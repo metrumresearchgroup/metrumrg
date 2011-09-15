@@ -31,8 +31,8 @@
   \item{walls}{numeric, recycled to length 2.  Number of vertical lines
   on left and right of table.}
   \item{grid}{logical, whether to have lines between rows and columns}
-  \item{rowgroups}{a vector as long as names(x), non-repeats trigger vertical lines}
-  \item{colgroups}{a vector as long as nrow(x), non-repeats trigger horizontal lines}
+  \item{rowgroups}{a vector as long as nrow(x), non-repeats trigger horizontal lines}
+  \item{colgroups}{a vector as long as names(x), non-repeats trigger vertical lines}
   \item{rowbreaks}{numeric: a manual way to specify numbers of lines between rows (ignores grid and rowgroups)}
   \item{colbreaks}{numeric: a manual way to specify numbers of lines between columns (ignores grid and colgroups)}
   \item{charjust}{default justification for character columns}
