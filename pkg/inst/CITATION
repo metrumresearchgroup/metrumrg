@@ -1,0 +1,20 @@
+citHeader("To cite MIfuns in publications use:")
+
+citEntry(entry="Manual",
+         title = "Facilitating the Pharmacometrics Work-Flow with the MItools R Package",
+         author = person(last="William Knebel, Tim Bergsma, Jeannine Fisher, George Georgalis, Leonid Gibiansky, Bill Gillespie, Matt Riggs, and Marc R. Gastonguay"),
+         organization = "Metrum Institute",
+         address      = "Tariffville, CT",
+         url          = "http://metruminstitute.org",
+         proceedings  = "American Conference on Pharmacometrics, Tuscon, AZ 2008",
+         
+         textVersion = 
+         paste("William Knebel, Tim Bergsma, Jeannine Fisher, George Georgalis, Leonid Gibiansky, Bill Gillespie, Matt Riggs, and Marc R. Gastonguay. ", 
+               "Facilitating the Pharmacometrics Work-Flow with the MItools R Package. ",
+               "Metrum Institute, Tariffville, CT. ",
+               "URL: http://metruminstitute.org. ",
+               "American Conference on Pharmacometrics, Tuscon, AZ 2008.", 
+               sep="")
+         )
+
+citFooter(" ")
