@@ -1,10 +1,10 @@
 \name{helpSimulate}
 \alias{helpSimulate}
 \docType{package}
-\title{MIfuns: Simulation}
+\title{metrumrg: Simulation}
 \description{Tools for conducting simulations.}
 \details{
-\link[=MIfuns]{MIfuns}
+\link[=metrumrg]{metrumrg}
 
 I want to ....
 \itemize{

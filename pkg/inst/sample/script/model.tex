@@ -5,9 +5,7 @@
 \begin{document}
 \vspace*{2cm}
 \begin{center}
-{\Large MIfuns Sample Script}\\
-\vspace{1.5cm}
-{\Large Phase I Modeling}\\
+{\Large Modeling}\\
 ~\\
 \today\\
 ~\\
@@ -24,16 +22,16 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/Users/timb/code/inst/sample/script"
+[1] "/home/timb/metrumrg/inst/sample/script"
 \end{Soutput}
 \begin{Sinput}
-> library(MIfuns,lib.loc="~/Rlibs")
+> library(metrumrg)
 \end{Sinput}
 \begin{Soutput}
-MIfuns 4.3.4 
+metrumrg 5.0 
 \end{Soutput}
 \begin{Sinput}
-> command <- '/common/NONMEM/nm7_osx1/test/nm7_osx1.pl'
+> command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
 > cat.cov='SEX'
 > cont.cov=c('HEIGHT','WEIGHT','AGE')
 > par.list=c('CL','Q','KA','V','V2','V3')
@@ -43,10 +41,10 @@ MIfuns 4.3.4
 \subsection{Run NONMEM.}
 \begin{Schunk}
 \begin{Sinput}
-> NONR(
+> NONR72(
 +      run=1005,
 +      command=command,
-+      project='../nonmem',
++      project='/home/timb/metrumrg/inst/sample/nonmem',
 +      grid=FALSE,
 +      nice=TRUE,
 +      checkrunno=FALSE,
@@ -54,14 +52,14 @@ MIfuns 4.3.4
 +      cat.cov=cat.cov,
 +      par.list=par.list,
 +      eta.list=eta.list,
-+      plotfile='../nonmem/*/diagnostics.pdf',
-+      streams='../nonmem/ctl',
++      plotfile='/home/timb/metrumrg/inst/sample/nonmem/*/diagnostics.pdf',
++      streams='/home/timb/metrumrg/inst/sample/nonmem/ctl',
 +      checksum=FALSE
 + )
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/Users/timb/code/inst/sample/script"
+[1] "/home/timb/metrumrg/inst/sample/script"
 \end{Soutput}
 \end{Schunk}
 Covariance succeeded on model 1005.
@@ -169,7 +167,7 @@ Fix records of interest.
 This run makes the predictions (simulations).
 \begin{Schunk}
 \begin{Sinput}
-> NONR(
+> NONR72(
 +      run=1105,
 +      command=command,
 +      project='../nonmem',
@@ -182,7 +180,7 @@ This run makes the predictions (simulations).
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/Users/timb/code/inst/sample/script"
+[1] "/home/timb/metrumrg/inst/sample/script"
 \end{Soutput}
 \end{Schunk}
 \subsection{Recover and format the original dataset.}
@@ -201,7 +199,7 @@ Now we fetch the results and integrate them with the other data.
 5 <NA>  1 1.00   0    0   NA 1.120    1 1.00 1.00 1.00 1000   0    174   74.2
 6 <NA>  1 2.00   0    0   NA 2.280    1 2.00 2.00 2.00 1000   0    174   74.2
   SEX  AGE DOSE FED SMK DS CRCN predose zerodv
-1   0 29.1 1000   1   0  0 83.5       1      1
+1   0 29.1 1000   1   0  0 83.5       1      0
 2   0 29.1 1000   1   0  0 83.5       0      0
 3   0 29.1 1000   1   0  0 83.5       0      0
 4   0 29.1 1000   1   0  0 83.5       0      0
@@ -602,7 +600,7 @@ We also show densityplots of predictions at those quartiles.
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/Users/timb/code/inst/sample/script"
+[1] "/home/timb/metrumrg/inst/sample/script"
 \end{Soutput}
 \begin{Sinput}
 > dir.create('../nonmem/1005.boot')
@@ -651,17 +649,24 @@ We also show densityplots of predictions at those quartiles.
 \subsection{Run bootstrap models.}
 \begin{Schunk}
 \begin{Sinput}
-> NONR(
+> NONR72(
 +      run=1:300,
 +      command=command,
 +      project='../nonmem/1005.boot/',
 +      boot=TRUE,
 +      nice=TRUE,
-+      grid=FALSE,
-+      concurrent=FALSE,
++      #grid=TRUE,
++      #concurrent=TRUE,
 +      streams='../nonmem/1005.boot/ctl',
 +      checksum=FALSE
 + )
+\end{Sinput}
+\begin{Soutput}
+Installing SIGCHLD signal handler...Done.
+\end{Soutput}
+\begin{Sinput}
+> nms <- paste('../nonmem/1005.boot/',1:300,'.boot/',1:300,'.log.xml',sep='')
+> while(!(all(file.exists(nms))))Sys.sleep(10)
 > boot <- rlog(
 + 	run=1:300,
 + 	project='../nonmem/1005.boot',

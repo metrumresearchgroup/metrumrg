@@ -3,7 +3,7 @@
 \docType{data}
 \title{A Sample NONMEM(r) Control Stream}
 \description{
-  The control stream for running control test 8 of NMQual from Metrum Institute.
+  The control stream for running control test 8 of NMQual.
 }
 \usage{data(ctl)}
 \format{

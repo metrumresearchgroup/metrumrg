@@ -54,7 +54,7 @@ cells within columns that represent extreme quantiles. By default, the
 }
 \value{a data frame with the same rows, columns, row order, and column order as x 
 (except for dropped columns)}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 
 

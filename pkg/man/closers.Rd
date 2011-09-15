@@ -14,7 +14,7 @@ closers(x, sub, sup, ...)
 \details{Used by \code{wikiparse}.
 }
 \value{character}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

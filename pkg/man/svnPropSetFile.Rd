@@ -11,7 +11,8 @@
 }
 \details{It is an error if the file is not subversioned.}
 \value{used for side effects}
-\references{ http://metruminstitute.org }
+\references{\url{http://metrumrg.r-forge.r-project.org}}
+
 \author{ Tim Bergsma }
 \seealso{
 	\itemize{

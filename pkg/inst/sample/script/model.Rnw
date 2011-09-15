@@ -5,9 +5,7 @@
 \begin{document}
 \vspace*{2cm}
 \begin{center}
-{\Large MIfuns Sample Script}\\
-\vspace{1.5cm}
-{\Large Phase I Modeling}\\
+{\Large Modeling}\\
 ~\\
 \today\\
 ~\\
@@ -21,8 +19,8 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \subsection{Set up for NONMEM run.}
 <<model>>=
 getwd()
-library(MIfuns,lib.loc="~/Rlibs")
-command <- '/common/NONMEM/nm7_osx1/test/nm7_osx1.pl'
+library(metrumrg)
+command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
 cat.cov='SEX'
 cont.cov=c('HEIGHT','WEIGHT','AGE')
 par.list=c('CL','Q','KA','V','V2','V3')
@@ -30,10 +28,10 @@ eta.list=paste('ETA',1:10,sep='')
 @
 \subsection{Run NONMEM.}
 <<run>>=
-NONR(
+NONR72(
      run=1005,
      command=command,
-     project='../nonmem',
+     project='/home/timb/metrumrg/inst/sample/nonmem',
      grid=FALSE,
      nice=TRUE,
      checkrunno=FALSE,
@@ -41,8 +39,8 @@ NONR(
      cat.cov=cat.cov,
      par.list=par.list,
      eta.list=eta.list,
-     plotfile='../nonmem/*/diagnostics.pdf',
-     streams='../nonmem/ctl',
+     plotfile='/home/timb/metrumrg/inst/sample/nonmem/*/diagnostics.pdf',
+     streams='/home/timb/metrumrg/inst/sample/nonmem/ctl',
      checksum=FALSE
 )
 getwd()
@@ -80,7 +78,7 @@ write.nmctl(ctl,'../nonmem/ctl/1105.ctl')
 \subsection{Run the simulation.}
 This run makes the predictions (simulations).
 <<sim>>=
-NONR(
+NONR72(
      run=1105,
      command=command,
      project='../nonmem',
@@ -284,17 +282,19 @@ t <- metaSub(
 @
 \subsection{Run bootstrap models.}
 <<boot>>=
-NONR(
+NONR72(
      run=1:300,
      command=command,
      project='../nonmem/1005.boot/',
      boot=TRUE,
      nice=TRUE,
-     grid=FALSE,
-     concurrent=FALSE,
+     #grid=TRUE,
+     #concurrent=TRUE,
      streams='../nonmem/1005.boot/ctl',
      checksum=FALSE
 )
+nms <- paste('../nonmem/1005.boot/',1:300,'.boot/',1:300,'.log.xml',sep='')
+while(!(all(file.exists(nms))))Sys.sleep(10)
 boot <- rlog(
 	run=1:300,
 	project='../nonmem/1005.boot',

@@ -78,7 +78,7 @@ related details from the run log.  \code{wikitab} is more restrictive than \code
 but it lets all the usual parameter details arise from a single specification thereof.
 }
 \value{data.frame}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

@@ -5,9 +5,8 @@
 \begin{document}
 \vspace*{2cm}
 \begin{center}
-{\Large MIfuns Sample}\\
 \vspace{1.5cm}
-{\Large Phase 1 Data Assembly}\\
+{\Large Data Assembly}\\
 ~\\
 \today\\
 ~\\
@@ -21,9 +20,9 @@ Make sure you are in the script directory, where this files resides.
 <<dir>>=
 getwd()
 @
-Load the MIfuns package.
+Load the metrumrg package.
 <<lib>>=
-library(MIfuns)
+library(metrumrg)
 @
 Groom the dose data
 <<dose>>=
@@ -107,6 +106,7 @@ We create a summary of which columns were hidden for which reasons.
 summary(hidden(dat))
 @
 \end{document}
+
 
 
 

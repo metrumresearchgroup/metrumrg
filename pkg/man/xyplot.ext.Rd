@@ -57,7 +57,7 @@ all of which may be overridden.
 \value{
 a trellis object
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \note{Even though \code{xyplot.ext} looks like a method, it will be more common
 to call it directly, as in the examples.}

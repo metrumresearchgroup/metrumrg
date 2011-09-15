@@ -1,10 +1,10 @@
 \name{helpVisualize}
 \alias{helpVisualize}
 \docType{package}
-\title{MIfuns: Plotting}
+\title{metrumrg: Plotting}
 \description{Tools for creating plots.}
 \details{
-\link[=MIfuns]{MIfuns}
+\link[=metrumrg]{metrumrg}
 
 I want to ....
 \itemize{

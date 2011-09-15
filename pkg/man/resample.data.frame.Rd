@@ -78,7 +78,7 @@
 	A list of data.frames, or if \code{out} is supplied, an invisible list of
 	the numbers of rows of each data.frame written to file.
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

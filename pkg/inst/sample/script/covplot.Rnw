@@ -5,8 +5,6 @@
 \begin{document}
 \vspace*{2cm}
 \begin{center}
-{\Large MIfuns Sample Script}\\
-\vspace{1.5cm}
 {\Large Covariate Plots}\\
 ~\\
 \today\\
@@ -21,7 +19,7 @@ This script picks up after model.Rnw to process bootstrap results and make covar
 <<more>>= 
 #wait for bootstraps to finish
 getwd()
-require(MIfuns)
+require(metrumrg)
 boot <- read.csv('../nonmem/1005.boot/log.csv',as.is=TRUE)
 head(boot)
 unique(boot$parameter)

@@ -96,7 +96,7 @@ Most functions and methods documented here return objects with class
 \code{naKeys} and \code{dupKeys} return logical vectors as long as \code{nrow(x)}.
 
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

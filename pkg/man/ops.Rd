@@ -69,7 +69,7 @@ and defining proxy methods for them.  \code{plus.rigged} and \code{minus.moot} a
 examples.  See examples for \code{as.nm}.
 }
 \value{keyed data.frame}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

@@ -5,8 +5,6 @@
 \begin{document}
 \vspace*{2cm}
 \begin{center}
-{\Large MIfuns Sample Script}\\
-\vspace{1.5cm}
 {\Large Covariate Plots}\\
 ~\\
 \today\\
@@ -24,13 +22,13 @@ This script picks up after model.Rnw to process bootstrap results and make covar
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/Users/timb/project/metrum/inst/sample/script"
+[1] "/home/timb/metrumrg/inst/sample/script"
 \end{Soutput}
 \begin{Sinput}
-> require(MIfuns)
+> require(metrumrg)
 \end{Sinput}
 \begin{Soutput}
-MIfuns 4.3.5 
+metrumrg 5.0 
 \end{Soutput}
 \begin{Sinput}
 > boot <- read.csv('../nonmem/1005.boot/log.csv',as.is=TRUE)
@@ -38,11 +36,11 @@ MIfuns 4.3.5
 \end{Sinput}
 \begin{Soutput}
   X tool run parameter   moment            value
-1 1  nm7   1       ofv  minimum 2668.50793105071
-2 2  nm7   1    THETA1 estimate           8.9009
+1 1  nm7   1       ofv  minimum 2522.77057359274
+2 2  nm7   1    THETA1 estimate           8.0323
 3 3  nm7   1    THETA1     prse             <NA>
 4 4  nm7   1    THETA1       se             <NA>
-5 5  nm7   1    THETA2 estimate          20.9039
+5 5  nm7   1    THETA2 estimate          23.1126
 6 6  nm7   1    THETA2     prse             <NA>
 \end{Soutput}
 \begin{Sinput}
@@ -73,10 +71,10 @@ original control stream.
 \end{Sinput}
 \begin{Soutput}
   tool run parameter   moment   value
-2  nm7   1    THETA1 estimate  8.9009
+2  nm7   1    THETA1 estimate  8.0323
 3  nm7   1    THETA1     prse    <NA>
 4  nm7   1    THETA1       se    <NA>
-5  nm7   1    THETA2 estimate 20.9039
+5  nm7   1    THETA2 estimate 23.1126
 6  nm7   1    THETA2     prse    <NA>
 7  nm7   1    THETA2       se    <NA>
 \end{Soutput}
@@ -108,25 +106,25 @@ prse, and therefore moment, is noninformative for these bootstraps.
 > head(boot)
 \end{Sinput}
 \begin{Soutput}
-   run parameter     value
-2    1    THETA1    8.9009
-5    1    THETA2   20.9039
-8    1    THETA3 0.0706347
-11   1    THETA4   3.36588
-14   1    THETA5   116.254
-17   1    THETA6   1.04097
+   run parameter    value
+2    1    THETA1   8.0323
+5    1    THETA2  23.1126
+8    1    THETA3 0.074152
+11   1    THETA4  4.00584
+14   1    THETA5   106.33
+17   1    THETA6  1.11708
 \end{Soutput}
 \begin{Sinput}
 > unique(boot$value[boot$parameter %in% c('OMEGA2.1','OMEGA3.1','OMEGA3.2')])
 \end{Sinput}
 \begin{Soutput}
-[1] "0"
+[1] "0" NA 
 \end{Soutput}
 \begin{Sinput}
 > unique(boot$parameter[boot$value=='0'])
 \end{Sinput}
 \begin{Soutput}
-[1] "OMEGA2.1" "OMEGA3.1" "OMEGA3.2"
+[1] "OMEGA2.1" "OMEGA3.1" "OMEGA3.2" NA        
 \end{Soutput}
 \end{Schunk}
 Off-diagonals (and only off-diagonals) are noninformative.
@@ -136,20 +134,20 @@ Off-diagonals (and only off-diagonals) are noninformative.
 > any(is.na(as.numeric(boot$value)))
 \end{Sinput}
 \begin{Soutput}
-[1] FALSE
+[1] TRUE
 \end{Soutput}
 \begin{Sinput}
 > boot$value <- as.numeric(boot$value)
 > head(boot)
 \end{Sinput}
 \begin{Soutput}
-   run parameter       value
-2    1    THETA1   8.9009000
-5    1    THETA2  20.9039000
-8    1    THETA3   0.0706347
-11   1    THETA4   3.3658800
-14   1    THETA5 116.2540000
-17   1    THETA6   1.0409700
+   run parameter      value
+2    1    THETA1   8.032300
+5    1    THETA2  23.112600
+8    1    THETA3   0.074152
+11   1    THETA4   4.005840
+14   1    THETA5 106.330000
+17   1    THETA6   1.117080
 \end{Soutput}
 \end{Schunk}
 \subsection{Restrict data to 95 percentiles.}
@@ -168,13 +166,13 @@ scale independent.
 > head(boot)
 \end{Sinput}
 \begin{Soutput}
-  run parameter       value
-1   1    THETA1   8.9009000
-2   1    THETA2  20.9039000
-3   1    THETA3   0.0706347
-4   1    THETA4   3.3658800
-5   1    THETA5 116.2540000
-6   1    THETA6   1.0409700
+  run parameter      value
+1   1    THETA1   8.032300
+2   1    THETA2  23.112600
+3   1    THETA3   0.074152
+4   1    THETA4   4.005840
+5   1    THETA5 106.330000
+6   1    THETA6   1.117080
 \end{Soutput}
 \begin{Sinput}
 > any(is.na(boot$value))
@@ -219,18 +217,18 @@ stream.
 9                                              IIV_V_c /F ~ Omega_2.2  nm7 1005
 10                                               IIV_K_a  ~ Omega_3.3  nm7 1005
 11                                               err_prop ~ Sigma_1.1  nm7 1005
-    estimate prse        se
-1    8.57997 9.51  0.815572
-2    21.6409 9.33   2.02017
-3  0.0684281 8.04  0.005504
-4    3.78411 13.5  0.510932
-5    107.375 15.7   16.8257
-6   0.998986 13.7    0.1364
-7    1.67117 21.9  0.366424
-8   0.195776 23.1 0.0451412
-9   0.128574 30.4 0.0391464
-10  0.106528 25.2 0.0268981
-11  0.067111 11.4 0.0076591
+    estimate prse         se
+1    8.57997 9.53   0.817948
+2    21.6409 9.34    2.02094
+3  0.0684281 8.04 0.00550178
+4    3.78411 13.5   0.511271
+5    107.376 15.7    16.8344
+6   0.998986 14.8   0.148279
+7    1.67117 21.7   0.363297
+8   0.195776   23  0.0450967
+9   0.128574 30.4  0.0391104
+10  0.106527 25.3  0.0268981
+11  0.067111 11.4 0.00766169
 \end{Soutput}
 \begin{Sinput}
 > wiki$name <- wiki2label(wiki$model)
@@ -246,20 +244,20 @@ stream.
 \end{Sinput}
 \begin{Soutput}
  [1] "THETA1"   "THETA2"   "THETA3"   "THETA4"   "THETA5"   "THETA6"  
- [7] "THETA7"   "OMEGA1.1" "OMEGA2.2" "OMEGA3.3" "SIGMA1.1"
+ [7] "THETA7"   "OMEGA1.1" "OMEGA2.2" "SIGMA1.1" "OMEGA3.3"
 \end{Soutput}
 \begin{Sinput}
 > boot <- stableMerge(boot, wiki[,c('parameter','name')])
 > head(boot)
 \end{Sinput}
 \begin{Soutput}
-  run parameter       value      name
-1   1    THETA1   8.9009000      CL/F
-2   1    THETA2  20.9039000     V_c/F
-3   1    THETA3   0.0706347       K_a
-4   1    THETA4   3.3658800       Q/F
-5   1    THETA5 116.2540000     V_p/F
-6   1    THETA6   1.0409700 MALE_CL/F
+  run parameter      value      name
+1   1    THETA1   8.032300      CL/F
+2   1    THETA2  23.112600     V_c/F
+3   1    THETA3   0.074152       K_a
+4   1    THETA4   4.005840       Q/F
+5   1    THETA5 106.330000     V_p/F
+6   1    THETA6   1.117080 MALE_CL/F
 \end{Soutput}
 \end{Schunk}
 \subsection{Create covariate plot.}
@@ -283,7 +281,7 @@ clearance, is female, and has median weight.
 5 <NA>  1 1.00   0    0   NA 1.120    1 1.00 1.00 1.00 1000   0    174   74.2
 6 <NA>  1 2.00   0    0   NA 2.280    1 2.00 2.00 2.00 1000   0    174   74.2
   SEX  AGE DOSE FED SMK DS CRCN predose zerodv
-1   0 29.1 1000   1   0  0 83.5       1      1
+1   0 29.1 1000   1   0  0 83.5       1      0
 2   0 29.1 1000   1   0  0 83.5       0      0
 3   0 29.1 1000   1   0  0 83.5       0      0
 4   0 29.1 1000   1   0  0 83.5       0      0
@@ -335,20 +333,20 @@ effectively reproducing the submodel from the control stream.
 > head(boot) 
 \end{Sinput}
 \begin{Soutput}
-  run parameter       value      name
-1   1    THETA1   8.9009000      CL/F
-2   1    THETA2  20.9039000     V_c/F
-3   1    THETA3   0.0706347       K_a
-4   1    THETA4   3.3658800       Q/F
-5   1    THETA5 116.2540000     V_p/F
-6   1    THETA6   1.0409700 MALE_CL/F
+  run parameter      value      name
+1   1    THETA1   8.032300      CL/F
+2   1    THETA2  23.112600     V_c/F
+3   1    THETA3   0.074152       K_a
+4   1    THETA4   4.005840       Q/F
+5   1    THETA5 106.330000     V_p/F
+6   1    THETA6   1.117080 MALE_CL/F
 \end{Soutput}
 \begin{Sinput}
 > unique(boot$name)
 \end{Sinput}
 \begin{Soutput}
  [1] "CL/F"      "V_c/F"     "K_a"       "Q/F"       "V_p/F"     "MALE_CL/F"
- [7] "WT_CL/F"   "IIV_CL/F"  "IIV_V_c/F" "IIV_K_a"   "err_prop" 
+ [7] "WT_CL/F"   "IIV_CL/F"  "IIV_V_c/F" "err_prop"  "IIV_K_a"  
 \end{Soutput}
 \begin{Sinput}
 > clearance <- boot[boot$name %in% c('CL/F','WT_CL/F','MALE_CL/F'),]
@@ -356,25 +354,25 @@ effectively reproducing the submodel from the control stream.
 \end{Sinput}
 \begin{Soutput}
    run parameter    value      name
-1    1    THETA1  8.90090      CL/F
-6    1    THETA6  1.04097 MALE_CL/F
-7    1    THETA7  1.04042   WT_CL/F
-12   2    THETA1 10.04230      CL/F
-17   2    THETA6  1.03979 MALE_CL/F
-18   2    THETA7  1.27276   WT_CL/F
+1    1    THETA1 8.032300      CL/F
+6    1    THETA6 1.117080 MALE_CL/F
+7    1    THETA7 1.593720   WT_CL/F
+12   2    THETA1 8.610640      CL/F
+17   2    THETA6 0.988349 MALE_CL/F
+18   2    THETA7 1.473480   WT_CL/F
 \end{Soutput}
 \begin{Sinput}
 > frozen <- data.frame(cast(clearance,run~name),check.names=FALSE)
 > head(frozen)
 \end{Sinput}
 \begin{Soutput}
-  run     CL/F MALE_CL/F WT_CL/F
-1   1  8.90090  1.040970 1.04042
-2   2 10.04230  1.039790 1.27276
-3   4  9.01211  1.303000      NA
-4   5  8.88781  0.900391 1.42585
-5   6  7.68465  1.071680 2.05066
-6   7  8.15527  0.988161 2.33554
+  run    CL/F MALE_CL/F WT_CL/F
+1   1 8.03230  1.117080 1.59372
+2   2 8.61064  0.988349 1.47348
+3   3 8.57952  0.966976 1.66538
+4   4 8.08375  1.035090 2.09828
+5   5 9.84918  0.775953 1.70033
+6   6 8.34069  0.943343 1.77161
 \end{Soutput}
 \begin{Sinput}
 > frozen$`WT_CL/F:65` <- (65/70)**frozen$`WT_CL/F`
@@ -396,26 +394,26 @@ effectively reproducing the submodel from the control stream.
 > head(frozen)
 \end{Sinput}
 \begin{Soutput}
-  run     CL/F MALE_CL/F WT_CL/F WT_CL/F:65 WT_CL/F:75 WT_CL/F:85
-1   1  8.90090  1.040970 1.04042  0.9257941   1.074421   1.223853
-2   2 10.04230  1.039790 1.27276  0.9099900   1.091782   1.280325
-3   4  9.01211  1.303000      NA         NA         NA         NA
-4   5  8.88781  0.900391 1.42585  0.8997243   1.103375   1.318952
-5   6  7.68465  1.071680 2.05066  0.8590138   1.151979   1.489064
-6   7  8.15527  0.988161 2.33554  0.8410685   1.174844   1.573747
+  run    CL/F MALE_CL/F WT_CL/F WT_CL/F:65 WT_CL/F:75 WT_CL/F:85
+1   1 8.03230  1.117080 1.59372  0.8886006   1.116228   1.362649
+2   2 8.61064  0.988349 1.47348  0.8965541   1.107007   1.331206
+3   3 8.57952  0.966976 1.66538  0.8838942   1.121761   1.381740
+4   4 8.08375  1.035090 2.09828  0.8559877   1.155770   1.502896
+5   5 9.84918  0.775953 1.70033  0.8816078   1.124469   1.391148
+6   6 8.34069  0.943343 1.77161  0.8769630   1.130012   1.410535
 \end{Soutput}
 \begin{Sinput}
 > frozen[['CL/F']] <- frozen[['CL/F']]/cl
 > head(frozen)
 \end{Sinput}
 \begin{Soutput}
-  run     CL/F MALE_CL/F WT_CL/F WT_CL/F:65 WT_CL/F:75 WT_CL/F:85
-1   1 1.037405  1.040970 1.04042  0.9257941   1.074421   1.223853
-2   2 1.170435  1.039790 1.27276  0.9099900   1.091782   1.280325
-3   4 1.050366  1.303000      NA         NA         NA         NA
-4   5 1.035879  0.900391 1.42585  0.8997243   1.103375   1.318952
-5   6 0.895650  1.071680 2.05066  0.8590138   1.151979   1.489064
-6   7 0.950501  0.988161 2.33554  0.8410685   1.174844   1.573747
+  run      CL/F MALE_CL/F WT_CL/F WT_CL/F:65 WT_CL/F:75 WT_CL/F:85
+1   1 0.9361688  1.117080 1.59372  0.8886006   1.116228   1.362649
+2   2 1.0035746  0.988349 1.47348  0.8965541   1.107007   1.331206
+3   3 0.9999476  0.966976 1.66538  0.8838942   1.121761   1.381740
+4   4 0.9421653  1.035090 2.09828  0.8559877   1.155770   1.502896
+5   5 1.1479271  0.775953 1.70033  0.8816078   1.124469   1.391148
+6   6 0.9721118  0.943343 1.77161  0.8769630   1.130012   1.410535
 \end{Soutput}
 \begin{Sinput}
 > frozen$`WT_CL/F` <- NULL
@@ -423,13 +421,13 @@ effectively reproducing the submodel from the control stream.
 > head(molten)
 \end{Sinput}
 \begin{Soutput}
-  run variable    value
-1   1     CL/F 1.037405
-2   2     CL/F 1.170435
-3   4     CL/F 1.050366
-4   5     CL/F 1.035879
-5   6     CL/F 0.895650
-6   7     CL/F 0.950501
+  run variable     value
+1   1     CL/F 0.9361688
+2   2     CL/F 1.0035746
+3   3     CL/F 0.9999476
+4   4     CL/F 0.9421653
+5   5     CL/F 1.1479271
+6   6     CL/F 0.9721118
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Plot.}

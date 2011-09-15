@@ -91,7 +91,7 @@ timecourse (i.e., \sQuote{rigging}). \code{as.rigged} returns a list of class \c
 \code{deranged} returns keyed data.frame.
 
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

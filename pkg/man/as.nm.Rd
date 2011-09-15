@@ -48,7 +48,7 @@ that creates an nm classification; use with caution, as it does not enforce all 
   \item \code{NA} \code{C} will be imputed \code{FALSE}.
   \item Every active (non-commented) source record should define exactly one of \code{HOUR} or \code{DATETIME}.
   \item \code{HOUR} is taken to represent relative accumulation of hours from arbitrary origin.
-  \item \code{DATETIME} is understood as seconds, coercible to \code{miDateTime}.
+  \item \code{DATETIME} is understood as seconds, coercible to \code{mDateTime}.
   \item \code{TIME} is calculated from either \code{HOUR} or \code{DATETIME}.
   \item Definition (or not) of \code{HOUR} vs. \code{DATETIME} should be constant within subject (for active records).
   \item \code{SEQ} (class \code{flag}) will be created if not present.
@@ -74,7 +74,7 @@ that creates an nm classification; use with caution, as it does not enforce all 
 \code{write.nm} is used for side effects. Others return an object with class 
 \code{c('nm','keyed','data.frame')}.
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \note{
 In the examples below, note that assembly chains beginning with \code{nm} will 

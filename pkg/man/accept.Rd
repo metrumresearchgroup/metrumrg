@@ -33,7 +33,7 @@ accept(
 \arguments{
   \item{contingencies}{a character vector of packages that must survive \code{packageCheck}
    in order for acceptance to succeed.  Can be \code{NULL}.  Defaults are arbitrarily chosen
-  to suit the needs of Metrum Research Group, LLC.}
+  to suit the needs of Metrum Research Group LLC.}
   \item{installMissing}{scalar logical: should \code{install.packages} be attempted for 
   missing contingencies?}
 }
@@ -49,7 +49,7 @@ accept(
   an invisible named vector of version identifiers, where the names are package
   names.
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

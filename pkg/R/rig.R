@@ -18,7 +18,7 @@ rig.nm <- function(x,n=50,dateTime=FALSE,noDups=FALSE,...){
     			x$ID,
     			function(x)data.frame(
     				SUBJ=rep(x$SUBJ[[1]],n),
-    				DATETIME=as.miDateTime(
+    				DATETIME=as.mDateTime(
     					round(
     						seq(
     							from=min(x$DATETIME),

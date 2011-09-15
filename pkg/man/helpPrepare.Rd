@@ -1,10 +1,10 @@
 \name{helpPrepare}
 \alias{helpPrepare}
 \docType{package}
-\title{MIfuns: Data Preparation}
+\title{metrumrg: Data Preparation}
 \description{Tools for preparing pharmacometric analysis data sets.}
 \details{
-\link[=MIfuns]{MIfuns}
+\link[=metrumrg]{metrumrg}
 
 I want to ....
 \itemize{

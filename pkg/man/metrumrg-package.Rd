@@ -1,6 +1,6 @@
-\name{MIfuns-package}
-\alias{MIfuns-package}
-\alias{MIfuns}
+\name{metrumrg-package}
+\alias{metrumrg-package}
+\alias{metrumrg}
 \docType{package}
 \title{Pharmacometric Tools for Data Preparation, Modeling, Simulation, and Reporting}
 \description{
@@ -11,8 +11,6 @@ user-defined diagnostic plots, execution and summary of bootstrap and
 predictive check results, implementation of simulations from posterior
 parameter distributions, reporting of output tables, and creation of
 detailed analysis logs.
-
-Deprecated.  Please see the replacement package \pkg{metrumrg}.
 }
 \details{
 
@@ -28,7 +26,7 @@ I want to ....
 \item \link[=helpList]{list} all functions
 }  
 \tabular{ll}{
-Package: \tab MIfuns\cr
+Package: \tab metrumrg\cr
 Type: \tab Package\cr
 Version: \tab 5.1\cr
 Date: \tab 2011-09-07\cr
@@ -36,7 +34,6 @@ License: \tab GPL\cr
 }
 }
   
-  \author{Developed by Metrum Institute (Bill Knebel, Tim Bergsma, Leonid Gibianski, others). Maintainer: Tim Bergsma <timb@metrumrg.com>}
-  
-  \references{http://mifuns.googlecode.com}
+  \author{Tim Bergsma, Bill Knebel, and Leonid Gibianski. Maintainer: Tim Bergsma <timb@metrumrg.com>}
+  \references{\url{http://metrumrg.r-forge.r-project.org}}
   \keyword{manip}

@@ -10,5 +10,5 @@
     		sigma = "data.frame"
     	)
     )
-    cat('MIfuns',utils::packageDescription('MIfuns',fields='Version'),'\n')
+    cat('metrumrg',utils::packageDescription('metrumrg',fields='Version'),'\n')
 }

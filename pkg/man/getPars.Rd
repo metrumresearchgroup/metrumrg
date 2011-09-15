@@ -10,7 +10,7 @@ getPars(file)
 	\item{file}{path for a file, typcally \file{*par.TAB}}
 }
 \value{data.frame}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

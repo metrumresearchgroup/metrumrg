@@ -5,9 +5,8 @@
 \begin{document}
 \vspace*{2cm}
 \begin{center}
-{\Large MIfuns Sample}\\
 \vspace{1.5cm}
-{\Large Phase 1 Data Assembly}\\
+{\Large Data Assembly}\\
 ~\\
 \today\\
 ~\\
@@ -23,16 +22,16 @@ Make sure you are in the script directory, where this files resides.
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/Users/timb/project/metrum/inst/sample/script"
+[1] "/home/timb/metrumrg/inst/sample/script"
 \end{Soutput}
 \end{Schunk}
-Load the MIfuns package.
+Load the metrumrg package.
 \begin{Schunk}
 \begin{Sinput}
-> library(MIfuns)
+> library(metrumrg)
 \end{Sinput}
 \begin{Soutput}
-MIfuns 4.3.2 
+metrumrg 5.0 
 \end{Soutput}
 \end{Schunk}
 Groom the dose data
@@ -280,7 +279,7 @@ badII           0
 5 .    1 1.00   0 1.00    0  1   NA 1.00 1.00 1000 1.120   0    174   74.2   0
 6 .    1 2.00   0 2.00    0  1   NA 2.00 2.00 1000 2.280   0    174   74.2   0
    AGE DOSE FED SMK DS CRCN predose zerodv
-1 29.1 1000   1   0  0 83.5       1      1
+1 29.1 1000   1   0  0 83.5       1      0
 2 29.1 1000   1   0  0 83.5       0      0
 3 29.1 1000   1   0  0 83.5       0      0
 4 29.1 1000   1   0  0 83.5       0      0
@@ -303,7 +302,7 @@ We could rearrange columns for convenience and clarity.
 5 .  1 1.00   0    0   NA 1.120    1 1.00 1.00 1.00 1000   0    174   74.2   0
 6 .  1 2.00   0    0   NA 2.280    1 2.00 2.00 2.00 1000   0    174   74.2   0
    AGE DOSE FED SMK DS CRCN predose zerodv
-1 29.1 1000   1   0  0 83.5       1      1
+1 29.1 1000   1   0  0 83.5       1      0
 2 29.1 1000   1   0  0 83.5       0      0
 3 29.1 1000   1   0  0 83.5       0      0
 4 29.1 1000   1   0  0 83.5       0      0
@@ -324,11 +323,12 @@ We create a summary of which columns were hidden for which reasons.
 \end{Sinput}
 \begin{Soutput}
        predose zerodv
-total       40     25
-unique      25     10
+total       40     10
+unique      40     10
 \end{Soutput}
 \end{Schunk}
 \end{document}
+
 
 
 

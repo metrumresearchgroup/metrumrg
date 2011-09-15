@@ -55,7 +55,7 @@ after(   where,within,n=1,...)
 	vector of same class as \code{x}, if supplied, else of class integer. Logical for \code{before},
 	\code{at}, and \code{after}.
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

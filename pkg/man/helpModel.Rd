@@ -1,11 +1,11 @@
 \name{helpModel}
 \alias{helpModel}
 \docType{package}
-\title{MIfuns: Modeling}
+\title{metrumrg: Modeling}
 \description{Tools for preparing, executing, and analyzing models.}
 
 \details{
-\link[=MIfuns]{MIfuns}
+\link[=metrumrg]{metrumrg}
 
 I want to ....
 \itemize{

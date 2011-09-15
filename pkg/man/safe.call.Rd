@@ -13,7 +13,7 @@ safe.call(what, ...)
   \item{\dots}{extra arguments, to be filtered}
 }
 \value{the result of the called function}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

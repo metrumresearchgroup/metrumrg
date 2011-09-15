@@ -49,7 +49,7 @@ are welcome to impute \code{NA}s as 0. Methods are defined for common classes.
 \code{f} is an alias to \code{as.flag}.
 }
 \value{flag}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \examples{
 hide(Theoph,where=Theoph$conc < 1,why='BLQ')

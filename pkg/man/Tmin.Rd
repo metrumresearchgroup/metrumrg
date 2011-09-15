@@ -18,6 +18,6 @@ The \code{Tmin} function performs the calculation based on the variables \code{i
 }
 \value{
   One Tmin is returned for each subject}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Leonid Gibianski}
 \keyword{manip}

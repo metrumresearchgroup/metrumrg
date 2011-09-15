@@ -31,7 +31,7 @@ specified environments, then wraps result in a latex table
 environment.  Result is returned visibly or printed to file
 and returned invisibly.}
 \value{character}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{tabular.data.frame}}

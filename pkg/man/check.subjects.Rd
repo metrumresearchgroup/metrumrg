@@ -13,6 +13,6 @@ check.subjects(x,subject)
   \item{subject}{subject identifier in the data (column name)}
 }
 \value{summary of each column in \code{x} by \code{subject}}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Leonid Gibianski, modified by Tim Bergsma}
 \keyword{manip}

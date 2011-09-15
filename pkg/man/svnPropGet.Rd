@@ -12,7 +12,8 @@
 	A vectorized verson of svnPropGetFile.
 }
 \value{	character}
-\references{ http://metruminstitute.org }
+\references{\url{http://metrumrg.r-forge.r-project.org}}
+
 \author{ Tim Bergsma }
 \seealso{
 	\itemize{

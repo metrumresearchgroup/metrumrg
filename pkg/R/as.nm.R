@@ -22,7 +22,7 @@ read.nm <- function(
 	if(any(naKeys(tran) & !tran$C))warning('file has na Keys')
 	if(any(dupKeys(tran)))warning('file has duplicate keys')
 	#if(!is.integer(tran$ID))warning('ID is not integer')
-	if('DATETIME' %in% names(tran))tran$DATETIME <- as.miDateTime(tran$DATETIME)
+	if('DATETIME' %in% names(tran))tran$DATETIME <- as.mDateTime(tran$DATETIME)
 	for(f in flags)tran[[f]] <- as.flag(as.numeric(tran[[f]]))
 	class(tran) <- c('nm',class(tran))
 	tran
@@ -200,8 +200,8 @@ merge.nm <- function(x,y,...)as.nm(merge(data.frame(x),y,...))
 	#HOUR is received as-is, taken to represent relative accumulation of hours from arbitrary origin.
 	x$TIME <- rep(NA,nrow(x))  #syntax supports zero-row data.frame
 	if('HOUR' %in% names(x)) x$TIME <- x$HOUR
-	#DATETIME is understood as seconds, coercible to miDateTime.
-	if('DATETIME' %in% names(x))x$DATETIME <- as.miDateTime(x$DATETIME)	
+	#DATETIME is understood as seconds, coercible to mDateTime.
+	if('DATETIME' %in% names(x))x$DATETIME <- as.mDateTime(x$DATETIME)	
 	if('DATETIME' %in% names(x))x$TIME[!is.na(x$DATETIME)] <- as.numeric(x$DATETIME[!is.na(x$DATETIME)])/60/60
 	
 	#At this point, active TIME should be completely defined.

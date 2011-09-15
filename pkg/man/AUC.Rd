@@ -20,6 +20,6 @@ AUC(data, time = 'TIME', id = 'ID', dv = 'DV')
 \value{
   One area under the dv-time curve is returned for each subject.
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Leonid Gibianski}
 \keyword{manip}

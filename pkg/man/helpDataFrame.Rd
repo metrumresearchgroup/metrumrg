@@ -1,10 +1,10 @@
 \name{helpDataFrame}
 \alias{helpDataFrame}
 \docType{package}
-\title{MIfuns: Working with Data Frames}
+\title{metrumrg: Working with Data Frames}
 \description{Tools for processing data.frames.}
 \details{
-\link[=MIfuns]{MIfuns} > \link[=helpPrepare]{Data}
+\link[=metrumrg]{metrumrg} > \link[=helpPrepare]{Data}
 
 I want to ....
 \itemize{

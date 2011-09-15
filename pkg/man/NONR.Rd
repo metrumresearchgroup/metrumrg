@@ -134,7 +134,7 @@ NONR72(
   (possibly grid-ready) NMQual commandline. Default: \code{FALSE}} 
   
   \item{invisible}{\code{intern}, \code{minimized}, and \code{invisible} 
-  can be specified for the system call that runs NONMEM.  MIfuns
+  	  can be specified for the system call that runs NONMEM.  \pkg{metrumrg}
   will largely ignore these on a unix-like platform.  For Windows, \code{invisible} is
   \code{TRUE} by default when \code{udef} is \code{TRUE}, and \code{FALSE} otherwise.  If \code{FALSE}, 
   NONMEM output will be displayed in a command window during the run.  Set 
@@ -242,7 +242,7 @@ File names and locations can be manipulated somewhat, i.e., by over-riding
 \value{used for side effects}
 \note{
   Specific control stream syntax is expected
-  when running \code{NONR} and the other functions present in the MIfuns package.
+  when running \code{NONR} and the other functions present in the \pkg{metrumrg} package.
   The list of syntax requirements are as follows.
   \itemize{
  
@@ -286,7 +286,7 @@ File names and locations can be manipulated somewhat, i.e., by over-riding
  \code{PLOTR}.  Mechanisms and expectations are somewhat different for NONMEM7.
 }
 
- \references{\url{http://mifuns.googlecode.com}}
+ \references{\url{http://metrumrg.r-forge.r-project.org}}
  \author{written by Bill Knebel; modified by Tim Bergsma.}
 \seealso{
 	\itemize{

@@ -17,7 +17,7 @@ groupnames(data, grp, grpnames = NULL, run)
   \item{run}{run name}
 }
 \value{factor}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

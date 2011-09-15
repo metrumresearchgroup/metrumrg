@@ -19,7 +19,7 @@ that \code{x} is missing.  Whereas in \code{lookup}, one is looking for details
 about elements of \code{x}, in \code{params}, one is asking what those elements
 may be.}
 \value{character}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

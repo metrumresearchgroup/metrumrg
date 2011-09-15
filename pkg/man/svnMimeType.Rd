@@ -11,7 +11,8 @@
 \details{Checks the property \sQuote{svn:mime-type} for subversioned files. 
 	NA where file is not subversioned.}
 \value{character}
-\references{ http://metruminstitute.org }
+\references{\url{http://metrumrg.r-forge.r-project.org}}
+
 \author{ Tim Bergsma }
 \seealso{
 

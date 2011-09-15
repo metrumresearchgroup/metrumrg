@@ -126,7 +126,7 @@ PLOTR(
      
 }
 \value{Used for side effects.}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

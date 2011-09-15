@@ -39,7 +39,7 @@ as.file.runlog(x, file = 'NonmemRunLog.csv', header = FALSE, quote = FALSE, na =
   serves as an interface.
   
   Metadata may reside in \file{lst} files (NONMEM primary output), in \file{NonmemRunLog}
-  files (created for NONMEM6 by MIfuns INFN routine) or in \file{ext} files (NONMEM7
+  files (created for NONMEM6 by \pkg{metrumrg} INFN routine) or in \file{ext} files (NONMEM7
   secondary output).  \code{as.unilog.lst}, \code{as.runlog.file}, and \code{as.pxml.ext} 
   (documented elsewhere) read these formats.  \emph{pxml} is an internal xml format
   produced by \code{as.pxml.ext} and converted to unilog by \code{as.unilog.pxml}.
@@ -69,7 +69,7 @@ as.file.runlog(x, file = 'NonmemRunLog.csv', header = FALSE, quote = FALSE, na =
 \code{as.file.runlog} is used for side effects.  All others return data.frame
 in the runlog or unilog format.
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \note{
 These functions are not vectorized: their first arguments are expected to 

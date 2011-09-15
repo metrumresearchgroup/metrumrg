@@ -76,7 +76,7 @@ not \code{NULL} (set to \code{NA} by \code{panel.superpose}).
   \code{levels} are available to \code{panel.levels}.
 }
 \value{used for side effects}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

@@ -1,11 +1,11 @@
 \name{helpAdminister}
 \alias{helpAdminister}
 \docType{package}
-\title{MIfuns: Administrative}
+\title{metrumrg: Administrative}
 \description{Tools for administrative tasks.}
 
 \details{
-\link[=MIfuns]{MIfuns}
+\link[=metrumrg]{metrumrg}
 
 I want to ....
 \itemize{

@@ -18,7 +18,7 @@ between-element position if the bounding elements differ.
 Used for placing lines between sets of rows or columns in a table.
 }
 \value{integer}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{tabular.data.frame}}

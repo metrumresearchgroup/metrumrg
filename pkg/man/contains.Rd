@@ -16,7 +16,7 @@ contains(pattern, text, ...)
 \value{
 logical vector as long as \code{text}
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

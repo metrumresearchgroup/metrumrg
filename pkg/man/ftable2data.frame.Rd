@@ -16,7 +16,7 @@ ftable2data.frame(x,...)
 	passing to latex).
 }
 \value{data.frame}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \examples{
 ftable(mtcars[c("cyl", "vs", "am", "gear")])

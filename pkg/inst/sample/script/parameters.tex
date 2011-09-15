@@ -5,8 +5,6 @@
 \begin{document}
 \vspace*{2cm}
 \begin{center}
-{\Large MIfuns Sample Script}\\
-\vspace{1.5cm}
 {\Large Parameter Table}\\
 ~\\
 \today\\
@@ -23,19 +21,18 @@ This script picks up after model.Rnw to process bootstrap results and make a par
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/Users/timb/project/metrum/inst/sample/script"
+[1] "/home/timb/metrumrg/inst/sample/script"
 \end{Soutput}
 \begin{Sinput}
-> require(MIfuns)
+> require(metrumrg)
 \end{Sinput}
 \begin{Soutput}
-MIfuns 4.3.5 
+metrumrg 5.0 
 \end{Soutput}
 \end{Schunk}
 \section{Parameter Table}
 \begin{Schunk}
 \begin{Sinput}
-> library(Hmisc)
 > tab <- wikitab(1005,'../nonmem')
 > tab
 \end{Sinput}
@@ -64,18 +61,18 @@ MIfuns 4.3.5
 9                                              IIV_V_c /F ~ Omega_2.2  nm7 1005
 10                                               IIV_K_a  ~ Omega_3.3  nm7 1005
 11                                               err_prop ~ Sigma_1.1  nm7 1005
-    estimate prse        se
-1    8.57997 9.51  0.815572
-2    21.6409 9.33   2.02017
-3  0.0684281 8.04  0.005504
-4    3.78411 13.5  0.510932
-5    107.375 15.7   16.8257
-6   0.998986 13.7    0.1364
-7    1.67117 21.9  0.366424
-8   0.195776 23.1 0.0451412
-9   0.128574 30.4 0.0391464
-10  0.106528 25.2 0.0268981
-11  0.067111 11.4 0.0076591
+    estimate prse         se
+1    8.57997 9.53   0.817948
+2    21.6409 9.34    2.02094
+3  0.0684281 8.04 0.00550178
+4    3.78411 13.5   0.511271
+5    107.376 15.7    16.8344
+6   0.998986 14.8   0.148279
+7    1.67117 21.7   0.363297
+8   0.195776   23  0.0450967
+9   0.128574 30.4  0.0391104
+10  0.106527 25.3  0.0268981
+11  0.067111 11.4 0.00766169
 \end{Soutput}
 \begin{Sinput}
 > tab$estimate <- as.character(signif(as.numeric(tab$estimate),3))
@@ -97,7 +94,35 @@ MIfuns 4.3.5
 > boot[] <- lapply(boot,as.character)
 > boot <- boot[contains('THETA|OMEGA|SIGMA',boot$parameter),c('parameter','estimate')]
 > boot$estimate <- as.numeric(boot$estimate)
-> boot <- data.frame(cast(boot,parameter~.,value='estimate',fun=function(x)list(lo=as.character(signif(quantile(x,probs=0.05),3)),hi=as.character(signif(quantile(x,probs=0.95),3)))))
+> boot <-data.frame(
++   cast(
++     boot,
++     parameter~.,
++     value='estimate',
++     fun=function(x)list(
++       lo=as.character(
++         signif(
++           quantile(
++             x,
++             probs=0.05,
++             na.rm=TRUE
++           ),
++           3
++         )
++       ),
++       hi=as.character(
++         signif(
++           quantile(
++             x,
++             probs=0.95,
++             na.rm=TRUE
++           ),
++           3
++         )
++       )
++     )
++   )
++ )
 > boot$CI <- with(boot, parens(glue(lo,',',hi)))
 > tab <- stableMerge(tab,boot[,c('parameter','CI')])
 > tab <- within(tab, se <- name <- run <- tool <- parameter <- NULL)
@@ -129,42 +154,37 @@ MIfuns 4.3.5
 9                                                                   $\\mathrm{IIV_{V_{c}/F}\\sim \\Omega_{2.2}}$
 10                                                                    $\\mathrm{IIV_{K_{a}}\\sim \\Omega_{3.3}}$
 11                                                                     $\\mathrm{err_{prop}\\sim \\Sigma_{1.1}}$
-                   estimate prse              CI
-1              8.58 $ L/h $ 9.51     (7.46,9.94)
-2                21.6 $ L $ 9.33     (18.5,25.7)
-3          0.0684 $ h^-1  $ 8.04 (0.0602,0.0785)
-4              3.78 $ L/h $ 13.5     (3.01,4.87)
-5                 107 $ L $ 15.7      (86.2,149)
-6                0.999 $  $ 13.7    (0.775,1.29)
-7                 1.67 $  $ 21.9        (1,2.35)
-8   0.196 $  $ (\\%CV=46.5) 23.1   (0.115,0.255)
-9   0.129 $  $ (\\%CV=37.1) 30.4  (0.0641,0.184)
-10  0.107 $  $ (\\%CV=33.6) 25.2  (0.0651,0.147)
-11 0.0671 $  $ (\\%CV=26.3) 11.4 (0.0548,0.0803)
+                   estimate prse             CI
+1              8.58 $ L/h $ 9.53    (7.17,9.98)
+2                21.6 $ L $ 9.34    (18.2,25.2)
+3          0.0684 $ h^-1  $ 8.04 (0.0593,0.078)
+4              3.78 $ L/h $ 13.5    (3.03,4.77)
+5                 107 $ L $ 15.7     (84.8,164)
+6                0.999 $  $ 14.8   (0.773,1.31)
+7                 1.67 $  $ 21.7     (1.02,2.3)
+8   0.196 $  $ (\\%CV=46.5)   23  (0.124,0.266)
+9   0.129 $  $ (\\%CV=37.1) 30.4  (0.064,0.187)
+10  0.107 $  $ (\\%CV=33.6) 25.3  (0.064,0.152)
+11 0.0671 $  $ (\\%CV=26.3) 11.4  (0.0551,0.08)
 \end{Soutput}
 \end{Schunk}
-% latex.default(tab, file = "", rowname = NULL, caption = "Parameter Estimates from Population Pharmacokinetic Model Run 1005",      caption.lot = "Model 1005 Parameters", label = "p1005", where = "ht",      table.env = FALSE) 
-%
-\begin{table}[ht]
- \caption[Model 1005 Parameters]{Parameter Estimates from Population Pharmacokinetic Model Run 1005\label{p1005}} 
+\begin{table}[!htpb]
+ \caption[Model 1005 Parameters]{Parameter Estimates from Population Pharmacokinetic Model Run 1005 \label{p1005}}
  \begin{center}
- \begin{tabular}{lllll}\hline\hline
-\multicolumn{1}{c}{description}&\multicolumn{1}{c}{model}&\multicolumn{1}{c}{estimate}&\multicolumn{1}{c}{prse}&\multicolumn{1}{c}{CI}\tabularnewline
-\hline
-apparent oral clearance&$\mathrm{CL/F  \sim \theta_{1}\cdot  \theta_{6}^{MALE}\cdot (WT/70)^{\theta_{7}}\cdot e^{\eta_{1}}}$&8.58 $ L/h $&9.51&(7.46,9.94)\tabularnewline
-central volume of distribution&$\mathrm{V_{c}/F  \sim \theta_{2}\cdot (WT/70)^{1}\cdot e^{\eta_{2}}}$&21.6 $ L $&9.33&(18.5,25.7)\tabularnewline
-absorption rate constant&$\mathrm{K_{a} \sim \theta_{3}\cdot e^{\eta_{3}}}$&0.0684 $ h^-1  $&8.04&(0.0602,0.0785)\tabularnewline
-intercompartmental clearance&$\mathrm{Q/F  \sim \theta_{4}}$&3.78 $ L/h $&13.5&(3.01,4.87)\tabularnewline
-peripheral volume of distribution&$\mathrm{V_{p}/F  \sim \theta_{5}}$&107 $ L $&15.7&(86.2,149)\tabularnewline
-male effect on clearance&$\mathrm{MALE_{CL/F}\sim \theta_{6}}$&0.999 $  $&13.7&(0.775,1.29)\tabularnewline
-weight effect on clearance&$\mathrm{WT_{CL/F}\sim \theta_{7}}$&1.67 $  $&21.9&(1,2.35)\tabularnewline
-interindividual variability of clearance&$\mathrm{IIV_{CL/F}\sim \Omega_{1.1}}$&0.196 $  $ (\%CV=46.5)&23.1&(0.115,0.255)\tabularnewline
-interindividual variability of central volume&$\mathrm{IIV_{V_{c}/F}\sim \Omega_{2.2}}$&0.129 $  $ (\%CV=37.1)&30.4&(0.0641,0.184)\tabularnewline
-interindividual variability of Ka&$\mathrm{IIV_{K_{a}}\sim \Omega_{3.3}}$&0.107 $  $ (\%CV=33.6)&25.2&(0.0651,0.147)\tabularnewline
-proportional error&$\mathrm{err_{prop}\sim \Sigma_{1.1}}$&0.0671 $  $ (\%CV=26.3)&11.4&(0.0548,0.0803)\tabularnewline
-\hline
-\end{tabular}
-
-\end{center}
-
+  \begin{tabular}{lllll}
+    \hline \hline
+   description & model & estimate & prse & CI \\ \hline
+   apparent oral clearance                       & $\mathrm{CL/F  \sim \theta_{1}\cdot  \theta_{6}^{MALE}\cdot (WT/70)^{\theta_{7}}\cdot e^{\eta_{1}}}$ & 8.58 $ L/h $             & 9.53 & (7.17,9.98)    \\
+   central volume of distribution                & $\mathrm{V_{c}/F  \sim \theta_{2}\cdot (WT/70)^{1}\cdot e^{\eta_{2}}}$                                  & 21.6 $ L $               & 9.34 & (18.2,25.2)    \\
+   absorption rate constant                      & $\mathrm{K_{a} \sim \theta_{3}\cdot e^{\eta_{3}}}$                                                       & 0.0684 $ h^-1  $         & 8.04 & (0.0593,0.078) \\
+   intercompartmental clearance                  & $\mathrm{Q/F  \sim \theta_{4}}$                                                                            & 3.78 $ L/h $             & 13.5 & (3.03,4.77)    \\
+   peripheral volume of distribution             & $\mathrm{V_{p}/F  \sim \theta_{5}}$                                                                        & 107 $ L $                & 15.7 & (84.8,164)     \\
+   male effect on clearance                      & $\mathrm{MALE_{CL/F}\sim \theta_{6}}$                                                                      & 0.999 $  $               & 14.8 & (0.773,1.31)   \\
+   weight effect on clearance                    & $\mathrm{WT_{CL/F}\sim \theta_{7}}$                                                                        & 1.67 $  $                & 21.7 & (1.02,2.3)     \\
+   interindividual variability of clearance      & $\mathrm{IIV_{CL/F}\sim \Omega_{1.1}}$                                                                     & 0.196 $  $ (\%CV=46.5)  & 23   & (0.124,0.266)  \\
+   interindividual variability of central volume & $\mathrm{IIV_{V_{c}/F}\sim \Omega_{2.2}}$                                                                  & 0.129 $  $ (\%CV=37.1)  & 30.4 & (0.064,0.187)  \\
+   interindividual variability of Ka             & $\mathrm{IIV_{K_{a}}\sim \Omega_{3.3}}$                                                                    & 0.107 $  $ (\%CV=33.6)  & 25.3 & (0.064,0.152)  \\
+   proportional error                            & $\mathrm{err_{prop}\sim \Sigma_{1.1}}$                                                                     & 0.0671 $  $ (\%CV=26.3) & 11.4 & (0.0551,0.08)  \\ \hline
+  \end{tabular}
+ \end{center}
 \end{table}\end{document}

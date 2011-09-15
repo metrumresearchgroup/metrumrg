@@ -11,7 +11,7 @@
 \begin{document}
 \section*{Wikimath}
 <<handlers,echo=false,results=hide>>=
-library(MIfuns)
+library(metrumrg)
 @
 \subsection{writing wikimath expressions}
 Here we define a string of text.

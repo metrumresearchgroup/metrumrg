@@ -40,7 +40,7 @@ in which case \code{as.matrix(x))} suffices.
 vector with as many elements as a triangular matrix corresponding to \code{x} 
 (except \code{as.matrix} returns matrix)
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

@@ -1,10 +1,10 @@
 \name{helpStrategic}
 \alias{helpStrategic}
 \docType{package}
-\title{MIfuns: Strategic Data Manipulation}
+\title{metrumrg: Strategic Data Manipulation}
 \description{Tools for strategic data manipulation.}
 \details{
-\link[=MIfuns]{MIfuns} > \link[=helpPrepare]{Data}
+\link[=metrumrg]{metrumrg} > \link[=helpPrepare]{Data}
 
 I want to ....
 \itemize{

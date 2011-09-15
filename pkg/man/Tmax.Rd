@@ -17,6 +17,6 @@ Tmax(data, id = 'ID', dv = 'DV', time = 'TIME')
 	The \code{Tmax} function performs the calculation based on the variables \code{id}, \code{time}, and \code{dv} present in the R data object.
 }
 \value{One Tmax is returned for each subject.}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Leonid Gibianski}
 \keyword{manip}

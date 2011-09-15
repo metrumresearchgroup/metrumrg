@@ -17,7 +17,7 @@ padded with spaces on the right, so that the decimals
 align.  Whole numbers without the decimal mark get an 
 extra space in its place.}
 \value{character}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{tabular.data.frame}}

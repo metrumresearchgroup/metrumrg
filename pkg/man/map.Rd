@@ -31,7 +31,7 @@ error if \code{from} and \code{to} have different lengths.
 \value{
 	vector of same class as \code{to} and same length as \code{x}
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

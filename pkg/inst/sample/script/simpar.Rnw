@@ -5,8 +5,6 @@
 \begin{document}
 \vspace*{2cm}
 \begin{center}
-{\Large MIfuns Sample Script}\\
-\vspace{1.5cm}
 {\Large Simulating with Parameter Uncertainty}\\
 ~\\
 \today\\
@@ -20,15 +18,15 @@ Tim Bergsma\\
 This script shows how to conduct a simulation that
 considers uncertainty in the parameter estimates.
 \section{Data}
-Here we load MIfuns and read in the data to be used
+Here we load metrumrg and read in the data to be used
 for simulations.
 <<data>>=
-library(MIfuns)
+library(metrumrg)
 data <- read.csv("../data/derived/phase1.csv")
 head(data)
 @
 We use NONMEM output from a simple two compartment model to generate parameters.
-We use 1005.lst and 1005.cov output from NM7 to populate a call to MIfuns::simpar().
+We use 1005.lst and 1005.cov output from NM7 to populate a call to metrumrg::simpar().
 <<cov>>=
 cov <- read.table("../nonmem/1005/1005.cov", skip=1, header=T)
 head(cov)
@@ -55,7 +53,7 @@ PKparms
 \section{Control Streams}
 We read in a control stream and clean out extra xml markup.
 <<ctl>>=
-ctl <- as.nmcontrol(readLines("../nonmem/ctl/1005.ctl"))
+ctl <- as.nmctl(readLines("../nonmem/ctl/1005.ctl"))
 ctl[] <- lapply(ctl,function(rec)sub("<.*","",rec))
 @
 Now we iterate across the rows of PKparms, writing out a separate ctl for each.
@@ -81,7 +79,7 @@ set <- lapply(
 		ctl$table <- NULL
 		ctl$table <- NULL
 		ctl$table <- 'ID TIME DV WT SEX LDOS NOPRINT NOAPPEND FILE=sim.tab'
-		write.nmcontrol(ctl,file=file.path('../nonmem/sim',paste(sep='.',row,'ctl')))
+		write.nmctl(ctl,file=file.path('../nonmem/sim',paste(sep='.',row,'ctl')))
 		return(ctl)		
 	},
 	params=PKparms,
@@ -91,7 +89,7 @@ set <- lapply(
 \section{Simulation}
 Finally, we run NONMEM simulations using NONR.
 <<nonr,eval=FALSE>>=
-NONR(
+NONR72(
 	run=1:10,
 	command="/common/NONMEM/nm7_osxi/test/nm7_osxi.pl",
 	project="../nonmem/sim",

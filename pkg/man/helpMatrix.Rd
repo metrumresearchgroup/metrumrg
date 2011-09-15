@@ -1,10 +1,10 @@
 \name{helpMatrix}
 \alias{helpMatrix}
 \docType{package}
-\title{MIfuns: Working with Matrices}
+\title{metrumrg: Working with Matrices}
 \description{Tools for processing matrices.}
 \details{
-\link[=MIfuns]{MIfuns} > \link[=helpPrepare]{Data}
+\link[=metrumrg]{metrumrg} > \link[=helpPrepare]{Data}
 
 I want to ....
 \itemize{

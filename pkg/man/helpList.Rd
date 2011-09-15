@@ -1,22 +1,22 @@
 \name{helpList} 
 \alias{helpList} 
 \docType{package} 
-\title{MIfuns: Defined Functions}
-\description{Exhaustive list of functions defined by \pkg{MIfuns}.}
+\title{metrumrg: Defined Functions}
+\description{Exhaustive list of functions defined by \pkg{metrumrg}.}
 \details{
-\link[=MIfuns]{MIfuns}
+\link[=metrumrg]{metrumrg}
 
 \itemize{
 \item \link{[.comment} subset a comment
 \item \link{[.flag} subset a flag
 \item \link{[.keyed} subset a keyed data frame
-\item \link{[.miTemporal} subset a miTemporal object
+\item \link{[.temporal} subset a temporal object
 \item \link{[.nmctl} subset a control stream object
 \item \link{[[.comment} select element from a comment
 \item \link{[[.flag} select element from a flag
-\item \link{[[.miTemporal} select element from a miTemporal object
+\item \link{[[.temporal} select element from a temporal object
 \item \link{[[.nmctl} select element from a control stream object
-\item \link{[<-.miTemporal} assign to a miTemporal object
+\item \link{[<-.temporal} assign to a temporal object
 \item \link{\%nested.in\%} test whether a is nested in b
 \item \link{\%nests\%} test whether a nests b
 \item \link{accept} document the acceptance of an R installation
@@ -28,7 +28,7 @@
 \item \link{and.keyed} produce inner join of two keyed data frames
 \item \link{as.character.comment} convert comment to character
 \item \link{as.character.flag} convert flag to character
-\item \link{as.character.miTemporal} convert miTemporal to character
+\item \link{as.character.temporal} convert temporal to character
 \item \link{as.character.nmctl} convert nmctl to character
 \item \link{as.chartime} convert to time (generic, internal)
 \item \link{as.chartime.numeric} convert numeric to time
@@ -53,25 +53,25 @@
 \item \link{as.keyed.data.frame} convert data frame to keyed
 \item \link{as.list.nmctl} convert nmctl to list
 \item \link{as.matrix.halfmatrix} convert a vector to a symmetric matrix
-\item \link{as.miDate} convert to miDate
-\item \link{as.miDate.character} convert character to miDate
-\item \link{as.miDate.Date} convert Date to miDate
-\item \link{as.miDate.dates} convert dates (chron) to miDate
-\item \link{as.miDate.miDate} convert miDate to miDate
-\item \link{as.miDate.numeric} convert numeric to miDate
-\item \link{as.miDateTime} convert to miDateTime
-\item \link{as.miDateTime.character} convert character to miDateTime
-\item \link{as.miDateTime.chron} convert chron to miDateTime
-\item \link{as.miDateTime.miDate} convert miDate to miDateTime
-\item \link{as.miDateTime.miDateTime} convert miDateTime to miDateTime
-\item \link{as.miDateTime.numeric} convert numeric to miDateTime
-\item \link{as.miDateTime.POSIXct} convert POSIXct to miDateTime
-\item \link{as.miDateTime.POSIXlt} convert POSIXlt to miDateTime
-\item \link{as.miTime} convert to miTime
-\item \link{as.miTime.character} convert character to miTime
-\item \link{as.miTime.miTime} convert miTime to miTime
-\item \link{as.miTime.numeric} convert numeric to miTime
-\item \link{as.miTime.times} convert times (chron) to miTime
+\item \link{as.mDate} convert to mDate
+\item \link{as.mDate.character} convert character to mDate
+\item \link{as.mDate.Date} convert Date to mDate
+\item \link{as.mDate.dates} convert dates (chron) to mDate
+\item \link{as.mDate.mDate} convert mDate to mDate
+\item \link{as.mDate.numeric} convert numeric to mDate
+\item \link{as.mDateTime} convert to mDateTime
+\item \link{as.mDateTime.character} convert character to mDateTime
+\item \link{as.mDateTime.chron} convert chron to mDateTime
+\item \link{as.mDateTime.mDate} convert mDate to mDateTime
+\item \link{as.mDateTime.mDateTime} convert mDateTime to mDateTime
+\item \link{as.mDateTime.numeric} convert numeric to mDateTime
+\item \link{as.mDateTime.POSIXct} convert POSIXct to mDateTime
+\item \link{as.mDateTime.POSIXlt} convert POSIXlt to mDateTime
+\item \link{as.mTime} convert to mTime
+\item \link{as.mTime.character} convert character to mTime
+\item \link{as.mTime.mTime} convert mTime to mTime
+\item \link{as.mTime.numeric} convert numeric to mTime
+\item \link{as.mTime.times} convert times (chron) to mTime
 \item \link{as.moot} convert to moot
 \item \link{as.nm} convert to nm (NMTRAN-ready NONMEM data set)
 \item \link{as.nm.data.frame} convert data frame to nm
@@ -112,7 +112,7 @@
 \item \link{bsa} calculate body surface area
 \item \link{c.comment} combine comment
 \item \link{c.flag} combine flag
-\item \link{c.miTemporal} combine miTemporal
+\item \link{c.temporal} combine temporal
 \item \link{cavg} calculate average concentration
 \item \link{check.subjects} check for missing data, numeric data, ranges, etc.
 \item \link{clear} drop regular patterns from a character vector
@@ -164,9 +164,9 @@
 \item \link{forbak} impute NAs using last observation carried forward and then next observation carried backward
 \item \link{format.comment} format comment 
 \item \link{format.flag} format flag
-\item \link{format.miDate} format miDate
-\item \link{format.miDateTime} format miDateTime
-\item \link{format.miTime} format miTime
+\item \link{format.mDate} format mDate
+\item \link{format.mDateTime} format mDateTime
+\item \link{format.mTime} format mTime
 \item \link{format.nmctl} format nmctl
 \item \link{ftable2data.frame} convert ftable to data.frame as displayed
 \item \link{getCovs} return non-commented non-duplicated rows of a NONMEM data set (internal)
@@ -277,7 +277,7 @@
 \item \link{print.flag} print flag
 \item \link{print.halfmatrix} print halfmatrix
 \item \link{print.keyed.summary} print keyed summary
-\item \link{print.miTemporal} print miTemporal
+\item \link{print.temporal} print temporal
 \item \link{print.nm.summary} print nm summary
 \item \link{print.nmctl} print nmctl
 \item \link{purge.dir} purge a directory (internal)
@@ -289,7 +289,7 @@
 \item \link{reapply} apply a function across cells of an indexed vector, giving an identically-indexed result
 \item \link{rep.comment} repeat comment
 \item \link{rep.flag} repeat flag
-\item \link{rep.miTemporal} repeat miTemporal
+\item \link{rep.temporal} repeat temporal
 \item \link{resample} generic
 \item \link{resample.csv.filename} create replicate data sets by stratified sampling with replacement, after reading csv file
 \item \link{resample.data.frame} create replicate data sets by stratified sampling with replacement
@@ -311,7 +311,7 @@
 \item \link{safe.call} call a function, passing only those extra arguments that the function accepts
 \item \link{safeQuote} single-quote unquoted text that contains space
 \item \link{scavenge} find an expression in lines of text
-\item \link{seq.miTemporal} generate miTemporal sequence
+\item \link{seq.temporal} generate temporal sequence
 \item \link{setCwres} append conditional weighted residuals to an appropriate file
 \item \link{shuffle} move columns in a data frame
 \item \link{sigmacor} convert sigma covariance in NONMEM output to correlation matrix
@@ -351,7 +351,7 @@
 \item \link{uniKey.keyed} create a single character vector from all the key columns
 \item \link{unilog} create a zero-row unilog
 \item \link{unilogcor} convert omega or sigma covariance in NONMEM output to correlation matrix
-\item \link{unique.miTemporal} find unique elements of a temporal vector
+\item \link{unique.temporal} find unique elements of a temporal vector
 \item \link{unitDensity} calculate univariate density with maximum equal to 1
 \item \link{unitHist} calculate univariate histogram architecture with maximum height equal to 1
 \item \link{nmVersion} extract NONMEM version specification from configuration file
@@ -368,7 +368,7 @@
 \item \link{write.nmctl} write an nmctl object to file
 \item \link{xtfrm.comment} produce a numeric vector that sorts in the same order as comment
 \item \link{xtfrm.flag} produce a numeric vector that sorts in the same order as flag
-\item \link{xtfrm.miTemporal} produce a numeric vector that sorts in the same order as miTemporal
+\item \link{xtfrm.temporal} produce a numeric vector that sorts in the same order as temporal
 \item \link{xyplot.ext} plot the parameter search history for a NONMEM7 run
 \item \link{zeroAmt} generic
 \item \link{zeroAmt.nm} AMT is zero where EVID is 1

@@ -11,7 +11,7 @@
 \begin{document}
 \section*{tabular}
 <<handlers,echo=false,results=hide>>=
-library(MIfuns)
+library(metrumrg)
 @
 We make a sample data frame.
 <<sample>>=

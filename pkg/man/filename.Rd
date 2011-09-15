@@ -15,7 +15,7 @@ filename(dir, run = NULL, ext = NULL)
   \item{ext}{file extension}
 }
 \value{character}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

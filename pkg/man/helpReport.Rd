@@ -1,10 +1,10 @@
 \name{helpReport}
 \alias{helpReport}
 \docType{package}
-\title{MIfuns: Reporting}
+\title{metrumrg: Reporting}
 \description{Tools for summarizing and reporting pharmacometric analyses.}
 \details{
-\link[=MIfuns]{MIfuns}
+\link[=metrumrg]{metrumrg}
 
 I want to ....
 \itemize{

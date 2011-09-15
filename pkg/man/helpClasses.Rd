@@ -1,10 +1,10 @@
 \name{helpClasses}
 \alias{helpClasses}
 \docType{package}
-\title{MIfuns: Data Classes}
+\title{metrumrg: Data Classes}
 \description{Classes for building feature-rich data.}
 \details{
-\link[=MIfuns]{MIfuns} > \link[=helpPrepare]{Data}
+\link[=metrumrg]{metrumrg} > \link[=helpPrepare]{Data}
 
 I want to ....
 \itemize{

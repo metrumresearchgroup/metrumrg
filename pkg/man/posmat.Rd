@@ -19,7 +19,7 @@ matrix with only positive diagonal elements
 \value{
 matrix
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Leonid Gibianski, modified by Tim Bergsma}
 
 \examples{

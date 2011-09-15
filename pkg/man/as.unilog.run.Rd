@@ -2,7 +2,7 @@
 \alias{as.unilog.run}
 \title{Create a Run Log for NONMEM7 using NONMEM6 Format}
 \description{
-  MIfuns includes an INFN routine for NONMEM6 and earlier that creates a 
+	\pkg{metrumrg} includes an INFN routine for NONMEM6 and earlier that creates a 
   comma-separated listing of parameter estimates and their percent relative
   standard errors.  This function emulates that data, using the \file{.ext} file
   produced under NONMEM7. \code{as.runlog.unilog} converts the output to the
@@ -39,7 +39,7 @@ as.unilog.run(
 \value{
   data.frame with columns \emph{tool, run, parameter, moment, value}.
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

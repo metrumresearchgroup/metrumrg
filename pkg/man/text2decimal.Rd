@@ -16,7 +16,7 @@ may have a leading sign, must have one or more digits (\code{0:9}), may have a d
 and may have any number of trailing digits.
 }
 \value{numeric}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \examples{
 text2decimal('every 3.5 hours')

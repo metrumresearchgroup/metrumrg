@@ -1,10 +1,10 @@
 \name{helpQuantify}
 \alias{helpQuantify}
 \docType{package}
-\title{MIfuns: Statistics}
+\title{metrumrg: Statistics}
 \description{Tools for calculating statistics.}
 \details{
-\link[=MIfuns]{MIfuns}
+\link[=metrumrg]{metrumrg}
 
 I want to ....
 \itemize{

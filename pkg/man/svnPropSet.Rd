@@ -12,7 +12,8 @@
 }
 \details{This is a vectorized version of svnPropSetFile.}
 \value{used for side effects}
-\references{ http://metruminstitute.org }
+\references{\url{http://metrumrg.r-forge.r-project.org}}
+
 \author{ Tim Bergsma }
 \seealso{
 	\itemize{

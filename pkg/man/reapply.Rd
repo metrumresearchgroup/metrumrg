@@ -19,7 +19,7 @@ of the original index.  Regardless of the length of the value of \code{FUN}, the
 length of the value of reapply is always identical to that of \code{x}.
 }
 \value{an atomic object, typically a vector}
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.r-forge.r-project.org}}
 \author{Tim Bergsma}
 \note{
 	\code{NA} is returned whererever a component of \code{INDEX} is \code{NA}.

@@ -5,8 +5,6 @@
 \begin{document}
 \vspace*{2cm}
 \begin{center}
-{\Large MIfuns Sample Script}\\
-\vspace{1.5cm}
 {\Large Parameter Table}\\
 ~\\
 \today\\
@@ -20,11 +18,10 @@ This script picks up after model.Rnw to process bootstrap results and make a par
 \subsection{Package}
 <<more>>= 
 getwd()
-require(MIfuns)
+require(metrumrg)
 @
 \section{Parameter Table}
 <<params>>=
-library(Hmisc)
 tab <- wikitab(1005,'../nonmem')
 tab
 tab$estimate <- as.character(signif(as.numeric(tab$estimate),3))
@@ -46,7 +43,35 @@ boot <- data.frame(cast(boot,...~moment))
 boot[] <- lapply(boot,as.character)
 boot <- boot[contains('THETA|OMEGA|SIGMA',boot$parameter),c('parameter','estimate')]
 boot$estimate <- as.numeric(boot$estimate)
-boot <- data.frame(cast(boot,parameter~.,value='estimate',fun=function(x)list(lo=as.character(signif(quantile(x,probs=0.05),3)),hi=as.character(signif(quantile(x,probs=0.95),3)))))
+boot <-data.frame(
+  cast(
+    boot,
+    parameter~.,
+    value='estimate',
+    fun=function(x)list(
+      lo=as.character(
+        signif(
+          quantile(
+            x,
+            probs=0.05,
+            na.rm=TRUE
+          ),
+          3
+        )
+      ),
+      hi=as.character(
+        signif(
+          quantile(
+            x,
+            probs=0.95,
+            na.rm=TRUE
+          ),
+          3
+        )
+      )
+    )
+  )
+)
 boot$CI <- with(boot, parens(glue(lo,',',hi)))
 tab <- stableMerge(tab,boot[,c('parameter','CI')])
 tab <- within(tab, se <- name <- run <- tool <- parameter <- NULL)
@@ -54,15 +79,13 @@ tab$model <- wiki2latex(noUnits(tab$model))
 tab
 @ 
 <<results=tex,echo=FALSE>>=
-latex(
-	tab,
-	file='',
-	rowname=NULL,
-	caption='Parameter Estimates from Population Pharmacokinetic Model Run 1005',
-	caption.lot='Model 1005 Parameters',
-	label='p1005',
-	where='ht',
-	table.env=FALSE
+writeLines(
+  ltable(
+	  tab,
+    caption='Parameter Estimates from Population Pharmacokinetic Model Run 1005',
+	  cap='Model 1005 Parameters',
+	  label='p1005'
+  )
 )
 @
 \end{document}
