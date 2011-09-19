@@ -1,7 +1,22 @@
 \name{tabular.data.frame}
 \alias{tabular.data.frame}
-\title{Convert a Data Frame to a Latex Tabular Environment}
-\description{Convert a data.frame to a latex tabular environment}
+\alias{as.document}
+\alias{as.document.tabular}
+\alias{as.pdf}
+\alias{as.pdf.document}
+\alias{as.pdf.tabular}
+\alias{as.pdf.data.frame}
+\alias{tabular}
+\title{Convert a Data Frame to a Latex Tabular Environment, Latex Document, or PDF}
+\description{ The functions \code{tabular}, \code{as.document}, and \code{as.pdf}
+are generic.  Methods are given here that cascade in the order data.frame -> tabular
+-> document -> pdf.  \code{as.document.tabular} is argued identically to \code{tabular},
+except for a few extra arguments; the function tries to guess the exact length and
+width for a page size identical to the printed area (you can modify with the arguments
+\code{wider} and \code{longer}).  \code{as.pdf.document} needs a file stem and 
+(optionally) whether to perform clean-up.  The other \code{as.pdf} methods are 
+convenience wrappers.
+}
 \usage{
 \method{tabular}{data.frame}(
 	x, 
@@ -23,6 +38,33 @@
 	trim = TRUE, 
 	...
 )
+\method{as.document}{tabular}(
+	x, 
+	rules = c(2, 1, 1), 
+	walls = 0, 
+	grid = FALSE, 
+	rowgroups = rownames(x), 
+	colgroups = names(x), 
+	rowbreaks = if (grid) breaks(rowgroups, ...) else 0,
+	colbreaks = if (grid) breaks(colgroups, ...) else 0, 
+	charjust = "left", 
+	numjust = "right", 
+	justify = ifelse(sapply(x, is.numeric), numjust, charjust), 
+	colwidth = NA, 
+	paralign = "top", 
+	na = "", 
+	verbatim = ifelse(sapply(x, is.numeric), TRUE, FALSE), 
+	escape = "#", 
+	trim = TRUE,
+	wider = 0,
+	longer = 0,
+	prolog = NULL,
+	epilog = NULL,	
+	...
+)
+\method{as.pdf}{document}(x,...)
+\method{as.pdf}{tabular}(x,...)
+\method{as.pdf}{data.frame}(x,...)
 }
 \arguments{
   \item{x}{data.frame}
@@ -45,9 +87,16 @@
   \item{escape}{symbol used by `verb' command as delimiter.  A warning is issued if it is found in non-NA text.}
   \item{trim}{passed to the format command: true by default, so that 
   alignment is the responsibility of just the tabular environment arguments}
-  \item{\dots}{passed to \code{format}}
+  \item{wider}{additional document width in mm}
+  \item{longer}{additional document lenth in mm}
+  \item{prolog}{latex markup to include before the tabular environment}
+  \item{epilog}{latex markup to include after the tabular environment}
+  \item{stem}{the stem of a file name (no extension)}
+  \item{clean}{whether to delete system files after pdf creation}
+  \item{\dots}{passed to called functions}
 }
-\details{Principal choices here are the number of lines above and below the header,
+\details{
+Principal choices in \code{tabular.data.frame} are the number of lines above and below the header,
 number of lines at the end of the table (rules), and whether to have
 lines between rows and columns (grid).  If you do want the latter, you 
 can modify their placement easily with rowgroups and colgroups: factor-like
@@ -70,7 +119,7 @@ Rownames are ignored.  If informative, capture them as a column.
 	}
 }
 \examples{
-tabular.data.frame(head(Theoph))
+tabular(head(Theoph))
 }
 \keyword{manip}
 
