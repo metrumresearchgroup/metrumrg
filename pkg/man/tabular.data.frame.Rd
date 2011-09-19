@@ -62,12 +62,13 @@ convenience wrappers.
 	epilog = NULL,	
 	...
 )
+\method{as.document}{data.frame}(x,...)
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
 \method{as.pdf}{tabular}(x,stem,...)
 \method{as.pdf}{data.frame}(x,stem,...)
 }
 \arguments{
-  \item{x}{data.frame}
+  \item{x}{object to be converted, typically data.frame}
   \item{rules}{numeric; will be recycled to length 3.  indicates number of 
   horizontal lines above and below the header, and below the last row.}
   \item{walls}{numeric, recycled to length 2.  Number of vertical lines

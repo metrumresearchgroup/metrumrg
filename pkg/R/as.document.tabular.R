@@ -1,4 +1,5 @@
 as.document <- function(x,...)UseMethod('as.document')
+as.document.data.frame <- function(x,...)as.document(tabular(x,...),...)
 as.document.tabular <- function(
   x,
   rules = c(2, 1, 1), 
