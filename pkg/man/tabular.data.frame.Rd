@@ -65,7 +65,7 @@ convenience wrappers.
 )
 \method{as.document}{tabular}(x,wide,long,prolog=NULL,epilog=NULL,...)
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
-\method{as.pdf}{tabular}(x,stem,...)
+\method{as.pdf}{tabular}(x,wide,long,stem,...)
 \method{as.pdf}{data.frame}(x,stem,...)
 }
 \arguments{

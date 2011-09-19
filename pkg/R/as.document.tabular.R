@@ -106,5 +106,5 @@ as.pdf.document <- function(x,stem,dir='.',clean=TRUE,...){
 	if(clean)file.remove(actuals)
 	invisible(result)
 }
-as.pdf.tabular <- function(x,stem,...)as.pdf(as.document(x=x,stem=stem,...),...)
-as.pdf.data.frame <- function(x,stem,...)as.pdf(x=tabular(x=x,...),stem=stem,...)
+as.pdf.tabular <- function(x,wide,long,stem,...)as.pdf(as.document(x,wide=wide,long=long,...),stem=stem,...)
+as.pdf.data.frame <- function(x,stem,...)as.pdf(as.document(x,...),stem=stem,...)
