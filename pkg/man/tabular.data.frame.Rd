@@ -63,7 +63,7 @@ convenience wrappers.
 	epilog = NULL,	
 	...
 )
-\method{as.document}{tabular}(x,prolog=NULL,epilog=NULL,...)
+\method{as.document}{tabular}(x,wide,long,prolog=NULL,epilog=NULL,...)
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
 \method{as.pdf}{tabular}(x,stem,...)
 \method{as.pdf}{data.frame}(x,stem,...)

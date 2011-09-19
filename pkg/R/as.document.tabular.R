@@ -1,5 +1,6 @@
 as.document <- function(x,...)UseMethod('as.document')
-as.document.tabular <- function(x,prolog=NULL,epilog=NULL,...){
+as.document.tabular <- function(x,wide,long,prolog=NULL,epilog=NULL,...){
+    papersize <- glue('{',wide,'mm',',',long,'mm}')
     doc <-  c(
     	command('documentclass',args='article'),
     	command(
@@ -70,7 +71,6 @@ as.document.data.frame <- function(
   
   long <- rows*4.21 + lines*0.16 + 2 + longer
   
-  papersize <- glue('{',wide,'mm',',',long,'mm}')
   tab <- tabular(
           x=x,
           rules=rules,
@@ -91,7 +91,7 @@ as.document.data.frame <- function(
           trim=trim,
           ...
   )
-  doc <-  as.document(tab,prolog=prolog,epilog=epilog,...)
+  doc <-  as.document(tab,wide,long,prolog=prolog,epilog=epilog,...)
   doc
 }
 as.pdf <- function(x,...)UseMethod('as.pdf')
