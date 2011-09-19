@@ -34,11 +34,9 @@ tagvalue <- function(x,sep='=',collapse=',',...){
 		function(num){
 			tag <- names(x)[[num]]
 			value <- x[[num]]
-			if(
-				!is.null(tag) &
-				!is.na(tag) &
-				tag != ""
-			) value <- paste(tag,value,sep=sep)
+			if(!is.null(tag))
+			if(!is.na(tag))
+			if(tag != "")value <- paste(tag,value,sep=sep)
 			value
 		}
 	)

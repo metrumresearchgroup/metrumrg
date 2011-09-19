@@ -95,7 +95,7 @@ as.pdf.document <- function(x,stem,clean=TRUE,...){
 	writeLines(x,tex)
 	cmd <- paste('pdflatex',tex)
 	result <- system(cmd)
-	possibles <- glue(stem,c('.tex','.log','.aux','.out')
+	possibles <- glue(stem,c('.tex','.log','.aux','.out'))
 	actuals <- possibles[file.exists(possibles)]
 	if(clean)file.remove(actuals)
 	invisible(result)
