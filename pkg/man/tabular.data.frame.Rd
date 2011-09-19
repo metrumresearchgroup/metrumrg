@@ -89,6 +89,8 @@ convenience wrappers.
   \item{escape}{symbol used by `verb' command as delimiter.  A warning is issued if it is found in non-NA text.}
   \item{trim}{passed to the format command: true by default, so that 
   alignment is the responsibility of just the tabular environment arguments}
+  \item{wide}{document width in mm}
+  \item{long}{document lenth in mm}
   \item{wider}{additional document width in mm}
   \item{longer}{additional document lenth in mm}
   \item{prolog}{latex markup to include before the tabular environment}
