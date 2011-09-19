@@ -8,6 +8,7 @@
 \alias{as.pdf.tabular}
 \alias{as.pdf.data.frame}
 \alias{tabular}
+\alias{as.tabular}
 \title{Convert a Data Frame to a Latex Tabular Environment, Latex Document, or PDF}
 \description{ The functions \code{tabular}, \code{as.document}, and \code{as.pdf}
 are generic.  Methods are given here that cascade in the order data.frame -> tabular
