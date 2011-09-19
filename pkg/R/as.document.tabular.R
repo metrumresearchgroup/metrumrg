@@ -90,15 +90,16 @@ as.document.tabular <- function(
   doc
 }
 as.pdf <- function(x,...)UseMethod('as.pdf')
-as.pdf.document <- function(x,stem,clean=TRUE,...){
-	tex <- glue(stem,'.tex')
-	writeLines(x,tex)
-	cmd <- paste('pdflatex',tex)
+as.pdf.document <- function(x,stem,dir='.',clean=TRUE,...){
+	outfile <- glue(stem,'.tex')
+	outpath <- file.path(dir,outfile)
+	writeLines(x,outpath)
+	cmd <- glue('pdflatex -output-directory=',dir,' ',outpath)
 	result <- system(cmd)
 	possibles <- glue(stem,c('.tex','.log','.aux','.out'))
 	actuals <- possibles[file.exists(possibles)]
 	if(clean)file.remove(actuals)
 	invisible(result)
 }
-as.pdf.tabular <- function(x,...)as.pdf(as.document(x,...),...)
-as.pdf.data.frame <- function(x,...)as.pdf(tabular(x,...),...)
+as.pdf.tabular <- function(x,stem,...)as.pdf(as.document(x=x,stem=stem,...),...)
+as.pdf.data.frame <- function(x,stem,...)as.pdf(x=tabular(x=x,...),stem=stem,...)

@@ -62,9 +62,9 @@ convenience wrappers.
 	epilog = NULL,	
 	...
 )
-\method{as.pdf}{document}(x,stem,clean=TRUE,...)
-\method{as.pdf}{tabular}(x,...)
-\method{as.pdf}{data.frame}(x,...)
+\method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
+\method{as.pdf}{tabular}(x,stem,...)
+\method{as.pdf}{data.frame}(x,stem,...)
 }
 \arguments{
   \item{x}{data.frame}
@@ -92,6 +92,7 @@ convenience wrappers.
   \item{prolog}{latex markup to include before the tabular environment}
   \item{epilog}{latex markup to include after the tabular environment}
   \item{stem}{the stem of a file name (no extension)}
+  \item{dir}{output directory}
   \item{clean}{whether to delete system files after pdf creation}
   \item{\dots}{passed to called functions}
 }
@@ -120,6 +121,7 @@ Rownames are ignored.  If informative, capture them as a column.
 }
 \examples{
 tabular(head(Theoph))
+as.document(head(Theoph))
 }
 \keyword{manip}
 
