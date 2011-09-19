@@ -103,7 +103,8 @@ as.pdf.document <- function(x,stem,dir='.',clean=TRUE,...){
 	result <- system(cmd)
 	possibles <- glue(stem,c('.tex','.log','.aux','.out'))
 	actuals <- possibles[file.exists(possibles)]
-	if(clean)file.remove(actuals)
+	actualpaths <- file.path(dir,actuals)
+	if(clean)file.remove(actualpaths)
 	invisible(result)
 }
 as.pdf.tabular <- function(x,wide,long,stem,...)as.pdf(as.document(x,wide=wide,long=long,...),stem=stem,...)
