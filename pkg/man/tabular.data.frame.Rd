@@ -2,6 +2,7 @@
 \alias{tabular.data.frame}
 \alias{as.document}
 \alias{as.document.tabular}
+\alias{as.document.data.frame}
 \alias{as.pdf}
 \alias{as.pdf.document}
 \alias{as.pdf.tabular}
@@ -10,7 +11,7 @@
 \title{Convert a Data Frame to a Latex Tabular Environment, Latex Document, or PDF}
 \description{ The functions \code{tabular}, \code{as.document}, and \code{as.pdf}
 are generic.  Methods are given here that cascade in the order data.frame -> tabular
--> document -> pdf.  \code{as.document.tabular} is argued identically to \code{tabular},
+-> document -> pdf.  \code{as.document.data.frame} is argued identically to \code{tabular},
 except for a few extra arguments; the function tries to guess the exact length and
 width for a page size identical to the printed area (you can modify with the arguments
 \code{wider} and \code{longer}).  \code{as.pdf.document} needs a file stem and 
@@ -38,7 +39,7 @@ convenience wrappers.
 	trim = TRUE, 
 	...
 )
-\method{as.document}{tabular}(
+\method{as.document}{data.frame}(
 	x, 
 	rules = c(2, 1, 1), 
 	walls = 0, 
@@ -62,7 +63,7 @@ convenience wrappers.
 	epilog = NULL,	
 	...
 )
-\method{as.document}{data.frame}(x,...)
+\method{as.document}{tabular}(x,prolog=NULL,epilog=NULL,...)
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
 \method{as.pdf}{tabular}(x,stem,...)
 \method{as.pdf}{data.frame}(x,stem,...)

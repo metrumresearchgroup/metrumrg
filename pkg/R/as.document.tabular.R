@@ -1,6 +1,33 @@
 as.document <- function(x,...)UseMethod('as.document')
-as.document.data.frame <- function(x,...)as.document(tabular(x,...),...)
-as.document.tabular <- function(
+as.document.tabular <- function(x,prolog=NULL,epilog=NULL,...){
+    doc <-  c(
+    	command('documentclass',args='article'),
+    	command(
+	      'usepackage',
+	      options=list(
+		  left='1mm',
+		  top='1mm',
+		  bottom='1mm',
+		  right='1mm'
+	      ),
+	      args='geometry'
+	    ),
+	    command('geometry',args=list(glue('papersize=',papersize))),
+	    wrap(
+	      environment='document',
+	      c(
+		command('thispagestyle',args='empty'),
+		command('pagestyle',args='empty'),
+		prolog,
+		x,
+		epilog
+	      )
+	    )
+	  )
+	  class(doc) <- c('document',class(doc))
+	  doc
+}
+as.document.data.frame <- function(
   x,
   rules = c(2, 1, 1), 
   walls = 0, 
@@ -44,26 +71,7 @@ as.document.tabular <- function(
   long <- rows*4.21 + lines*0.16 + 2 + longer
   
   papersize <- glue('{',wide,'mm',',',long,'mm}')
-  doc <-  c(
-    command('documentclass',args='article'),
-    command(
-      'usepackage',
-      options=list(
-          left='1mm',
-          top='1mm',
-          bottom='1mm',
-          right='1mm'
-      ),
-      args='geometry'
-    ),
-    command('geometry',args=list(glue('papersize=',papersize))),
-    wrap(
-      environment='document',
-      c(
-      	command('thispagestyle',args='empty'),
-     	command('pagestyle',args='empty'),
-        prolog,
-        tabular(
+  tab <- tabular(
           x=x,
           rules=rules,
           walls=walls,
@@ -82,12 +90,8 @@ as.document.tabular <- function(
           escape=escape,
           trim=trim,
           ...
-        ),
-        epilog
-      )
-    )
   )
-  class(doc) <- c('document',class(doc))
+  doc <-  as.document(tab,prolog=prolog,epilog=epilog,...)
   doc
 }
 as.pdf <- function(x,...)UseMethod('as.pdf')
