@@ -150,6 +150,7 @@ ltable.data.frame <- function(
 		invisible(x)
 	}
 }	
+as.tabular <- function(x,...)UseMethod('tabular')
 tabular <- function(x,...)UseMethod('tabular')
 tabular.data.frame <- function(
 	x,

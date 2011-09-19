@@ -16,7 +16,7 @@ except for a few extra arguments; the function tries to guess the exact length a
 width for a page size identical to the printed area (you can modify with the arguments
 \code{wider} and \code{longer}).  \code{as.pdf.document} needs a file stem and 
 (optionally) whether to perform clean-up.  The other \code{as.pdf} methods are 
-convenience wrappers.
+convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
 }
 \usage{
 \method{tabular}{data.frame}(
