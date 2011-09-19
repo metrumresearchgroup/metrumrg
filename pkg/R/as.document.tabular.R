@@ -101,10 +101,10 @@ as.pdf.document <- function(x,stem,dir='.',clean=TRUE,...){
 	writeLines(x,outpath)
 	cmd <- glue('pdflatex -output-directory=',dir,' ',outpath)
 	result <- system(cmd)
-	possibles <- glue(stem,c('.tex','.log','.aux','.out'))
+	variants <- glue(stem,c('.tex','.log','.aux','.out'))
+	possibles <- file.path(dir,variants)
 	actuals <- possibles[file.exists(possibles)]
-	actualpaths <- file.path(dir,actuals)
-	if(clean)file.remove(actualpaths)
+	if(clean)file.remove(actuals)
 	invisible(result)
 }
 as.pdf.tabular <- function(x,wide,long,stem,...)as.pdf(as.document(x,wide=wide,long=long,...),stem=stem,...)

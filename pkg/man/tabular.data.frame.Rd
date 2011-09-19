@@ -126,7 +126,9 @@ Rownames are ignored.  If informative, capture them as a column.
 }
 \examples{
 tabular(head(Theoph))
+as.tabular(head(Theoph))
 as.document(head(Theoph))
+as.pdf(head(Theoph))
 }
 \keyword{manip}
 
