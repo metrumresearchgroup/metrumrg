@@ -5,7 +5,7 @@
 \description{Test a character vector for occurences of a pattern.}
  \usage{
 contains(pattern, text, ...)
-`contains`(x,y)
+x \%contains\% y
 }
 \arguments{
   \item{pattern}{regular expression}
