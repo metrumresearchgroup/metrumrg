@@ -3,7 +3,7 @@ function(pattern,text,...){
 	hits <- regexpr(pattern,text,...)
 	hits >=0
 }
-
+`%contains%` <- function(x,y)contains(y,x)
 `text2decimal` <-
 function(x)as.numeric(sub("[^0-9.+-]*([+|-]?[0-9]+\\.?[0-9]*).*","\\1",as.character(x)))
 
