@@ -173,6 +173,7 @@ tabular.data.frame <- function(
 	...
 ){
 	#groom arguments
+	x <- as.data.frame(x)
 	rules <- rep(rules, length.out=3)
 	walls <- rep(walls, length.out=2)
 	rowgroups <- rep(rowgroups, length.out=nrow(x))
