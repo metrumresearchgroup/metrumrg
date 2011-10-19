@@ -19,7 +19,7 @@ to \code{cut}: whereas in \code{cut} one specifies the "breaks", with \code{snap
 specifies a set of "attractors" (breaks are the implied midpoints); both functions map their
 primary argument to a (possibly) smaller set of values.}
 \value{numeric}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{
 Tim Bergsma
 }

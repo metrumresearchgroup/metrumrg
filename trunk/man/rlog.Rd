@@ -49,7 +49,7 @@ rlog(
   Combined runlog is returned invisibly in the unilog format.  Side effect: if
   \code{file} is specified, runlog format is written to disk.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{written by Bill Knebel; modified by Tim Bergsma.}
 \seealso{
 	\itemize{

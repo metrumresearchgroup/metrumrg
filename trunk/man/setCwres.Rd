@@ -14,7 +14,7 @@ setCwres(cwres, file)
   \item{file}{file to append}
 }
 \value{Used for side effects}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

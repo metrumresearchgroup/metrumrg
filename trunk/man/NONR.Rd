@@ -286,7 +286,7 @@ File names and locations can be manipulated somewhat, i.e., by over-riding
  \code{PLOTR}.  Mechanisms and expectations are somewhat different for NONMEM7.
 }
 
- \references{\url{http://metrumrg.r-forge.r-project.org}}
+ \references{\url{http://metrumrg.googlecode.com}}
  \author{written by Bill Knebel; modified by Tim Bergsma.}
 \seealso{
 	\itemize{

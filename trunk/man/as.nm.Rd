@@ -74,7 +74,7 @@ that creates an nm classification; use with caution, as it does not enforce all 
 \code{write.nm} is used for side effects. Others return an object with class 
 \code{c('nm','keyed','data.frame')}.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \note{
 In the examples below, note that assembly chains beginning with \code{nm} will 

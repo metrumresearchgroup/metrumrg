@@ -12,7 +12,7 @@ is.alpha(x, ...)
 \details{Verifies that each element in \code{x} contains only 
 upper or lower case letters.}
 \value{logical}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{is.latex.token}}

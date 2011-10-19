@@ -14,7 +14,7 @@ backtrans(x, cols)
   \item{cols}{vector of column names}
 }
 \value{data.frame}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

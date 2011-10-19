@@ -11,7 +11,7 @@ row2tabular(x, ...)
 }
 \details{Elements are collapsed into a string, with ampersand as the separator.}
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{tabular.data.frame}}

@@ -64,6 +64,8 @@ no hide flags, the result is a data frame with one cell: ncol=0. If
 \code{hidden(x)} has no rows, the result is a data frame with one cell: nrow=0.
 }
 \value{comment, or data.frame for \code{hide.data.frame}, etc.}
+\references{\url{http://metrumrg.googlecode.com}}
+\author{Tim Bergsma}
 \examples{
 Theoph <- hide(Theoph, where=Theoph$conc < 1,why='blq')
 Theoph <- hide(Theoph, where=Theoph$Subject==1,why='suspect')

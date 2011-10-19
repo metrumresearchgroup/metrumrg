@@ -19,7 +19,7 @@ extra arguments, ignored
 \value{
 logical
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\code{\link{ord.matrix}}, 

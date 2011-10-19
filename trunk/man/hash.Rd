@@ -18,7 +18,7 @@ hash(x,char='#')
 \value{
 used for side effects
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \section{Warning}{
   Don't \dQuote{hash} an expression that directly or indirectly calls a function being

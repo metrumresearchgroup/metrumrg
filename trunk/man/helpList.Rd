@@ -10,26 +10,27 @@
 \item \link{[.comment} subset a comment
 \item \link{[.flag} subset a flag
 \item \link{[.keyed} subset a keyed data frame
-\item \link{[.temporal} subset a temporal object
 \item \link{[.nmctl} subset a control stream object
+\item \link{[.temporal} subset a temporal object
 \item \link{[[.comment} select element from a comment
 \item \link{[[.flag} select element from a flag
-\item \link{[[.temporal} select element from a temporal object
 \item \link{[[.nmctl} select element from a control stream object
+\item \link{[[.temporal} select element from a temporal object
 \item \link{[<-.temporal} assign to a temporal object
+\item \link{\%contains\%} test whether x contains y
 \item \link{\%nested.in\%} test whether a is nested in b
 \item \link{\%nests\%} test whether a nests b
 \item \link{accept} document the acceptance of an R installation
 \item \link{acceptance} display the acceptance documentation for an R installation
 \item \link{acr} calculate accumulation ratio
 \item \link{after} test whether elements occur after some condition is \code{TRUE}
-\item \link{align.decimal} align numeric column in latex table on the decimal
 \item \link{aggregate.keyed} aggregate a keyed data frame
+\item \link{align.decimal} align numeric column in latex table on the decimal
 \item \link{and.keyed} produce inner join of two keyed data frames
 \item \link{as.character.comment} convert comment to character
 \item \link{as.character.flag} convert flag to character
-\item \link{as.character.temporal} convert temporal to character
 \item \link{as.character.nmctl} convert nmctl to character
+\item \link{as.character.temporal} convert temporal to character
 \item \link{as.chartime} convert to time (generic, internal)
 \item \link{as.chartime.numeric} convert numeric to time
 \item \link{as.comment} convert to comment
@@ -40,6 +41,9 @@
 \item \link{as.data.frame.block} convert a block of lines to data frame
 \item \link{as.data.frame.comment} convert comment to data frame
 \item \link{as.data.frame.flag} convert flag to data frame
+\item \link{as.document} convert to latex document
+\item \link{as.document.data.frame} convert data.frame to latex document
+\item \link{as.document.tabular} convert tabular to latex document
 \item \link{as.file.runlog} convert to convert runlog to file
 \item \link{as.filename} convert to filename
 \item \link{as.filename.character} convert character to filename
@@ -67,21 +71,26 @@
 \item \link{as.mDateTime.numeric} convert numeric to mDateTime
 \item \link{as.mDateTime.POSIXct} convert POSIXct to mDateTime
 \item \link{as.mDateTime.POSIXlt} convert POSIXlt to mDateTime
+\item \link{as.moot} convert to moot
 \item \link{as.mTime} convert to mTime
 \item \link{as.mTime.character} convert character to mTime
 \item \link{as.mTime.mTime} convert mTime to mTime
 \item \link{as.mTime.numeric} convert numeric to mTime
 \item \link{as.mTime.times} convert times (chron) to mTime
-\item \link{as.moot} convert to moot
 \item \link{as.nm} convert to nm (NMTRAN-ready NONMEM data set)
 \item \link{as.nm.data.frame} convert data frame to nm
 \item \link{as.nmctl} convert to nmctl
 \item \link{as.nmctl.character} convert character to nmctl
 \item \link{as.numeric.chartime} convert chartime to numeric
+\item \link{as.pdf} convert to pdf
+\item \link{as.pdf.data.frame} convert data.frame to pdf
+\item \link{as.pdf.document} convert latex document to pdf
+\item \link{as.pdf.tabular} convert tabular to pdf
 \item \link{as.pxml.ext} convert a param file to XML
 \item \link{as.rigged} convert to rigged
 \item \link{as.runlog.file} convert file to runlog
 \item \link{as.runlog.unilog} convert unilog to runlog
+\item \link{as.tabular} convert to a latex tabular environment
 \item \link{as.unilog.lst} convert nonmem output (.lst) to unilog
 \item \link{as.unilog.pxml} convert nonmem output (.ext) to unilog
 \item \link{as.unilog.run} convert run to unilog
@@ -116,8 +125,8 @@
 \item \link{cavg} calculate average concentration
 \item \link{check.subjects} check for missing data, numeric data, ranges, etc.
 \item \link{clear} drop regular patterns from a character vector
-\item \link{closers} set closing positions for wikmath nests
 \item \link{CLNR} delete files and directories and log what was deleted to a text file in the project
+\item \link{closers} set closing positions for wikmath nests
 \item \link{cmax} calculate maximum steady-state concentration
 \item \link{cmin} calculate minimum steady-state concentration
 \item \link{colname<-} change identified column names
@@ -179,12 +188,11 @@
 \item \link{half} generic
 \item \link{half.matrix} vectorize the lower triangular portion of a symmetric matrix
 \item \link{hash} prepend a character to each line of output
-\item \link{hide} generic
-\item \link{hide.data.frame} comment out the specified rows of a data frame, appending a flag that suggests the reason
 \item \link{hidden} generic
 \item \link{hidden.data.frame} show commented rows of a data frame
+\item \link{hide} generic
+\item \link{hide.data.frame} comment out the specified rows of a data frame, appending a flag that suggests the reason
 \item \link{ibw} calculate ideal body weight
-\item \link{iterations} retrieve iteration statistics from NONMEM output file
 \item \link{ind.cwres} compute conditional weighted residuals (internal)
 \item \link{inner} generic
 \item \link{inner.data.frame} reduce columns to inner quantiles by imputing NA
@@ -196,6 +204,7 @@
 \item \link{is.square.matrix} test whether a matrix is square
 \item \link{isSubversioned} check if files are subversioned
 \item \link{isSubversionedFile} check if one file is subversioned
+\item \link{iterations} retrieve iteration statistics from NONMEM output file
 \item \link{justUnits} extract units from wikimath
 \item \link{ke} calculate elimination constant
 \item \link{key} return the key of a keyed data frame
@@ -238,9 +247,9 @@
 \item \link{nocb} impute NA with next observation carried backward
 \item \link{NONR} run NONMEM and create diagnostic plots
 \item \link{NONR72} run NONMEM 7.2.0 or later
-\item \link{nospace} drop spaces from text
 \item \link{noPk} generic
 \item \link{noPk.nm} rows where EVID is never 0 within SUBJ
+\item \link{nospace} drop spaces from text
 \item \link{noUnits} drop units from wikimath
 \item \link{nth} repeat, for each element, the \eqn{n^{th}}{n^th} element where a condition is \code{TRUE}  (usually, within levels of an index)
 \item \link{nxt} calculate the next element for each element of x
@@ -277,9 +286,9 @@
 \item \link{print.flag} print flag
 \item \link{print.halfmatrix} print halfmatrix
 \item \link{print.keyed.summary} print keyed summary
-\item \link{print.temporal} print temporal
 \item \link{print.nm.summary} print nm summary
 \item \link{print.nmctl} print nmctl
+\item \link{print.temporal} print temporal
 \item \link{purge.dir} purge a directory (internal)
 \item \link{purge.files} purge files (internal)
 \item \link{qsub} prepare commandlines for qsub
@@ -328,13 +337,14 @@
 \item \link{summary.hidden.data.frame} summarize hidden rows of a data frame
 \item \link{summary.nm} summarize an nm object
 \item \link{svnIsText} check if subversioned files are text rather than binary
-\item \link{svnMarkAsText} tell Subversion to treat files as text
 \item \link{svnMarkAsNonText} tell Subversion to treat files as binary
+\item \link{svnMarkAsText} tell Subversion to treat files as text
 \item \link{svnMimeType} get the Subversion mime-type for files
 \item \link{svnPropGet} get a Subversion property for files
 \item \link{svnPropGetFile} get a Subversion property for one file
 \item \link{svnPropSet} set a subversion property on files
 \item \link{svnPropSetFile} set a Subversion property on a file
+\item \link{svnSetMimeType} set Subversion mime type on file
 \item \link{synthesis} sequentially left-join an arbitrary number of data frames, picking up novel columns (internal)
 \item \link{tabfile} extract tabfile specification from a control stream
 \item \link{tabular} convert to a latex tabular environment
@@ -354,7 +364,6 @@
 \item \link{unique.temporal} find unique elements of a temporal vector
 \item \link{unitDensity} calculate univariate density with maximum equal to 1
 \item \link{unitHist} calculate univariate histogram architecture with maximum height equal to 1
-\item \link{nmVersion} extract NONMEM version specification from configuration file
 \item \link{variants} locate variants of a file in distinctive subdirectories
 \item \link{wiki2label} convert wikimath to a label, e.g. CL/F
 \item \link{wiki2latex} convert wikimath to latex

@@ -36,7 +36,7 @@ values are continuous, and the rest are categorical. But you can reallocate,
 even assigning the same column as both categorical and continuous.
 }
 \value{a list of \code{trellis} objects}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

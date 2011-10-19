@@ -92,7 +92,7 @@ runNonmem(
   \item{perm.cond}{passed to PLOTR; defined here to prevent partial matching of \code{pe} argument to \code{qsub}}
 }
 \value{used for side effects}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

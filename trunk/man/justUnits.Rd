@@ -26,7 +26,7 @@ tos(x, ...)
 	and num is an unsigned decimal (1, 2.1, etc.).
 }
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

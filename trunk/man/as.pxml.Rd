@@ -23,7 +23,7 @@ as.pxml.ext(file, lead = 1, tag = 'param', ...)
 \value{
 character
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

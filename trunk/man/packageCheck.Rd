@@ -20,7 +20,7 @@ Many packages do not have package-level examples; the call to \code{example} in
 an scalar character string: zero if the package does not load or if \code{example} 
   generates an error; otherwise, the package version.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

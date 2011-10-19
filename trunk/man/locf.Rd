@@ -25,6 +25,7 @@ If even one non-\code{NA} value is present, \code{forbak} should not return any 
 does the reverse.
 }
 \value{A vector of the same class as \code{x}.}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \examples{
 locf(c(NA,1,2,NA,NA,3,NA,4,NA))

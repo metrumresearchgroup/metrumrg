@@ -32,6 +32,7 @@ of the population.
 \value{
 A table with bin limits encoded as column names.
 }
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

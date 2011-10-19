@@ -13,7 +13,7 @@ is.latex.token(x, ...)
 must consist entirely of upper or lower case letters, or must
 be a single non-letter.}
 \value{logical}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{is.alpha}}

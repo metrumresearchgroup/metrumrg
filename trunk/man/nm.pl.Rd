@@ -62,7 +62,7 @@ autolog.pl(
 	assumes the mode is \sQuote{run}.  See also \url{http://nmqual.googlecode.com}.
 }
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

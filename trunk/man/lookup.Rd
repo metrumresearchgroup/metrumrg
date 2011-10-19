@@ -56,7 +56,7 @@ clear(     x, drop = NULL, ...)
 All these functions return character.  \code{lookup} returns a vector of names 
 corresponding to x, but having some other form (representing some other attribute).
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \examples{
 codes <- c(

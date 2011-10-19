@@ -41,6 +41,7 @@ crosses(a,b)
 \value{
 	Logical vector for \code{crosses}; scalar logical for all others.
 }
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \note{
 	All these functions are NA-safe; i.e., they treat \code{NA} as a distinct level.	

@@ -79,7 +79,7 @@ appear in list order. The write function warns if the 80 character limit is exce
 \item{read.nmctl}{a control stream object}
 \item{write.nmctl }{used for side effects}
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

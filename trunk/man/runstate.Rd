@@ -48,7 +48,7 @@ runstate(
 	scalar character: one of \sQuote{queued}, \sQuote{compiled}, \sQuote{running}, 
 	\sQuote{done}, or \sQuote{indeterminate}.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma.}
 \seealso{
 	\itemize{

@@ -28,12 +28,12 @@ I want to ....
 \tabular{ll}{
 Package: \tab metrumrg\cr
 Type: \tab Package\cr
-Version: \tab 5.1\cr
-Date: \tab 2011-09-07\cr
+Version: \tab 5.2\cr
+Date: \tab 2011-09-19\cr
 License: \tab GPL\cr
 }
 }
   
   \author{Tim Bergsma, Bill Knebel, and Leonid Gibianski. Maintainer: Tim Bergsma <timb@metrumrg.com>}
-  \references{\url{http://metrumrg.r-forge.r-project.org}}
+  \references{\url{http://metrumrg.googlecode.com}}
   \keyword{manip}

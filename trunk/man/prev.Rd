@@ -39,6 +39,7 @@ runhead(x)
 	\code{nxt}: a vector of the same class
 	\code{runhead}: a vector of logicals
 }
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \note{
 \code{NA}s in the argument to \code{runhead} give surprising but reasonable results. It cannot

@@ -10,7 +10,7 @@ spaces(x)
 }
 \details{generates a string of \code{x} spaces}
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{command}}

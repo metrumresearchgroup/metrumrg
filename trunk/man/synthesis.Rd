@@ -21,7 +21,7 @@ synthesis(x, key = character(0), frames, ...)
   duplicate rows.
 }
 \value{data.frame}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

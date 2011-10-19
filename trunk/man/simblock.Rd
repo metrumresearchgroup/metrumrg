@@ -20,7 +20,7 @@ simblock(n, df, cov)
  matrix, with one row per simulation and one column per element in the corresponding
 triangular version of \code{cov}. 
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{written by Leonid Gibiansky; modified by Tim Bergsma.}
 \seealso{
 	\itemize{

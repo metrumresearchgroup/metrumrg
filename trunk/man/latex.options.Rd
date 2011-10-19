@@ -13,7 +13,7 @@ latex.options(x, ...)
 optionally with \code{name=} syntax.  List is enclosed in 
 square brackets.}
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{wrap}}

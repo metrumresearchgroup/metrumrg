@@ -26,6 +26,7 @@ stableMerge(x, y)
 \value{
 	A dataframe with as many rows as \code{nrow(x)} but possibly more columns.
 }
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

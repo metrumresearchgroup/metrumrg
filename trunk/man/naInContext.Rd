@@ -25,6 +25,7 @@ naInContext(x, context, search)
 }
 
 \value{data.frame}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \examples{
 test <- Theoph

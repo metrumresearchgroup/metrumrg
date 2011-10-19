@@ -58,6 +58,8 @@ parameter set (row) is dropped from the result, with warning.
 matrix, with column names indicating parameters, and row names indicating set
 number before filtering by \code{min} and \code{max}.
 }
+\references{\url{http://metrumrg.googlecode.com}}
+\author{Tim Bergsma}
 \seealso{
 	\itemize{
 		\item \code{\link{posmat}}

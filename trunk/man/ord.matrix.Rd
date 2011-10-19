@@ -28,7 +28,7 @@ explicitly, even if \code{x} is not classed as halfmatrix:  \code{ord.halfmatrix
 \value{
 scalar numeric
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\code{\link{is.square.matrix}}, 

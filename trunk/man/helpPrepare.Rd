@@ -8,11 +8,11 @@
 
 I want to ....
 \itemize{
-\item work with \link[=helpVector]{vectors}    
-\item work with \link[=helpDataFrame]{data.frames}
-\item work with \link[=helpMatrix]{matrices}
-\item \link[=helpClasses]{use} classes specialized for data assembly
-\item \link[=helpPharmacometric]{investigate} pharmacometric properties
-\item \link[=helpStrategic]{perform} strategic data manipulations
+\item \link[=helpVector]{work with vectors}    
+\item \link[=helpDataFrame]{work with data.frames}
+\item \link[=helpMatrix]{work with matrices}
+\item \link[=helpClasses]{use classes specialized for data assembly}
+\item \link[=helpPharmacometric]{investigate pharmacometric properties}
+\item \link[=helpStrategic]{perform strategic data manipulations}
 }
 }

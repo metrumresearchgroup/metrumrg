@@ -16,7 +16,7 @@ the options (possibly named) inserted in square brackets,
 and the arguments each enclosed in curly braces.  \code{depth} 
 spaces are added to the left end of the string.}
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{wrap}}

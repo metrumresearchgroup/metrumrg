@@ -93,7 +93,7 @@
 	If \code{out} is supplied, elements are written as files with corresponding
 	names.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{
