@@ -19,6 +19,6 @@ CLNR(Dir, project, note = 'Files removed', test = TRUE)
   	  delete the files or just see what files would be deleted. To delete directory, files, and
   sub-directories use \code{test=F}.}
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Bill Knebel}
 \keyword{manip}

@@ -49,7 +49,7 @@ accept(
   an invisible named vector of version identifiers, where the names are package
   names.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

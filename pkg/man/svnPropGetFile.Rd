@@ -11,7 +11,7 @@
 \details{Returns NA if file is not subversioned.
  Returns an empty string if the property is not defined.}
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 
 \author{ Tim Bergsma }
 \seealso{

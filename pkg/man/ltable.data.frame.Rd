@@ -35,7 +35,7 @@ and returned invisibly.
 \code{ltable} is generic.  You can write methods for other classes.
 }
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{tabular.data.frame}}

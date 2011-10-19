@@ -49,7 +49,7 @@ cwresPlots(
 \value{
 a list of trellis objects
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

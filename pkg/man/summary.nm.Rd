@@ -89,7 +89,7 @@ Development Solutions).  The tests are performed after removing comments.
   \item{badII}{as defined, active rows}
   \item{table}{counts of active rows tabled by \code{by}, if supplied}
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

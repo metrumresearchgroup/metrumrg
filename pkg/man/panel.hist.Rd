@@ -36,7 +36,7 @@ unitHist(x, plot = FALSE, ...)
 \sQuote{heights} is proportional to density, but normalized relative to maximum density.
  Panel functions are used for side effects.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

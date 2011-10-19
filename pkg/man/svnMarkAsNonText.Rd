@@ -13,7 +13,7 @@ For each Subversioned file in \code{x}, the property \sQuote{svn:mime-type}
 is set to \sQuote{application/octet-stream}.
 }
 \value{used for side effects}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 
 \author{ Tim Bergsma }
 \seealso{

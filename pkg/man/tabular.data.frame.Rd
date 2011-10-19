@@ -114,7 +114,7 @@ latter have lengths one less than their respective dimensions.
 Rownames are ignored.  If informative, capture them as a column.
 }
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{align.decimal}}

@@ -17,6 +17,6 @@ riwish(s, df, prec)
 \value{
  The variance of the random effect can be drawn from the returned inverse Wishart distribution.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{written by Leonid Gibiansky; modified by Tim Bergsma.}
 \keyword{manip}

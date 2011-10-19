@@ -105,7 +105,7 @@ runs as well as the execute halves of split runs are diverted to \sQuote{all.q} 
 and \sQuote{bootstrap.q} otherwise.
 }
 \value{Used for side effects}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

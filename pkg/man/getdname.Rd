@@ -12,7 +12,7 @@ getdname(filename)
   \item{filename}{path for the control stream}
 }
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

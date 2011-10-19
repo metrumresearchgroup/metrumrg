@@ -15,7 +15,7 @@ wrap(x, environment, options = NULL, args = NULL, depth = 0)
 \details{\code{x} is wrapped in the specified environment,
 with options and aruments formatted appropriately.}
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{command}}

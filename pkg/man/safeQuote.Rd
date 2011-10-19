@@ -19,7 +19,7 @@ Text is already quoted if it begins with a single or double quote.}
 \value{
 character
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{
 Tim Bergsma
 }

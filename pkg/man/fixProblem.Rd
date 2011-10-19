@@ -68,7 +68,7 @@ beginning with \sQuote{.}) relative to \code{dir}.
 arguments, relying on \code{extfile} as the common engine.
 }
 \value{character}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

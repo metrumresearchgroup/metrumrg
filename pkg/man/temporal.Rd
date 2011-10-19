@@ -96,7 +96,7 @@ as.mDateTime(x, ...)
   \item{as.mDate}{object with class \code{c('mDate','temporal','numeric')}}
   \item{as.mDateTime}{object with class \code{c('mDateTime','temporal','numeric')}}
 }
-\references{\url{http://mifuns.googlecode.com}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

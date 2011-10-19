@@ -35,5 +35,5 @@ License: \tab GPL\cr
 }
   
   \author{Tim Bergsma, Bill Knebel, and Leonid Gibianski. Maintainer: Tim Bergsma <timb@metrumrg.com>}
-  \references{\url{http://metrumrg.r-forge.r-project.org}}
+  \references{\url{http://metrumrg.googlecode.com}}
   \keyword{manip}

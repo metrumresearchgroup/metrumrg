@@ -69,7 +69,7 @@ as.file.runlog(x, file = 'NonmemRunLog.csv', header = FALSE, quote = FALSE, na =
 \code{as.file.runlog} is used for side effects.  All others return data.frame
 in the runlog or unilog format.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \note{
 These functions are not vectorized: their first arguments are expected to 

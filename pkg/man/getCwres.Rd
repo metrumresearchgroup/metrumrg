@@ -14,7 +14,7 @@ getCwres(directory)
   \item{directory}{NONMEM run directory}
 }
 \value{numeric}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

@@ -59,7 +59,7 @@ as.chartime(x, ...)
   \item{as.character.temporal}{character (time)}
   \item{others}{object with same class as \code{x}}
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

@@ -13,7 +13,7 @@ getTabs(file)
 	\item{file}{path for a file, typically \file{*.TAB}}
 }
 \value{data.frame}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

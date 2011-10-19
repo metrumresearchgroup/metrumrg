@@ -14,7 +14,7 @@ acceptance()
 \value{
  an object of class \code{XMLNode}
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{
