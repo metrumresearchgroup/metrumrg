@@ -1,0 +1,252 @@
+\documentclass[titlepage]{article}
+\usepackage{hyperref}
+\usepackage[left=3cm,top=3cm,bottom=3cm, right=3cm,includehead,includefoot]{geometry}
+\usepackage{graphicx}
+\usepackage{tocbibind}
+\usepackage{fixltx2e}
+\usepackage{Sweave}
+
+ 
+
+\begin{document}
+\section*{tabular}
+We make a sample data frame.
+\begin{Schunk}
+\begin{Sinput}
+> x <- data.frame(
++   study=c(rep('PROT01',5),NA),
++   subject=rep(c(1001,1002),each=3),
++   time=c(0,1,2,0,1,2),
++   conc=c(0.12,34,5.6,.5,200,NA)
++ )
+> x
+\end{Sinput}
+\begin{Soutput}
+   study subject time   conc
+1 PROT01    1001    0   0.12
+2 PROT01    1001    1  34.00
+3 PROT01    1001    2   5.60
+4 PROT01    1002    0   0.50
+5 PROT01    1002    1 200.00
+6   <NA>    1002    2     NA
+\end{Soutput}
+\end{Schunk}
+Now we try various invocations.
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x))
+\end{Sinput}
+\begin{table}[!htpb]
+ \begin{center}
+  \begin{tabular}{lrrr}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+   PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+   PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,environments=NULL))
+\end{Sinput}
+\begin{table}[!htpb]
+ \begin{tabular}{lrrr}
+   \hline \hline
+  study & subject & time & conc \\ \hline
+  PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+  PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+  PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\
+  PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+  PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+   & \verb#1002# & \verb#2# & \verb## \\ \hline
+ \end{tabular}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,caption='Plasma Concentrations',label='pctab'))
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Plasma Concentrations]{Plasma Concentrations \label{pctab}}
+ \begin{center}
+  \begin{tabular}{lrrr}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+   PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+   PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,caption='Plasma Concentrations',cap.top=FALSE))
+\end{Sinput}
+\begin{table}[!htpb]
+ \begin{center}
+  \begin{tabular}{lrrr}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+   PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+   PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+ \caption[Plasma Concentrations]{Plasma Concentrations }
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,grid=TRUE,caption='grid is TRUE'))
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[grid is TRUE]{grid is TRUE }
+ \begin{center}
+  \begin{tabular}{l|r|r|r}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\ \hline
+   PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\ \hline
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\ \hline
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\ \hline
+   PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\ \hline
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,grid=TRUE,caption='Includes Walls',walls=1,rules=c(1,2,1)))
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Includes Walls]{Includes Walls }
+ \begin{center}
+  \begin{tabular}{|l|r|r|r|}
+    \hline
+   study & subject & time & conc \\ \hline \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\ \hline
+   PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\ \hline
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\ \hline
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\ \hline
+   PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\ \hline
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,grid=TRUE,caption='Custom Breaks',
++     colbreaks=c(0,2,0),rowgroups=x$subject
++ ))
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Custom Breaks]{Custom Breaks }
+ \begin{center}
+  \begin{tabular}{lr||rr}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+   PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\ \hline
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+   PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,grid=TRUE,caption='Custom Justify',
++     numjust='left',charjust='right'
++ ))
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Custom Justify]{Custom Justify }
+ \begin{center}
+  \begin{tabular}{r|l|l|l}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\ \hline
+   PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\ \hline
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\ \hline
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\ \hline
+   PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\ \hline
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,grid=TRUE,caption='Decimal Align',
++     justify=c('center','left','right','decimal')
++ ))
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Decimal Align]{Decimal Align }
+ \begin{center}
+  \begin{tabular}{c|l|r|r}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\ \hline
+   PROT01 & \verb#1001# & \verb#1# & \verb#34   # \\ \hline
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.6 # \\ \hline
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.5 # \\ \hline
+   PROT01 & \verb#1002# & \verb#1# & \verb#200   # \\ \hline
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,grid=TRUE,caption='Not Verbatim',
++     justify=c('center','left','right','decimal'),
++     verbatim=FALSE
++ ))
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Not Verbatim]{Not Verbatim }
+ \begin{center}
+  \begin{tabular}{c|l|r|r}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   PROT01 & 1001 & 0 & 0.12 \\ \hline
+   PROT01 & 1001 & 1 & 34    \\ \hline
+   PROT01 & 1001 & 2 & 5.6  \\ \hline
+   PROT01 & 1002 & 0 & 0.5  \\ \hline
+   PROT01 & 1002 & 1 & 200    \\ \hline
+    & 1002 & 2 &  \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,grid=TRUE,caption='Custom Column Width',
++     justify=c('center','left','right','decimal'),
++     colwidth=c(NA,NA,NA,'2cm')
++ ))
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Custom Column Width]{Custom Column Width }
+ \begin{center}
+  \begin{tabular}{c|l|r|p{2cm}}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\ \hline
+   PROT01 & \verb#1001# & \verb#1# & \verb#34   # \\ \hline
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.6 # \\ \hline
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.5 # \\ \hline
+   PROT01 & \verb#1002# & \verb#1# & \verb#200   # \\ \hline
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\end{document}
