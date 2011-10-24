@@ -49,7 +49,7 @@ doName <- function(name,replace,...) {
             ext), row.names = row.names, quote = quote, sep=sep,...)
         return(nrow(sample.dataset))
 }
-invisible(lapply(as.list(as.character(names)), doName, replace=replace,...))
+invisible(lapply(as.list(as.character(names)), function(x,...)doName(name=x,...), replace=replace,...))
 }
 `resample.csv.filename` <-
 function(x,...){

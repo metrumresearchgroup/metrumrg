@@ -25,8 +25,8 @@ for \code{Ops.keyed} are techniques for dynamic preparation.
 as.moot(...)
 as.rigged(...)
 
-\method{minus}{moot}(x, y, ...)
-\method{plus}{rigged}(x, y)
+minus.moot(x, y, ...)
+plus.rigged(x, y)
 
 
 }

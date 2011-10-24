@@ -16,8 +16,13 @@ rlog(
 	rundir = filename(project, run, if(boot) '.boot' else ''),
 	nmlog = file.path(rundir,'NonmemRunLog.csv'),
 	nmout = filename(rundir,run,'.lst'),
-	pattern = if(boot)c('^F','^nonmem.exe','^P','^O','^Run') else '^FD',
-	...
+        pattern = c(
+        	'^F[ISRCMP]','^OU','^nonmem','^nul$', 
+        	'WK', 'LNK$', 'fort', '^nm', 'lnk$', 
+        	'set$','^gar', 'INT', '^temp', '^tr', 
+        	'^new', '^FD','^Run\\\\d+\\\\.o\\\\d+$','^prsizes'
+        ),
+ 	...
 )
 }
 \arguments{

@@ -24,6 +24,7 @@ the (named) vector of the corresponding class.
 \method{as.halfmatrix}{halfmatrix}(x,...)
 \method{as.halfmatrix}{default}(x,...)
 \method{offdiag}{halfmatrix}(x,...)
+\method{print}{halfmatrix}(x,...)
 }
 \arguments{
   \item{x}{symmetric matrix (half) or halfmatrix equivalent (as.matrix)}

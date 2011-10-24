@@ -31,6 +31,7 @@ f(x, ...)
 \method{format}{flag}(x, ...)
 \method{print}{flag}(x, ...)
 \method{rep}{flag}(x, ...)
+\method{xtfrm}{flag}(x)
 }
 \arguments{
   \item{x}{the flag object, or something coercible to integer}

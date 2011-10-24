@@ -14,6 +14,7 @@
 \usage{
 	\method{as.csv.filename}{character}(x, ...)
 	\method{resample}{csv.filename}(x, ...)
+	\method{resample}{filename}(x, ...)
 	\method{resample}{data.frame}(
 	x, 
 	names, 

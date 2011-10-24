@@ -9,7 +9,7 @@ possibly standard errrors.  This function plots the parameter estimates vs. iter
 indicated.
 }
 \usage{
-\method{xyplot}{ext}(
+xyplot.ext(
 	x, 
 	data = read.table(file, skip = 1, header = TRUE, check.names = FALSE), 
 	project = getwd(), 

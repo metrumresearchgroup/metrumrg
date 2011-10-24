@@ -15,10 +15,10 @@ that have matching rows in \code{y}. The syntax can be extended to subclasses of
 }
 \usage{
 \method{Ops}{keyed}(e1, e2)
-\method{plus}{keyed}(x, y)
-\method{and}{keyed}(x, y)
-\method{minus}{keyed}(x, y)
-\method{left}{keyed}(x, y)
+plus.keyed(x, y)
+and.keyed(x, y)
+minus.keyed(x, y)
+left.keyed(x, y)
 }
 \arguments{
   \item{e1}{left argument to Ops}

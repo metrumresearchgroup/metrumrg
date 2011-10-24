@@ -8,7 +8,13 @@
 	rundir = filename(project, run, if(boot) '.boot' else ''),
 	nmlog = file.path(rundir,'NonmemRunLog.csv'),
 	nmout = filename(rundir,run,'.lst'),
-	pattern=if(boot)c('^F','^nonmem.exe','^P','^O','^Run') else '^FD',
+	#pattern=if(boot)c('^F','^nonmem.exe','^P','^O','^Run') else '^FD',
+        pattern = c(
+        	'^F[ISRCMP]','^OU','^nonmem','^nul$', 
+        	'WK', 'LNK$', 'fort', '^nm', 'lnk$', 
+        	'set$','^gar', 'INT', '^temp', '^tr', 
+        	'^new', '^FD','^Run\\d+\\.o\\d+$','^prsizes'
+        ),
         ...
 ){
   stopifnot(
@@ -17,7 +23,9 @@
   	length(nmlog)==length(run),
   	length(nmout)==length(run)
   )
-  state <- sapply(rundir,function(dir)runstate(rundir=dir,...),...)
+  testfile <- c('FCON','FILE10','OUTPUT')
+  if(tool=='nm7')testfile <- c('FCON','FILE10','INTER')
+  state <- sapply(rundir,function(dir)runstate(rundir=dir,testfile=testfile,...),...)
   #run <- run[state=='done']
   #rundir <- rundir[state=='done']
   #nmout <- nmout[state=='done']

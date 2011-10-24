@@ -48,6 +48,7 @@ as.mDate(x, ...)
 \method{as.mDate}{character}(x, format = '\%Y-\%m-\%d',...)
 \method{as.mDate}{numeric}(x,...)
 \method{as.mDate}{Date}(x,...)
+\method{as.mDate}{mDate}(x,...)
 \method{as.mDate}{dates}(x,...)
 as.mDateTime(x, ...)
 \method{as.mDateTime}{character}(x, format = '\%Y-\%m-\%d \%H:\%M',...)
@@ -61,6 +62,7 @@ as.mDateTime(x, ...)
 \method{format}{mDate}(x, format = '\%Y-\%m-\%d', mark=TRUE,...)
 \method{format}{mDateTime}(x, format = '\%Y-\%m-\%d \%H:\%M', mark=TRUE,...)
 \method{unique}{temporal}(x, incomparables=FALSE,...)
+\method{xtfrm}{temporal}(x,...)
 }
 
 \arguments{
