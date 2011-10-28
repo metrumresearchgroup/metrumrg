@@ -20,7 +20,7 @@ matrix with only positive diagonal elements
 matrix
 }
 \references{\url{http://metrumrg.googlecode.com}}
-\author{Leonid Gibianski, modified by Tim Bergsma}
+\author{Leonid Gibiansky, modified by Tim Bergsma}
 
 \examples{
 posmat(matrix(c(10.00006,20.00006,-30,40),2,2))

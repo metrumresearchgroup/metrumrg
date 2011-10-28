@@ -14,5 +14,5 @@ check.subjects(x,subject)
 }
 \value{summary of each column in \code{x} by \code{subject}}
 \references{\url{http://metrumrg.googlecode.com}}
-\author{Leonid Gibianski, modified by Tim Bergsma}
+\author{Leonid Gibiansky, modified by Tim Bergsma}
 \keyword{manip}

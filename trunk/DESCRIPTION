@@ -3,7 +3,7 @@ Type: Package
 Title: Pharmacometric tools for data preparation, modeling, simulation, and reporting
 Version: 5.3
 Date: 2011-10-24
-Author: Tim Bergsma, Bill Knebel, and Leonid Gibianski
+Author: Tim Bergsma, Bill Knebel, and Leonid Gibiansky
 Maintainer: Tim Bergsma <timb@metrumrg.com>
 Depends: reshape, methods, lattice, grid, XML, MASS
 Suggests:  chron, fork

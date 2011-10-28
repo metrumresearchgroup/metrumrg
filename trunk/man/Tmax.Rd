@@ -18,5 +18,5 @@ Tmax(data, id = 'ID', dv = 'DV', time = 'TIME')
 }
 \value{One Tmax is returned for each subject.}
 \references{\url{http://metrumrg.googlecode.com}}
-\author{Leonid Gibianski}
+\author{Leonid Gibiansky}
 \keyword{manip}

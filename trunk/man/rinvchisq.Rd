@@ -19,5 +19,5 @@ rinvchisq(n, df, cov)
  The \code{rinvchisq} function returns \code{n} parameter deviates for use as simulation parameters.
 }
 \references{\url{http://metrumrg.googlecode.com}}
-\author{written by Leonid Gibianski; modified by Tim Bergsma.}
+\author{written by Leonid Gibiansky; modified by Tim Bergsma.}
 \keyword{utilities}
