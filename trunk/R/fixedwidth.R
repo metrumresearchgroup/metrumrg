@@ -6,5 +6,5 @@ function(x,...){
 	x <- rbind(names(x),x)
 	x <- data.frame(lapply(x,format,justify='right'),stringsAsFactors=FALSE)
 	names(x) <- x[1,]
-	x[-1,]
+	x[-1,,drop=FALSE]
 }
