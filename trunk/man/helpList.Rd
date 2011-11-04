@@ -116,6 +116,7 @@
 \item \link{before} test whether elements occur before some condition is \code{TRUE}
 \item \link{bin} calculate bin limits for x and place each value in a bin, returning the number of values in each bin
 \item \link{bmi} calculate body mass index
+\item \link{bounds} calculate normal quantiles at bounding probabilities
 \item \link{bracket} create an XML tag
 \item \link{breaks} calculate breaks between grouped elements
 \item \link{bsa} calculate body surface area
@@ -143,6 +144,8 @@
 \item \link{crosses} test whether a crosses b
 \item \link{css} calculate steady-state concentration
 \item \link{ctl2xml} isolate xml comments from a control stream
+\item \link{cvNormal} calculate coefficient of variation for normal data
+\item \link{cvLognormal} calculate coefficient of variation for log-normal data
 \item \link{cwresPlots} create conditional weighted residual diagnostic plots
 \item \link{dataFormat} combine NONMEM predictions, parameter estimates, and covariates into a standard format
 \item \link{dataSynthesis} build a standard plotting data set for a given NONR run
@@ -198,8 +201,14 @@
 \item \link{inner.data.frame} reduce columns to inner quantiles by imputing NA
 \item \link{is.alpha} test whether text is letters-only
 \item \link{is.cwres.readable.file} compute conditional weighted residuals (internal)
+\item \link{is.diagnonal} test whether parameter label represents matrix diagonal element
+\item \link{is.fixed} detect thetas in parameter labels
+\item \link{is.iiv} detect omegas in parameter labels
 \item \link{is.latex.token} test whether text is valid latex command or environment
+\item \link{is.offdiagnonal} test whether parameter label represents matrix offdiagonal element
 \item \link{is.one.nonalpha} test whether text is singular non-letter
+\item \link{is.random} detect omegas and sigmas in parameter labels
+\item \link{is.residual} detect sigmas in parameter labels
 \item \link{is.square} generic
 \item \link{is.square.matrix} test whether a matrix is square
 \item \link{isSubversioned} check if files are subversioned
@@ -219,6 +228,7 @@
 \item \link{locf} impute NA using last observation carried forward
 \item \link{lookup} translate among parameter attributes (vector)
 \item \link{lookup.one} translate among parameter attributes (scalar)
+\item \link{lower} calculate normal quantiles at lower probability of interval
 \item \link{ltable} convert to a latex table
 \item \link{ltable.data.frame} convert a data.frame to a latex table
 \item \link{map} map one set of values to another
@@ -269,10 +279,12 @@
 \item \link{panel.hist} for each level, plot a histogram
 \item \link{panel.ref} plot a reference region in a stripplot
 \item \link{panel.stratify} handle strips (levels) of data one at a time
+\item \link{parameter2wiki} convert parameter labels to wikmath
 \item \link{params} list documented model parameters
 \item \link{parens} wrap text in parentheses
 \item \link{parfile} extract parfile specification from a control stream
 \item \link{partab} construct a model parameter table
+\item \link{percent} convert to percent
 \item \link{plot.nm} generate standard plots for an nm object using \code{\link{nmPlots}}
 \item \link{plotfilename} make a name for a diagnostic plot file
 \item \link{PLOTR} create diagnostic plots for NONMEM runs
@@ -352,6 +364,8 @@
 \item \link{tabularformat} generate a format string for a latex tabular environment
 \item \link{tagvalue} convert a list to a string of delimited tag-value pairs
 \item \link{text2decimal} convert mixed text to decimal
+\item \link{titleCase} convert mixed case to title case, strictly by default
+\item \link{totitle} convert mixed case to title case, not strictly by default
 \item \link{tmax} calculate the time of the maximum concentration
 \item \link{Tmax} calculate the time associated with the maximum concentration for each subject
 \item \link{Tmin} calculate the time associated with the minimum concentration for each subject
@@ -364,6 +378,7 @@
 \item \link{unique.temporal} find unique elements of a temporal vector
 \item \link{unitDensity} calculate univariate density with maximum equal to 1
 \item \link{unitHist} calculate univariate histogram architecture with maximum height equal to 1
+\item \link{upper} calculate normal quantiles at upper probability of interval
 \item \link{variants} locate variants of a file in distinctive subdirectories
 \item \link{wiki2label} convert wikimath to a label, e.g. CL/F
 \item \link{wiki2latex} convert wikimath to latex

@@ -60,6 +60,7 @@ wiki2parameter(x,...)
   	        \item \code{\link{closers}}
   	        \item \code{\link{wikitab}}
   	        \item \code{\link{tos}}
+  	        \item \code{\link{parameter2wiki}}
 	}
 }
 \examples{

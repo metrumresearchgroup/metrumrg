@@ -14,5 +14,6 @@ I want to ....
 \item \link[=runhead]{check some properties of vectors}
 \item \link[=temporal]{create date, time, and date-time objects}
 \item \link[=map]{map one set of values to another}
+\item \link[=titleCase]{coerce text to title case}
 }
 }
