@@ -1,8 +1,9 @@
-\name{cvLognormal}
+\name{cv}
 \alias{cvLognormal}
 \alias{cvNormal}
+\alias{cv}
 \title{
-Compute Coefficient of Variation for Normal and Log-Normal Data.~~
+Compute Coefficient of Variation for Normal and Log-Normal Data.
 }
 \description{
 The CV for normally distributed data can be calculated as a function
@@ -26,7 +27,7 @@ cvLognormal(var, ...)
 
 \url{http://en.wikipedia.org/wiki/Log-normal_distribution#Coefficient_of_variation}
 
-\url{http://en.wikipedia.org/wiki/Log-normal_distribution#Coefficient_of_variation}
+\url{http://tolstoy.newcastle.edu.au/R/help/05/12/16710.html}
 }
 \author{Tim Bergsma}
 \seealso{
@@ -35,7 +36,10 @@ cvLognormal(var, ...)
 	}
 }
 \examples{
-cvLognormal	
+norm <- rnorm(10000,mean=10,sd=5)
+lnrm <- rlnorm(10000,meanlog=10,sdlog=.3)
+cvNormal(sd(norm)^2,mean(norm))
+cvLognormal(sd(log(lnrm))^2)
 }
 \keyword{manip}
 

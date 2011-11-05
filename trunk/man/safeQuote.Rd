@@ -1,17 +1,17 @@
 \name{safeQuote}
 \alias{safeQuote}
 \title{
-Single-quote Conditionally ~~
+Single-quote Conditionally 
 }
 \description{
-Place single quotes around text that contains space and is not already quoted. ~~
+Place single quotes around text that contains space and is not already quoted. 
 }
 \usage{
 safeQuote(x)
 }
 \arguments{
   \item{x}{
-character~~
+character
 }
 }
 \details{

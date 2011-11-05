@@ -3,7 +3,7 @@
 \alias{upper}
 \alias{lower}
 \title{
-Calculate Normal Quantiles at Boundaries of Probability Intervals~~
+Calculate Normal Quantiles at Boundaries of Probability Intervals
 }
 \description{
 	\code{qnorm} expects scalar means and standard deviations, 
@@ -12,12 +12,23 @@ Calculate Normal Quantiles at Boundaries of Probability Intervals~~
 	equal-length vectors for mean and standard deviation, but 
 	scalar probabilities. Probability can be supplied directly
 	or calculated as the bound of a symmetric interval. \code{bounds}
-	pairs \code{lower} and \code{upper} using suitable notation.~~
+	pairs \code{lower} and \code{upper} using suitable notation.
 }
 \usage{
 lower(x, sd, interval = 0.95, prob = 0.5 * (1 - interval), ...)
 upper(x, sd, interval = 0.95, prob = 0.5 * (1 + interval), ...)
-bounds(x, sd, interval = 0.95, lower = 0.5 * (1 - interval), upper = 0.5 * (1 + interval), left = "(", right = ")", sep = ",", digits = 3, ...)
+bounds(
+	x, 
+	sd, 
+	interval = 0.95, 
+	lower = 0.5 * (1 - interval), 
+	upper = 0.5 * (1 + interval), 
+	left = "(", 
+	right = ")", 
+	sep = ",", 
+	digits = 3, 
+	...
+)
 }
 \arguments{
   \item{x}{means}
@@ -33,10 +44,10 @@ bounds(x, sd, interval = 0.95, lower = 0.5 * (1 - interval), upper = 0.5 * (1 + 
   \item{\dots}{other arguments, passed to \code{qnorm}}
 }
 \details{
-	\code{interval} is a convenient~way to set upper and lower probabilities,
+	\code{interval} is a convenient way to set upper and lower probabilities,
 	and is ignored if these are specified directly.  \code{left}
 	and \code{right} are passed to \code{paste}, and so will be 
-	repeated as necessary to match the length of \code{x}.~
+	repeated as necessary to match the length of \code{x}.
 }
 \value{
 	\code{lower} and \code{upper} return numeric.  \code{bounds}

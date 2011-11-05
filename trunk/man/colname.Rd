@@ -4,10 +4,10 @@
 \alias{name}
 \alias{colname}
 \title{
-Change Selected Names~~
+Change Selected Names
 }
 \description{
-Change selected element names.~~
+Change selected element names.
 }
 \usage{
 colname(x) <- value

@@ -1,7 +1,7 @@
 \name{percent}
 \alias{percent}
 \title{
-Calculate Percent.~~
+Calculate Percent.
 }
 \description{
 Format a decimal as percent, specifying significant digits.

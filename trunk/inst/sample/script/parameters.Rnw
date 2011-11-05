@@ -18,7 +18,7 @@ This script picks up after model.Rnw to process bootstrap results and make a par
 \subsection{Package}
 <<more>>= 
 getwd()
-require(metrumrg)
+library(metrumrg)
 @
 \section{Parameter Table}
 <<params>>=

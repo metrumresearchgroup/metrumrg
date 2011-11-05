@@ -11,5 +11,5 @@
     	)
     )
     cat('metrumrg',utils::packageDescription('metrumrg',fields='Version'),'\n')
-    cat('enter "?metrumrg" for help')
+    cat('enter "?metrumrg" for help\n')
 }

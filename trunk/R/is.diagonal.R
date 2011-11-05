@@ -1,24 +1,13 @@
-is.diagonal <-
-function(x){
+on.diagonal <-function(x){
   dec <- text2decimal(x)
-  ord <- trunc(max(dec))
-  mat <- half(diag(ord))
-  off <- offdiag(mat)
-  nms <- setdiff(names(mat),names(off))
-  was <- as.character(dec)
-  is.diag <- was %in% nms
-  is.diag
+  txt <- as.character(dec)
+  spt <- strsplit(txt,'.',fixed=TRUE)
+  row <- sapply(spt,function(x)if(length(x)==2)as.numeric(x[[1]])else NA)
+  col <- sapply(spt,function(x)if(length(x)==2)as.numeric(x[[2]])else NA)
+  row==col
 }
-is.offdiagonal <-
-function(x){
-  dec <- text2decimal(x)
-  ord <- trunc(max(dec))
-  mat <- half(diag(ord))
-  off <- offdiag(mat)
-  nms <- names(off)
-  is.off <- as.character(dec) %in% nms
-  is.off
-}
+is.diagonal <- function(x) !is.na(on.diagonal(x)) & on.diagonal(x)
+is.offdiagonal <- function(x) !is.na(on.diagonal(x)) & !on.diagonal(x)
 is.fixed <- function(x)contains("THETA",x,ignore.case=TRUE)
 is.random <- function(x)contains("OMEGA|SIGMA",x,ignore.case=TRUE)
 is.iiv <- function(x)contains("OMEGA",x,ignore.case=TRUE)

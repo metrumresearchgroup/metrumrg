@@ -6,19 +6,20 @@ Convert parameter labels for thetas, omegas, sigmas, and etas
 to wikimath.  See \code{\link{wikimath}}.
 }
 \usage{
-subscript(x, ...)
+parameter2wiki(x,lowercase='is.fixed',...)
 }
 \arguments{
   \item{x}{character, or coercible to character}
+  \item{lowercase}{functions of x identifying elements to coerce to lower case}
   \item{\dots}{ignored}
 }
 \details{
 This function expects a vector of labels such as "THETA1"
 or "OMEGA2.1".  It converts them to their wikimath equivalents.
-Thetas are coerced to the lower case representation,
-whereas omegas, sigmas, and Etas will be upper case. The 
-result can be passed conveniently to \code{wiki2latex} for 
-table development.
+Thetas are coerced to the lower case representation by default,
+whereas omegas, sigmas, and etas will be upper case (set \code{lowercase} 
+to NULL for no coercion). The result can be passed conveniently to 
+\code{wiki2latex} for table development.
 }
 \value{
 character
@@ -34,9 +35,10 @@ character
 	}
 }
 \examples{
-x <- parameter2wiki(c("THETA1","OMEGA1.2","SIGMA1.1")
+x <- parameter2wiki(c("THETA1","OMEGA1.2","SIGMA1.1"))
 x
 wiki2latex(x)
+#as.pdf(wiki2latex(x))
 }
 \keyword{manip}
 

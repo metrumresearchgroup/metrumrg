@@ -201,11 +201,11 @@
 \item \link{inner.data.frame} reduce columns to inner quantiles by imputing NA
 \item \link{is.alpha} test whether text is letters-only
 \item \link{is.cwres.readable.file} compute conditional weighted residuals (internal)
-\item \link{is.diagnonal} test whether parameter label represents matrix diagonal element
+\item \link{is.diagonal} test whether parameter label represents matrix diagonal element
 \item \link{is.fixed} detect thetas in parameter labels
 \item \link{is.iiv} detect omegas in parameter labels
 \item \link{is.latex.token} test whether text is valid latex command or environment
-\item \link{is.offdiagnonal} test whether parameter label represents matrix offdiagonal element
+\item \link{is.offdiagonal} test whether parameter label represents matrix offdiagonal element
 \item \link{is.one.nonalpha} test whether text is singular non-letter
 \item \link{is.random} detect omegas and sigmas in parameter labels
 \item \link{is.residual} detect sigmas in parameter labels

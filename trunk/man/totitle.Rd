@@ -2,11 +2,11 @@
 \alias{totitle}
 \alias{titleCase}
 \title{
-Convert Text to Title Case~~
+Convert Text to Title Case
 }
 \description{
 Convert text to title case.  I.e., capitalize each word.  If strict
-is TRUE, force subsequent letters in each word to be lower case.~
+is TRUE, force subsequent letters in each word to be lower case.
 }
 \usage{
 totitle(x, strict = FALSE)
@@ -14,14 +14,15 @@ titleCase(x, strict = TRUE,...)
 }
 \arguments{
   \item{x}{
-character~~
+character
 }
   \item{strict}{
-Shall non-first letters of words be coerced to lower case?~~
+Shall non-first letters of words be coerced to lower case?
 }
+\item{\dots}{ignored}
 }
 \details{
-	The code for \code{totitle} is borrowed from the R help for \code{toupper} (capword). ~~
+	The code for \code{totitle} is borrowed from the R help for \code{toupper} (capword). 
 }
 \value{
 character
@@ -35,7 +36,7 @@ character
 	}
 }
 \examples{
-totitle('THETA1')	
+titleCase('THETA1')	
 }
 \keyword{manip}
 
