@@ -1,0 +1,5644 @@
+<?xml version="1.0" encoding="ASCII"?>
+<!DOCTYPE nm:output SYSTEM "output.dtd">
+<nm:output
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
+xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
+>
+<nm:start_datetime>2011-11-08T03:33:25.019</nm:start_datetime>
+<nm:control_stream><![CDATA[
+$PROB 1105 phase1 2 CMT like 1004 but diff. initial on V3
+$INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
+$DATA ../../data/derived/phase1.csv IGNORE=C
+$SUBROUTINE ADVAN4 TRANS4
+$PK
+ CL=THETA(1)*EXP(ETA(1)) * THETA(6)**SEX * (WT/70)**THETA(7)
+ V2 =THETA(2)*EXP(ETA(2))
+ KA=THETA(3)*EXP(ETA(3))
+ Q  =THETA(4)
+ V3=THETA(5)
+ S2=V2
+
+$ERROR
+ Y=F*EXP(ERR(1))
+ IPRE=F
+
+$MSFI =../1005/1005.msf
+$SIMULATION ONLYSIM (1968) SUBPROBLEMS=500
+$TABLE DV NOHEADER NOPRINT FILE=./1105.tab FORWARD NOAPPEND
+]]></nm:control_stream>
+<nm:nmtran><![CDATA[
+
+ WARNINGS AND ERRORS (IF ANY) FOR PROBLEM    1
+
+ (WARNING  2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
+
+ (WARNING  22) WITH $MSFI AND "SUBPROBS", "TRUE=FINAL" IS ALSO REQUIRED ON
+ $SIMUL RECORD. NM-TRAN HAS SUPPLIED THIS OPTION.
+ CREATING MUMODEL ROUTINE...
+]]></nm:nmtran>
+<nm:nonmem nm:version='7.2.0'>
+<nm:license_information><![CDATA[
+License Registered to: Metrum Research Group
+Expiration Date:    14 JUL 2012
+Current Date:        8 NOV 2011
+Days until program expires : 251
+]]></nm:license_information>
+<nm:program_information><![CDATA[
+1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
+ ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
+ CURRENT DEVELOPERS ARE ROBERT BAUER, ICON DEVELOPMENT SOLUTIONS,
+ AND ALISON BOECKMANN. IMPLEMENTATION, EFFICIENCY, AND STANDARDIZATION
+ PERFORMED BY NOUS INFOSYSTEMS.
+]]></nm:program_information>
+<nm:problem nm:number='1' nm:subproblem='0' nm:superproblem1='0' nm:iteration1='0' nm:superproblem2='0' nm:iteration2='0'>
+<nm:problem_title>1105 phase1 2 CMT like 1004 but diff. initial on V3</nm:problem_title>
+<nm:problem_information><![CDATA[
+
+ PROBLEM NO.:         1
+ 1105 phase1 2 CMT like 1004 but diff. initial on V3
+0DATA CHECKOUT RUN:              NO
+ DATA SET LOCATED ON UNIT NO.:    2
+ THIS UNIT TO BE REWOUND:        NO
+ NO. OF DATA RECS IN DATA SET:      550
+ NO. OF DATA ITEMS IN DATA SET:  18
+ ID DATA ITEM IS DATA ITEM NO.:   2
+ DEP VARIABLE IS DATA ITEM NO.:   6
+ MDV DATA ITEM IS DATA ITEM NO.: 12
+0INDICES PASSED TO SUBROUTINE PRED:
+   4   3   5   0   0   0   0   0   0   0   0
+0LABELS FOR DATA ITEMS:
+ C ID TIME EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
+0FORMAT FOR DATA:
+ (1(12E6.0/),6E6.0)
+
+ TOT. NO. OF OBS RECS:      510
+ TOT. NO. OF INDIVIDUALS:     40
+0MODEL SPECIFICATION FILE INPUT
+ EST. RESCALED:   NO
+0SIMULATION STEP OMITTED:    NO
+ OBJ FUNC EVALUATED:         NO
+ SIMULATE WITH
+   INITIAL ESTIMATE:         NO
+   FINAL ESTIMATE:          YES
+   PRIOR ROUTINE VAL.:       NO
+ SOURCE   1:
+   SEED1:          1968   SEED2:             0   PSEUDO-NORMAL
+ NUMBER OF SUBPROBLEMS:  500
+0TABLES STEP OMITTED:    NO
+ NO. OF TABLES:           1
+0-- TABLE   1 --
+04 COLUMNS APPENDED:     NO
+ PRINTED:                NO
+ HEADER:                 NO
+ FILE TO BE FORWARDED:  YES
+0USER-CHOSEN ITEMS:
+ DV
+
+ THE FOLLOWING LABELS ARE EQUIVALENT
+ PRED=NPRED
+ RES=NRES
+ WRES=NWRES
+1DOUBLE PRECISION PREDPP VERSION 7.2.0
+
+ TWO COMPARTMENT MODEL WITH FIRST-ORDER ABSORPTION (ADVAN4)
+0MAXIMUM NO. OF BASIC PK PARAMETERS:   5
+0BASIC PK PARAMETERS (AFTER TRANSLATION):
+   BASIC PK PARAMETER NO.  1: ELIMINATION RATE (K)
+   BASIC PK PARAMETER NO.  2: CENTRAL-TO-PERIPH. RATE (K23)
+   BASIC PK PARAMETER NO.  3: PERIPH.-TO-CENTRAL RATE (K32)
+   BASIC PK PARAMETER NO.  5: ABSORPTION RATE (KA)
+ TRANSLATOR WILL CONVERT PARAMETERS
+ CL, V2, Q, V3 TO K, K23, K32 (TRANS4)
+0COMPARTMENT ATTRIBUTES
+ COMPT. NO.   FUNCTION   INITIAL    ON/OFF      DOSE      DEFAULT    DEFAULT
+                         STATUS     ALLOWED    ALLOWED    FOR DOSE   FOR OBS.
+    1         DEPOT        OFF        YES        YES        YES        NO
+    2         CENTRAL      ON         NO         YES        NO         YES
+    3         PERIPH.      ON         NO         YES        NO         NO
+    4         OUTPUT       OFF        YES        NO         NO         NO
+1
+ ADDITIONAL PK PARAMETERS - ASSIGNMENT OF ROWS IN GG
+ COMPT. NO.                             INDICES
+              SCALE      BIOAVAIL.   ZERO-ORDER  ZERO-ORDER  ABSORB
+                         FRACTION    RATE        DURATION    LAG
+    1           *           *           *           *           *
+    2           6           *           *           *           *
+    3           *           *           *           *           *
+    4           *           -           -           -           -
+             - PARAMETER IS NOT ALLOWED FOR THIS MODEL
+             * PARAMETER IS NOT SUPPLIED BY PK SUBROUTINE;
+               WILL DEFAULT TO ONE IF APPLICABLE
+0DATA ITEM INDICES USED BY PRED ARE:
+   EVENT ID DATA ITEM IS DATA ITEM NO.:      4
+   TIME DATA ITEM IS DATA ITEM NO.:          3
+   DOSE AMOUNT DATA ITEM IS DATA ITEM NO.:   5
+
+0PK SUBROUTINE CALLED WITH EVERY EVENT RECORD.
+ PK SUBROUTINE NOT CALLED AT NONEVENT (ADDITIONAL OR LAGGED) DOSE TIMES.
+0ERROR SUBROUTINE CALLED WITH EVERY EVENT RECORD.
+]]></nm:problem_information>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:      1
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1971892548   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='1' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:      2
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     727617288   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='2' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:      3
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     686792413   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='3' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:      4
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     790238274   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='4' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:      5
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1323927340   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='5' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:      6
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1736376421   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='6' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:      7
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2014448316   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='7' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:      8
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     179880587   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='8' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:      9
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1282180607   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='9' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     10
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1654994917   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='10' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     11
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     126892766   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='11' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     12
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1325791316   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='12' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     13
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1664554454   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='13' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     14
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     310340302   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='14' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     15
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     724481732   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='15' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     16
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1535529155   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='16' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     17
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1664151078   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='17' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     18
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1958526182   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='18' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     19
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1072412934   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='19' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     20
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1748593589   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='20' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     21
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1223676088   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='21' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     22
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1161956335   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='22' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     23
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     379476742   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='23' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     24
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     697660698   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='24' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     25
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      40644345   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='25' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     26
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1048002430   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='26' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     27
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2068003887   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='27' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     28
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     947432092   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='28' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     29
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2039597464   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='29' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     30
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1911984451   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='30' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     31
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2079719789   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='31' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     32
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1484110672   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='32' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     33
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     227596476   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='33' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     34
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1007968470   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='34' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     35
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      94961946   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='35' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     36
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     979554663   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='36' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     37
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1046157978   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='37' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     38
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     489494558   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='38' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     39
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1175346118   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='39' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     40
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      72094136   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='40' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     41
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1772674440   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='41' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     42
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1691457887   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='42' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     43
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     523680682   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='43' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     44
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1347933916   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='44' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     45
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1621640142   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='45' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     46
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1072716840   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='46' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     47
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1234451218   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='47' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     48
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     658875207   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='48' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     49
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1671525352   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='49' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     50
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1248459806   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='50' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     51
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1106390342   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='51' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     52
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     784005543   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='52' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     53
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      34499895   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='53' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     54
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2039859263   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='54' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     55
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1620359800   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='55' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     56
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2053068036   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='56' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     57
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1302566634   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='57' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     58
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1100206856   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='58' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     59
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     112671960   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='59' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     60
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     239063878   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='60' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     61
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     351795552   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='61' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     62
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1419546346   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='62' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     63
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1064776952   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='63' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     64
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     183298873   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='64' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     65
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     595274714   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='65' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     66
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1238823739   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='66' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     67
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1839060899   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='67' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     68
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1321872985   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='68' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     69
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1118040989   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='69' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     70
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1186072302   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='70' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     71
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1253955654   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='71' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     72
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2043314681   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='72' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     73
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     636500712   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='73' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     74
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1590175099   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='74' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     75
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      98263112   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='75' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     76
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     266930530   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='76' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     77
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     591823622   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='77' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     78
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1607551394   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='78' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     79
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2015785465   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='79' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     80
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2078248822   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='80' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     81
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     454076077   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='81' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     82
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1967242997   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='82' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     83
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1639950000   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='83' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     84
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1062424127   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='84' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     85
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2016555244   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='85' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     86
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2027254605   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='86' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     87
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     466064559   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='87' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     88
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      64246945   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='88' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     89
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1665999379   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='89' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     90
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     519081975   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='90' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     91
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     722426803   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='91' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     92
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1415800220   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='92' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     93
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     623553355   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='93' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     94
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1848023457   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='94' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     95
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1066189933   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='95' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     96
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     701867851   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='96' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     97
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1196251960   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='97' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     98
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     420622529   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='98' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:     99
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2061134632   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='99' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    100
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     515696189   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='100' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    101
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1604227465   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='101' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    102
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     596463497   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='102' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    103
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1737498556   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='103' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    104
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     210185732   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='104' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    105
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     517470988   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='105' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    106
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1234119749   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='106' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    107
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     307384849   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='107' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    108
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     242719448   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='108' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    109
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     409352683   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='109' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    110
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1000456137   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='110' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    111
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      55950509   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='111' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    112
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     524818204   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='112' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    113
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1932165179   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='113' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    114
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2122335229   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='114' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    115
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1958677239   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='115' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    116
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1724598454   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='116' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    117
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1056353762   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='117' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    118
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2012546627   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='118' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    119
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1079531638   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='119' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    120
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     225506930   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='120' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    121
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     942246167   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='121' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    122
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1995104297   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='122' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    123
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1702779581   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='123' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    124
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     633483985   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='124' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    125
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1335522839   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='125' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    126
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     201812433   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='126' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    127
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     600375470   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='127' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    128
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     915501969   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='128' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    129
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1854868510   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='129' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    130
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     477543941   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='130' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    131
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     936239532   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='131' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    132
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     872673834   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='132' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    133
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     485751184   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='133' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    134
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1239326812   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='134' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    135
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1078215008   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='135' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    136
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     986661788   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='136' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    137
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1054864694   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='137' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    138
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     981470976   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='138' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    139
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1757397208   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='139' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    140
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     143920909   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='140' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    141
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1876026225   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='141' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    142
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1195288952   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='142' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    143
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1875510191   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='143' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    144
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     348543459   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='144' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    145
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     168552242   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='145' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    146
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1461355181   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='146' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    147
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2010574400   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='147' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    148
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1042504994   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='148' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    149
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     168470409   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='149' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    150
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1974389041   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='150' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    151
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     169806432   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='151' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    152
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     780368265   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='152' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    153
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1858540813   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='153' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    154
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1627185879   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='154' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    155
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1806434624   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='155' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    156
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1383262883   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='156' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    157
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1778214865   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='157' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    158
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1450013900   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='158' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    159
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1694043274   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='159' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    160
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     648410860   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='160' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    161
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     943212618   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='161' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    162
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1541371482   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='162' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    163
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     943329314   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='163' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    164
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     147075735   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='164' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    165
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2081793016   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='165' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    166
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1003511152   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='166' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    167
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1433824300   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='167' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    168
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     697193036   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='168' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    169
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     155046350   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='169' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    170
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     150231141   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='170' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    171
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1454510453   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='171' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    172
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2021348755   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='172' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    173
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     430706014   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='173' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    174
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      47863266   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='174' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    175
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     776151329   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='175' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    176
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1624907022   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='176' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    177
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1649268492   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='177' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    178
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      45856037   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='178' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    179
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     420464230   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='179' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    180
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1354551875   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='180' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    181
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2092073325   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='181' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    182
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1568194928   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='182' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    183
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1136171724   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='183' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    184
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     136047382   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='184' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    185
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     155889059   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='185' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    186
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     132853860   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='186' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    187
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      94178543   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='187' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    188
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     945413019   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='188' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    189
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     449146807   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='189' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    190
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2028981647   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='190' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    191
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     287896678   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='191' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    192
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     267103863   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='192' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    193
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      98882137   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='193' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    194
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     927997514   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='194' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    195
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     124825950   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='195' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    196
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2010225357   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='196' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    197
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1021599757   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='197' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    198
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      98778346   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='198' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    199
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2040556134   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='199' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    200
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1741113936   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='200' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    201
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2083691945   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='201' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    202
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1476235384   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='202' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    203
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1103415548   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='203' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    204
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1415743828   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='204' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    205
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     740254020   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='205' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    206
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      11621506   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='206' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    207
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1595559541   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='207' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    208
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1051796033   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='208' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    209
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1460579682   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='209' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    210
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     206201005   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='210' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    211
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     801289304   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='211' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    212
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     869695878   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='212' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    213
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1275216054   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='213' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    214
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     304614067   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='214' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    215
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      74344884   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='215' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    216
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1433736772   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='216' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    217
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     466744968   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='217' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    218
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1525030350   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='218' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    219
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1790785677   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='219' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    220
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1558339765   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='220' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    221
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1644708004   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='221' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    222
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1168437840   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='222' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    223
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1905422862   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='223' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    224
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1287220652   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='224' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    225
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2031235853   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='225' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    226
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1187748538   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='226' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    227
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1211317386   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='227' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    228
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1270363258   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='228' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    229
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1855873407   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='229' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    230
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1645799893   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='230' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    231
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1663438145   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='231' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    232
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1640619436   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='232' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    233
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     341043408   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='233' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    234
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     572295919   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='234' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    235
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     414562043   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='235' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    236
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      79033773   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='236' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    237
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1099184085   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='237' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    238
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     964758450   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='238' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    239
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     393418287   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='239' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    240
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1890287636   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='240' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    241
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1314003757   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='241' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    242
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1361507070   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='242' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    243
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1791648157   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='243' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    244
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1513033045   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='244' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    245
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     497022314   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='245' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    246
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1596194260   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='246' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    247
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     231846504   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='247' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    248
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2082045609   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='248' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    249
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2041774223   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='249' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    250
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1512793815   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='250' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    251
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     133515678   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='251' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    252
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1665294685   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='252' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    253
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     874806491   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='253' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    254
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     915920400   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='254' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    255
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1057833859   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='255' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    256
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     222346630   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='256' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    257
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     201340156   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='257' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    258
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2048607050   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='258' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    259
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     223237573   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='259' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    260
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     247361496   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='260' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    261
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      32243308   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='261' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    262
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1072008983   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='262' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    263
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1445728854   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='263' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    264
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1908981181   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='264' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    265
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     839358616   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='265' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    266
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1613351061   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='266' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    267
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1919279742   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='267' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    268
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1936120076   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='268' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    269
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     992922422   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='269' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    270
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     722204265   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='270' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    271
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     492684561   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='271' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    272
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     893038564   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='272' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    273
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     551169077   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='273' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    274
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      29239409   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='274' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    275
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     890582908   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='275' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    276
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1525734476   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='276' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    277
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1599224801   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='277' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    278
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:       2534506   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='278' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    279
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1219570033   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='279' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    280
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1184434715   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='280' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    281
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1982770321   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='281' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    282
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     109190534   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='282' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    283
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2085593266   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='283' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    284
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1045898857   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='284' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    285
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     400323560   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='285' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    286
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     411279266   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='286' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    287
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1919311002   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='287' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    288
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1098072823   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='288' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    289
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     503642422   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='289' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    290
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     749858687   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='290' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    291
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     762386042   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='291' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    292
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1180944807   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='292' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    293
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     594476803   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='293' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    294
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     286175402   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='294' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    295
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1168233217   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='295' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    296
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     613658591   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='296' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    297
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1764053356   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='297' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    298
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1887173646   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='298' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    299
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1222818044   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='299' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    300
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1618958067   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='300' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    301
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     915020177   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='301' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    302
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1455700301   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='302' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    303
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      64733100   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='303' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    304
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1893036125   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='304' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    305
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1785523715   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='305' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    306
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1077627646   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='306' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    307
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1004369714   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='307' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    308
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     736371207   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='308' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    309
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1086453852   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='309' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    310
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     413638324   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='310' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    311
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     190103557   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='311' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    312
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1420618744   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='312' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    313
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     296931016   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='313' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    314
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     437903811   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='314' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    315
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1132620036   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='315' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    316
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     693913182   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='316' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    317
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     485099210   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='317' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    318
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2146432682   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='318' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    319
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     441041929   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='319' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    320
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1358187704   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='320' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    321
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     505345610   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='321' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    322
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1628459675   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='322' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    323
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     631020425   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='323' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    324
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1932836342   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='324' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    325
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1416002344   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='325' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    326
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     550588688   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='326' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    327
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     421061073   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='327' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    328
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1500280516   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='328' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    329
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1490010834   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='329' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    330
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1634687348   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='330' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    331
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     387934917   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='331' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    332
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     492575435   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='332' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    333
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     522896659   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='333' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    334
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     797321261   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='334' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    335
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     324001098   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='335' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    336
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1212974473   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='336' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    337
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     228988723   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='337' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    338
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     471712437   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='338' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    339
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1462878610   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='339' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    340
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     793164024   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='340' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    341
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     681419542   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='341' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    342
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     182491552   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='342' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    343
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1606153002   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='343' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    344
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1121970081   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='344' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    345
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2131001074   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='345' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    346
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     349935892   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='346' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    347
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:       1985877   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='347' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    348
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1536221654   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='348' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    349
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1384959139   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='349' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    350
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1786912298   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='350' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    351
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1479357705   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='351' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    352
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1750903892   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='352' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    353
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     912484635   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='353' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    354
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     717032990   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='354' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    355
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1325657177   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='355' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    356
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      24486297   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='356' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    357
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1548410839   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='357' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    358
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1664717702   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='358' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    359
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1824783032   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='359' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    360
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      61260945   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='360' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    361
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     576116546   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='361' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    362
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1010030104   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='362' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    363
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1210694585   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='363' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    364
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2063592638   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='364' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    365
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     979170030   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='365' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    366
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1269737567   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='366' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    367
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1246149619   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='367' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    368
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2109965383   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='368' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    369
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1900348698   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='369' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    370
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1123516628   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='370' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    371
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     795450877   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='371' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    372
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1098508939   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='372' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    373
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     705022560   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='373' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    374
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     407461698   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='374' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    375
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     107020519   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='375' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    376
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     233167212   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='376' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    377
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     928667643   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='377' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    378
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     503742717   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='378' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    379
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1948304398   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='379' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    380
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     681935238   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='380' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    381
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1973820931   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='381' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    382
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      97862815   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='382' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    383
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     299312347   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='383' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    384
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     952016260   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='384' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    385
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     969155057   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='385' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    386
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1901602286   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='386' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    387
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1070213777   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='387' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    388
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     787486852   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='388' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    389
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1488380748   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='389' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    390
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1223931748   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='390' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    391
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1253301057   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='391' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    392
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     623403952   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='392' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    393
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     627059296   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='393' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    394
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1112890041   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='394' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    395
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     348353906   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='395' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    396
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2113057528   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='396' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    397
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     229438717   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='397' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    398
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     200877254   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='398' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    399
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1694658965   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='399' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    400
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1032975977   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='400' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    401
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1024394455   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='401' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    402
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     765269695   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='402' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    403
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1635205732   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='403' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    404
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     525236003   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='404' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    405
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1287545231   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='405' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    406
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1319206304   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='406' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    407
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1169085134   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='407' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    408
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2018224165   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='408' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    409
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1346392625   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='409' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    410
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2043023599   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='410' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    411
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      15175408   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='411' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    412
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      34847387   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='412' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    413
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1541155331   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='413' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    414
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1561819604   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='414' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    415
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1285226589   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='415' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    416
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     804191053   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='416' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    417
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1961614181   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='417' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    418
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     720766911   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='418' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    419
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     969162348   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='419' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    420
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1730113779   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='420' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    421
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1173179479   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='421' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    422
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     450037244   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='422' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    423
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1646568634   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='423' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    424
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1488999720   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='424' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    425
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     902190616   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='425' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    426
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1997582774   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='426' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    427
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1058868430   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='427' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    428
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     194293120   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='428' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    429
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     219519687   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='429' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    430
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1232259968   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='430' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    431
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     981540761   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='431' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    432
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     643238693   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='432' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    433
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     672910329   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='433' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    434
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1285822899   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='434' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    435
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     952736374   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='435' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    436
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      88746851   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='436' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    437
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     914427751   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='437' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    438
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     275338131   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='438' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    439
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1907035148   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='439' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    440
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     309351340   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='440' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    441
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      32053981   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='441' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    442
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     440757008   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='442' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    443
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     559258316   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='443' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    444
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1620721264   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='444' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    445
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1569167082   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='445' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    446
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1695824910   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='446' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    447
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     359014935   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='447' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    448
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1165399020   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='448' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    449
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     111583233   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='449' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    450
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1733820635   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='450' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    451
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     109582201   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='451' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    452
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1341355957   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='452' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    453
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2051841643   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='453' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    454
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     543333091   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='454' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    455
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1342012001   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='455' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    456
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     482608592   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='456' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    457
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2004374344   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='457' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    458
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1288721165   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='458' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    459
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1841463112   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='459' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    460
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     367843031   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='460' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    461
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     451866378   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='461' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    462
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     211716731   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='462' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    463
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1830590254   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='463' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    464
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     110166536   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='464' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    465
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1472603098   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='465' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    466
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1696389905   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='466' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    467
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1905936110   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='467' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    468
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2092282279   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='468' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    469
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1608211444   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='469' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    470
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1920159943   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='470' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    471
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     882571003   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='471' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    472
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1447431924   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='472' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    473
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1490851651   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='473' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    474
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1135764389   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='474' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    475
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1627876706   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='475' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    476
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     951866250   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='476' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    477
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1012491283   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='477' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    478
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     545382662   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='478' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    479
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1618985304   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='479' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    480
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2056351078   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='480' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    481
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:      81362691   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='481' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    482
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1487372114   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='482' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    483
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     409835413   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='483' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    484
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1370493112   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='484' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    485
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     344163830   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='485' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    486
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     770507977   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='486' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    487
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2063778455   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='487' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    488
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1838481473   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='488' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    489
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     648965452   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='489' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    490
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     748152959   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='490' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    491
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1162329580   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='491' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    492
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1420763874   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='492' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    493
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     968351079   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='493' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    494
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1613576332   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='494' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    495
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1901271151   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='495' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    496
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     712929320   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='496' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    497
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     477344190   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='497' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    498
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:     807298546   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='498' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    499
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    1631851147   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='499' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+<nm:simulation_information><![CDATA[
+1
+ PROBLEM NO.:         1     SUBPROBLEM NO.:    500
+
+ SIMULATION STEP PERFORMED
+ SOURCE  1:
+    SEED1:    2068107800   SEED2:             0
+]]></nm:simulation_information>
+<nm:estimation nm:number='500' nm:type='1'>
+<nm:table_series>0</nm:table_series>
+</nm:estimation>
+</nm:problem>
+</nm:nonmem>
+<nm:stop_datetime>2011-11-08T03:34:02.414</nm:stop_datetime>
+</nm:output>

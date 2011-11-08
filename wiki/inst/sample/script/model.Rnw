@@ -18,7 +18,6 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \section{Model Development}
 \subsection{Set up for NONMEM run.}
 <<model>>=
-getwd()
 library(metrumrg)
 command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
 cat.cov='SEX'
@@ -31,7 +30,7 @@ eta.list=paste('ETA',1:10,sep='')
 NONR72(
      run=1005,
      command=command,
-     project='/home/timb/metrumrg/inst/sample/nonmem',
+     project='../nonmem',
      grid=FALSE,
      nice=TRUE,
      checkrunno=FALSE,
@@ -39,12 +38,10 @@ NONR72(
      cat.cov=cat.cov,
      par.list=par.list,
      eta.list=eta.list,
-     plotfile='/home/timb/metrumrg/inst/sample/nonmem/*/diagnostics.pdf',
-     streams='/home/timb/metrumrg/inst/sample/nonmem/ctl',
+     plotfile='../nonmem/*/diagnostics.pdf',
+     streams='../nonmem/ctl',
      checksum=FALSE
 )
-getwd()
-
 @
 Covariance succeeded on model 1005.
 \section{Predictive Check}
@@ -88,7 +85,6 @@ NONR72(
      streams='../nonmem/ctl',
      checksum=FALSE
 )
-getwd()
 @
 \subsection{Recover and format the original dataset.}
 Now we fetch the results and integrate them with the other data.
@@ -288,7 +284,7 @@ NONR72(
      project='../nonmem/1005.boot/',
      boot=TRUE,
      nice=TRUE,
-     #grid=TRUE,
+     grid=TRUE,
      #concurrent=TRUE,
      streams='../nonmem/1005.boot/ctl',
      checksum=FALSE

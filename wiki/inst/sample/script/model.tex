@@ -19,16 +19,11 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \subsection{Set up for NONMEM run.}
 \begin{Schunk}
 \begin{Sinput}
-> getwd()
-\end{Sinput}
-\begin{Soutput}
-[1] "/home/timb/metrumrg/inst/sample/script"
-\end{Soutput}
-\begin{Sinput}
 > library(metrumrg)
 \end{Sinput}
 \begin{Soutput}
-metrumrg 5.0 
+metrumrg 5.4 
+enter "?metrumrg" for help
 \end{Soutput}
 \begin{Sinput}
 > command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
@@ -44,7 +39,7 @@ metrumrg 5.0
 > NONR72(
 +      run=1005,
 +      command=command,
-+      project='/home/timb/metrumrg/inst/sample/nonmem',
++      project='../nonmem',
 +      grid=FALSE,
 +      nice=TRUE,
 +      checkrunno=FALSE,
@@ -52,15 +47,11 @@ metrumrg 5.0
 +      cat.cov=cat.cov,
 +      par.list=par.list,
 +      eta.list=eta.list,
-+      plotfile='/home/timb/metrumrg/inst/sample/nonmem/*/diagnostics.pdf',
-+      streams='/home/timb/metrumrg/inst/sample/nonmem/ctl',
++      plotfile='../nonmem/*/diagnostics.pdf',
++      streams='../nonmem/ctl',
 +      checksum=FALSE
 + )
-> getwd()
 \end{Sinput}
-\begin{Soutput}
-[1] "/home/timb/metrumrg/inst/sample/script"
-\end{Soutput}
 \end{Schunk}
 Covariance succeeded on model 1005.
 \section{Predictive Check}
@@ -177,11 +168,7 @@ This run makes the predictions (simulations).
 +      streams='../nonmem/ctl',
 +      checksum=FALSE
 + )
-> getwd()
 \end{Sinput}
-\begin{Soutput}
-[1] "/home/timb/metrumrg/inst/sample/script"
-\end{Soutput}
 \end{Schunk}
 \subsection{Recover and format the original dataset.}
 Now we fetch the results and integrate them with the other data.
@@ -600,7 +587,7 @@ We also show densityplots of predictions at those quartiles.
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/home/timb/metrumrg/inst/sample/script"
+[1] "/data/metsvn/wiki/inst/sample/script"
 \end{Soutput}
 \begin{Sinput}
 > dir.create('../nonmem/1005.boot')
@@ -655,7 +642,7 @@ We also show densityplots of predictions at those quartiles.
 +      project='../nonmem/1005.boot/',
 +      boot=TRUE,
 +      nice=TRUE,
-+      #grid=TRUE,
++      grid=TRUE,
 +      #concurrent=TRUE,
 +      streams='../nonmem/1005.boot/ctl',
 +      checksum=FALSE
