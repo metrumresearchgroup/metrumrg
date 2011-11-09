@@ -11,7 +11,7 @@ $PK
  S2=V2
  
 $ERROR
- Y=F*EXP(ERR(1))
+ Y=F*(1+ERR(1)) + ERR(2)
  IPRE=F
 
 $MSFI =../1005/1005.msf

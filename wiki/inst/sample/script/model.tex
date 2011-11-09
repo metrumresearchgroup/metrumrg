@@ -82,7 +82,7 @@ Strip comments and view.
 [11] " S2=V2"                                                                                      
 [12] " "                                                                                           
 [13] "$ERROR"                                                                                      
-[14] " Y=F*EXP(ERR(1))"                                                                            
+[14] " Y=F*(1+ERR(1)) + ERR(2)"                                                                    
 [15] " IPRE=F"                                                                                     
 [16] ""                                                                                            
 [17] "$THETA"                                                                                      
@@ -94,33 +94,44 @@ Strip comments and view.
 [23] "(0,1,2)"                                                                                     
 [24] "(0,0.75,3)"                                                                                  
 [25] ""                                                                                            
-[26] "$OMEGA 0.09 0.09 0.09"                                                                       
-[27] ""                                                                                            
-[28] ""                                                                                            
-[29] ""                                                                                            
+[26] "$OMEGA BLOCK(3)"                                                                             
+[27] ".1"                                                                                          
+[28] ".01 .1"                                                                                      
+[29] ".01 .01 .1"                                                                                  
 [30] ""                                                                                            
 [31] ""                                                                                            
-[32] "$SIGMA 0.09"                                                                                 
+[32] ""                                                                                            
 [33] ""                                                                                            
 [34] ""                                                                                            
 [35] ""                                                                                            
-[36] "$ESTIMATION MAXEVAL=9999 PRINT=5 NOABORT METHOD=1 INTER MSFO=./1005.msf"                     
-[37] "$COV PRINT=E"                                                                                
-[38] "$TABLE NOPRINT FILE=./1005.tab ONEHEADER ID AMT TIME EVID PRED IPRE CWRES"                   
-[39] "$TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3"            
+[36] ""                                                                                            
+[37] ""                                                                                            
+[38] "$SIGMA 0.1 0.1"                                                                              
+[39] ""                                                                                            
 [40] ""                                                                                            
 [41] ""                                                                                            
 [42] ""                                                                                            
-[43] ""                                                                                            
-[44] ""                                                                                            
-[45] ""                                                                                            
-[46] ""                                                                                            
+[43] "$ESTIMATION MAXEVAL=9999 PRINT=5 NOABORT METHOD=1 INTER MSFO=./1005.msf"                     
+[44] "$COV PRINT=E"                                                                                
+[45] "$TABLE NOPRINT FILE=./1005.tab ONEHEADER ID AMT TIME EVID PRED IPRE CWRES"                   
+[46] "$TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3"            
 [47] ""                                                                                            
 [48] ""                                                                                            
 [49] ""                                                                                            
 [50] ""                                                                                            
 [51] ""                                                                                            
 [52] ""                                                                                            
+[53] ""                                                                                            
+[54] ""                                                                                            
+[55] ""                                                                                            
+[56] ""                                                                                            
+[57] ""                                                                                            
+[58] ""                                                                                            
+[59] ""                                                                                            
+[60] ""                                                                                            
+[61] ""                                                                                            
+[62] ""                                                                                            
+[63] ""                                                                                            
 \end{Soutput}
 \end{Schunk}
 Fix records of interest.
@@ -250,11 +261,11 @@ Now we fetch the results and integrate them with the other data.
 \begin{Soutput}
   SUBJ TIME    DV SIM    PRED
 2    1 0.00    NA   1 0.00000
-3    1 0.25 0.363   1 0.17932
-4    1 0.50 0.914   1 0.53642
-5    1 1.00 1.120   1 0.78983
-6    1 2.00 2.280   1 1.84990
-7    1 3.00 1.630   1 1.96530
+3    1 0.25 0.363   1 0.72542
+4    1 0.50 0.914   1 1.38320
+5    1 1.00 1.120   1 2.06720
+6    1 2.00 2.280   1 3.48570
+7    1 3.00 1.630   1 5.44600
 \end{Soutput}
 \begin{Sinput}
 > phase1 <- phase1[!is.na(phase1$DV),]
@@ -262,12 +273,12 @@ Now we fetch the results and integrate them with the other data.
 \end{Sinput}
 \begin{Soutput}
   SUBJ TIME    DV SIM    PRED
-3    1 0.25 0.363   1 0.17932
-4    1 0.50 0.914   1 0.53642
-5    1 1.00 1.120   1 0.78983
-6    1 2.00 2.280   1 1.84990
-7    1 3.00 1.630   1 1.96530
-8    1 4.00 2.040   1 2.01810
+3    1 0.25 0.363   1 0.72542
+4    1 0.50 0.914   1 1.38320
+5    1 1.00 1.120   1 2.06720
+6    1 2.00 2.280   1 3.48570
+7    1 3.00 1.630   1 5.44600
+8    1 4.00 2.040   1 2.99140
 \end{Soutput}
 \end{Schunk}
 \subsection{Plot predictive checks.}
@@ -282,12 +293,12 @@ Therefore, we wish to calculate summary statistics for each subject,
 \end{Sinput}
 \begin{Soutput}
   SUBJ TIME    DV SIM    PRED
-3    1 0.25 0.363   1 0.17932
-4    1 0.50 0.914   1 0.53642
-5    1 1.00 1.120   1 0.78983
-6    1 2.00 2.280   1 1.84990
-7    1 3.00 1.630   1 1.96530
-8    1 4.00 2.040   1 2.01810
+3    1 0.25 0.363   1 0.72542
+4    1 0.50 0.914   1 1.38320
+5    1 1.00 1.120   1 2.06720
+6    1 2.00 2.280   1 3.48570
+7    1 3.00 1.630   1 5.44600
+8    1 4.00 2.040   1 2.99140
 \end{Soutput}
 \begin{Sinput}
 > subject <- melt(phase1,measure.var=c('DV','PRED'))
@@ -318,13 +329,13 @@ Now we cast, ignoring time.
 > head(subject)
 \end{Sinput}
 \begin{Soutput}
-  SUBJ SIM variable      min    med    max
-1    1   1       DV 0.363000 1.6100 3.0900
-2    1   1     PRED 0.179320 1.9653 5.0314
-3    1   2       DV 0.363000 1.6100 3.0900
-4    1   2     PRED 0.096462 3.0448 7.4728
-5    1   3       DV 0.363000 1.6100 3.0900
-6    1   3     PRED 0.450430 5.5284 8.7665
+  SUBJ SIM variable       min    med     max
+1    1   1       DV  0.363000 1.6100  3.0900
+2    1   1     PRED  0.725420 3.4795  5.4460
+3    1   2       DV  0.363000 1.6100  3.0900
+4    1   2     PRED -0.085238 2.2941  4.6468
+5    1   3       DV  0.363000 1.6100  3.0900
+6    1   3     PRED -0.022407 4.8896 12.3770
 \end{Soutput}
 \end{Schunk}
 Note that regardless of SIM, DV (observed) is constant.
@@ -336,13 +347,13 @@ Now we melt the metrics.
 > head(metr)
 \end{Sinput}
 \begin{Soutput}
-  SUBJ SIM variable metric    value
-1    1   1       DV    min 0.363000
-2    1   1     PRED    min 0.179320
-3    1   2       DV    min 0.363000
-4    1   2     PRED    min 0.096462
-5    1   3       DV    min 0.363000
-6    1   3     PRED    min 0.450430
+  SUBJ SIM variable metric     value
+1    1   1       DV    min  0.363000
+2    1   1     PRED    min  0.725420
+3    1   2       DV    min  0.363000
+4    1   2     PRED    min -0.085238
+5    1   3       DV    min  0.363000
+6    1   3     PRED    min -0.022407
 \end{Soutput}
 \begin{Sinput}
 > metr$value <- reapply(
@@ -356,12 +367,12 @@ Now we melt the metrics.
 \end{Sinput}
 \begin{Soutput}
   SUBJ SIM metric    DV     PRED
-1    1   1    min 0.139 0.064213
-2    1   1    med 1.025 1.943600
-3    1   1    max 2.530 3.945400
-4    1   2    min 0.139 0.016162
-5    1   2    med 1.025 1.476300
-6    1   2    max 2.530 3.463200
+1    1   1    min 0.139 -0.61537
+2    1   1    med 1.025  1.25865
+3    1   1    max 2.530  2.17620
+4    1   2    min 0.139 -0.35196
+5    1   2    med 1.025  1.20926
+6    1   2    max 2.530  2.42390
 \end{Soutput}
 \begin{Sinput}
 > nrow(metr)
@@ -406,13 +417,13 @@ indicating quartiles.
 > head(med)
 \end{Sinput}
 \begin{Soutput}
-   SUBJ SIM    DV     PRED
-2     1   1 1.025 1.943600
-5     1   2 1.025 1.476300
-8     1   3 1.025 1.466300
-11    1   4 1.025 1.342400
-14    1   5 1.025 1.362350
-17    1   6 1.025 0.625815
+   SUBJ SIM    DV    PRED
+2     1   1 1.025 1.25865
+5     1   2 1.025 1.20926
+8     1   3 1.025 1.57990
+11    1   4 1.025 0.88489
+14    1   5 1.025 1.65875
+17    1   6 1.025 0.95005
 \end{Soutput}
 \begin{Sinput}
 > trim <- inner(med, id.var=c('SIM'),measure.var=c('PRED','DV'))
@@ -444,13 +455,13 @@ indicating quartiles.
 > head(trim)
 \end{Sinput}
 \begin{Soutput}
-    SIM   DV   PRED
-501   1 1.13 1.9653
-502   2 1.13 1.5989
-503   3 1.13 1.4754
-504   4 1.13 1.4074
-505   5 1.13 1.3787
-506   6 1.13 1.4753
+    SIM   DV    PRED
+501   1 1.13 2.05880
+502   2 1.13 2.00535
+503   3 1.13 1.65480
+504   4 1.13 1.06910
+505   5 1.13 2.05960
+506   6 1.13 0.98589
 \end{Soutput}
 \begin{Sinput}
 > print(
@@ -480,13 +491,13 @@ We also show densityplots of predictions at those quartiles.
 > head(trim)
 \end{Sinput}
 \begin{Soutput}
-    SIM   DV   PRED
-501   1 1.13 1.9653
-502   2 1.13 1.5989
-503   3 1.13 1.4754
-504   4 1.13 1.4074
-505   5 1.13 1.3787
-506   6 1.13 1.4753
+    SIM   DV    PRED
+501   1 1.13 2.05880
+502   2 1.13 2.00535
+503   3 1.13 1.65480
+504   4 1.13 1.06910
+505   5 1.13 2.05960
+506   6 1.13 0.98589
 \end{Soutput}
 \begin{Sinput}
 > quantile(trim$DV)
@@ -513,26 +524,26 @@ We also show densityplots of predictions at those quartiles.
 > head(quart)
 \end{Sinput}
 \begin{Soutput}
-  SIM variable      X25.    X50.      X75.
-1   1       DV  7.950000 20.2500 100.10000
-2   1     PRED 10.329750 22.8675  91.61825
-3   2       DV  7.950000 20.2500 100.10000
-4   2     PRED 10.241500 23.4225  97.26175
-5   3       DV  7.950000 20.2500 100.10000
-6   3     PRED  8.081437 20.0330 106.59750
+  SIM variable     X25.     X50.      X75.
+1   1       DV  7.95000 20.25000 100.10000
+2   1     PRED 11.92825 22.16750 103.96500
+3   2       DV  7.95000 20.25000 100.10000
+4   2     PRED  7.23495 20.27050 105.20875
+5   3       DV  7.95000 20.25000 100.10000
+6   3     PRED  7.82690 14.50425  98.27575
 \end{Soutput}
 \begin{Sinput}
 > molt <- melt(quart,id.var='variable',measure.var=c('X25.','X50.','X75.'),variable_name='quartile')
 > head(molt)
 \end{Sinput}
 \begin{Soutput}
-  variable quartile     value
-1       DV     X25.  7.950000
-2     PRED     X25. 10.329750
-3       DV     X25.  7.950000
-4     PRED     X25. 10.241500
-5       DV     X25.  7.950000
-6     PRED     X25.  8.081437
+  variable quartile    value
+1       DV     X25.  7.95000
+2     PRED     X25. 11.92825
+3       DV     X25.  7.95000
+4     PRED     X25.  7.23495
+5       DV     X25.  7.95000
+6     PRED     X25.  7.82690
 \end{Soutput}
 \begin{Sinput}
 > levels(molt$quartile)
@@ -545,13 +556,13 @@ We also show densityplots of predictions at those quartiles.
 > head(molt)
 \end{Sinput}
 \begin{Soutput}
-  variable       quartile     value
-1       DV first quartile  7.950000
-2     PRED first quartile 10.329750
-3       DV first quartile  7.950000
-4     PRED first quartile 10.241500
-5       DV first quartile  7.950000
-6     PRED first quartile  8.081437
+  variable       quartile    value
+1       DV first quartile  7.95000
+2     PRED first quartile 11.92825
+3       DV first quartile  7.95000
+4     PRED first quartile  7.23495
+5       DV first quartile  7.95000
+6     PRED first quartile  7.82690
 \end{Soutput}
 \begin{Sinput}
 > levels(molt$variable)

@@ -11,7 +11,7 @@ $PK
  S2=V2
  
 $ERROR
- Y=F*EXP(ERR(1)); + ERR(2)
+ Y=F*(1+ERR(1)) + ERR(2)
  IPRE=F
 ;<doc>
 $THETA 
@@ -23,15 +23,22 @@ $THETA
 (0,1,2)       ;SEX       <parameter name='THETA6' latex='$\theta_6$'                 label='Male.CL'                                >male effect on clearance</parameter>
 (0,0.75,3)    ;WT on CL  <parameter name='THETA7' latex='$\theta_7$'                 label='WT.CL'                                  >weight effect on clearance</parameter>
 
-$OMEGA 0.09 0.09 0.09 
+$OMEGA BLOCK(3)
+.1
+.01 .1
+.01 .01 .1
 
 ;<parameter name='OMEGA1.1' label='$\Omega^{1.1}CL/F$'>interindividual variability on clearance</parameter>
+;<parameter name='OMEGA2.1' label='$\Omega^{2.1}Vc/F$'>interindividual clearance-volume covariance</parameter>
 ;<parameter name='OMEGA2.2' label='$\Omega^{2.2}Vc/F$'>interindividual variability on central volume</parameter>
+;<parameter name='OMEGA3.1' label='$\Omega^{3.1}Ka$'>interindividual clearance-Ka covariance</parameter>
+;<parameter name='OMEGA3.2' label='$\Omega^{3.2}Ka$'>interindividual volume-Ka covariance</parameter>
 ;<parameter name='OMEGA3.3' label='$\Omega^{3.3}Ka$'>interindividual variability on Ka</parameter>
 
-$SIGMA 0.09
+$SIGMA 0.1 0.1
 
 ;<parameter name='SIGMA1.1' label='$\sigma^{1.1}prop$'>proportional error</parameter>
+;<parameter name='SIGMA2.2' label='$\sigma^{2.2}prop$'>additive error</parameter>
 
 $ESTIMATION MAXEVAL=9999 PRINT=5 NOABORT METHOD=1 INTER MSFO=./1005.msf
 $COV PRINT=E
@@ -46,7 +53,11 @@ $TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 ;<wiki model='MALE_CL/F ~ theta_6'                                              >male effect on clearance</wiki>
 ;<wiki model = 'WT_CL/F ~ theta_7'                                              >weight effect on clearance</wiki>
 ;<wiki model='IIV_CL/F ~ Omega_1.1'                                             >interindividual variability of clearance</wiki>
+;<wiki model='cov_CL,V ~ Omega_2.1'                                             >interindividual clearance-volume covariance</wiki>
 ;<wiki model='IIV_V_c /F ~ Omega_2.2'                                           >interindividual variability of central volume</wiki>
+;<wiki model='cov_CL,Ka  ~ Omega_3.1'                                           >interindividual clearance-Ka covariance</wiki>
+;<wiki model='cov_V,Ka  ~ Omega_3.2'                                            >interindividual volume-Ka covariance</wiki>
 ;<wiki model='IIV_K_a  ~ Omega_3.3'                                             >interindividual variability of Ka</wiki>
 ;<wiki model='err_prop ~ Sigma_1.1'                                             >proportional error</wiki>
+;<wiki model='err_add ~ Sigma_2.2'                                             >additive error</wiki>
 ;</doc>
