@@ -28,7 +28,7 @@ eta.list=paste('ETA',1:10,sep='')
 \subsection{Run NONMEM.}
 <<run>>=
 NONR72(
-     run=1005,
+     run=1001:1005,
      command=command,
      project='../nonmem',
      grid=FALSE,
@@ -44,6 +44,31 @@ NONR72(
 )
 @
 Covariance succeeded on model 1005.
+We can make a quick run log using some simple tools. Table \ref{runlog}.
+<<runlog>>=
+log <- rlog(1001:1005,'../nonmem',tool='nm7')
+head(log)
+tail(log)
+sapply(log,class)
+log$tool <- NULL
+unique(log$parameter)
+log <- log[log$parameter %in% c('ofv','prob','cov','min'),]
+log
+with(log, constant(moment,within=parameter))#i.e., moment is non-informative here.
+log <- data.frame(cast(log,run~parameter))
+log <- shuffle(log,'prob','run')
+log$ofv <- signif(as.numeric(as.character(log$ofv,6)))
+@
+<<runlog,results=tex,echo=FALSE>>=
+writeLines(
+  ltable(
+    log,
+    caption='Run Log',
+    cap='Run Log',
+	  label='runlog'
+  )
+)
+@
 \section{Predictive Check}
 \subsection{Create a simulation control stream.}
 Convert control stream to R object.

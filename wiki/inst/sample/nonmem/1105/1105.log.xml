@@ -74,7 +74,7 @@
          </job>
          <job>
           <do>date</do>
-          <so>Wed Nov  9 16:25:47 UTC 2011</so>
+          <so>Thu Nov 10 14:52:41 UTC 2011</so>
          </job>
          <job>
           <do>perl -e "use POSIX; print join qq(,),uname"</do>
@@ -109,8 +109,8 @@
           Starting nonmem execution ...
           License Registered to: Metrum Research Group
           Expiration Date:    14 JUL 2012
-          Current Date:        9 NOV 2011
-          Days until program expires : 250
+          Current Date:       10 NOV 2011
+          Days until program expires : 249
            
            PROBLEM NO.:         1     SUBPROBLEM NO.:      1
            
@@ -1616,7 +1616,7 @@
           <do>if [ -e 1105.xml ];then cat 1105.xml;else echo \&lt;nofile/\>; fi</do>
           <so>
            <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-            <nm:start_datetime>2011-11-09T16:25:56.817</nm:start_datetime>
+            <nm:start_datetime>2011-11-10T14:52:50.252</nm:start_datetime>
             <nm:control_stream>
             $PROB 1105 phase1 2 CMT like 1004 but diff. initial on V3
             $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
@@ -1650,8 +1650,8 @@
              <nm:license_information>
              License Registered to: Metrum Research Group
              Expiration Date:    14 JUL 2012
-             Current Date:        9 NOV 2011
-             Days until program expires : 250</nm:license_information>
+             Current Date:       10 NOV 2011
+             Days until program expires : 249</nm:license_information>
              <nm:program_information>
              1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
               ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -6746,7 +6746,7 @@
               </nm:estimation>
              </nm:problem>
             </nm:nonmem>
-            <nm:stop_datetime>2011-11-09T16:26:37.805</nm:stop_datetime>
+            <nm:stop_datetime>2011-11-10T14:53:30.615</nm:stop_datetime>
            </nm:output>
           </so>
          </job>

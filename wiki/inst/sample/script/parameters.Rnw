@@ -14,15 +14,14 @@ Tim Bergsma\\
 \newpage
 
 \section{Purpose}
-This script picks up after model.Rnw to process bootstrap results and make a parameter table. It assumes
-the current working directory is the script directory containing this file.
+This script picks up after model.Rnw to process bootstrap results and make a parameter table. It assumes the current working directory is the script directory containing this file.
 \subsection{Package}
 <<more>>= 
 library(metrumrg)
 @
 \section{inputs}
 `wikitab' gives us a quick synthesis of `rlog' and the `lookup' of wiki notation in 1005.ctl.
-We do some science on the result first, and then some aesthetics for printing in a \LaTeX table.
+We do some science on the result first, and then some aesthetics for printing in a \LaTeX table.  Table \ref{p1005}.
 <<params>>=
 tab <- wikitab(1005,'../nonmem')
 tab$estimate <- signif(as.numeric(tab$estimate),3)
@@ -130,8 +129,8 @@ tab$statistic <- NULL
 tab$cv <- NULL
 tab$sd <- NULL
 tab$cor <- NULL
-
-<<results=tex,echo=FALSE>>=
+@
+<<partab,results=tex,echo=FALSE>>=
 writeLines(
   ltable(
 	  tab,
@@ -141,4 +140,34 @@ writeLines(
   )
 )
 @
+\section{simple parameter table}
+We can make a quick parameter table that does not use wikitab markup. Table \ref{simple}.
+<<simpletab>>=
+tab <- rlog(1005,'../nonmem',tool='nm7')
+head(tab)
+tab$tool <- NULL
+tab$run <- NULL
+tab <- tab[tab$moment %in% c('estimate','prse'),]
+unique(tab$parameter)
+tab$value <- signif(as.numeric(tab$value),3)
+tab$parameter <- factor(tab$parameter,levels=unique(tab$parameter))#to preserve row order during cast
+tab <- cast(tab,parameter~moment)
+tab
+tab$parameter <- parameter2wiki(tab$parameter)
+tab
+tab$parameter <- wiki2latex(tab$parameter)
+tab
+@
+<<simpletab,results=tex,echo=false>>=
+writeLines(
+  ltable(
+    tab,
+    caption='Simple Parameter Table',
+	  label='simple'
+  )
+)
+@
+
+
+
 \end{document}

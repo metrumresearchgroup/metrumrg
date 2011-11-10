@@ -37,7 +37,7 @@ enter "?metrumrg" for help
 \begin{Schunk}
 \begin{Sinput}
 > NONR72(
-+      run=1005,
++      run=1001:1005,
 +      command=command,
 +      project='../nonmem',
 +      grid=FALSE,
@@ -54,7 +54,132 @@ enter "?metrumrg" for help
 \end{Sinput}
 \end{Schunk}
 Covariance succeeded on model 1005.
-\section{Predictive Check}
+We can make a quick run log using some simple tools. Table \ref{runlog}.
+\begin{Schunk}
+\begin{Sinput}
+> log <- rlog(1001:1005,'../nonmem',tool='nm7')
+> head(log)
+\end{Sinput}
+\begin{Soutput}
+  tool  run parameter   moment            value
+1  nm7 1001       ofv  minimum 2526.39867230031
+2  nm7 1001    THETA1 estimate          11.7167
+3  nm7 1001    THETA1     prse             8.67
+4  nm7 1001    THETA1       se          1.01636
+5  nm7 1001    THETA2 estimate          14.5657
+6  nm7 1001    THETA2     prse             8.67
+\end{Soutput}
+\begin{Sinput}
+> tail(log)
+\end{Sinput}
+\begin{Soutput}
+    tool  run parameter   moment
+245  nm7 1005  SIGMA2.2     prse
+246  nm7 1005  SIGMA2.2       se
+247  nm7 1005       cov   status
+248  nm7 1005      prob     text
+249  nm7 1005       min   status
+250  nm7 1005      data filename
+                                                  value
+245                                                33.5
+246                                           0.0676412
+247                                                   0
+248 1005 phase1 2 CMT like 1004 but diff. initial on V3
+249                                                   0
+250                       ../../data/derived/phase1.csv
+\end{Soutput}
+\begin{Sinput}
+> sapply(log,class)
+\end{Sinput}
+\begin{Soutput}
+       tool         run   parameter      moment       value 
+"character"   "integer" "character" "character" "character" 
+\end{Soutput}
+\begin{Sinput}
+> log$tool <- NULL
+> unique(log$parameter)
+\end{Sinput}
+\begin{Soutput}
+ [1] "ofv"      "THETA1"   "THETA2"   "THETA3"   "OMEGA1.1" "OMEGA2.1"
+ [7] "OMEGA2.2" "OMEGA3.1" "OMEGA3.2" "OMEGA3.3" "SIGMA1.1" "SIGMA2.1"
+[13] "SIGMA2.2" "cov"      "prob"     "min"      "data"     "THETA4"  
+[19] "THETA5"   "OMEGA4.1" "OMEGA4.2" "OMEGA4.3" "OMEGA4.4" "OMEGA5.1"
+[25] "OMEGA5.2" "OMEGA5.3" "OMEGA5.4" "OMEGA5.5" "THETA6"   "THETA7"  
+\end{Soutput}
+\begin{Sinput}
+> log <- log[log$parameter %in% c('ofv','prob','cov','min'),]
+> log
+\end{Sinput}
+\begin{Soutput}
+     run parameter  moment
+1   1001       ofv minimum
+38  1001       cov  status
+39  1001      prob    text
+40  1001       min  status
+42  1002       ofv minimum
+112 1002       cov  status
+113 1002      prob    text
+114 1002       min  status
+116 1003       ofv minimum
+153 1003       cov  status
+154 1003      prob    text
+155 1003       min  status
+157 1004       ofv minimum
+194 1004       cov  status
+195 1004      prob    text
+196 1004       min  status
+198 1005       ofv minimum
+247 1005       cov  status
+248 1005      prob    text
+249 1005       min  status
+                                                          value
+1                                              2526.39867230031
+38                                                            0
+39                                             1001 phase1 1CMT
+40                                                            0
+42                                             2525.96526753388
+112                                                           1
+113                                           1002 phase1 2 CMT
+114                                                           1
+116                                            2569.89393760215
+153                                                           1
+154 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
+155                                                           0
+157                                            2570.45022637547
+194                                                           0
+195               1004 phase1 2 CMT like 1003 but better bounds
+196                                                           0
+198                                            2405.91625845151
+247                                                           0
+248         1005 phase1 2 CMT like 1004 but diff. initial on V3
+249                                                           0
+\end{Soutput}
+\begin{Sinput}
+> with(log, constant(moment,within=parameter))#i.e., moment is non-informative here.
+\end{Sinput}
+\begin{Soutput}
+[1] TRUE
+\end{Soutput}
+\begin{Sinput}
+> log <- data.frame(cast(log,run~parameter))
+> log <- shuffle(log,'prob','run')
+> log$ofv <- signif(as.numeric(as.character(log$ofv,6)))
+\end{Sinput}
+\end{Schunk}
+\begin{table}[!htpb]
+ \caption[Run Log]{Run Log \label{runlog}}
+ \begin{center}
+  \begin{tabular}{rlllr}
+    \hline \hline
+   run & prob & cov & min & ofv \\ \hline
+   \verb#1001# & 1001 phase1 1CMT                                            & 0 & 0 & \verb#2526.40# \\
+   \verb#1002# & 1002 phase1 2 CMT                                           & 1 & 1 & \verb#2525.97# \\
+   \verb#1003# & 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err & 1 & 0 & \verb#2569.89# \\
+   \verb#1004# & 1004 phase1 2 CMT like 1003 but better bounds               & 0 & 0 & \verb#2570.45# \\
+   \verb#1005# & 1005 phase1 2 CMT like 1004 but diff. initial on V3         & 0 & 0 & \verb#2405.92# \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\section{Predictive Check}
 \subsection{Create a simulation control stream.}
 Convert control stream to R object.
 \begin{Schunk}
