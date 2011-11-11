@@ -102,7 +102,7 @@
 	}
 }
 \examples{
-data(ctl)
+ctl <- readLines(system.file('example/misc/8.ctl',package='metrumrg'))
 dir()
 e <- metaSub(
 	ctl,

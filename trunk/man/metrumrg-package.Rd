@@ -24,12 +24,13 @@ I want to ....
 \item \link[=helpReport]{report} modeling and simulation results systematically
 \item \link[=helpAdminister]{administer} related files and file systems
 \item \link[=helpList]{list} all functions
+\item \link[=helpBrowse]{browse} extended examples
 }  
 \tabular{ll}{
 Package: \tab metrumrg\cr
 Type: \tab Package\cr
 Version: \tab 5.4\cr
-Date: \tab 2011-11-04\cr
+Date: \tab 2011-11-10\cr
 License: \tab GPL\cr
 }
 }

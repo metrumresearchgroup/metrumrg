@@ -238,6 +238,7 @@
 \item \link{metaSub} generic
 \item \link{metaSub.character} systematically substitute elements in a character vector
 \item \link{metaSub.filename} systematically substitute elements in a text file
+\item \link{metrumrgURL} view a file in the metrumrg package
 \item \link{minus.keyed} drop rows in x that have matching rows in y
 \item \link{minus.moot} drop moot rows
 \item \link{moot} generic
