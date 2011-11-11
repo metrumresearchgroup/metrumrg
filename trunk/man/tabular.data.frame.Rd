@@ -128,7 +128,8 @@ Rownames are ignored.  If informative, capture them as a column.
 tabular(head(Theoph))
 as.tabular(head(Theoph))
 as.document(head(Theoph))
-#as.pdf(head(Theoph),stem='theoph')
+\dontrun{as.pdf(head(Theoph),stem='theoph')}
+\dontrun{metrumrgURL('example/tabular/tabular.pdf')}
 }
 \keyword{manip}
 

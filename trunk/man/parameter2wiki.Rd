@@ -38,7 +38,7 @@ character
 x <- parameter2wiki(c("THETA1","OMEGA1.2","SIGMA1.1"))
 x
 wiki2latex(x)
-#as.pdf(wiki2latex(x))
+\dontrun{as.pdf(wiki2latex(x))}
 }
 \keyword{manip}
 
