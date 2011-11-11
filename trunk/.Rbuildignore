@@ -1,0 +1,4 @@
+inst/example/project/nonmem/1005.boot/data
+inst/example/project/nonmem/1005.boot/ctl
+inst/example/project/nonmem/1005.boot/*.boot
+inst/example/project/nonmem/1105/1105.tab
