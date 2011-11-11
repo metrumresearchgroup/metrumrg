@@ -304,7 +304,8 @@ dataSynthesis <- function(
     if (!file.exists(outfile))stop(outfile,' does not exist.',call.=FALSE)
     if (!file.exists(ctlfile))stop(ctlfile,'does not exist.',.call.=FALSE)
     ctlfile <- read.nmctl(ctlfile)#switch from file name to file content
-    outputrecords <- as.character(ctlfile[names(ctlfile)=='table'])
+    #outputrecords <- as.character(ctlfile[names(ctlfile)=='table'])
+    outputrecords <- as.character(ctlfile[names(ctlfile) %contains% 'tab'])
     tabfile <- tryCatch(tabfile(outputrecords,dir=rundir,...),error=function(e)stop('cannot locate *.tab in control stream for run ',run,call.=FALSE))
     parfile <- tryCatch(parfile(outputrecords,dir=rundir,...),error=function(e)stop('cannot locate *par.tab in control stream for run ',run,call.=FALSE))
     

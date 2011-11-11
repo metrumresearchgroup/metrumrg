@@ -60,7 +60,8 @@ function (
   outfile <- star(outfile,run)
   if(!file.exists(ctlfile))stop(ctlfile,' not found')
   control <- read.nmctl(ctlfile)
-  outputdomain <- names(control) =='table' | contains('est',names(control))
+  #outputdomain <- names(control) =='table' | contains('est',names(control))
+  outputdomain <- names(control) %contains% 'tab|est'
   control[outputdomain] <- lapply(control[outputdomain],explicitPath)
   if (checkrunno) {
   	  problemdomain <- contains('prob',names(control))
