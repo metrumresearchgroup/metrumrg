@@ -89,5 +89,8 @@ but it lets all the usual parameter details arise from a single specification th
     \item \code{\link{tos}}
 	}
 }
+\examples{
+metrumrgURL('example/project/script/parameters.pdf')	
+}
 \keyword{manip}
 

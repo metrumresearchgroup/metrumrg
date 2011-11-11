@@ -294,5 +294,8 @@ File names and locations can be manipulated somewhat, i.e., by over-riding
 		\item \code{\link{PLOTR}}
 	}
 }
+\examples{
+metrumrgURL('example/project/script/model.pdf')
+}
 \keyword{manip}
 

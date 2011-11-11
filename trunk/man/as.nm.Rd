@@ -91,6 +91,8 @@ generic \code{moot}.
 	}
 }
 \examples{
+# metrumrgURL('example/project/script/assemble.pdf')
+
 dose <- data.frame( 
 	SUBJ = rep(letters[1:3], each = 2), 
 	HOUR = rep(c(0,20),3), 

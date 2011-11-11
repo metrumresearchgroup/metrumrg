@@ -147,6 +147,8 @@ unitDensity(x,...)
 	}
 }
 \examples{
+#metrumrgURL('example/project/script/covplot.pdf')
+
 #a bootstrap of a pharmacokinetic model
 set.seed(0)
 boot <- data.frame(
