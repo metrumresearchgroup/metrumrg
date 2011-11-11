@@ -69,6 +69,6 @@ wiki2latex(wiki)
 wiki2plotmath(wiki)
 wiki2label(wiki)
 wiki2parameter(wiki)
-#metrumrgURL('example/wikimath/wikimath.pdf')
+\dontrun{metrumrgURL('example/wikimath/wikimath.pdf')}
 }
 \keyword{manip}

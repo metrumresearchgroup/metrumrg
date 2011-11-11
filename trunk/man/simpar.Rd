@@ -68,7 +68,7 @@ number before filtering by \code{min} and \code{max}.
 	}
 }
 \examples{
-#metrumrgURL('example/project/script/simpar.pdf')
+\dontrun{metrumrgURL('example/project/script/simpar.pdf')}
 
 set.seed(100)
 simpar(

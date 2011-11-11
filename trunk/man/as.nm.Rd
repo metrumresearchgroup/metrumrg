@@ -91,7 +91,7 @@ generic \code{moot}.
 	}
 }
 \examples{
-# metrumrgURL('example/project/script/assemble.pdf')
+\dontrun{metrumrgURL('example/project/script/assemble.pdf')}
 
 dose <- data.frame( 
 	SUBJ = rep(letters[1:3], each = 2), 
