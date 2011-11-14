@@ -1,6 +1,7 @@
 \name{ltable.data.frame}
 \alias{ltable.data.frame}
 \alias{ltable}
+\alias{as.ltable}
 \title{Convert a Data Frame to a Latex Table}
 \description{Convert data.frame to latex table.}
 \usage{
@@ -32,7 +33,8 @@ specified environments, then wraps result in a latex table
 environment.  Result is returned visibly or printed to file
 and returned invisibly.
 
-\code{ltable} is generic.  You can write methods for other classes.
+\code{ltable} is generic.  You can write methods for other classes. 
+\code{as.ltable} is an alias for \code{ltable}.
 }
 \value{character}
 \references{\url{http://metrumrg.googlecode.com}}

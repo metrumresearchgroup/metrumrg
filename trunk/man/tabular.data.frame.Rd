@@ -84,16 +84,26 @@ viewing.
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
 \method{as.pdf}{tabular}(
 	x,
+	stem,
 	landscape=FALSE,
 	wide=if(landscape) 279.4 else 215.9,
 	long=if(landscape) 215.9 else 279.4,
-	stem,
 	...
 )
 \method{as.pdf}{data.frame}(x,stem,...)
+as.pdf.tex(
+	x,
+	stem=NULL,
+	dir=NULL,
+	landscape=FALSE,
+	clean=TRUE,
+	onefile=FALSE,
+	...
+)
+viewtex(x,...)
 }
 \arguments{
-	\item{x}{object to be converted, typically data.frame (paths of tex files for \code{as.pdf.tex} and \code{viewtex})}
+  \item{x}{object to be converted, typically data.frame (paths of tex files for \code{as.pdf.tex} and \code{viewtex})}
   \item{rules}{numeric; will be recycled to length 3.  indicates number of 
   horizontal lines above and below the header, and below the last row.}
   \item{walls}{numeric, recycled to length 2.  Number of vertical lines
@@ -119,7 +129,7 @@ viewing.
   \item{longer}{additional document lenth in mm}
   \item{prolog}{latex markup to include before the tabular environment}
   \item{epilog}{latex markup to include after the tabular environment}
-  \item{lanscape}{if TRUE, default orientation is `landscape' not `portrait'}
+  \item{landscape}{if TRUE, default orientation is `landscape' not `portrait'}
   \item{stem}{the stem of a file name (no extension)}
   \item{dir}{output directory}
   \item{clean}{whether to delete system files after pdf creation}
