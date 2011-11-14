@@ -120,8 +120,8 @@ as.pdf.document <- function(
 	writeLines(x,outpath)
 	cmd <- glue('pdflatex -output-directory=',dir,' ',outpath)
 	result <- system(cmd)
-	variants <- glue(stem,variants)
-	possibles <- file.path(dir,c('.tex','.log','.aux','.out'))
+	variants <- glue(stem,c('.tex','.log','.aux','.out'))
+	possibles <- file.path(dir,variants)
 	actuals <- possibles[file.exists(possibles)]
 	if(clean)file.remove(actuals)
 	invisible(result)
@@ -177,8 +177,12 @@ as.pdf.tex <- function(
 	invisible(file.path(dir,glue(targets,'.pdf')))
 }
 
-viewtex <- function(x,...){
+viewtex <- function(x,duration=Inf,...){
 	newfiles <- as.pdf.tex(x,...)
 	browseURL(glue('file:///',newfiles))
-	invisible(sapply(newfiles,unlink))
+	if(is.finite(duration)){
+		Sys.sleep(duration)
+		sapply(newfiles,unlink)
+	}
+	invisible(newfiles)
 }
