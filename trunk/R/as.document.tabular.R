@@ -111,7 +111,7 @@ as.pdf.document <- function(
 	...
 ){
 	if(missing(stem))stop('a file stem (no extension) must be provided')
-	if (contains('\\.pdf$',stem,ignore.case=TRUE){
+	if (contains('\\.pdf$',stem,ignore.case=TRUE)){
 		warning('stripping .pdf from file stem ...')
 		stem <- sub('\\.pdf$','',stem,ignore.case=TRUE)
 	}
@@ -159,7 +159,7 @@ as.pdf.tex <- function(
 	if(any(!is.tex))warning('x is expected to be a vector of tex file names')
 	dat <- lapply(x,readLines)
 	if(is.null(stem))stem <- sub('\\.[^.]+$','',basename(x),ignore.case=TRUE)
-	if.is.null(dir))dir <- dirname(x)
+	if(is.null(dir))dir <- dirname(x)
 	if(onefile)stem <- stem[[1]]
 	if(onefile)dir <- dir[[1]]
 	if(onefile)dat <- list(unlist(dat))
@@ -179,6 +179,6 @@ as.pdf.tex <- function(
 
 viewtex <- function(x,...){
 	newfiles <- as.pdf.tex(x,...)
-	browseURL(glue('file:///',newfiles)
+	browseURL(glue('file:///',newfiles))
 	invisible(sapply(newfiles,unlink))
 }
