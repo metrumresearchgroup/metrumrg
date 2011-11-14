@@ -154,35 +154,41 @@ as.pdf.tex <- function(
 	onefile=FALSE,
 	...
 ){
-	stopifnot(length(x)>0,all(file.exists(x)))
+	stopifnot(
+		length(x)>0,
+		all(file.exists(x)),
+		length(stem)==1 | length(stem)==length(x) | stem==NULL,
+		length(stem)==1 | onefile==FALSE | stem==NULL,
+		length(dir)==1 | length(dir)==length(x) | dir==NULL
+	)
 	is.tex <- sapply(x,function(nm)contains('\\.tex',nm,ignore.case=TRUE))
 	if(any(!is.tex))warning('x is expected to be a vector of tex file names')
 	dat <- lapply(x,readLines)
 	if(is.null(stem))stem <- sub('\\.[^.]+$','',basename(x),ignore.case=TRUE)
 	if(is.null(dir))dir <- dirname(x)
+	dir <- rep(dir,length.out=length(stem))
 	if(onefile)stem <- stem[[1]]
 	if(onefile)dir <- dir[[1]]
 	if(onefile)dat <- list(unlist(dat))
-	targets <- glue(stem,'_doc')
-	for(index in seq_along(x)){
+	stopifnot(length(dat)==length(stem),length(dat)==length(dir))
+	target <- glue(stem,'_doc')
+	for(index in seq_along(dat)){
 		as.pdf.character(
 			dat[[index]],
-			stem=targets[[index]],
+			stem=target[[index]],
 			dir=dir[[index]],
 			landscape=landscape,
 			clean=clean,
 			...
 		)
 	}
-	invisible(file.path(dir,glue(targets,'.pdf')))
+	invisible(file.path(dir,glue(target,'.pdf')))
 }
 
-viewtex <- function(x,duration=Inf,...){
+viewtex <- function(x,delete=TRUE,latency=1,...){
 	newfiles <- as.pdf.tex(x,...)
-	browseURL(glue('file:///',newfiles))
-	if(is.finite(duration)){
-		Sys.sleep(duration)
-		sapply(newfiles,unlink)
-	}
+	sapply(newfiles,browseURL)
+	if(delete)Sys.sleep(latency)
+	if(delete)sapply(newfiles,unlink)
 	invisible(newfiles)
 }
