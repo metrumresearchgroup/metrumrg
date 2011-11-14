@@ -86,6 +86,7 @@
 \item \link{as.pdf.data.frame} convert data.frame to pdf
 \item \link{as.pdf.document} convert latex document to pdf
 \item \link{as.pdf.tabular} convert tabular to pdf
+\item \link{as.pdf.tex} convert tex files to pdf
 \item \link{as.pxml.ext} convert a param file to XML
 \item \link{as.rigged} convert to rigged
 \item \link{as.runlog.file} convert file to runlog
@@ -381,6 +382,7 @@
 \item \link{unitHist} calculate univariate histogram architecture with maximum height equal to 1
 \item \link{upper} calculate normal quantiles at upper probability of interval
 \item \link{variants} locate variants of a file in distinctive subdirectories
+\item \link{viewtex} view (as pdfs) files that contain fragmentary tex code (e.g. tables)
 \item \link{wiki2label} convert wikimath to a label, e.g. CL/F
 \item \link{wiki2latex} convert wikimath to latex
 \item \link{wiki2parameter} convert wikimath to a parameter, e.g. THETA1

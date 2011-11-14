@@ -9,7 +9,11 @@
 \alias{as.pdf.data.frame}
 \alias{tabular}
 \alias{as.tabular}
+\alias{as.pdf.tex}
+\alias{viewtex}
+
 \title{Convert a Data Frame to a Latex Tabular Environment, Latex Document, or PDF}
+
 \description{ The functions \code{tabular}, \code{as.document}, and \code{as.pdf}
 are generic.  Methods are given here that cascade in the order data.frame -> tabular
 -> document -> pdf.  \code{as.document.data.frame} is argued identically to \code{tabular},
@@ -18,6 +22,10 @@ width for a page size identical to the printed area (you can modify with the arg
 \code{wider} and \code{longer}).  \code{as.pdf.document} needs a file stem and 
 (optionally) whether to perform clean-up.  The other \code{as.pdf} methods are 
 convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
+
+\code{as.pdf.tex} takes filenames for tex fragments, wraps them like documents and
+makes pdfs.  \code{viewtex} goes one step further, and tries to open those pdfs for
+viewing.
 }
 \usage{
 \method{tabular}{data.frame}(
@@ -64,13 +72,28 @@ convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
 	epilog = NULL,	
 	...
 )
-\method{as.document}{tabular}(x,wide,long,prolog=NULL,epilog=NULL,...)
+\method{as.document}{tabular}(
+	x,
+	landscape=FALSE,
+	wide=if(landscape) 279.4 else 215.9,
+	long=if(landscape) 215.9 else 279.4,
+	prolog=NULL,
+	epilog=NULL,
+	...
+)
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
-\method{as.pdf}{tabular}(x,wide,long,stem,...)
+\method{as.pdf}{tabular}(
+	x,
+	landscape=FALSE,
+	wide=if(landscape) 279.4 else 215.9,
+	long=if(landscape) 215.9 else 279.4,
+	stem,
+	...
+)
 \method{as.pdf}{data.frame}(x,stem,...)
 }
 \arguments{
-  \item{x}{object to be converted, typically data.frame}
+	\item{x}{object to be converted, typically data.frame (paths of tex files for \code{as.pdf.tex} and \code{viewtex})}
   \item{rules}{numeric; will be recycled to length 3.  indicates number of 
   horizontal lines above and below the header, and below the last row.}
   \item{walls}{numeric, recycled to length 2.  Number of vertical lines
@@ -96,9 +119,11 @@ convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
   \item{longer}{additional document lenth in mm}
   \item{prolog}{latex markup to include before the tabular environment}
   \item{epilog}{latex markup to include after the tabular environment}
+  \item{lanscape}{if TRUE, default orientation is `landscape' not `portrait'}
   \item{stem}{the stem of a file name (no extension)}
   \item{dir}{output directory}
   \item{clean}{whether to delete system files after pdf creation}
+  \item{onefile}{whether to combine tex snippets into a single file}
   \item{\dots}{passed to called functions}
 }
 \details{

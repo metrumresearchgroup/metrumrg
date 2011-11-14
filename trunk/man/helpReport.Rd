@@ -23,5 +23,6 @@ I want to ....
 \item \link[=ftable2data.frame]{reformat an ftable for printing with latex}
 \item \link[=ltable.data.frame]{convert a data.frame for printing with latex}
 \item \link[=as.pdf.data.frame]{render a data.frame to pdf format}
+\item \link[=viewtex]{render file-based tex fragments as pdf for informal viewing}
 }
 }

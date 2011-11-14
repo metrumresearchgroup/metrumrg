@@ -111,6 +111,7 @@ align.decimal <- function(x,decimal.mark='.',...){
 	}
 	x
 }
+as.ltable <- function(x,...)UseMethod('ltable')
 ltable <- function(x,...)UseMethod('ltable')
 ltable.data.frame <- function(
 	x,
