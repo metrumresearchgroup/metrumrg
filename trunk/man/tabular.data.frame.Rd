@@ -100,7 +100,7 @@ as.pdf.tex(
 	onefile=FALSE,
 	...
 )
-viewtex(x,...)
+viewtex(x,duration=Inf,...)
 }
 \arguments{
   \item{x}{object to be converted, typically data.frame (paths of tex files for \code{as.pdf.tex} and \code{viewtex})}
@@ -134,6 +134,7 @@ viewtex(x,...)
   \item{dir}{output directory}
   \item{clean}{whether to delete system files after pdf creation}
   \item{onefile}{whether to combine tex snippets into a single file}
+  \item{duration}{time in seconds for which the temporary file(s) should persist}
   \item{\dots}{passed to called functions}
 }
 \details{
