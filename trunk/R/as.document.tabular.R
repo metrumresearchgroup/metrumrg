@@ -1,5 +1,5 @@
 as.document <- function(x,...)UseMethod('as.document')
-as.document.tabular <- function(
+as.document.character <- function(
 	x,
 	landscape=FALSE,
 	wide=if(landscape) 279.4 else 215.9,
@@ -126,7 +126,7 @@ as.pdf.document <- function(
 	if(clean)file.remove(actuals)
 	invisible(result)
 }
-as.pdf.tabular <- function(
+as.pdf.character <- function(
 	x,
 	stem,
 	landscape=FALSE,
@@ -165,7 +165,7 @@ as.pdf.tex <- function(
 	if(onefile)dat <- list(unlist(dat))
 	targets <- glue(stem,'_doc')
 	for(index in seq_along(x)){
-		as.pdf.tabular(
+		as.pdf.character(
 			dat[[index]],
 			stem=targets[[index]],
 			dir=dir[[index]],
