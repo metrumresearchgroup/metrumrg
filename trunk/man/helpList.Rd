@@ -43,7 +43,7 @@
 \item \link{as.data.frame.flag} convert flag to data frame
 \item \link{as.document} convert to latex document
 \item \link{as.document.data.frame} convert data.frame to latex document
-\item \link{as.document.tabular} convert tabular to latex document
+\item \link{as.document.character} convert tex fragments to latex document
 \item \link{as.file.runlog} convert to convert runlog to file
 \item \link{as.filename} convert to filename
 \item \link{as.filename.character} convert character to filename
@@ -85,7 +85,7 @@
 \item \link{as.pdf} convert to pdf
 \item \link{as.pdf.data.frame} convert data.frame to pdf
 \item \link{as.pdf.document} convert latex document to pdf
-\item \link{as.pdf.tabular} convert tabular to pdf
+\item \link{as.pdf.character} convert tex fragments to pdf
 \item \link{as.pdf.tex} convert tex files to pdf
 \item \link{as.pxml.ext} convert a param file to XML
 \item \link{as.rigged} convert to rigged

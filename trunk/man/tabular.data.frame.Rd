@@ -1,11 +1,11 @@
 \name{tabular.data.frame}
 \alias{tabular.data.frame}
 \alias{as.document}
-\alias{as.document.tabular}
+\alias{as.document.character}
 \alias{as.document.data.frame}
 \alias{as.pdf}
 \alias{as.pdf.document}
-\alias{as.pdf.tabular}
+\alias{as.pdf.character}
 \alias{as.pdf.data.frame}
 \alias{tabular}
 \alias{as.tabular}
@@ -72,7 +72,7 @@ viewing.
 	epilog = NULL,	
 	...
 )
-\method{as.document}{tabular}(
+\method{as.document}{character}(
 	x,
 	landscape=FALSE,
 	wide=if(landscape) 279.4 else 215.9,
@@ -82,7 +82,7 @@ viewing.
 	...
 )
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
-\method{as.pdf}{tabular}(
+\method{as.pdf}{character}(
 	x,
 	stem,
 	landscape=FALSE,
