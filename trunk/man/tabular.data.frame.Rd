@@ -9,7 +9,7 @@
 \alias{as.pdf.data.frame}
 \alias{tabular}
 \alias{as.tabular}
-\alias{as.pdf.tex}
+\alias{tex2pdf}
 \alias{viewtex}
 
 \title{Convert a Data Frame to a Latex Tabular Environment, Latex Document, or PDF}
@@ -23,7 +23,7 @@ width for a page size identical to the printed area (you can modify with the arg
 (optionally) whether to perform clean-up.  The other \code{as.pdf} methods are 
 convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
 
-\code{as.pdf.tex} takes filenames for tex fragments, wraps them like documents and
+\code{tex2pdf} takes filenames for tex fragments, wraps them like documents and
 makes pdfs.  \code{viewtex} goes one step further, and tries to open those pdfs for
 viewing.
 }
@@ -91,7 +91,7 @@ viewing.
 	...
 )
 \method{as.pdf}{data.frame}(x,stem,...)
-as.pdf.tex(
+tex2pdf(
 	x,
 	stem=NULL,
 	dir=NULL,
@@ -103,7 +103,7 @@ as.pdf.tex(
 viewtex(x,delete=TRUE,latency=1,...)
 }
 \arguments{
-  \item{x}{object to be converted, typically data.frame (paths of tex files for \code{as.pdf.tex} and \code{viewtex})}
+  \item{x}{object to be converted, typically data.frame (paths of tex files for \code{tex2pdf} and \code{viewtex})}
   \item{rules}{numeric; will be recycled to length 3.  indicates number of 
   horizontal lines above and below the header, and below the last row.}
   \item{walls}{numeric, recycled to length 2.  Number of vertical lines

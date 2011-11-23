@@ -91,7 +91,6 @@
 \item \link{as.pdf.data.frame} convert data.frame to pdf
 \item \link{as.pdf.document} convert latex document to pdf
 \item \link{as.pdf.character} convert tex fragments to pdf
-\item \link{as.pdf.tex} convert tex files to pdf
 \item \link{as.pxml.ext} convert a param file to XML
 \item \link{as.rigged} convert to rigged
 \item \link{as.runlog.file} convert file to runlog
@@ -239,10 +238,12 @@
 \item \link{ltable.data.frame} convert a data.frame to a latex table
 \item \link{map} map one set of values to another
 \item \link{maxChar} return the number of printed characters for the widest element of x
-\item \link{merge.character} recursively merge based on a vector of file names
 \item \link{merge.keyed} merge keyed data frames, preserving attributes
-\item \link{merge.list} recursively merge elements of a list
 \item \link{merge.nm} merge nm objects
+\item \link{metaMerge} generic 
+\item \link{metaMerge.character} recursively merge based on a vector of file names
+\item \link{metaMerge.default} merge two groomed objects
+\item \link{metaMerge.list} recursively merge elements of a list
 \item \link{metaSub} generic
 \item \link{metaSub.character} systematically substitute elements in a character vector
 \item \link{metaSub.filename} systematically substitute elements in a text file
@@ -372,6 +373,7 @@
 \item \link{tabular.data.frame} convert a data.frame to a latex tabular environment
 \item \link{tabularformat} generate a format string for a latex tabular environment
 \item \link{tagvalue} convert a list to a string of delimited tag-value pairs
+\item \link{tex2pdf} convert tex files to pdf
 \item \link{text2decimal} convert mixed text to decimal
 \item \link{titleCase} convert mixed case to title case, strictly by default
 \item \link{totitle} convert mixed case to title case, not strictly by default
@@ -404,7 +406,7 @@
 \item \link{xtfrm.comment} produce a numeric vector that sorts in the same order as comment
 \item \link{xtfrm.flag} produce a numeric vector that sorts in the same order as flag
 \item \link{xtfrm.temporal} produce a numeric vector that sorts in the same order as temporal
-\item \link{xyplot.ext} plot the parameter search history for a NONMEM7 run
+\item \link{xyplotExt} plot the parameter search history for a NONMEM7 run
 \item \link{zeroAmt} generic
 \item \link{zeroAmt.nm} AMT is zero where EVID is 1
 \item \link{zeroDv} generic

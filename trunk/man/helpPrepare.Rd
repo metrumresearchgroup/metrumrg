@@ -14,6 +14,6 @@ I want to ....
 \item \link[=helpClasses]{use classes specialized for data assembly}
 \item \link[=helpPharmacometric]{investigate pharmacometric properties}
 \item \link[=helpStrategic]{perform strategic data manipulations}
-\item \link[=merge.list]{merge recursively}
+\item \link[=metaMerge.list]{merge recursively}
 }
 }

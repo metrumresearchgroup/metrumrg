@@ -1,5 +1,5 @@
-\name{xyplot.ext}
-\alias{xyplot.ext}
+\name{xyplotExt}
+\alias{xyplotExt}
 \title{Plot the Parameter Search History for a NONMEM 7 Run}
 \description{
 NONMEM7 produces, for run \code{n}, the file \code{n.ext}, containing the values
@@ -9,7 +9,7 @@ possibly standard errrors.  This function plots the parameter estimates vs. iter
 indicated.
 }
 \usage{
-xyplot.ext(
+xyplotExt(
 	x, 
 	data = read.table(file, skip = 1, header = TRUE, check.names = FALSE), 
 	project = getwd(), 
@@ -59,8 +59,6 @@ a trellis object
 }
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
-\note{Even though \code{xyplot.ext} looks like a method, it will be more common
-to call it directly, as in the examples.}
 \seealso{
 	\itemize{
 		\item \code{\link{as.pxml.ext}}
@@ -83,7 +81,7 @@ ext <- c(
 file <- textConnection(ext)
 data <- read.table(file, skip = 1, header = TRUE, check.names = FALSE)
 close(file)
-xyplot.ext(data=data)
+xyplotExt(data=data)
 }
 \keyword{manip}
 

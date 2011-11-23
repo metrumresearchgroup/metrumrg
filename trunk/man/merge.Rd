@@ -1,18 +1,23 @@
-\name{merge}
-\alias{merge.list}
-\alias{merge.character}
+\name{metaMerge}
+\alias{metaMerge}
+\alias{metaMerge.list}
+\alias{metaMerge.character}
+\alias{metaMerge.default}
 \title{Recursively Merge Multiple Tables}
 \description{
-  Perform an n-way merge, given multiple objects or file names
+  Perform an n-way merge, given multiple objects or file names.
 }
 \usage{
-	\method{merge}{list}(x,groom=as.best,...)
-	\method{merge}{character}(x,import=read.table,groom=as.best,...)
+	\method{metaMerge}{list}(x,groom=as.best,...)
+	\method{metaMerge}{character}(x,import=read.table,groom=as.best,...)
+	\method{metaMerge}{default}(x,y,...)
 }
 \arguments{
   \item{x}{a list of objects, e.g. data.frames, or a character vector of file names}
+  \item{y}{a second object}
   \item{import}{a function for reading files}
   \item{groom}{a function for preparing objects prior to merge}
+  \item{\dots}{passed to \code{groom} and \code{import}}
 }
 \details{
 	If \code{x} is a character vector, it is presumed to be file names.  An 
@@ -23,6 +28,8 @@
 	If \code{x} is an empty list, it is returned. Otherwise, each element is
 	transformed using using \code{groom} (after a call to \code{match.fun}).
 	The first object is merged with the merge of any remaining objects.
+	
+	The default method simply calls \code{merge} and is present for methodological reasons.
 }
 \value{
 	object like the elements of \code{x}, or given by \code{import}
@@ -36,7 +43,7 @@
 }
 \examples{
 #a nonsense example
-head(merge(list(Theoph,BOD)))
+head(metaMerge(list(Theoph,BOD)))
 }
 \keyword{manip}
 

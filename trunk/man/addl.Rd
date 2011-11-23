@@ -16,9 +16,9 @@ addl(x, interval=1)
 
 \arguments{
 \item{x}{numeric}
-}
   \item{interval}{numeric}
 }
+
 \details{
 	If an element of \code{x} is followed by n elements that occur 
 	at a fixed interval \code{interval}, n is returned at that position
