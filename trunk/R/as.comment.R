@@ -55,12 +55,16 @@
 	class(y) <- class(x)
 	y
 }
-
 `format.comment` <- function(x,...)unclass(ifelse(x,"C","."))
 
 `print.comment` <- function(x,...){
 	print(format(x),...,quote=FALSE)
 	invisible(x)
+}
+unique.comment <-
+function (x, incomparables = FALSE,...){
+    oldclass <- class(x)
+    structure(unique(unclass(x)), class = oldclass)
 }
 xtfrm.comment <- function(x)as.numeric(x)
 

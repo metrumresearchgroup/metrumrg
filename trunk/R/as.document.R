@@ -99,7 +99,7 @@ as.document.data.frame <- function(
           trim=trim,
           ...
   )
-  doc <-  as.document(tab,wide,long,prolog=prolog,epilog=epilog,...)
+  doc <-  as.document(tab,wide=wide,long=long,prolog=prolog,epilog=epilog,...)
   doc
 }
 as.pdf <- function(x,...)UseMethod('as.pdf')

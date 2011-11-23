@@ -28,7 +28,7 @@ as.mDate.numeric <- function(x,...){
 	structure(x, class = c('mDate','temporal','numeric'))
 }
 as.mDate.character <- function(x,format='%Y-%m-%d',...)as.mDate(as.numeric.chartime(x,format))
-
+as.mDate.sasdate <-function(x,...)as.mDate(as.Date(x, origin="1960-01-01",...))
 as.mDateTime <- function(x,...)UseMethod('as.mDateTime')
 as.mDateTime.numeric <- function(x,...){
 	x <- round(x)
