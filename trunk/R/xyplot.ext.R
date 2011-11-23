@@ -1,4 +1,4 @@
-xyplot.ext <-
+xyplotExt <-
 function(
 	x,
 	data=read.table(file,skip=1,header=TRUE,check.names=FALSE),

@@ -10,6 +10,8 @@
     		sigma = "data.frame"
     	)
     )
-    cat('metrumrg',utils::packageDescription('metrumrg',fields='Version'),'\n')
-    cat('enter "?metrumrg" for help\n')
+}
+.onAttach <- function(libname,pkgname){
+	packageStartupMessage(paste('metrumrg',utils::packageDescription('metrumrg',fields='Version')))
+	packageStartupMessage('enter "?metrumrg" for help')
 }

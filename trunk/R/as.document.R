@@ -145,7 +145,7 @@ as.pdf.character <- function(
 )
 as.pdf.data.frame <- function(x,stem,...)as.pdf(as.document(x,...),stem=stem,...)
 
-as.pdf.tex <- function(
+tex2pdf <- function(
 	x,
 	stem=NULL,
 	dir=NULL,
@@ -186,7 +186,7 @@ as.pdf.tex <- function(
 }
 
 viewtex <- function(x,delete=TRUE,latency=1,...){
-	newfiles <- as.pdf.tex(x,...)
+	newfiles <- tex2pdf(x,...)
 	sapply(newfiles,browseURL)
 	if(delete)Sys.sleep(latency)
 	if(delete)sapply(newfiles,unlink)
