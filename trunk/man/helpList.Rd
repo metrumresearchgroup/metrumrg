@@ -23,10 +23,14 @@
 \item \link{accept} document the acceptance of an R installation
 \item \link{acceptance} display the acceptance documentation for an R installation
 \item \link{acr} calculate accumulation ratio
+\item \link{addl} calculate the ADDL data item (NONMEM) from explicit dose records
 \item \link{after} test whether elements occur after some condition is \code{TRUE}
 \item \link{aggregate.keyed} aggregate a keyed data frame
 \item \link{align.decimal} align numeric column in latex table on the decimal
 \item \link{and.keyed} produce inner join of two keyed data frames
+\item \link{as.best} generic
+\item \link{as.best.data.frame} coerce a data.frame to unambigous numeric or character columns
+\item \link{as.best.default} coerce a vector unambiguously to numeric or character
 \item \link{as.character.comment} convert comment to character
 \item \link{as.character.flag} convert flag to character
 \item \link{as.character.nmctl} convert nmctl to character
@@ -62,6 +66,7 @@
 \item \link{as.mDate.Date} convert Date to mDate
 \item \link{as.mDate.dates} convert dates (chron) to mDate
 \item \link{as.mDate.mDate} convert mDate to mDate
+\item \link{as.mDate.sasdate} convert SAS date to mDate
 \item \link{as.mDate.numeric} convert numeric to mDate
 \item \link{as.mDateTime} convert to mDateTime
 \item \link{as.mDateTime.character} convert character to mDateTime
@@ -234,7 +239,9 @@
 \item \link{ltable.data.frame} convert a data.frame to a latex table
 \item \link{map} map one set of values to another
 \item \link{maxChar} return the number of printed characters for the widest element of x
+\item \link{merge.character} recursively merge based on a vector of file names
 \item \link{merge.keyed} merge keyed data frames, preserving attributes
+\item \link{merge.list} recursively merge elements of a list
 \item \link{merge.nm} merge nm objects
 \item \link{metaSub} generic
 \item \link{metaSub.character} systematically substitute elements in a character vector
@@ -378,6 +385,7 @@
 \item \link{unilog} create a zero-row unilog
 \item \link{unilogcor} convert omega or sigma covariance in NONMEM output to correlation matrix
 \item \link{unique.temporal} find unique elements of a temporal vector
+\item \link{unique.comment} find unique elements of a comment vector
 \item \link{unitDensity} calculate univariate density with maximum equal to 1
 \item \link{unitHist} calculate univariate histogram architecture with maximum height equal to 1
 \item \link{upper} calculate normal quantiles at upper probability of interval

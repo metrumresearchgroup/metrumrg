@@ -18,7 +18,7 @@ crosses(a,b)
   \item{a}{a list of equal length factors, or one factor}
   \item{b}{a list of factors, or one factor, same length as \code{a}}
   \item{x}{an object like \code{a}, or a dataframe}
-  \item{within}{An object like \code{b}, or just column names in \code{x} for the data.frame version}
+  \item{within}{An object like \code{b}}
   \item{\dots}{extra arguments passed to other methods}
 }
 \details{
@@ -55,7 +55,6 @@ with(ChickWeight,constant(Diet,within=Chick)) #TRUE
 with(ChickWeight,constant(weight,within=list(Chick,Time))) #TRUE
 crosses(c(1,1,1,NA,NA,4),c(2,3,3,NA,5,5)) #FALSE FALSE FALSE FALSE FALSE TRUE
 constant(Theoph$Wt,within=Theoph$Subject)#TRUE
-constant(Theoph, within='Subject')
 }
 \keyword{manip}
 

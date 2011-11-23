@@ -8,6 +8,7 @@
 \alias{as.mDate}
 \alias{as.mDate.numeric}
 \alias{as.mDate.mDate}
+\alias{as.mDate.sasdate}
 \alias{as.mDateTime}
 \alias{as.mDateTime.character}
 \alias{as.mDateTime.numeric}
@@ -272,8 +273,8 @@ as.mDate(dates('01/01/1970'))
 # 1970-01-01
 as.mDateTime(chron(dates='01/01/1970',times='12:30:00'))
 # 1970-01-01 12:30
-
-#NA
+as.mDate.sasdate(0)
+# 1960-01-01
 as.mTime(as.numeric(NA))
 # <NA>
 

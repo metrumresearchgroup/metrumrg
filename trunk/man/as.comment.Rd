@@ -12,6 +12,7 @@
 \alias{hide}
 \alias{print.comment}
 \alias{rep.comment}
+\alias{unique.comment}
 \alias{xtfrm.comment}
 \alias{hidden}
 \alias{hidden.data.frame}
@@ -37,6 +38,7 @@ never be \code{NA}, and prints as \sQuote{C} or \sQuote{.} (\code{TRUE},\code{FA
 \method{print}{comment}(x, ...)
 \method{rep}{comment}(x, ...)
 \method{hidden}{data.frame}(x, ...)
+\method{unique}{comment}(x,incomparables=FALSE,...)
 \method{xtfrm}{comment}(x)
 \method{summary}{hidden.data.frame}(object, ...)
 }
@@ -52,6 +54,7 @@ never be \code{NA}, and prints as \sQuote{C} or \sQuote{.} (\code{TRUE},\code{FA
   \item{where}{logical with length \code{nrow(x)}, indicating rows to hide}
   \item{why}{a column name suggesting the reason for hiding}
   \item{object}{hidden.data.frame}
+  \item{incomparables}{see \code{unique}}
 }
 
 \details{
