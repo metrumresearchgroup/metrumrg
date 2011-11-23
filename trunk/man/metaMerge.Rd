@@ -21,7 +21,7 @@
 }
 \details{
 	If \code{x} is a character vector, it is presumed to be file names.  An 
-	error is returned if any file does not exist.  Else, files are aquired
+	error is returned if any file does not exist.  Otherwise, files are acquired
 	using \code{import} (after a call to \code{match.fun}). The resulting list
 	of objects is merged.
 	

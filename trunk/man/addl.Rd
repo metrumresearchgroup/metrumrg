@@ -2,7 +2,7 @@
 \alias{addl}
 
 \title{
-Calculate a NONMEM ADDL data item from explicit records. ~~
+Calculate a NONMEM ADDL data item from explicit records. 
 }
 \description{
 The NONMEM data item ADDL on a dose record expresses the number of additional
@@ -25,7 +25,7 @@ addl(x, interval=1)
 	and NA is returned for each of the following elements. n may be zero.
 	
 	It is the responsibility of the user to apply the function to meaningful
-	subsets of the data, if any: sequential records with common subject and dose.
+	subsets of the data, if any: e.g., sequential records with common subject and dose.
 }
 \value{
 	a numeric vector as long as \code{x}

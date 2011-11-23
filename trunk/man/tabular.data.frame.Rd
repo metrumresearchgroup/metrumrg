@@ -23,9 +23,9 @@ width for a page size identical to the printed area (you can modify with the arg
 (optionally) whether to perform clean-up.  The other \code{as.pdf} methods are 
 convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
 
-\code{tex2pdf} takes filenames for tex fragments, wraps them like documents and
-makes pdfs.  \code{viewtex} goes one step further, and tries to open those pdfs for
-viewing.
+\code{tex2pdf} accepts the file names of tex fragments. It reads those fragments, 
+wraps them like documents and makes pdf files.  \code{viewtex} goes one step further, 
+and tries to open those pdfs for viewing.
 }
 \usage{
 \method{tabular}{data.frame}(
