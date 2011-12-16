@@ -25,7 +25,7 @@
   )
   testfile <- c('FCON','FILE10','OUTPUT')
   if(tool=='nm7')testfile <- c('FCON','FILE10','INTER')
-  state <- sapply(rundir,function(dir)runstate(rundir=dir,testfile=testfile,...),...)
+  state <- sapply(rundir,function(dir,...)runstate(rundir=dir,testfile=testfile,...),...)
   #run <- run[state=='done']
   #rundir <- rundir[state=='done']
   #nmout <- nmout[state=='done']

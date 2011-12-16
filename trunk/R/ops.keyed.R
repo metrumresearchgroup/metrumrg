@@ -6,8 +6,8 @@
 #Specific methods may be defined for redirect values. 
 
 Ops.keyed <- function(e1,e2){
-	methods  <- c('plus','minus','and','left')
-	generics <- c('+',   '-',    '&',   '|' )
+	methods  <- c('plus','minus','and','left', 'times','divide','raised','mod','div','not')
+	generics <- c('+',   '-',    '&',   '|',   '*',    '/',     '^',     '%%', '%/%','!' )
 	method   <- methods[match(.Generic,generics)]
 	UseMethod(method,e2)
 }
@@ -16,19 +16,7 @@ Ops.keyed <- function(e1,e2){
 	xr <- nrow(x)
 	yr <- nrow(y)
 	key <- intersect(names(x),names(y))
-	writeLines(
-		paste(
-			'outer join of',
-			xr,
-			'rows and',
-			yr,
-			'rows on',
-			paste(
-				key,
-				collapse=', '
-			)
-		)
-	)
+	message('outer join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '))
 	merge(x,y,all=TRUE)
 }
 
@@ -37,22 +25,7 @@ Ops.keyed <- function(e1,e2){
 	yr <- nrow(y)
 	key <- intersect(names(x),names(y))
 	matching <- sum(uniKey(x,key) %in% uniKey(y,key))
-	writeLines(
-		paste(
-			'inner join of',
-			xr,
-			'rows and',
-			yr,
-			'rows on',
-			paste(
-				key,
-				collapse=', '
-			),
-			'with',
-			matching,
-			'matches'
-		)
-	)
+	message('inner join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '),' with ',matching,' matches')
 	merge(x,y)
 }
 
@@ -60,25 +33,16 @@ Ops.keyed <- function(e1,e2){
 	xr <- nrow(x)
 	yr <- nrow(y)
 	key <- intersect(names(x),names(y))
-	writeLines(
-		paste(
-			'left join of',
-			xr,
-			'rows and',
-			yr,
-			'rows on',
-			paste(
-				key,
-				collapse=', '
-			)
-		)
-	)	
+	message('left join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '))	
 	left <- unique(uniKey(x,key))
 	right <- unique(uniKey(y,key))
 	unmatched <- setdiff(left,right)
 	unused <- setdiff(right,left)
-	if(length(unmatched))warning(paste(length(unmatched),'unmatched keys e.g.:',unmatched[1]))
-	if(length(unused))warning(paste(length(unused),'unused keys, e.g.:',unused[1]))
+	if(length(unmatched))warning(length(unmatched),' unmatched keys e.g.: ',unmatched[1])
+	if(length(unused))warning(length(unused),' unused keys, e.g.: ',unused[1])
+	right <- uniKey(y,key)
+	dups <- duplicated(right)
+	if(any(dups))warning(sum(dups),' duplicated keys, e.g.: ',right[dups][1])
 	merge(x,y,all.x=TRUE)
 }
 
@@ -87,20 +51,23 @@ Ops.keyed <- function(e1,e2){
 	yr <- nrow(y)
 	key <- intersect(names(x),names(y))
 	bad <- uniKey(x,key) %in% uniKey(y,key)
-	writeLines(
-		paste(
-			'dropping',
-			sum(bad),
-			'of',
-			xr,
-			'rows matching on',
-			paste(
-				key,
-				collapse=', '
-			)
-		)
-	)	
+	message('dropping ',sum(bad),' of ',xr,' rows matching on ',paste(key,collapse=', '))	
 	x[!bad,]
+}
+`raised.keyed` <- function(x,y){
+	xr <- nrow(x)
+	yr <- nrow(y)
+	key <- intersect(names(x),names(y))
+	y <- y[,sapply(y,constant,within=y[,key,drop=FALSE]),drop=FALSE]
+	y <- unique(y)
+	message('constant left join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '))	
+	left <- unique(uniKey(x,key))
+	right <- unique(uniKey(y,key))
+	unmatched <- setdiff(left,right)
+	unused <- setdiff(right,left)
+	if(length(unmatched))warning(length(unmatched),' unmatched keys e.g.: ',unmatched[1])
+	if(length(unused))warning(length(unused),' unused keys, e.g.: ',unused[1])
+	merge(x,y,all.x=TRUE)
 }
 
 
