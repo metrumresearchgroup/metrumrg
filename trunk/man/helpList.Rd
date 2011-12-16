@@ -23,7 +23,9 @@
 \item \link{accept} document the acceptance of an R installation
 \item \link{acceptance} display the acceptance documentation for an R installation
 \item \link{acr} calculate accumulation ratio
-\item \link{addl} calculate the ADDL data item (NONMEM) from explicit dose records
+\item \link{addl} calculate addl
+\item \link{addl.default} calculate the ADDL data item (NONMEM) from explicit dose records
+\item \link{addl.data.frame} collapse dose records by means of ADDL notation
 \item \link{after} test whether elements occur after some condition is \code{TRUE}
 \item \link{aggregate.keyed} aggregate a keyed data frame
 \item \link{align.decimal} align numeric column in latex table on the decimal
@@ -314,6 +316,7 @@
 \item \link{purge.dir} purge a directory (internal)
 \item \link{purge.files} purge files (internal)
 \item \link{qsub} prepare commandlines for qsub
+\item \link{raised.keyed} produce constant left join of two keyed data frames
 \item \link{read.cwres.data} compute conditional weighted residuals (internal)
 \item \link{read.nm} read a csv file and try to transform to nm
 \item \link{read.nmctl} read a NONMEM control stream, converting to modifiable object

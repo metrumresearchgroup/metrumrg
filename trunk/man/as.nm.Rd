@@ -127,6 +127,7 @@ dose & samp
 samp - dose
 dose | demo
 demo | dose
+dose^rbind(demo,demo)
 
 nm()
 nm() + dose

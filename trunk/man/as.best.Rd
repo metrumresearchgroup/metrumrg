@@ -6,7 +6,7 @@
 \description{
 	In some sense, numeric and character are the most general
 	data types.  \code{as.best} converts to one of these, handling
-	missing or near-missing values systematically.~~
+	missing or near-missing values systematically.
 }
 \usage{
 	\method{as.best}{default}(x, ...)
@@ -15,7 +15,7 @@
 
 \arguments{
   \item{x}{object to be coerced}
-  \item{\dots}{ignored}~~
+  \item{\dots}{ignored}
 }
 \details{
 Data printed at the command prompt can contain many ambiguities.  Factors
