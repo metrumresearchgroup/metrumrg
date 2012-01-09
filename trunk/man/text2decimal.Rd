@@ -29,8 +29,7 @@ Changes were made as of version 5.9 to support scientific notation.  Note that \
 \examples{
 text2decimal('every 3.5 hours')
 text2decimal('-17 units')
-text2decmial(
-  x <- c(
+x <- c(
   'I have -0.3 apples.',
   'I have -3 apples.',
   'I have 3. apples.',
@@ -53,9 +52,8 @@ text2decmial(
   'I have +e3 apples.',
   'I have .3.2 apples.',
   'I have no apples.'
- )
- suppressWarnings(data.frame(x=x,as.decimal=text2decimal(x))) # last 5 are NA
 )
+suppressWarnings(data.frame(x=x,as.decimal=text2decimal(x))) # last 5 are NA
 }
 \keyword{manip}
 
