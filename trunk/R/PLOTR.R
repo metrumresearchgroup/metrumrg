@@ -179,15 +179,18 @@ getPars <- function(file){
 }  
 
 #scavenges the data set name/path from the control stream
-getdname <- function(filename){
-	    if(!file.exists(filename))stop(filename,' not found',call.=FALSE)
-	    control <- read.nmctl(filename)
-            if(!'data' %in% names(control))stop('data record not found in control stream')
-            control$data <- sub('^ +','',control$data)#remove any leading spaces
-            control$data <- control$data[!control$data=='']#remove any blank lines
-            sub('^([^ ]+).*$','\\1',control$data[[1]])#take first line up to first space
+getdname <- function (x,...)UseMethod('getdname')
+getdname.default <- function(x,...){
+  if (!file.exists(x)) stop(x, " not found", call. = FALSE)
+  control <- read.nmctl(x)
+  getdname(control)
 }
-
+getdname.nmctl <- function(x,...){
+  if (!"data" %in% names(x))stop("data record not found in control stream")
+  x$data <- sub("^ +", "", x$data)
+  x$data <- x$data[!x$data == ""]
+  sub("^([^ ]+).*$", "\\1", x$data[[1]])
+}
 #finds the tab file and reduces it to observation rows
 getTabs <- function(file){
 	    if (!file.exists(file))stop(file,' does not exist.',call.=FALSE)

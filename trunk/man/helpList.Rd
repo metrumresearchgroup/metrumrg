@@ -316,7 +316,7 @@
 \item \link{purge.dir} purge a directory (internal)
 \item \link{purge.files} purge files (internal)
 \item \link{qsub} prepare commandlines for qsub
-\item \link{raised.keyed} produce constant left join of two keyed data frames
+\item \link{raised.keyed} produce sequential left join of two keyed data frames
 \item \link{read.cwres.data} compute conditional weighted residuals (internal)
 \item \link{read.nm} read a csv file and try to transform to nm
 \item \link{read.nmctl} read a NONMEM control stream, converting to modifiable object
@@ -357,6 +357,9 @@
 \item \link{sqrtm} support \code{compute.cwres}
 \item \link{stableMerge} produce a left join, with strict error checking
 \item \link{star} replace asterisk in x with y (internal)
+\item \link{static} generic
+\item \link{static.data.frame} return the static portion of a data frame
+\item \link{static.keyed} return the static portion of a keyed data frame
 \item \link{strain} reduce x to those elements that occur in options (internal)
 \item \link{summary.keyed} summarize a keyed data frame
 \item \link{summary.hidden.data.frame} summarize hidden rows of a data frame

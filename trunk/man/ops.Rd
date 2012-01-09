@@ -11,8 +11,8 @@
 These functions implement a concise syntax for joining objects of class \code{c('keyed', 'data frame')}.
 \code{+} produces an outer join, \code{&} produces an inner join, and \code{|} gives
 a left join.  By default, \code{-} drops rows in \code{x} that have matching rows in \code{y}. 
-\code{^} gives a left join using only columns that are constant with respect to key columns (and
-using unduplicated rows therein).
+\code{^} gives a sequential left join: x is joined cumulatively with static variants of y,
+using left subsets of the key (e.g. subj, subj-time, subj-time-cmt, etc.).
 
 The syntax can be extended to subclasses of
 \code{keyed} by writing additional proxy methods.
@@ -79,6 +79,7 @@ examples.  See examples for \code{as.nm}.
 \seealso{
 	\itemize{
 		\item \code{\link{as.nm}}
+		\item \code{\link{static.keyed}}
 	}
 }
 \keyword{manip}

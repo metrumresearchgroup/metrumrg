@@ -54,20 +54,17 @@ Ops.keyed <- function(e1,e2){
 	message('dropping ',sum(bad),' of ',xr,' rows matching on ',paste(key,collapse=', '))	
 	x[!bad,]
 }
-`raised.keyed` <- function(x,y){
-	xr <- nrow(x)
-	yr <- nrow(y)
-	key <- intersect(names(x),names(y))
-	y <- y[,sapply(y,constant,within=y[,key,drop=FALSE]),drop=FALSE]
-	y <- unique(y)
-	message('constant left join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '))	
-	left <- unique(uniKey(x,key))
-	right <- unique(uniKey(y,key))
-	unmatched <- setdiff(left,right)
-	unused <- setdiff(right,left)
-	if(length(unmatched))warning(length(unmatched),' unmatched keys e.g.: ',unmatched[1])
-	if(length(unused))warning(length(unused),' unused keys, e.g.: ',unused[1])
-	merge(x,y,all.x=TRUE)
+
+`raised.keyed` <- function (x, y){
+    key <- key(y)
+    message("serial left join of ", nrow(x), " rows and ", nrow(y), " rows on ", paste(key, collapse = ", "))
+    series <- lapply(seq_along(key),function(n)key[seq_len(n)])
+    candidates <- lapply(series,function(x)static(y,on=x))
+    while(length(candidates)){
+      try(x <- stableMerge(x,candidates[[1]]),silent=TRUE)
+      candidates <- candidates[-1]
+    }
+    x
 }
 
 
