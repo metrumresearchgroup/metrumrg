@@ -17,6 +17,13 @@ specified by levels of \code{INDEX}. \code{reapply} repeats that result as neces
 to match the number of input elements per cell, and restores the order to that
 of the original index.  Regardless of the length of the value of \code{FUN}, the
 length of the value of reapply is always identical to that of \code{x}.
+
+\code{reapply} gives a result almost identical to \code{stats::ave}. However, 
+\code{reapply} does not require a strict "multiple" relationship between the 
+input and output of \code{fun}.  \code{reapply} has a named argument for the index
+variables, and passes dots to \code{fun}; for \code{ave}, dots represent the indices,
+and any extra arguments to \code{fun} need to be hard-coded, e.g. in an anonymous
+function (see examples for \code{ave}).
 }
 \value{an atomic object, typically a vector}
 \references{\url{http://metrumrg.googlecode.com}}

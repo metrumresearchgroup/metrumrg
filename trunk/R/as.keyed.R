@@ -133,4 +133,9 @@ transform.keyed <- function(`_data`,...){
 	key(x) <- key(`_data`)
 	x
 }
+as.data.frame.keyed <- function(x,...){
+  x <- as.data.frame.data.frame(x,...)
+  attr(x,'key') <- NULL
+  x
+}
 

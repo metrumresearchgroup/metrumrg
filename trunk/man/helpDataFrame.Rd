@@ -13,5 +13,6 @@ I want to ....
 \item \link[=fixedwidth]{format a data.frame as fixed-width}
 \item \link[=aug]{add named elements to a data.frame or list}
 \item \link[=static]{find the static portion of a data frame}
+\item \link[=digest]{diagnose and visualize static data relationships}
 }
 }

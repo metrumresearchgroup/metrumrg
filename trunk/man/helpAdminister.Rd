@@ -17,6 +17,7 @@ I want to ....
 \item \link[=svnMarkAsText]{tell Subversion to treat your files as text}
 \item \link[=electronicAppendix]{create an FDA-style electronic appendix from a Subversioned directory}
 \item \link[=variants]{locate path-variant versions of a file}
+\item \link[=sortedInstall]{install local source packages in dependency order}
  }
 }
 

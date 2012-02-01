@@ -283,6 +283,7 @@ merge.nm <- function(x,y,...)as.nm(merge(data.frame(x),y,...))
 	x <- shuffle(x,key(x),after='C')
 	row.names(x) <- NULL
 	if(!inherits(x,'nm'))class(x) <- c('nm',class(x))
+	x[] <- with(x,lapply(x,as.nm,...))
 	x
 }
-
+as.nm.default <- function(x,...)x

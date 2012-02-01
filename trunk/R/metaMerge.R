@@ -1,16 +1,14 @@
 metaMerge <- function(x,...)UseMethod('metaMerge')
-metaMerge.list <- function(x,groom=as.best,...){
-	if(!length(x))return(x)
-	groom <- match.fun(groom)
-	x[[1]] <- groom(x[[1]],...)
+metaMerge.list <- function(x,...){
+	if(length(x)==0)return(x)
 	if(length(x)==1)return(x[[1]])
-	metaMerge(all=TRUE,x=x[[1]],y=metaMerge(x[-1]),...)
+	metaMerge(x=metaMerge(x[-length(x)]),y=x[[length(x)]],all=TRUE,...)
 }
-metaMerge.character <- function(x,import=read.table,groom=as.best,...){
+metaMerge.character <- function(x,import=read.table,...){
 	miss <- x[!file.exists(x)]
 	if(length(miss))stop('cannot find, e.g.,',miss[[1]])
 	import <- match.fun(import)
 	x <- lapply(x,import,...)
-	metaMerge(x,groom=groom,...)
+	metaMerge(x,...)
 }
 metaMerge.default <- function(x,y,...)merge(x,y,...)

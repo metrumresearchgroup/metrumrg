@@ -8,15 +8,14 @@
   Perform an n-way merge, given multiple objects or file names.
 }
 \usage{
-	\method{metaMerge}{list}(x,groom=as.best,...)
-	\method{metaMerge}{character}(x,import=read.table,groom=as.best,...)
+	\method{metaMerge}{list}(x,...)
+	\method{metaMerge}{character}(x,import=read.table,...)
 	\method{metaMerge}{default}(x,y,...)
 }
 \arguments{
   \item{x}{a list of objects, e.g. data.frames, or a character vector of file names}
   \item{y}{a second object}
   \item{import}{a function for reading files}
-  \item{groom}{a function for preparing objects prior to merge}
   \item{\dots}{passed to \code{groom} and \code{import}}
 }
 \details{
@@ -25,9 +24,10 @@
 	using \code{import} (after a call to \code{match.fun}). The resulting list
 	of objects is merged.
 	
-	If \code{x} is an empty list, it is returned. Otherwise, each element is
-	transformed using using \code{groom} (after a call to \code{match.fun}).
-	The first object is merged with the merge of any remaining objects.
+	If \code{x} is an empty list, it is returned. If of length one, the first 
+	element is returned.  Otherwise, the first element is merged with the second,
+	and the result merged with the third (if present), and so on.  Merges are
+	full or outer merges; i.e. \code{all=TRUE}.
 	
 	The default method simply calls \code{merge} and is present for methodological reasons.
 }

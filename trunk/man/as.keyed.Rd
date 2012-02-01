@@ -2,6 +2,7 @@
 \alias{[.keyed}
 \alias{aggregate.keyed}
 \alias{as.keyed.data.frame}
+\alias{as.data.frame.keyed}
 \alias{as.keyed}
 \alias{dupKeys}
 \alias{dupKeys.default}
@@ -56,7 +57,7 @@ The generic \code{as.keyed} is the usual way of creating a keyed object.  The me
 \code{as.keyed.data.frame} calls \code{key<-}. The function \code{key} allows checking an 
 object's key. A data.frame can be re-keyed by a subsequent call.  Generally, a 
 data.frame should be keyed on columns that actually exist, but this is not
-enforced.
+enforced. \code{as.data.frame.keyed} removes the key and reverts the class.
 
 In \code{aggregate.keyed}, the default behavior is to aggregate by the key columns, i.e.,
 to eliminate duplicate keys by aggregation.  \code{by} can be specified arbitrarily, but 

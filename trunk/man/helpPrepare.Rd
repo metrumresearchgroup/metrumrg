@@ -15,5 +15,6 @@ I want to ....
 \item \link[=helpPharmacometric]{investigate pharmacometric properties}
 \item \link[=helpStrategic]{perform strategic data manipulations}
 \item \link[=metaMerge.list]{merge recursively}
+\item \link[=digest]{diagnose and visualize static relationships}
 }
 }

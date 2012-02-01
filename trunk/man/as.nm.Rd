@@ -1,6 +1,7 @@
 \name{as.nm}
 \alias{nm}
 \alias{as.nm}
+\alias{as.nm.default}
 \alias{as.nm.data.frame}
 \alias{merge.nm}
 \alias{read.nm}
@@ -42,6 +43,10 @@ write.nm(x, file, na = '.', row.names = FALSE, quote = FALSE, ...)
 \code{as.nm.data.frame} is the principal method that creates an nm classification.  It 
 alone enforces all qualities of class nm.  \code{read.nm} is the only other function
 that creates an nm classification; use with caution, as it does not enforce all qualities.
+
+Just before \code{as.nm.data.frame} returns, it calls \code{as.nm} on each of 
+its columns: a non-operation (\code{as.nm.default}) unless the user supplies specialized
+classes and methods.
 \itemize{
   \item \code{SUBJ} must be present and defined, even for commented records. ID is (re)calculated as \code{as.numeric(factor(SUBJ))}.
   \item \code{C} (class:  comment) will be created if not present.
