@@ -48,8 +48,8 @@ superset(
 	appropriate for reading input and output file formats, respectively.
 	The ignore criteria will be reconstructed per row so that output can be
 	mapped unambiguously to input.  Alternatively, if \code{key} is provided,
-	it is used as an object model to allow an inferential left join of input
-	onto output; this approach is riskier but can back fill NA cells with 
+	it is used as an object model to allow an inferential left join of output
+	onto intput; this approach is riskier, but can back fill NA cells with 
 	values that are otherwise constant within left-subsets of the key.
 
 }

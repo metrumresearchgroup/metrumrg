@@ -44,10 +44,7 @@
 \alias{splom.digest}
 \alias{splom.keyed}
 
-
-\title{
-Diagnose and Visualize Static Data Relationships~~
-}
+\title{Diagnose and Visualize Static Data Relationships}
 \description{
 Break a data frame into components static on variants of a proposed key, and plot
 them flexibly.
@@ -153,17 +150,17 @@ may be appropriate as x where available, and a subject identifier could be the
 alternative:  \code{motif=list(y='.',x=c('time','id'))}.  Methods exist for creating
 default motifs for a variety of objects.  These are converted to roles in context.
 
-The following are generic: 
-\code{as.motif}, 
-\code{as.digest},~
-\code{as.conditioned}, 
-\code{index}, 
-\code{as.roles}, 
+The following are generic:
+\code{as.motif},
+\code{as.digest},
+\code{as.conditioned},
+\code{index},
+\code{as.roles},
 \code{as.isolated}.  
-\code{motif}, 
-\code{roles}, and 
-\code{digest} 
-are aliases for 
+\code{motif},
+\code{roles}, and
+\code{digest}
+are aliases for
 their \code{as.} counterparts.
 }
 \value{

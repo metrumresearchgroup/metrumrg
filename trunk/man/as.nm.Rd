@@ -46,7 +46,9 @@ that creates an nm classification; use with caution, as it does not enforce all 
 
 Just before \code{as.nm.data.frame} returns, it calls \code{as.nm} on each of 
 its columns: a non-operation (\code{as.nm.default}) unless the user supplies specialized
-classes and methods.
+classes and methods. Column-specific methods may make use of the passed argument
+\code{data}, which contains the data set itself.
+
 \itemize{
   \item \code{SUBJ} must be present and defined, even for commented records. ID is (re)calculated as \code{as.numeric(factor(SUBJ))}.
   \item \code{C} (class:  comment) will be created if not present.

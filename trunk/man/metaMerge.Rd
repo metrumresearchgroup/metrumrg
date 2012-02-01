@@ -16,7 +16,7 @@
   \item{x}{a list of objects, e.g. data.frames, or a character vector of file names}
   \item{y}{a second object}
   \item{import}{a function for reading files}
-  \item{\dots}{passed to \code{groom} and \code{import}}
+  \item{\dots}{passed to \code{import}}
 }
 \details{
 	If \code{x} is a character vector, it is presumed to be file names.  An 
