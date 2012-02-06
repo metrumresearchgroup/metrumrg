@@ -11,8 +11,8 @@ as.digest.keyed <- function(
   key=match.fun('key')(x),
   strict=TRUE,
   ...
-)as.digest.data.frame(x,key=key,...)
-as.digest.nm <- function(x,...)as.digest(as.keyed(x,key=key(x),...))
+)as.digest.data.frame(x,key=key,strict=strict,...)
+as.digest.nm <- function(x,key=match.fun('key')(x),...)as.digest(as.keyed(x,key=key,...))
 as.digest.data.frame <- function(
   x,
   key=character(0),
