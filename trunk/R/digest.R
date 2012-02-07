@@ -19,7 +19,9 @@ as.digest.data.frame <- function(
   strict=TRUE,
   mask=rep(FALSE,length(key)),
   ...
-){ 
+){
+  debug <- FALSE
+  if('debug' %in% names(list(...)))debug <- list(...)$debug
   descendable <- function(x)if(length(x)) !x[length(x)] else FALSE# terminal element is false
   descend <-function(x){ # always at least one trailing false when descending
     x[at(runhead(x),n=-1) & !x] <- TRUE
@@ -31,27 +33,26 @@ as.digest.data.frame <- function(
     x
   }
   moot <- function(x,key)all(names(x)%in%key)
-  #cat(paste(names(x),collapse=' '))
-  #cat('\n')
-  #cat('key',paste(key,collapse=' '),'\n')
-  #cat('mask',paste(mask,collapse=' '),'\n')
+  if(debug)cat(paste(names(x),collapse=' '))
+  if(debug)cat('\n')
+  if(debug)cat('key',paste(key,collapse=' '),'\n')
+  if(debug)cat('mask',paste(mask,collapse=' '),'\n')
   #if(!all(key[mask] %in% names(x)))browser()
   stopifnot(is.character(key),all(key[mask] %in% names(x)))
-  #cat('lysing on',paste(key[mask],collapse=' '),' ...\n')
+  if(debug)cat('lysing on',paste(key[mask],collapse=' '),' ...\n')
   lysis <- lyse(x,on=key[mask],strict=strict,...)
   stc <- lysis$static
   dyn <- lysis$dynamic
   stc <- as.keyed(stc,key[mask])
   dyn <- as.keyed(dyn,NA)
-  #cat('stc: ',paste(names(stc),collapse=' '),'\n')
-  #cat('dyn: ',paste(names(dyn),collapse=' '),'\n')
+  if(debug)cat('stc: ',paste(names(stc),collapse=' '),'\n')
+  if(debug)cat('dyn: ',paste(names(dyn),collapse=' '),'\n')
   if(moot(stc,key)){
-    #cat('stc is moot\n') 
+    if(debug)cat('stc is moot\n') 
     stc <- list()
   }else 
   if(ascendable(mask)){
-    #cat('ascending stc ...\n')
-    #stc <-
+    if(debug)cat('ascending stc ...\n')
     tmp <- digest(
       stc,
       key=key,
@@ -104,15 +105,15 @@ as.digest.data.frame <- function(
     if(ascensionPartial(tmp)) stc <- c(staticPart(tmp),list(static=reduced(stc,tmp)))
     if(ascensionFailed(tmp)) stc <- list(static=stc)
   } else {
-    #cat('no subkey on stc\n')
+    if(debug)cat('no subkey on stc\n')
     stc <- list(static=stc)
   }
   if(moot(dyn,key)){
-    #cat('dyn is moot\n')
+    if(debug)cat('dyn is moot\n')
     dyn <- list()
   }else 
   if(descendable(mask) & all(key[descend(mask)] %in% names(x))){
-    #cat('descending dyn ...\n')
+    if(debug)cat('descending dyn ...\n')
     dyn <- digest(
       dyn,
       key=key,
@@ -121,7 +122,7 @@ as.digest.data.frame <- function(
       ...
     )
   }else {
-    #cat('no unvisited keys\n')
+    if(debug)cat('no unvisited keys\n')
     dyn <- list(dynamic=dyn)
   }
   #stc and dyn are lists, whether or not populated
