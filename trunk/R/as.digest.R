@@ -134,7 +134,7 @@ as.conditioned.keyed <- function(x,roles=as.roles(x),...){
     dex <- x[[col]] # save for local use
     x[[col]] <- NULL # remove from forwarded context
     key(x) <- setdiff(key(x),col) # remove from key if present
-    dat <- split(x,dex) # split into sub-frames for sub-plots
+    dat <- split(x,dex,drop=TRUE) # split into sub-frames for sub-plots
     for(nm in names(dat))legacy(dat[[nm]]) <- structure(nm,names=col) #internal accumulator
     for(nm in names(dat))if(!inherits(dat[[nm]],'conditioned'))class(dat[[nm]]) <- c('conditioned',class(dat[[nm]]))
     names(dat) <- paste(col,names(dat),sep=':') # external hierarchical indicator

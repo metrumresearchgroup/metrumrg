@@ -58,7 +58,7 @@ them flexibly.
 \method{as.digest}{data.frame}(x, key = character(0), strict = TRUE, mask = rep(FALSE, length(key)), ...)
 \method{as.digest}{digest}(x, ...)
 \method{as.digest}{keyed}(x, key = match.fun("key")(x), strict = TRUE, ...)
-\method{as.digest}{nm}(x, ...)
+\method{as.digest}{nm}(x,key=match.fun('key')(x),...)
 \method{as.isolated}{digest}(x, ...)
 \method{as.isolated}{isolated}(x, ...)
 \method{as.isolated}{keyed}(x, ...)

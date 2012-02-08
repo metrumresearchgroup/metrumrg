@@ -88,7 +88,7 @@ zeroAmt.nm <- function(x,...){
 noPk <- function(x,...)UseMethod('noPk')
 noPk.nm <- function(x,...){
 	if(!'EVID' %in% names(x))return(rep(FALSE,nrow(x)))
-	with(x,is.na(first(where=EVID==0 & !C,within=SUBJ)))
+	with(x,!C & is.na(first(where=EVID==0 & !C,within=SUBJ)))
 }
 
 badII <- function(x,...)UseMethod('badII')

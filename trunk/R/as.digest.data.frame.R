@@ -32,6 +32,14 @@ as.digest.data.frame <- function(
   dyn <- lysis$dynamic
   stc <- as.keyed(stc,key[mask])
   dyn <- as.keyed(dyn,NA)
+  if(descendable(mask)){
+    if(!all(key[descend(mask)] %in% names(dyn))){
+        if(debug)cat('restoring keys\n')
+        suppressMessages(dyn <- dyn + stc[,names(stc) %in% key,drop=FALSE])
+	# restore column order
+	dyn <- dyn[,intersect(names(x),names(dyn))]
+      }
+  }
   if(debug)cat('stc: ',paste(names(stc),collapse=' '),'\n')
   if(debug)cat('dyn: ',paste(names(dyn),collapse=' '),'\n')
   if(moot(stc,key)){
@@ -98,27 +106,24 @@ as.digest.data.frame <- function(
   if(moot(dyn,key)){
     if(debug)cat('dyn is moot\n')
     dyn <- list()
-  }else 
-  if(descendable(mask) & all(key[descend(mask)] %in% names(x))){
-    if(debug)cat('descending dyn ...\n')
-    dyn <- digest(
-      dyn,
-      key=key,
-      strict=strict,
-      mask=descend(mask),
-      ...
-    )
-  }else{
-    dyn <- list(dynamic=dyn)
-    if(debug){
-      if(descendable(mask)){
-          cat('descent is missing key columns\n') # should be unreachable
-      }else{
-          if(exhausted(mask)){
-      	  cat('keys exhausted\n')
-      	  }else{ 
-      	      cat('key already ascended\n')
-      	  }
+  }else{ 
+    if(descendable(mask)){
+      if(debug)cat('descending dyn ...\n')    
+      dyn <- digest(
+        dyn,
+        key=key,
+        strict=strict,
+        mask=descend(mask),
+        ...
+      )
+    }else{
+      dyn <- list(dynamic=dyn)
+      if(debug){
+        if(exhausted(mask)){
+      	  cat('dyn key exhausted\n')
+        }else{ 
+      	  cat('dyn key already ascended\n')
+        }
       }
     }
   }
