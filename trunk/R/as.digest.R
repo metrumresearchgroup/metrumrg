@@ -114,11 +114,13 @@ legacy <- function(x,...)attr(x,'legacy')
 }
 
 format.legacy <- function(x,...){
-  f <- legacy(x)
-  if(is.null(f))return('')
-  vec <- sapply(names(f),function(nm)paste(nm,'=',f[[nm]]))
-  vec <- paste(vec,collapse='\\n')
-  vec
+    f <- legacy(x)
+    if (is.null(f)) 
+        return("")
+    vec <- sapply(names(f), function(nm) paste(nm, "=", f[[nm]]))
+    vec <- rev(vec)
+    vec <- paste(vec, collapse = "; ")
+    vec
 }
 as.conditioned <- function(x,...)UseMethod('as.conditioned')
 as.conditioned.isolated <- function(x,...){
@@ -272,6 +274,7 @@ index.conditioned <- function(x,roles=as.roles(x),...){
   return(result)
 }
 index.isolated <- function(x,roles=as.roles(x),...){
+  if(!nrow(x))return(NULL)
   #canonical order is the isolated column, followed by the key
   #in an isolate, we know we have only key colums and one variable.
   #at this point, we also have some assigned roles, or maybe none.
@@ -283,7 +286,7 @@ index.isolated <- function(x,roles=as.roles(x),...){
   names(x)[names(x)==roles['y']] <- 'y'
   names(x)[names(x)==roles['x']] <- 'x'
   names(x)[names(x)==roles['z']] <- 'z'
-if(is.character(x$x))x$x <- factor(x$x)
+  if(is.character(x$x))x$x <- factor(x$x)
   if(is.character(x$y))x$y <- factor(x$y)
   # now everything is presumably factor or numeric (i.e. plottable)
   args <- list()
