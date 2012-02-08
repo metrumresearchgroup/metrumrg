@@ -20,7 +20,7 @@ sortedInstall(pkgDir = getwd(), addLib = TRUE, tmpName = "tmpdir")
 	
 	Naturally, the \code{metrumrg} package and its dependencies must be 
 	attached in order to use \code{sortedInstall}. If these packages conflict 
-	with the contents of \code{pkgDir}, users will need detach to them before 
+	with the contents of \code{pkgDir}, users will need detach them before 
 	attaching the desired versions. An easier solution may be closing the 
 	current R session and opening a new one.
 
@@ -34,7 +34,7 @@ sortedInstall(pkgDir = getwd(), addLib = TRUE, tmpName = "tmpdir")
 }
 \value{Invisible \code{NULL}.}
 \references{\url{http://metrumrg.googlecode.com}}
-\author{Natlie Hsiang}
+\author{Natalie Hsiang}
 \seealso{	\itemize{
 			\item \code{\link{install.packages}}
 	}
