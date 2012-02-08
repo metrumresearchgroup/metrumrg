@@ -148,7 +148,7 @@ as.conditioned.keyed <- function(x,roles=as.roles(x),...){
 `[.conditioned`<-function (x, ...) 
 {
     y <- NextMethod()
-    if(!is.null(legacy(x))) legacy(y) <- legacy(x)
+    if(!is.null(legacy(x)) & is.null(legacy(y))) legacy(y) <- legacy(x)
     y
 }
 as.conditioned.digest <- function(x,...){
