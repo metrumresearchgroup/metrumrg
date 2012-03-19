@@ -14,8 +14,7 @@ superset(
 	read.input = list(
 		read.csv, 
 		header = TRUE, 
-		as.is = TRUE, 
-		na.strings = "."
+		as.is = TRUE
 	), 
 	read.output = list(
 		read.table, 

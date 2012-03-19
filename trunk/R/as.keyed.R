@@ -90,7 +90,7 @@ aggregate.keyed <- function(
 	unique <- x[!dupKeys(x),]
 	dups <- x[dupKeys(x),]
 	molten <- melt(dups,id.var=names(by),variable_name='aggregate.keyed.variable')
-	frozen <- cast(molten,formula=...~aggregate.keyed.variable,fun=FUN,...)
+	frozen <- cast(molten,formula=...~aggregate.keyed.variable,fun.aggregate=FUN,...)
 	frozen <- as.keyed(frozen,names(by))
 	#x <- merge(unique,frozen,all=TRUE)
 	x <- as.keyed(rbind(unique,frozen),names(by))

@@ -73,7 +73,7 @@ superset <- function(
   #key=c('ID','DATE','TIME','CMT'),
   key=character(0),
   #convert=FALSE,
-  read.input=list(read.csv,header=TRUE,as.is=TRUE,na.strings='.'),
+  read.input=list(read.csv,header=TRUE,as.is=TRUE),
   read.output=list(read.table,header=TRUE,as.is=TRUE,skip=1,comment.char='',check.names=FALSE),
   ...
 ){
@@ -166,12 +166,16 @@ superset <- function(
     label <- x['label']
     op <- x['operator']
     val <- x['value']
-    if(is.null(label))stop('no label')
-    if(is.null(val))stop('no value')
-    if(is.null(op))op <- 'EQ'
+    if(is.na(label))stop('no label')
+    if(is.na(val))stop('no value')
+    if(is.na(op))op <- 'EQ'
     pos <- match(label,labels)
     vec <- data[pos]
-    if(op %in% c('EQ','NE')){
+    if(any(is.na(vec))){
+    	    warning('imputing NA as "."')
+    	    vec[is.na(vec)] <- '.'
+    }
+    if(!op %in% c('EQ','NE')){
       val <- as.numeric(val)
       vec <- as.numeric(vec)
     }

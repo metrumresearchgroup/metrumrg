@@ -180,12 +180,12 @@ as.isolated.keyed <- function(x,...){
   return(result)
 }
 plot.keyed <- function(x,roles=as.roles(x),...){
-  tiles <- as.conditioned(x,roles=roles)
-  lapply(tiles,plot,roles=roles)
+  tiles <- as.conditioned(x,roles=roles,...)
+  lapply(tiles,plot,roles=roles,...)
 }
 splom.keyed <- function(x,data=NULL,roles=as.roles(x),...){
-  tiles <- as.conditioned(x,roles=roles)
-  lapply(tiles,splom,roles=roles)
+  tiles <- as.conditioned(x,roles=roles,...)
+  lapply(tiles,splom,roles=roles,...)
 }
 plot.conditioned <- function(x,roles=as.roles(x),...){
   splom <- splom(x,roles=roles,...)
@@ -259,14 +259,14 @@ splom.digest <- function(
 }
 index <- function(x,...)UseMethod('index')
 index.keyed <- function(x,roles=as.roles(x),...){
-  tiles <- as.conditioned(x,roles=roles)
-  lapply(tiles,index,roles=roles)
+  tiles <- as.conditioned(x,roles=roles,...)
+  lapply(tiles,index,roles=roles,...)
 }
 index.nm <- function(x,density=20,...){
   if('set' %in% names(x))stop("'set' is a reserved label in index.nm")
   x$ID <- factor(as.integer(as.character(x$ID)))
   x$set <- map(x$ID,from=unique(x$ID),to=rep(seq_along(unique(x$ID)),each=density,length.out=length(unique(x$ID))))
-  index(as.keyed(x,c('ID','set')),roles=c(y='.',x='ID'))
+  index(as.keyed(x,c('ID','set')),roles=c(y='.',x='ID'),...)
 }
 index.conditioned <- function(x,roles=as.roles(x),...){ 
   isolates <- as.isolated(x) # named list of isolates

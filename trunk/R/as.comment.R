@@ -135,7 +135,7 @@ summary.hidden.data.frame <- function(object,...){
 	if(nrow(unique))unique$hidden.scope <- 'unique'
 	else unique <- NULL
 	molten <- melt(rbind(hideflags,unique),id.var='hidden.scope')
-	y <- data.frame(cast(molten,fun=sum))
+	y <- data.frame(cast(molten,fun.aggregate=sum))
 	rownames(y) <- y$hidden.scope
 	y$hidden.scope <- NULL
 	y

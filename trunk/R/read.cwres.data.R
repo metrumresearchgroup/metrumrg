@@ -23,11 +23,11 @@ function (filename, old.file.convention = FALSE, est.tab.suffix = ".est",
                   return(NULL)
                 }
                 else {
-                  data <- read.table(filename, skip = 1, h = TRUE)
+                  data <- read.table(filename, skip = 1, header = TRUE)
                 }
             }
             else {
-                data <- read.table(filename, skip = 1, h = TRUE)
+                data <- read.table(filename, skip = 1, header = TRUE)
             }
             size.of.sim <- dim(data)[1]/nsim
             data[, "iteration.number"] <- sort(rep(1:nsim, size.of.sim))
@@ -58,16 +58,16 @@ function (filename, old.file.convention = FALSE, est.tab.suffix = ".est",
                   tempfile <- glue(deriv.file, ".xptmp")
                   write.table(tmp[-c(inds, inds2)], file = tempfile, 
                     row.names = FALSE, quote = FALSE)
-                  data <- read.table(tempfile, skip = 2, h = TRUE)
+                  data <- read.table(tempfile, skip = 2, header = TRUE)
                   unlink(tempfile)
                   nsim <- length(inds) + 1
                 }
                 else {
-                  data <- read.table(deriv.file, skip = 1, h = TRUE)
+                  data <- read.table(deriv.file, skip = 1, header = TRUE)
                 }
             }
             else {
-                data <- read.table(deriv.file, skip = 1, h = TRUE)
+                data <- read.table(deriv.file, skip = 1, header = TRUE)
             }
             size.of.sim <- dim(data)[1]/nsim
             data[, "iteration.number"] <- sort(rep(1:nsim, size.of.sim))

@@ -89,7 +89,7 @@ as.digest.data.frame <- function(
     
     #The overall goal is to reassign stc as some combination of stc, ascended-static, and ascended-dynamic.
     #stc on-hand is known static on key[mask].  Effectively, ascension cannot return a dynamic data frame.
-    endsDynamic <- function(x) is.na(key(x[[length(x)]]))
+    endsDynamic <- function(x) any(is.na(key(x[[length(x)]])))#scalar NA or vector key
     ascensionSucceeded <- function(x)!endsDynamic(x)
     ascensionFailed <-    function(x)endsDynamic(x) & length(x)==1  
     ascensionPartial <-   function(x)endsDynamic(x) & length(x) > 1
