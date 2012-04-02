@@ -1,43 +1,63 @@
 `diagnosticPlots` <-
-function (data, dvname='DV', group=NULL, model=NULL, ...) 
+function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...) 
 {
   plots <-list()
   if(is.null(group))data$grpnames <- 'all'
   if(is.null(group))group <- 'grpnames'
-  observed <- melt(data,measure.var=intersect(c("PRED","IPRE","IPRED"),names(data)),id.var=c("DV","grpnames"))
-  observed$variable <- factor(
-  	observed$variable,
-  	levels=intersect(c("PRED","IPRE","IPRED"),names(data)),
-  	labels=c("population","individual")[c("PRED","IPRE") %in% substr(names(data),1,4)]#IPRED in NM7
+  if(length(group) > 1 & include.all) plots <- diagnosticPlots(
+  	data=data,
+	dvname=dvname,
+	group=NULL,
+	model=model,
+	include.all=FALSE,
+	...
   )
+  obsvar <- intersect(c("PRED","IPRE","IPRED"),names(data))
+  obsid <- c("DV","grpnames")
+  observed <- list()
+  if(length(obsvar) & length(obsid)){
+  	  observed <- melt(data,measure.var=obsvar,id.var=obsid)
+  	  observed$variable <- factor(
+  	  	observed$variable,
+  	  	levels=obsvar,
+  	  	labels=map(
+  	  		obsvar,
+  	  		from=c("PRED","IPRE","IPRED"),
+  	  		to=c('population','individual','individual')
+  	  	)
+#  	  	labels=c("population","individual")[c("PRED","IPRE") %in% substr(names(data),1,4)]#IPRED in NM7
+  	  )
+  }
   resvar <- intersect(c("RES","WRES","CWRES"),names(data))
   resid <- intersect(c("PRED","TIME","grpnames","TAD"),names(data))
-  res <- melt(data,measure.var=resvar,id.var=resid)
- groupSubtitle <- function(grp){
-  	if(grp[[1]] == "plotrGroup")return(NULL)
+  res <- list()
+  if(length(resvar) & length(resid)){
+  	  res <- melt(data,measure.var=resvar,id.var=resid)
+  }
+  groupSubtitle <- function(grp){
+  	#if(grp[[1]] == "plotrGroup")return(NULL)
   	paste("for",paste(grp,collapse=", "),"data")
   }
   #Observed vs. Predicted 
-  for (group in levels(observed$grpnames)){
-  plots[[paste('obsPred',group)]] <- xyplot(
-  	DV ~ value |  variable, 
-  	observed[observed$grpnames==group,],
-  	as.table=TRUE,
-  	aspect=1,
-  	layout=c(2,2),
-  	#xlim = with(data[data$grpames==group,],c(min(0, DV, PRED), max(0, DV, PRED))),
-  	#ylim = with(data[data$grpnames==group,],c(min(0, DV, PRED), max(0, DV, PRED))),
-  	ylab = paste("Observed", dvname), 
-  	xlab = paste("Predicted", dvname),
-  	panel= function(x,y,...){
-  		panel.xyplot(x,y,...)
-  		panel.abline(0,1)
-  	},
-  	main=paste(model,"\nObserved vs. Predicted",groupSubtitle(group)),
+  if(length(observed)) for (group in levels(observed$grpnames))plots[[paste('obsPred',group)]] <- xyplot(
+	DV ~ value |  variable, 
+	observed[observed$grpnames==group,],
+	as.table=TRUE,
+	aspect=1,
+	layout=c(2,2),
+	#xlim = with(data[data$grpames==group,],c(min(0, DV, PRED), max(0, DV, PRED))),
+	#ylim = with(data[data$grpnames==group,],c(min(0, DV, PRED), max(0, DV, PRED))),
+	ylab = paste("Observed", dvname), 
+	xlab = paste("Predicted", dvname),
+	panel= function(x,y,...){
+		panel.xyplot(x,y,...)
+		panel.abline(0,1)
+	},
+	main=paste(model,"\nObserved vs. Predicted",groupSubtitle(group)),
 	...
-  )
-  #Residuals vs. Predicted
-   plots[[paste('resPred',group)]] <- xyplot(
+   )
+   #Residuals vs. Predicted
+   if(length(res)) plots[[paste('resPred',group)]] <- xyplot(
   	value ~ PRED |  variable, 
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -54,7 +74,7 @@ function (data, dvname='DV', group=NULL, model=NULL, ...)
 	...
   )
   #Residuals vs. Time
-  plots[[paste('resTime',group)]] <- xyplot(
+  if(length(res)) if("TIME" %in% names(res))plots[[paste('resTime',group)]] <- xyplot(
   	value ~ TIME |  variable, 
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -71,7 +91,7 @@ function (data, dvname='DV', group=NULL, model=NULL, ...)
 	...
   )
   #Residuals vs. TAD
-  if("TAD" %in% names(res))plots[[paste('resTad',group)]] <- xyplot(
+  if(length(res))if("TAD" %in% names(res))plots[[paste('resTad',group)]] <- xyplot(
   	value ~ TAD |  variable, 
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -88,7 +108,7 @@ function (data, dvname='DV', group=NULL, model=NULL, ...)
 	...
   )
   #QQ-Norm
-  plots[[paste('resQ',group)]] <- qqmath(
+  if(length(res)) plots[[paste('resQ',group)]] <- qqmath(
   	~ value | variable, 
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -106,7 +126,7 @@ function (data, dvname='DV', group=NULL, model=NULL, ...)
 	...
   )
   #QQ-Res
-  if("CWRES" %in% names(data))plots[[paste('resCwresQ',group)]] <- qq(
+  if(length(res))if(all(c("WRES","CWRES") %in% resvar))plots[[paste('resCwresQ',group)]] <- qq(
   	variable ~ value ,
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -121,14 +141,13 @@ function (data, dvname='DV', group=NULL, model=NULL, ...)
 	...
   )
   #Residuals
-  plotsRes <- bwplot(
+  if(length(res))plots[['plotsRes']] <- bwplot(
   	value ~ variable,
   	res[res$grpnames==group,],
   	main=paste(model,"Boxplots of Residuals"),
   	ylab="residuals",
 	...
   )
-  }
   plots
 }
 

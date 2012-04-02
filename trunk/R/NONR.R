@@ -32,7 +32,19 @@ function (
     if (win())  grid <- FALSE
     if (win())  concurrent <- FALSE
     run <- unique(run)
-	    
+    if (missing(command)){
+    	message('argument "command" was not supplied')
+    	message('searching for NONMEM ...')
+    	candidate <- safe.call(findNonmemCommand,...)
+    	if(!length(candidate))stop('NONMEM not detected. Specify "command" directly or see help for findNonmemCommand.')
+    	if(length(candidate) > 1 ){
+    		message('found: ',paste(collapse=', ',candidate))
+    		candidate <- candidate[[1]]
+    	}
+    	#now candidate is length 1
+    	message('using command: ',candidate)
+    	command <- candidate
+    }    
     for (each in run) {
         args <- list(
 		run = each, 

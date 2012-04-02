@@ -204,6 +204,7 @@
 \item \link{falseDv.nm} DV is defined where EVID is not 0
 \item \link{falseDv} generic
 \item \link{filename} generate standard file name (internal)
+\item \link{findNonmemCommand} find available NONMEM executables
 \item \link{first} repeat, for each element, the first element where a condition is \code{TRUE} (usually, within levels of an index)
 \item \link{fixedwidth.data.frame} convert a data.frame to fixed-width format
 \item \link{fixedwidth} convert to fixed-width format

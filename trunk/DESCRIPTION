@@ -1,12 +1,13 @@
 Package: metrumrg
 Type: Package
-Title: Pharmacometric tools for data preparation, modeling, simulation, and reporting
-Version: 5.14
-Date: 2012-03-19
+Title: Pharmacometric tools for data preparation, modeling, simulation,
+        and reporting
+Version: 5.15
+Date: 2012-04-02
 Author: Tim Bergsma, Bill Knebel, Leonid Gibiansky, Natalie Hsiang
 Maintainer: Tim Bergsma <timb@metrumrg.com>
 Depends: reshape, methods, lattice, grid, XML, MASS
-Suggests:  chron, fork
+Suggests: chron, fork
 Description: 
  Pharmacometric tools for common data preparation tasks, stratified 
  bootstrap resampling of data sets, NONMEM control stream creation/editing, 
@@ -15,4 +16,4 @@ Description:
  of simulations from posterior parameter distributions, reporting of output 
  tables and creation of detailed analysis logs.
 License: GPL
-
+Packaged: 2012-04-02 18:25:20 UTC; timb

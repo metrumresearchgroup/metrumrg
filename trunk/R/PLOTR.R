@@ -74,7 +74,7 @@
 			}
 		)
 	)
-)
+    )
 
     #cleanup
     dev.off()
@@ -96,7 +96,7 @@
 	    dvname=dvname,
 	    logtrans=logtrans,
 	    grp=grp,
-	    grpames=grpnames,
+	    grpnames=grpnames,
 	    cont.cov=cont.cov,
 	    cat.cov=cat.cov,
 	    par.list=par.list,

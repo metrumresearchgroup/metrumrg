@@ -90,10 +90,14 @@ NONR72(
   \code{command='C:/nm6/test/nm6.pl'}.  The script is assumed to be an NMQual-generated
   wrapper for NONMEM execution, but may also be arbitrarily defined by the user
   (\code{udef=TRUE}).  In the former case, appropriate arguments and modifiers are added
-  to build a typical NMQual commandline (\code{nm.pl}), conditionally wrapped in the arguments for
+  to build a typical NMQual commandline (\code{nm.pl} or \code{autolog.pl}), conditionally wrapped in the arguments for
   a typical grid commandline (\code{qsub}).  The path may be given relative to the 
   current directory.  \code{command} may be a character vector of length greater than one: 
   each element will be run in succession.
+  
+  If \code{command} is missing, an attempt will be made to locate a NONMEM installation 
+  using \code{\link{findNonmemCommand}} (as of package version 5.15).  Disclaimer: is the responsibility
+  of the user to ensure that the command thus-identified is appropriate.
  } 
 
   \item{project}{

@@ -49,18 +49,33 @@ c.temporal <- function (..., recursive = FALSE){
 	oldclass <- class(args[[1]])	
 	structure(c(unlist(lapply(args, unclass))), class = oldclass)
 }
-seq.temporal <- function (from, to, by=NULL,length.out = NULL, along.with = NULL, ...){
-	if(is.null(by))if(inherits(from,'mTime'))by=60*60
-	if(is.null(by))if(inherits(from,'mDate'))by=60*60*24
-	if(is.null(by))if(inherits(from,'mDateTime'))by=60*60*24
-	x <- seq(
-		from=as.numeric(from),
-		to=as.numeric(to),
-		by=by,
-		...
-	)
-	class(x) <- class(from)
-	x
+seq.temporal <- function (from, to, by, length.out, along.with, ...){
+  if(missing(from))stop('seq.temporal requires "from"')
+  #defaults for interval can be set, if neither specified nor implied
+  specified <- !missing(by)
+  implied <- !missing(to) & (!missing(length.out) | !missing(along.with))
+  if (!specified & !implied){
+    if (inherits(from, "mTime")) by = 60 * 60
+    if (inherits(from, "mDate")) by = 60 * 60 * 24
+    if (inherits(from, "mDateTime")) by = 60 * 60 * 24
+  }
+  if(!missing(to)){
+    stopifnot(identical(class(from),class(to)))
+    to <- as.numeric(to)
+  }
+  theClass <- class(from)
+  from <- as.numeric(from)
+  #if(missing(length.out))length.out=NULL
+  #if(missing(along.with))along.with=NULL
+  args <- list(from=from)
+  if(!missing(to))args <- c(args,list(to=to))
+  if(!missing(by))args <- c(args,list(by=by))
+  if(!missing(length.out))args <- c(args,list(length.out=length.out))
+  if(!missing(along.with))args <- c(args,list(along.with=along.with))
+  args=c(args,list(...))
+  x <- do.call(seq,args)
+  class(x) <- theClass
+  x
 }
 as.mTime.mTime <- function(x,...)x
 as.mDate.mDate <- function(x,...)x

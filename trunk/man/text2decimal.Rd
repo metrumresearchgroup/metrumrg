@@ -20,7 +20,9 @@ Elements are substituted with their numeric regions, and the result is passed to
 
 Changes were made as of version 5.9 to support scientific notation.  Note that \code{'e3'}
  and \code{'3e'} both give \code{3}: the first has 'e' stripped before coercion, and
- the second is valid syntax (e.g., \code{as.numeric('3e')}).
+ the second is valid syntax (e.g., \code{as.numeric('3e')}). Due to a bugfix in version
+ 5.15, "3X" (where X is a capital letter, or 'a','b','c','d') now returns \code{3} not
+ \code{NA}.
 
 }
 \value{numeric}
@@ -47,6 +49,7 @@ x <- c(
   'I have 1E3 apples.',
   'I have 30e10 apples.',
   'I have 30 + apples.',
+  'I have 3G apples.',
   'I have 30+ apples.',
   'I have ++.3 apples.',
   'I have +e3 apples.',

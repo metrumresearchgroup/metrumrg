@@ -13,9 +13,9 @@ function(x,...){
 	iteration <- iteration[informative]
 	data <- split(data,iteration)
 	
-	iterationNo            <- function(x)text2decimal(strsplit(x[[1]],':')[[1]])[[2]]
-	objectiveFunctionValue <- function(x)text2decimal(strsplit(x[[1]],':')[[1]])[[3]]
-	noOfFuncEvals          <- function(x)text2decimal(strsplit(x[[1]],':')[[1]])[[4]]
+	iterationNo            <- function(x)text2decimal(strsplit(x[[1]],':')[[1]][[2]])
+	objectiveFunctionValue <- function(x)text2decimal(strsplit(x[[1]],':')[[1]][[3]])
+	noOfFuncEvals          <- function(x)text2decimal(strsplit(x[[1]],':')[[1]][[4]])
 	cumulativeNoOfFuncEvals<- function(x)text2decimal(gsub('\\.','',x[[2]]))
 	gradientCue <- function(x)grep('GRADIENT',x)
 	parameterCue <- function(x)grep('PARAMETER',x)

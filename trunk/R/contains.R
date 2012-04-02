@@ -5,7 +5,7 @@ function(pattern,text,...){
 }
 `%contains%` <- function(x,y)contains(y,x)
 `text2decimal` <-
-function (x) as.numeric(sub("^[^0-9.+-]*([0-9.+-eE]+).*$", "\\1", as.character(x)))
+function (x) as.numeric(sub("^[^0-9.+-]*([0-9.eE+-]+).*$", "\\1", as.character(x)))
 
 aug <- function(x,...){
 	extras <- list(...)

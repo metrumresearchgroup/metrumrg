@@ -12,6 +12,7 @@ diagnosticPlots(
 	dvname='DV', 
 	group=NULL, 
 	model=NULL, 
+	include.all=FALSE,
 	...
 )
 
@@ -36,6 +37,7 @@ cwresPlots(
   \item{dvname}{name of the dependent variable to use as a label for the diagnostic plots}
   \item{group}{optionally, a column name in \code{data} used to condition the output of \code{diagnosticPlots}}
   \item{model}{If supplied, this text argument will be prepended to the figure titles.}
+  \item{include.all}{When \code{group} is specified, should plots be generated as well, for all data collectively?}
   \item{cont.cov}{as defined for \code{PLOTR}}
   \item{cat.cov}{as defined for \code{PLOTR}}
   \item{par.list}{as defined for \code{PLOTR}}

@@ -26,7 +26,7 @@ as.chartime(x, ...)
 \method{as.numeric}{chartime}(x, format,...)
 \method{print}{temporal}(x, ...)
 \method{rep}{temporal}(x, ...)
-\method{seq}{temporal}(from, to, by = NULL, length.out = NULL, along.with = NULL, ...)
+\method{seq}{temporal}(from, to, by, length.out, along.with, ...)
 }
 
 \arguments{
@@ -48,11 +48,11 @@ as.chartime(x, ...)
   variants exist just so that class information is not lost on invocation of the 
   generic.  \code{as.character.temporal} and \code{print.temporal} just call \code{format}.
   \code{chartime} variants are used internally by other functions.  \code{seq.temporal} 
-  requires \code{from} and \code{to}, sets smart defaults for \code{by} (if \code{null}), and preserves
-  class information, relative to \code{seq.default}.
+  requires \code{from}. If an interval cannot be calculated from supplied arguments,
+  \code{by} is set to 1 hour for \code{mTime} or 1 day for \code{mDate} or \code{mDateTime}.
 }
 \value{
-	\item{print}{an invisible object with same class as \code{x}}
+  \item{print}{an invisible object with same class as \code{x}}
   \item{as.chartime}{generic: does not return}
   \item{as.chartime.numeric}{character (time)}
   \item{as.numeric.chartime}{numeric (seconds)}
@@ -124,5 +124,14 @@ as.mDateTime(as.mDateTime(0))
 #repetition
 rep(as.mTime(86340),2)
 # 23:59 23:59
+
+#sequence
+seq(from=as.mTime('00:00'),length.out=3)
+seq(from=as.mTime('00:00'),by=as.mTime('00:05'),length.out=3)
+seq(from=as.mTime('00:00'),by=as.mTime('00:05'),along.with=integer(3))
+seq(from=as.mTime('00:00'),to=as.mTime('06:00'))
+seq(from=as.mTime('00:00'),to=as.mTime('06:00'),by=as.mTime('02:00'))
+seq(from=as.mTime('00:00'),to=as.mTime('06:00'),length.out=4)
+
 }
 \keyword{manip}

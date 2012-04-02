@@ -9,6 +9,11 @@ function (
 ) 
 {
     plots <- list()
+    stopifnot("ID" %in% names(data))
+    if(length(cont.cov)) cont.cov <- intersect(cont.cov,names(data))
+    if(length(cat.cov)) cat.cov <- intersect(cat.cov,names(data))
+    if(length(par.list)) par.list <- intersect(par.list,names(data))
+    if(length(eta.list)) eta.list <- intersect(eta.list,names(data))
     data <- data[!duplicated(data$ID),]
     #Covariate SPLOM
     if (length(cont.cov) >= 2)plots$covSplom <- splom(
@@ -86,7 +91,7 @@ function (
     		scales=list(relation="free"),
 		...
     	)
-	}
+    }
     #ETA Densityplots
     if(length(eta.list)){
     	etas <- melt(data,measure.var=eta.list)
@@ -99,7 +104,7 @@ function (
     		scales=list(relation="free"),
 		...
     	)
-	}
+    }
     #ETA vs Categoricals
     if(length(cat.cov) && length(eta.list)){
     	etas <- melt(data,measure.var=eta.list,id.var=cat.cov)
@@ -144,7 +149,6 @@ function (
 		...
     	)
     }
-
     plots
 }
 `cwresPlots` <-
@@ -156,6 +160,8 @@ function (
 ) 
 {
     plots <- list()
+    if(length(cont.cov)) cont.cov <- intersect(cont.cov,names(data))
+    if(length(cat.cov)) cat.cov <- intersect(cat.cov,names(data))
     #CWRES
     #CWRES vs. Categoricals
     if("CWRES" %in% names(data) && length(cat.cov)){
