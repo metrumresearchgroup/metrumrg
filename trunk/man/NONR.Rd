@@ -96,7 +96,7 @@ NONR72(
   each element will be run in succession.
   
   If \code{command} is missing, an attempt will be made to locate a NONMEM installation 
-  using \code{\link{findNonmemCommand}} (as of package version 5.15).  Disclaimer: is the responsibility
+  using \code{\link{findNonmemCommand}} (as of package version 5.15).  DISCLAIMER: it is the responsibility
   of the user to ensure that the command thus-identified is appropriate.
  } 
 
