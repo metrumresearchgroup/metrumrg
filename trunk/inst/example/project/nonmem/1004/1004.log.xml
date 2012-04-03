@@ -70,11 +70,11 @@
          </config>
          <job>
           <do>pwd</do>
-          <so>/data/metsvn/wiki/inst/sample/script</so>
+          <so>/data/metrumrg/inst/example/project/script</so>
          </job>
          <job>
           <do>date</do>
-          <so>Thu Nov 10 14:51:33 UTC 2011</so>
+          <so>Tue Apr  3 02:22:30 UTC 2012</so>
          </job>
          <job>
           <do>perl -e "use POSIX; print join qq(,),uname"</do>
@@ -106,8 +106,8 @@
           Starting nonmem execution ...
           License Registered to: Metrum Research Group
           Expiration Date:    14 JUL 2012
-          Current Date:       10 NOV 2011
-          Days until program expires : 249
+          Current Date:        3 APR 2012
+          Days until program expires : 101
            
            
            First Order Conditional Estimation with Interaction
@@ -161,14 +161,14 @@
            NPARAMETR:  1.1063E+01  1.2989E+01  4.3570E-02  4.8777E+01  2.1895E-01  2.5061E-01  2.1597E-01  6.5318E-02  7.5106E-02
            PARAMETER:  2.2791E-01  3.9533E-01 -1.4560E+00  5.1724E+00 -3.7313E+00  6.1205E-01  5.3767E-01 -6.0275E-02  9.5445E-03
            GRADIENT:   4.4183E-03  1.0478E-02  7.0558E-02 -5.8284E-04  2.4934E-04 -2.1464E-04 -3.6138E-03  4.4525E-04 -3.7376E-03
-           Elapsed estimation time in seconds:     5.58
-           Elapsed covariance time in seconds:     4.23</so>
+           Elapsed estimation time in seconds:     5.55
+           Elapsed covariance time in seconds:     4.19</so>
          </job>
          <job>
           <do>if [ -e 1004.xml ];then cat 1004.xml;else echo \&lt;nofile/\>; fi</do>
           <so>
            <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-            <nm:start_datetime>2011-11-10T14:51:42.226</nm:start_datetime>
+            <nm:start_datetime>2012-04-03T02:22:39.713</nm:start_datetime>
             <nm:control_stream>
             $PROB 1004 phase1 2 CMT like 1003 but better bounds
             $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -209,8 +209,8 @@
              <nm:license_information>
              License Registered to: Metrum Research Group
              Expiration Date:    14 JUL 2012
-             Current Date:       10 NOV 2011
-             Days until program expires : 249</nm:license_information>
+             Current Date:        3 APR 2012
+             Days until program expires : 101</nm:license_information>
              <nm:program_information>
              1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
               ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -385,10 +385,10 @@
                  <nm:col nm:cname="EPS1">9.47688053553475</nm:col>
                 </nm:row>
                </nm:epsshrink>
-               <nm:estimation_elapsed_time>5.58</nm:estimation_elapsed_time>
+               <nm:estimation_elapsed_time>5.55</nm:estimation_elapsed_time>
                <nm:covariance_information/>
                <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000" />
-               <nm:covariance_elapsed_time>4.23</nm:covariance_elapsed_time>
+               <nm:covariance_elapsed_time>4.19</nm:covariance_elapsed_time>
                <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
                <nm:final_objective_function>2570.45022637547</nm:final_objective_function>
                <nm:theta>
@@ -807,7 +807,7 @@
               </nm:estimation>
              </nm:problem>
             </nm:nonmem>
-            <nm:stop_datetime>2011-11-10T14:51:52.281</nm:stop_datetime>
+            <nm:stop_datetime>2012-04-03T02:22:49.697</nm:stop_datetime>
            </nm:output>
           </so>
          </job>

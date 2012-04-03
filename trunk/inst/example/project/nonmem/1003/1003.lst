@@ -1,4 +1,4 @@
-Thu Nov 10 14:50:45 UTC 2011
+Tue Apr  3 02:21:42 UTC 2012
 $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
 $DATA ../../data/derived/phase1.csv IGNORE=C
@@ -38,8 +38,8 @@ NM-TRAN MESSAGES
 
 License Registered to: Metrum Research Group
 Expiration Date:    14 JUL 2012
-Current Date:       10 NOV 2011
-Days until program expires : 249
+Current Date:        3 APR 2012
+Days until program expires : 101
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
  ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
  CURRENT DEVELOPERS ARE ROBERT BAUER, ICON DEVELOPMENT SOLUTIONS,
@@ -290,7 +290,7 @@ Days until program expires : 249
  EPSshrink(%):   9.2578E+00
  
  #TERE:
- Elapsed estimation time in seconds:    22.43
+ Elapsed estimation time in seconds:    22.51
 0R MATRIX ALGORITHMICALLY NON-POSITIVE-SEMIDEFINITE
  BUT NONSINGULAR
 0R MATRIX IS OUTPUT
@@ -450,4 +450,4 @@ Days until program expires : 249
  
 1THERE ARE ERROR MESSAGES IN FILE PRDERR                                                                  
 Stop Time:
-Thu Nov 10 14:51:21 UTC 2011
+Tue Apr  3 02:22:18 UTC 2012
