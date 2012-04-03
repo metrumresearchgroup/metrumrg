@@ -1,6 +1,2 @@
-inst/example/project/nonmem/1005\.boot/data
-inst/example/project/nonmem/1005\.boot/ctl
-inst/example/project/nonmem/1005\.boot/[0-9]+\.boot
-inst/example/project/nonmem/1105/1105\.tab
 inst/example/project/nonmem/[0-9]+/[0-9]+\.log\.xml
 inst/example/project/nonmem/100[1-4]
