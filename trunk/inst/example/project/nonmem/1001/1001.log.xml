@@ -74,7 +74,7 @@
          </job>
          <job>
           <do>date</do>
-          <so>Tue Apr  3 02:20:31 UTC 2012</so>
+          <so>Tue Apr  3 15:04:44 UTC 2012</so>
          </job>
          <job>
           <do>perl -e "use POSIX; print join qq(,),uname"</do>
@@ -179,14 +179,14 @@
            NPARAMETR:  1.1717E+01  1.4566E+01  4.7859E-02  2.5902E-01  2.0702E-01  3.8792E-02  5.7307E-02  2.0580E-01
            PARAMETER:  1.1717E-01  1.4566E-01  2.3930E-02  6.2855E-01  5.1650E-01 -3.2080E-01 -1.2570E-01  4.6087E-01
            GRADIENT:   9.0402E-02 -1.6577E-01  9.1752E-01  1.4141E-03  9.2340E-03  5.5845E-03 -2.9927E-02  9.5891E-03
-           Elapsed estimation time in seconds:     2.47
-           Elapsed covariance time in seconds:     2.70</so>
+           Elapsed estimation time in seconds:     2.72
+           Elapsed covariance time in seconds:     3.09</so>
          </job>
          <job>
           <do>if [ -e 1001.xml ];then cat 1001.xml;else echo \&lt;nofile/\>; fi</do>
           <so>
            <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-            <nm:start_datetime>2012-04-03T02:20:40.084</nm:start_datetime>
+            <nm:start_datetime>2012-04-03T15:05:04.236</nm:start_datetime>
             <nm:control_stream>
             $PROB 1001 phase1 1CMT
             $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -390,10 +390,10 @@
                  <nm:col nm:cname="EPS2">9.33583884919795</nm:col>
                 </nm:row>
                </nm:epsshrink>
-               <nm:estimation_elapsed_time>2.47</nm:estimation_elapsed_time>
+               <nm:estimation_elapsed_time>2.72</nm:estimation_elapsed_time>
                <nm:covariance_information/>
                <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000" />
-               <nm:covariance_elapsed_time>2.70</nm:covariance_elapsed_time>
+               <nm:covariance_elapsed_time>3.09</nm:covariance_elapsed_time>
                <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
                <nm:final_objective_function>2526.39867230031</nm:final_objective_function>
                <nm:theta>
@@ -823,7 +823,7 @@
               </nm:estimation>
              </nm:problem>
             </nm:nonmem>
-            <nm:stop_datetime>2012-04-03T02:20:45.487</nm:stop_datetime>
+            <nm:stop_datetime>2012-04-03T15:05:10.267</nm:stop_datetime>
            </nm:output>
           </so>
          </job>

@@ -41,6 +41,9 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 +      cat.cov=cat.cov,
 +      par.list=par.list,
 +      eta.list=eta.list,
++      grp='SEX',
++      grpnames=c('female','male'),
++      include.all=TRUE,
 +      plotfile='../nonmem/*/*.pdf',
 +      streams='../nonmem/ctl'
 + )

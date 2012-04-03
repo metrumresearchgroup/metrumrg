@@ -1,4 +1,4 @@
-Tue Apr  3 02:23:01 UTC 2012
+Tue Apr  3 15:07:32 UTC 2012
 $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
 $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
 $DATA ../../data/derived/phase1.csv IGNORE=C
@@ -307,8 +307,8 @@ Days until program expires : 101
  EPSshrink(%):   7.0502E+00  7.0502E+00
  
  #TERE:
- Elapsed estimation time in seconds:     6.02
- Elapsed covariance time in seconds:     8.26
+ Elapsed estimation time in seconds:     7.57
+ Elapsed covariance time in seconds:    10.61
 1
  
  
@@ -723,4 +723,4 @@ Days until program expires : 101
           1.91E+00  2.45E+00  4.16E+00
  
 Stop Time:
-Tue Apr  3 02:23:25 UTC 2012
+Tue Apr  3 15:07:58 UTC 2012

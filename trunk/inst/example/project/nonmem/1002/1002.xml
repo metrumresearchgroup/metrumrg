@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2012-04-03T02:21:07.272</nm:start_datetime>
+<nm:start_datetime>2012-04-03T15:05:30.490</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1002 phase1 2 CMT
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -244,7 +244,7 @@ Days until program expires : 101
 <nm:col nm:cname='EPS2'>9.17026780257756</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>22.14</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>25.90</nm:estimation_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2525.96526753388</nm:final_objective_function>
 <nm:theta>
@@ -329,5 +329,5 @@ Days until program expires : 101
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2012-04-03T02:21:29.670</nm:stop_datetime>
+<nm:stop_datetime>2012-04-03T15:05:56.645</nm:stop_datetime>
 </nm:output>

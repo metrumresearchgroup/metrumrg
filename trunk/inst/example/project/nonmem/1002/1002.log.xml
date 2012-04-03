@@ -74,7 +74,7 @@
          </job>
          <job>
           <do>date</do>
-          <so>Tue Apr  3 02:20:57 UTC 2012</so>
+          <so>Tue Apr  3 15:05:23 UTC 2012</so>
          </job>
          <job>
           <do>perl -e "use POSIX; print join qq(,),uname"</do>
@@ -477,13 +477,13 @@
                       -1.2629E-01  4.6311E-01
            GRADIENT:  -2.5373E-02 -1.0966E-01  4.0266E-01 -1.0329E-07 -2.1167E-01  5.4721E-03  1.0048E-02  5.3042E-03 -3.5548E-03  0.0000E+00
                        5.3474E-02  2.9194E-03
-           Elapsed estimation time in seconds:    22.14</so>
+           Elapsed estimation time in seconds:    25.90</so>
          </job>
          <job>
           <do>if [ -e 1002.xml ];then cat 1002.xml;else echo \&lt;nofile/\>; fi</do>
           <so>
            <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-            <nm:start_datetime>2012-04-03T02:21:07.272</nm:start_datetime>
+            <nm:start_datetime>2012-04-03T15:05:30.490</nm:start_datetime>
             <nm:control_stream>
             $PROB 1002 phase1 2 CMT
             $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -716,7 +716,7 @@
                  <nm:col nm:cname="EPS2">9.17026780257756</nm:col>
                 </nm:row>
                </nm:epsshrink>
-               <nm:estimation_elapsed_time>22.14</nm:estimation_elapsed_time>
+               <nm:estimation_elapsed_time>25.90</nm:estimation_elapsed_time>
                <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
                <nm:final_objective_function>2525.96526753388</nm:final_objective_function>
                <nm:theta>
@@ -801,7 +801,7 @@
               </nm:estimation>
              </nm:problem>
             </nm:nonmem>
-            <nm:stop_datetime>2012-04-03T02:21:29.670</nm:stop_datetime>
+            <nm:stop_datetime>2012-04-03T15:05:56.645</nm:stop_datetime>
            </nm:output>
           </so>
          </job>

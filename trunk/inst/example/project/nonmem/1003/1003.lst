@@ -1,4 +1,4 @@
-Tue Apr  3 02:21:42 UTC 2012
+Tue Apr  3 15:06:09 UTC 2012
 $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
 $DATA ../../data/derived/phase1.csv IGNORE=C
@@ -290,12 +290,12 @@ Days until program expires : 101
  EPSshrink(%):   9.2578E+00
  
  #TERE:
- Elapsed estimation time in seconds:    22.51
+ Elapsed estimation time in seconds:    26.82
 0R MATRIX ALGORITHMICALLY NON-POSITIVE-SEMIDEFINITE
  BUT NONSINGULAR
 0R MATRIX IS OUTPUT
 0COVARIANCE STEP ABORTED
- Elapsed covariance time in seconds:     4.31
+ Elapsed covariance time in seconds:     5.23
 1
  
  
@@ -450,4 +450,4 @@ Days until program expires : 101
  
 1THERE ARE ERROR MESSAGES IN FILE PRDERR                                                                  
 Stop Time:
-Tue Apr  3 02:22:18 UTC 2012
+Tue Apr  3 15:06:49 UTC 2012
