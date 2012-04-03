@@ -19,7 +19,7 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \subsection{Set up for NONMEM run.}
 <<model>>=
 library(metrumrg)
-command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
+#command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
 cat.cov='SEX'
 cont.cov=c('HEIGHT','WEIGHT','AGE')
 par.list=c('CL','Q','KA','V','V2','V3')
@@ -29,7 +29,7 @@ eta.list=paste('ETA',1:10,sep='')
 <<run>>=
 NONR72(
      run=1001:1005,
-     command=command,
+     #command=command,
      project='../nonmem',
      grid=FALSE,
      nice=TRUE,
@@ -38,15 +38,14 @@ NONR72(
      cat.cov=cat.cov,
      par.list=par.list,
      eta.list=eta.list,
-     plotfile='../nonmem/*/diagnostics.pdf',
-     streams='../nonmem/ctl',
-     checksum=FALSE
+     plotfile='../nonmem/*/*.pdf',
+     streams='../nonmem/ctl'
 )
 @
 Covariance succeeded on model 1005.
 We can make a quick run log using some simple tools. Table \ref{runlog}.
 <<runlog>>=
-log <- rlog(1001:1005,'../nonmem',tool='nm7')
+log <- rlog(1001:1005,'../nonmem',tool='nm7',file=NULL)
 head(log)
 tail(log)
 sapply(log,class)
@@ -102,13 +101,12 @@ This run makes the predictions (simulations).
 <<sim>>=
 NONR72(
      run=1105,
-     command=command,
+     #command=command,
      project='../nonmem',
      grid=FALSE,
      nice=TRUE,
      diag=FALSE,
-     streams='../nonmem/ctl',
-     checksum=FALSE
+     streams='../nonmem/ctl'
 )
 @
 \subsection{Recover and format the original dataset.}
@@ -305,14 +303,13 @@ t <- metaSub(
 <<boot>>=
 NONR72(
      run=1:300,
-     command=command,
+     #command=command,
      project='../nonmem/1005.boot/',
      boot=TRUE,
      nice=TRUE,
      grid=TRUE,
      #concurrent=TRUE,
-     streams='../nonmem/1005.boot/ctl',
-     checksum=FALSE
+     streams='../nonmem/1005.boot/ctl'
 )
 nms <- paste('../nonmem/1005.boot/',1:300,'.boot/',1:300,'.log.xml',sep='')
 while(!(all(file.exists(nms))))Sys.sleep(10)
@@ -321,8 +318,15 @@ boot <- rlog(
 	project='../nonmem/1005.boot',
 	boot=TRUE,
 	append=FALSE,
-	tool='nm7'
+	tool='nm7',
+  file=NULL
 )
-write.csv(boot, '../nonmem/1005.boot/log.csv')  
+write.csv(boot, '../nonmem/1005.bootlog.csv')
+@
+\section{File Disposition}
+Predictive checks and bootstraps make huge files that need not be retained.
+<<cleanup>>=
+unlink('../nonmem/1105',recursive=TRUE)
+unlink('../nonmem/1005.boot',recursive=TRUE)
 @
 \end{document}

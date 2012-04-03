@@ -20,7 +20,7 @@ This script picks up after model.Rnw to process bootstrap results and make covar
 #wait for bootstraps to finish
 getwd()
 require(metrumrg)
-boot <- read.csv('../nonmem/1005.boot/log.csv',as.is=TRUE)
+boot <- read.csv('../nonmem/1005.bootlog.csv',as.is=TRUE)
 head(boot)
 unique(boot$parameter)
 text2decimal(unique(boot$parameter))

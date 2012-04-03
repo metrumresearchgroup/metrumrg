@@ -22,7 +22,7 @@ Make sure you are in the script directory, where this files resides.
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/home/timb/metrumrg/inst/sample/script"
+[1] "/data/metrumrg/inst/example/project/script"
 \end{Soutput}
 \end{Schunk}
 Load the metrumrg package.
@@ -30,9 +30,6 @@ Load the metrumrg package.
 \begin{Sinput}
 > library(metrumrg)
 \end{Sinput}
-\begin{Soutput}
-metrumrg 5.0 
-\end{Soutput}
 \end{Schunk}
 Groom the dose data
 \begin{Schunk}
@@ -151,11 +148,6 @@ unsorted
 \end{Soutput}
 \begin{Sinput}
 > pk <- pk - bad
-\end{Sinput}
-\begin{Soutput}
-dropping 2 of 562 rows matching on SUBJ, HOUR, DV
-\end{Soutput}
-\begin{Sinput}
 > summary(pk)
 \end{Sinput}
 \begin{Soutput}
@@ -185,13 +177,6 @@ The pipe operator means ``left join'' (merge, all.x=TRUE) when the arguments are
 + 	aug(dose,SEQ=1,EVID=1) + 
 + 	aug(pk,  SEQ=0,EVID=0) | 
 + 	dem
-\end{Sinput}
-\begin{Soutput}
-outer join of 0 rows and 40 rows on SUBJ, SEQ, HOUR
-outer join of 40 rows and 560 rows on SUBJ, SEQ, HOUR, EVID
-left join of 600 rows and 40 rows on SUBJ
-\end{Soutput}
-\begin{Sinput}
 > summary(dat)
 \end{Sinput}
 \begin{Soutput}

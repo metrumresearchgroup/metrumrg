@@ -20,13 +20,7 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \begin{Schunk}
 \begin{Sinput}
 > library(metrumrg)
-\end{Sinput}
-\begin{Soutput}
-metrumrg 5.4 
-enter "?metrumrg" for help
-\end{Soutput}
-\begin{Sinput}
-> command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
+> #command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
 > cat.cov='SEX'
 > cont.cov=c('HEIGHT','WEIGHT','AGE')
 > par.list=c('CL','Q','KA','V','V2','V3')
@@ -38,7 +32,7 @@ enter "?metrumrg" for help
 \begin{Sinput}
 > NONR72(
 +      run=1001:1005,
-+      command=command,
++      #command=command,
 +      project='../nonmem',
 +      grid=FALSE,
 +      nice=TRUE,
@@ -47,9 +41,8 @@ enter "?metrumrg" for help
 +      cat.cov=cat.cov,
 +      par.list=par.list,
 +      eta.list=eta.list,
-+      plotfile='../nonmem/*/diagnostics.pdf',
-+      streams='../nonmem/ctl',
-+      checksum=FALSE
++      plotfile='../nonmem/*/*.pdf',
++      streams='../nonmem/ctl'
 + )
 \end{Sinput}
 \end{Schunk}
@@ -57,7 +50,7 @@ Covariance succeeded on model 1005.
 We can make a quick run log using some simple tools. Table \ref{runlog}.
 \begin{Schunk}
 \begin{Sinput}
-> log <- rlog(1001:1005,'../nonmem',tool='nm7')
+> log <- rlog(1001:1005,'../nonmem',tool='nm7',file=NULL)
 > head(log)
 \end{Sinput}
 \begin{Soutput}
@@ -296,13 +289,12 @@ This run makes the predictions (simulations).
 \begin{Sinput}
 > NONR72(
 +      run=1105,
-+      command=command,
++      #command=command,
 +      project='../nonmem',
 +      grid=FALSE,
 +      nice=TRUE,
 +      diag=FALSE,
-+      streams='../nonmem/ctl',
-+      checksum=FALSE
++      streams='../nonmem/ctl'
 + )
 \end{Sinput}
 \end{Schunk}
@@ -723,7 +715,7 @@ We also show densityplots of predictions at those quartiles.
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/data/metsvn/wiki/inst/sample/script"
+[1] "/data/metrumrg/inst/example/project/script"
 \end{Soutput}
 \begin{Sinput}
 > dir.create('../nonmem/1005.boot')
@@ -774,14 +766,13 @@ We also show densityplots of predictions at those quartiles.
 \begin{Sinput}
 > NONR72(
 +      run=1:300,
-+      command=command,
++      #command=command,
 +      project='../nonmem/1005.boot/',
 +      boot=TRUE,
 +      nice=TRUE,
 +      grid=TRUE,
 +      #concurrent=TRUE,
-+      streams='../nonmem/1005.boot/ctl',
-+      checksum=FALSE
++      streams='../nonmem/1005.boot/ctl'
 + )
 \end{Sinput}
 \begin{Soutput}
@@ -795,9 +786,18 @@ Installing SIGCHLD signal handler...Done.
 + 	project='../nonmem/1005.boot',
 + 	boot=TRUE,
 + 	append=FALSE,
-+ 	tool='nm7'
++ 	tool='nm7',
++   file=NULL
 + )
-> write.csv(boot, '../nonmem/1005.boot/log.csv')  
+> write.csv(boot, '../nonmem/1005.bootlog.csv')
+\end{Sinput}
+\end{Schunk}
+\section{File Disposition}
+Predictive checks and bootstraps make huge files that need not be retained.
+\begin{Schunk}
+\begin{Sinput}
+> unlink('../nonmem/1105',recursive=TRUE)
+> unlink('../nonmem/1005.boot',recursive=TRUE)
 \end{Sinput}
 \end{Schunk}
 \end{document}
