@@ -4,7 +4,7 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
   plots <-list()
   if(is.null(group))data$grpnames <- 'all'
   if(is.null(group))group <- 'grpnames'
-  if(length(group) > 1 & include.all) plots <- diagnosticPlots(
+  if(length(unique(data[[group]])) > 1 & include.all) plots <- diagnosticPlots(
   	data=data,
 	dvname=dvname,
 	group=NULL,
@@ -39,7 +39,7 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
   	paste("for",paste(grp,collapse=", "),"data")
   }
   #Observed vs. Predicted 
-  if(length(observed)) for (group in levels(observed$grpnames))plots[[paste('obsPred',group)]] <- xyplot(
+  if(length(observed)) for (group in unique(observed$grpnames))plots[[paste('obsPred',group)]] <- xyplot(
 	DV ~ value |  variable, 
 	observed[observed$grpnames==group,],
 	as.table=TRUE,
@@ -57,7 +57,7 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
 	...
    )
    #Residuals vs. Predicted
-   if(length(res)) plots[[paste('resPred',group)]] <- xyplot(
+   if(length(res))for (group in unique(res$grpnames)) plots[[paste('resPred',group)]] <- xyplot(
   	value ~ PRED |  variable, 
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -74,7 +74,7 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
 	...
   )
   #Residuals vs. Time
-  if(length(res)) if("TIME" %in% names(res))plots[[paste('resTime',group)]] <- xyplot(
+  if(length(res)) if("TIME" %in% names(res))for (group in unique(res$grpnames))plots[[paste('resTime',group)]] <- xyplot(
   	value ~ TIME |  variable, 
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -91,7 +91,7 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
 	...
   )
   #Residuals vs. TAD
-  if(length(res))if("TAD" %in% names(res))plots[[paste('resTad',group)]] <- xyplot(
+  if(length(res))if("TAD" %in% names(res))for (group in unique(res$grpnames))plots[[paste('resTad',group)]] <- xyplot(
   	value ~ TAD |  variable, 
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -108,7 +108,7 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
 	...
   )
   #QQ-Norm
-  if(length(res)) plots[[paste('resQ',group)]] <- qqmath(
+  if(length(res))for (group in unique(res$grpnames)) plots[[paste('resQ',group)]] <- qqmath(
   	~ value | variable, 
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -126,7 +126,7 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
 	...
   )
   #QQ-Res
-  if(length(res))if(all(c("WRES","CWRES") %in% resvar))plots[[paste('resCwresQ',group)]] <- qq(
+  if(length(res))if(all(c("WRES","CWRES") %in% resvar))for (group in unique(res$grpnames))plots[[paste('resCwresQ',group)]] <- qq(
   	variable ~ value ,
   	res[res$grpnames==group,],
   	as.table=TRUE,
@@ -141,10 +141,10 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
 	...
   )
   #Residuals
-  if(length(res))plots[['plotsRes']] <- bwplot(
+  if(length(res))for (group in unique(res$grpnames))plots[[paste('plotsRes',group)]] <- bwplot(
   	value ~ variable,
   	res[res$grpnames==group,],
-  	main=paste(model,"Boxplots of Residuals"),
+  	main=paste(model,"Boxplots of Residuals",groupSubtitle(group)),
   	ylab="residuals",
 	...
   )
