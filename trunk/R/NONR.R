@@ -78,7 +78,7 @@ function (
         if (concurrent){
             library(fork)
             suppressWarnings(handleSIGCLD())
-            pid <- fork(NULL)
+            pid <- fork::fork(NULL)
             if (pid == 0) {
                 tryCatch(
                 	do.call("runNonmem", args),
