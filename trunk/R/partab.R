@@ -22,9 +22,11 @@ function(
 	log <- data.frame(cast(log,...~moment))
 	log[] <- lapply(log,as.character)
 	names(log)[names(log)=='parameter'] <- by
-	par <- as.data.frame(
+	par <- data.frame(
 	    stringsAsFactors=FALSE,
+	    check.names=FALSE,
 		sapply(
+			simplify=FALSE,
 			as,
 			function(as,x,within,by,type,...){
 				if(is.na(as)) as <- NULL
