@@ -73,6 +73,7 @@ NONR72(
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
+	delay = 0,
 	...,
 	interface='autolog.pl',
 	q='all.q'

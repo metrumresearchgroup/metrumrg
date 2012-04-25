@@ -130,6 +130,7 @@ NONR72 <- function(
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
+	delay = 0,
 	...,
 	interface='autolog.pl',
 	q='all.q'
@@ -160,7 +161,8 @@ NONR72 <- function(
 	cat.cov=cat.cov,
 	par.list=par.list,
 	eta.list=eta.list,
-	missing=-99,
+	missing= missing,
+	delay = delay,
 	...,
 	interface=interface,
 	q=q
