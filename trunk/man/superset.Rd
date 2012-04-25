@@ -14,7 +14,8 @@ superset(
 	read.input = list(
 		read.csv, 
 		header = TRUE, 
-		as.is = TRUE
+		as.is = TRUE,
+		na.strings='.'
 	), 
 	read.output = list(
 		read.table, 
@@ -24,6 +25,8 @@ superset(
 		comment.char = "", 
 		check.names = FALSE
 	), 
+	exclusive=NULL,
+	test=FALSE,
 	...
 )
 }
@@ -35,6 +38,8 @@ superset(
   \item{key}{the object model for the input data}
   \item{read.input}{a methodology for acquiring the input}
   \item{read.output}{a methodology for acquiring the output}
+  \item{exclusive}{character vector of output column names to exclude; or logical: whether to keep columns with re-used names}
+  \item{as.logical}{whether to return just an index to dropped rows}
   \item{\dots}{ignored}
 }
 \details{
@@ -50,9 +55,37 @@ superset(
 	it is used as an object model to allow an inferential left join of output
 	onto intput; this approach is riskier, but can back fill NA cells with 
 	values that are otherwise constant within left-subsets of the key.
+	
+	For the usual invocation (zero-length key) \code{superset} tries to load
+	columns from output tables onto the input table. Naming convention of
+	the input is retained, and output column names are mapped by position, 
+	using the control stream input criteria. Output tables are restored to 
+	input dimensions using the "ignore" criteria, then checked for length: 
+	currently, \code{superset} ignores output tables having fewer rows than 
+	the input, as well as output tables whose row count is not a multiple 
+	of input row count.
+	
+	Output tables may contain versions of input columns.  Disposition depends
+	on the value of \code{exclusive}. If a character vector, it lists columns 
+	to exclude from output. If \code{TRUE}, all columns with re-used names 
+	will be dropped. If \code{FALSE}, such columns will be renamed 
+	(*.n, where n is table number). If \code{NULL}, only informative 
+	columns will be retained and renamed.  A column is informative if any 
+	element is informative.  An element is informative if it is newly generated
+	(not NA and not zero, but original is NA) or if it is an alteration (non-NA,
+	and different from non-NA original). 
+	
+	Column redundancy among output tablesis not checked: i.e., if both 
+	table 1 and table 2 report DV, both variants may be checked for 
+	informativeness relative to input DV, but not relative 
+	to eachother.
 
 }
-\value{logical}
+\value{
+	data.frame where row count is a multiple of input row count; 
+	or if \code{as.logical=TRUE}, a logical vector indicating which rows
+	were dropped.
+}
 \references{\url{http://metrumrg.googlecode.com}}
 
 \author{ Tim Bergsma }

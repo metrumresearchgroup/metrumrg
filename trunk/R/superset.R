@@ -36,7 +36,7 @@
     z <- as.data.frame(z,...)
     .markup(c(list(z),lst),key=key,...)
 }
-.superbind <- function(lst,i=0){
+.superbind <- function(lst,i=0,exclusive=NULL){
     stopifnot(is.list(lst),!!length(lst),is.data.frame(lst[[1]]))
     x <- lst[[1]]
     i <- i + 1
@@ -52,17 +52,31 @@
       message('ignoring table ',i,': expected ', nrow(x),' rows but found ',nrow(y),' (not a multiple).')
       return(x)
     }
-    for(col in intersect(names(x),names(y)))
-      # a column is informative if it has non-na values that differ from existing non-na values
-      if(
-        any(
-          (!is.na(x[[col]]) & !is.na(y[[col]]) & x[[col]] != y[[col]]) | #both values present, but different
-          (is.na(x[[col]]) & !is.na(y[[col]])) # value only on the right
-        )
-      ) names(y)[names(y)==col] <- glue(col,'.',i) # renamed
-      else y[[col]] <- NULL # redundant
+    analogs <- intersect(names(x),names(y))
+    #(implicitly, y cols with new names are informative.)
+    informative <- function(x,y){
+      stopifnot(length(x)==length(y))
+      # first, we detect informative elements of y
+      generated <- is.na(x) & !is.na(y) & y!=0 #y:0 is probably just NONMEM substitute for NA
+      degenerated <- !is.na(x) & is.na(y)
+      altered <- !is.na(x) & !is.na(y) & x!=y
+      any(generated | altered)
+    }
+    index <- sapply(analogs, function(col)informative(x[[col]],y[[col]]))
+    goodDups <- analogs[index]
+    badDups <- setdiff(analogs,goodDups)
+    newname <- function(x,i) <- glue(names(x),'.',i)
+    
+    #every analog y column will be renamed or dropped (or both).
+    if(is.character(exclusive)) y <- y[,!names(y) %in% exclusive,drop=FALSE]
+    else{
+      if(is.null(exclusive)) y <- y[,!names(y) %in% badDups,drop=FALSE]
+      else if(as.logical(exclusive)) y <- y[,!names(y) %in% goodDups,drop=FALSE]
+    }
+    fix <- names(y) %in% analogs
+    names(y)[fix] <- map(names(y)[fix],from=analogs,to=newname(analogs))
     z <- cbind(x,y)
-    .superbind(c(list(z),lst), i=i)
+    .superbind(c(list(z),lst), i=i, exclusive=exclusive)
 }
 # Need a function that, given a nonmem run directory, merges the output with the input.
 superset <- function(
@@ -73,8 +87,10 @@ superset <- function(
   #key=c('ID','DATE','TIME','CMT'),
   key=character(0),
   #convert=FALSE,
-  read.input=list(read.csv,header=TRUE,as.is=TRUE),
+  read.input=list(read.csv,header=TRUE,as.is=TRUE,na.strings='.'),
   read.output=list(read.table,header=TRUE,as.is=TRUE,skip=1,comment.char='',check.names=FALSE),
+  exclusive=NULL,
+  as.logical=FALSE,
   ...
 ){
   #functions
@@ -117,25 +133,24 @@ superset <- function(
   labels <- .nminput(control)
   input <- read.any(file=datafile,args=read.input)
   lines <- readLines(datafile)
+  #To guide merging, we need to know which records from the original data set were dropped.
+  #Character and numeric versions of the data may differ in row count if there was a header.
+  dropped <- .nmdropped(data=input,lines=lines,test=.nmignore(control),labels=labels)
+  if(as.logical)return(dropped)
   if(!length(paths)){message('nothing to add');return(input)}
   if(length(labels)>ncol(input))stop('more nonmem aliases than data columns')
   output <- lapply(paths, read.any, args=read.output)
   analogs <- names(input)[seq_along(labels)]
   output <- lapply(output,revert,labels=labels,analogs=analogs)
   #Now all the tables have corresponding column names.
-  #To guide merging, we need to know which records from the original data set were dropped.
-  #Character and numeric versions of the data may differ in row count if there was a header.
-  dropped <- .nmdropped(data=input,lines=lines,test=.nmignore(control),labels=labels)
-  #if(read.input$header){
-  #  if(!dropped[[1]])stop('expected a dropped header')
-  #  dropped <- dropped[-1]
-  #}
   expected <- nrow(input) - sum(dropped)
   lapply(output,agree,expected)
   if(length(key)) return(.markup(lst=c(list(input),output),key=key))
   output <- .distill(output)
   output <- lapply(output,.restore,dropped=dropped)
-  .superbind(c(list(input),output))
+  res <- .superbind(c(list(input),output),exclusive=exclusive)
+  res[run] <- as.integer(dropped)
+  res
 }
 #debug(superset)
 #superset(ctlfile='../../model/abeta/1249/1249.ctl')
