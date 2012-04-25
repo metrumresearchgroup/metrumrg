@@ -15,24 +15,42 @@
 	eta.list = NULL, 
 	missing = -99,
 	estimated = NULL,
+	superset = FALSE,
 	...
 ){
     
     #process data
-    data <- dataSynthesis(
-    	run=run,
-	project=project,
-	logtrans=logtrans,
-	grp=grp,
-	grpnames=grpnames,
-	cont.cov=cont.cov,
-	cat.cov=cat.cov,
-	par.list=par.list,
-	eta.list=eta.list,
-	missing=missing,
-	rundir=rundir,
-	...
-    )
+    if(superset) {
+    	data <- superset(
+    	  run=run,
+ 	  project=project,
+ 	  rundir=rundir,
+ 	  ...
+        )
+        data <- data[is.na(data$C),,drop=FALSE]
+        if(logtrans) data <- backtrans(data,intersect(names(data),c('DV','PRED','IPRE','IPRED')))
+        missing <- as.numeric(as.character(missing))
+	for(col in cont.cov) data[[col]] <- as.numeric(as.character(data[[col]]))
+	for(col in cont.cov) data[[col]][!is.na(data[[col]]) & data[[col]]==missing] <- NA
+	if(is.null(grp))data$grpnames <- 'all'
+	if(is.null(grp))grp <- 'grpnames'
+	data$grpnames <- groupnames(data,grp,grpnames,run)
+    }else{
+    	data <- dataSynthesis(
+    	  run=run,
+	  project=project,
+	  logtrans=logtrans,
+	  grp=grp,
+	  grpnames=grpnames,
+	  cont.cov=cont.cov,
+	  cat.cov=cat.cov,
+	  par.list=par.list,
+	  eta.list=eta.list,
+	  missing=missing,
+	  rundir=rundir,
+	  ...
+      )
+    }
     write.csv(data,filename(rundir,ext='_syn.csv'),row.names=FALSE)
     available <- names(data)
     cont.cov <- strain(cont.cov,available)
