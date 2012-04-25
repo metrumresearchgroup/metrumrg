@@ -65,7 +65,7 @@
     index <- sapply(analogs, function(col)informative(x[[col]],y[[col]]))
     goodDups <- analogs[index]
     badDups <- setdiff(analogs,goodDups)
-    newname <- function(x,i) <- glue(names(x),'.',i)
+    newname <- function(x,i)glue(names(x),'.',i)
     
     #every analog y column will be renamed or dropped (or both).
     if(is.character(exclusive)) y <- y[,!names(y) %in% exclusive,drop=FALSE]

@@ -26,7 +26,7 @@ superset(
 		check.names = FALSE
 	), 
 	exclusive=NULL,
-	test=FALSE,
+	as.logical=FALSE,
 	...
 )
 }
