@@ -20,6 +20,9 @@ function(data, id="ID", dv="DV", time="TIME") {
 }
 `AUC` <-
 function(data, time="TIME", id="ID", dv="DV") {
+  if(any(is.na(data[[id]])))warning('id contains NA')
+  if(any(is.na(data[[time]])))warning('time contains NA')
+  if(any(is.na(data[[dv]])))warning('dv contains NA')
   data <- data[order(data[[id]],-data[[time]]),]
   nrec <- length(data[[time]])
   data$diff <- c(data[[time]][-nrec] - data[[time]][-1],0)

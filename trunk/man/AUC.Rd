@@ -16,6 +16,7 @@ AUC(data, time = 'TIME', id = 'ID', dv = 'DV')
 }
 \details{
 	The \code{AUC} function performs the calculation based on the variables \code{id}, \code{time}, and \code{dv} present in the R data object.
+	Warnings are issued if any of these contain \code{NA}.
 }
 \value{
   One area under the dv-time curve is returned for each subject.
