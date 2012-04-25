@@ -27,6 +27,7 @@ function (
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
+	delay = 0,
 	...
 ){
     if (win())  grid <- FALSE
@@ -46,6 +47,7 @@ function (
     	command <- candidate
     }    
     for (each in run) {
+    	Sys.sleep(delay/1000)
         args <- list(
 		run = each, 
 		command = command, 
@@ -80,6 +82,11 @@ function (
             suppressWarnings(handleSIGCLD())
             pid <- fork::fork(NULL)
             if (pid == 0) {
+            
+            #library(multicore)
+            #pid <- multicore::fork()
+            #if(inherits(pid,'masterProcess'){
+            	    
                 tryCatch(
                 	do.call("runNonmem", args),
                 	error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
@@ -131,7 +138,7 @@ NONR72 <- function(
 	command=command,
 	project=project,
 	boot=boot,
-  grid=grid,
+	grid=grid,
 	concurrent=concurrent,
 	urgent=urgent,
 	udef=udef,
