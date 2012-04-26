@@ -16,6 +16,8 @@ I want to ....
 \item \link[=runstate]{determine the status of a run}
 \item \link[=compute.cwres]{compute conditional weighted residuals in NONMEM 6, etc.}
 \item \link[=helpVisualize]{visualize model results}
+\item \link[=superset]{integrate model output with input}
+\item \link[=dataSynthesis]{integrate model input with output}
 }
 }
 

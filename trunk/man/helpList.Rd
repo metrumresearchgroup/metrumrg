@@ -234,6 +234,7 @@
 \item \link{hide.data.frame} comment out the specified rows of a data frame, appending a flag that suggests the reason
 \item \link{hide} generic
 \item \link{ibw} calculate ideal body weight
+\item \link{ignored} check which rows of an input data set were ignored by NONMEM
 \item \link{ind.cwres} compute conditional weighted residuals (internal)
 \item \link{index.conditioned} index a conditioned object
 \item \link{index.digest} index a digest
@@ -414,6 +415,7 @@
 \item \link{summary.hidden.data.frame} summarize hidden rows of a data frame
 \item \link{summary.keyed} summarize a keyed data frame
 \item \link{summary.nm} summarize an nm object
+\item \link{superset} combine all NONMEM input with all output
 \item \link{svnIsText} check if subversioned files are text rather than binary
 \item \link{svnMarkAsNonText} tell Subversion to treat files as binary
 \item \link{svnMarkAsText} tell Subversion to treat files as text

@@ -1,6 +1,4 @@
-#Although values were not calculated for dropped rows, they could be imputed if 
-#the result is static on key, or leading subsets of key. 
-.restore <- function(x,dropped,...){ # need to add records wherever dropped is TRUE
+.restore <- function(x,dropped,...){ # add records wherever dropped is TRUE
   stopifnot(is.data.frame(x),is.logical(dropped))
   if(any(is.na(dropped)))stop['dropped must not contain NA']
   if(sum(!dropped)!=nrow(x))warning('row count does not match sum of non-dropped')
@@ -8,7 +6,7 @@
   index[!dropped] <- rownames(x)
   x[index,,drop=FALSE]
 }
-.distill <- function(x,known=character(0),...){ # x is a list of data frames
+.distill <- function(x,known=character(0),...){ # strike repeated columns within and among data frames
     stopifnot(is.list(x))
     if(!length(x))return(x)
     y <- x[[1]]
@@ -18,7 +16,7 @@
     known <- c(known,names(y))
     c(list(y),.distill(x[-1],known=known,...)) # recursion
 }
-.markup <- function(lst,key,...){ # lst is a list of data frames
+.markup <- function(lst,key,...){ # recursively amend using raised.keyed
     stopifnot(is.list(lst),!!length(lst),is.data.frame(lst[[1]]))
     x <- lst[[1]]
     lst <- lst[-1]
@@ -29,14 +27,14 @@
     y <- as.keyed(y,ind)
     x$metrumrg.markup <- 1:nrow(x)
     x <- as.keyed(x,'metrumrg.markup')
-    z <- x^y
+    z <- x^y # the magic
     if(any(is.na(z$metrumrg.markup)))stop('pseudo rows introduced')
     z <- sort(as.keyed(z,'metrumrg.markup'))
     z$metrumrg.markup <- NULL
     z <- as.data.frame(z,...)
     .markup(c(list(z),lst),key=key,...)
 }
-.superbind <- function(lst,i=0,exclusive=NULL){
+.superbind <- function(lst,i=0,exclusive=NULL){ # recursively cbind with auto-rename and exclusivity options
     stopifnot(is.list(lst),!!length(lst),is.data.frame(lst[[1]]))
     x <- lst[[1]]
     i <- i + 1
@@ -78,84 +76,99 @@
     z <- cbind(x,y)
     .superbind(c(list(z),lst), i=i, exclusive=exclusive)
 }
-# Need a function that, given a nonmem run directory, merges the output with the input.
-superset <- function(
-  run,
-  project=getwd(),
-  rundir = filename(project,run), 
-  ctlfile = filename(rundir, run, ".ctl"),
-  #key=c('ID','DATE','TIME','CMT'),
-  key=character(0),
-  #convert=FALSE,
-  read.input=list(read.csv,header=TRUE,as.is=TRUE,na.strings='.'),
-  read.output=list(read.table,header=TRUE,as.is=TRUE,skip=1,comment.char='',check.names=FALSE),
-  exclusive=NULL,
-  as.logical=FALSE,
-  ...
-){
-  #functions
-  revert <- function(x,labels,analogs){
-    fix <- names(x) %in% labels
-    names(x)[fix] <- map(names(x)[fix],from=labels,to=analogs)
-    x
-  }
-  tablePaths <- function(tables)sapply(
-    seq_along(tables), 
-    function(recnum)tryCatch(
-      extfile(
-        tables[[recnum]],
-        dir=rundir,
-        extreg='FILE'
-      ),
-      error=function(e)warning('in table ',recnum,': ',e,call.=FALSE,immediate.=TRUE)
-    )
-  )
-  read.any <- function(file,args){
+.read.any <- function(file,args){ # read a file according to a protocol (first arg is function ref.) 
     fun <- match.fun(args[[1]])
     args <- args[-1]
     args <- c(args,file=file)
     do.call(fun,args)
   }
-  agree <- function(x,expected)if(nrow(x)!=expected)warning('expected ',expected,' rows but found ',nrow(x))
-  # process
+# given a nonmem control stream, give an index to dropped input rows.
+ignored <- function(
+  run,
+  project=getwd(),
+  rundir = filename(project,run), 
+  ctlfile = filename(rundir, run, ".ctl"),
+  read.input=list(read.csv,header=TRUE,as.is=TRUE,na.strings='.'),
+  ...
+){
+  stopifnot('header' %in% names(read.input))
+  if(missing(rundir))rundir <- dirname(ctlfile)
+  if(rundir!=dirname(ctlfile))warning('rundir does not specify parent of ctlfile') 
+  control <- read.nmctl(ctlfile)
+  dname <- getdname(control)
+  datafile <- resolve(dname,rundir)
+  if (!file.exists(datafile))stop(dname, " not visible from ", rundir, call. = FALSE)
+  dropped <- .nmdropped(
+  	data=.read.any(file=datafile,args=read.input),
+  	lines=readLines(datafile),
+  	test=.nmignore(control),
+  	labels=.nminput(control)
+  )
+  return(dropped)
+}
+.revert <- function(x,labels,analogs){#change column names from their labels to their analogs
+  fix <- names(x) %in% labels
+  names(x)[fix] <- map(names(x)[fix],from=labels,to=analogs)
+  x
+}
+.tablePaths <- function(tables)sapply(#try to extract paths to tables from control stream fragments
+  seq_along(tables), 
+  function(recnum)tryCatch(
+    extfile(
+      tables[[recnum]],
+      dir=rundir,
+      extreg='FILE'
+    ),
+    error=function(e)warning('in table ',recnum,': ',e,call.=FALSE,immediate.=TRUE)
+  )
+)
+#warn if nrow does not match expected
+.agree <- function(x,expected)if(nrow(x)!=expected)warning('expected ',expected,' rows but found ',nrow(x))
+
+#lossless integration of NONMEM run inputs and outputs
+superset <- function(
+  run,
+  project=getwd(),
+  rundir = filename(project,run), 
+  ctlfile = filename(rundir, run, ".ctl"),
+  key=character(0),
+  read.input=list(read.csv,header=TRUE,as.is=TRUE,na.strings='.'),
+  read.output=list(read.table,header=TRUE,as.is=TRUE,skip=1,comment.char='',check.names=FALSE),
+  exclusive=NULL,
+  ...
+){
   stopifnot('header' %in% names(read.input))
   if(missing(rundir))rundir <- dirname(ctlfile)
   if(rundir!=dirname(ctlfile))warning('rundir does not specify parent of ctlfile')
+  dropped <- ignored(run=run,project=project,rundir=rundir,ctlfile=ctlfile,read.input=read.input,...)
   control <- read.nmctl(ctlfile)
   dname <- getdname(control)
   datafile <- resolve(dname,rundir)
   if (!file.exists(datafile))stop(dname, " not visible from ", rundir, call. = FALSE)
   outputdomain <- names(control) %contains% "tab"
   tables <- control[outputdomain]
-  paths <- tablePaths(tables)
-  #Now we have input path (datafile) and output paths (paths).  We munge them together.
-  #But first, we need to decode the INPUT statement.
+  paths <- .tablePaths(tables)
   labels <- .nminput(control)
-  input <- read.any(file=datafile,args=read.input)
-  lines <- readLines(datafile)
-  #To guide merging, we need to know which records from the original data set were dropped.
-  #Character and numeric versions of the data may differ in row count if there was a header.
-  dropped <- .nmdropped(data=input,lines=lines,test=.nmignore(control),labels=labels)
-  if(as.logical)return(dropped)
-  if(!length(paths)){message('nothing to add');return(input)}
+  input <- .read.any(file=datafile,args=read.input)
+  stopifnot(nrow(input)==length(dropped))
+  input[run] <- as.integer(dropped)
+  if(!length(paths))return(input)
   if(length(labels)>ncol(input))stop('more nonmem aliases than data columns')
-  output <- lapply(paths, read.any, args=read.output)
+  output <- lapply(paths, .read.any, args=read.output)
   analogs <- names(input)[seq_along(labels)]
-  output <- lapply(output,revert,labels=labels,analogs=analogs)
+  output <- lapply(output,.revert,labels=labels,analogs=analogs)
   #Now all the tables have corresponding column names.
   expected <- nrow(input) - sum(dropped)
-  lapply(output,agree,expected)
+  lapply(output,.agree,expected)
   if(length(key)) return(.markup(lst=c(list(input),output),key=key))
-  output <- .distill(output)
-  output <- lapply(output,.restore,dropped=dropped)
+  output <- .distill(output)#drop repeat columns
+  output <- lapply(output,.restore,dropped=dropped)#expand
   res <- .superbind(c(list(input),output),exclusive=exclusive)
-  res[run] <- as.integer(dropped)
+  rownames(res) <- NULL
   res
 }
-#debug(superset)
-#superset(ctlfile='../../model/abeta/1249/1249.ctl')
 
-.nmdropped <- function(data,lines,test,labels,...){
+.nmdropped <- function(data,lines,test,labels,...){#determine which records from data/lines are dropped, given test
   #data is the original data set as a data frame
   #lines is original data set, with any header, as character
   #test is a list corresponding to the INPUT options named ignore or accept
@@ -172,12 +185,7 @@ superset <- function(
   .or(test)
 }
 
-.nmconditional <- function(x,data,c1,cn,labels,...){
-  evalchar <- function(x,c1,cn,...){
-    if(x=='@')return(cn %in% c(letters,LETTERS,'@'))
-    else return(c1==x)
-  }
-  evalcond <- function(x,data,labels,...){
+.evalcond <- function(x,data,labels,...){#evaluate condition-type ignore criteria
     label <- x['label']
     op <- x['operator']
     val <- x['value']
@@ -202,32 +210,34 @@ superset <- function(
     fun <- match.fun(op)
     fun(vec,val)
   }
-  evalEither <- function(x,data,c1,cn,labels,...){
-    if(length(x)==1)evalchar(x['value'],data=data,c1=c1,cn=cn,...)
-    else evalcond(x,data=data,labels=labels,...)
+.evalchar <- function(x,c1,cn,...){#evaluate character-type ignore criteria
+    if(x=='@')return(cn %in% c(letters,LETTERS,'@'))
+    else return(c1==x)
   }
-  result <- lapply(x,evalEither,data=data,c1=c1,cn=cn,labels=labels,...)
+.evalEither <- function(x,data,c1,cn,labels,...){#evaluate either conditional or character ignore criteria
+    if(length(x)==1).evalchar(x['value'],data=data,c1=c1,cn=cn,...)
+    else .evalcond(x,data=data,labels=labels,...)
+  }
+.nmconditional <- function(x,data,c1,cn,labels,...){#evaluate ignore criteria from NONMEM control stream
+  result <- lapply(x,.evalEither,data=data,c1=c1,cn=cn,labels=labels,...)
   .or(result)
 }
-
-.or <- function(x,na.rm=FALSE,...){
+.or <- function(x,na.rm=FALSE,...){#multicolumn compounded "or"
   x <- as.matrix(as.data.frame(x,...),...)
   apply(x,MARGIN=1,any,na.rm=na.rm)
 }
-.and <- function(x,na.rm=FALSE,...){
+.and <- function(x,na.rm=FALSE,...){#multicolumn compounded "and"
   x <- as.matrix(as.data.frame(x,...),...)
   apply(x,MARGIN=1,all,na.rm=FALSE)
 }
-  
-#debug(.nmdropped)
 
 .nminput <- function(x,...)UseMethod('.nminput')
-.nminput.default <- function(x,...){
+.nminput.default <- function(x,...){#assume x is a filepath for control stream
   if (!file.exists(x)) stop(x, " not found", call. = FALSE)
   control <- read.nmctl(x)
   .nminput(control)
 }
-.nminput.nmctl <- function(x,...){
+.nminput.nmctl <- function(x,...){#extract input labels from control stream, with values like output tables but order like input table
   if(! 'input' %in% names(x))stop('no input record found in ',x,call.=FALSE)
   x <- x$input
   x <- paste(x,collapse=' ')
@@ -260,16 +270,14 @@ superset <- function(
   #It is as long as the number of columns read from the input data set.
   labels
 }
-#debug(.nminput.nmctl)
-#.nminput('../../model/abeta/1249/1249.ctl')
 
 .nmignore <- function (x,...)UseMethod('.nmignore')
-.nmignore.default <- function(x,...){
+.nmignore.default <- function(x,...){#assume x is path to control stream
   if (!file.exists(x)) stop(x, " not found", call. = FALSE)
   control <- read.nmctl(x)
   .nmignore(control)
 }
-.nmignore.nmctl <- function(x,...){
+.nmignore.nmctl <- function(x,...){#extract ignore criteria from control stream
   opt <- .nmdataoptions(x,...) # named character
   if(!length(opt))opt  <- c(ignore="#") # the nonmem default
   test <- opt[names(opt) %in% c('ignore','accept')]
@@ -282,7 +290,7 @@ superset <- function(
   test <- lapply(test,.ignorecanonical)
   test # a list
 }
-.ignorecanonical <- function(x,...){ # scalar character
+.ignorecanonical <- function(x,...){ # convert x (scalar character) to canonical form
   x  <- sub('^\\(','',x)
   x <- sub('\\)$','',x)
   x <- strsplit(x,',',fixed=TRUE)[[1]] #only need the first, since x was scalar
@@ -293,7 +301,9 @@ superset <- function(
   x <- lapply(x,.ignorecondition)
   x
 }
-.ignorecondition <- function(x,...){ # a single condition of the form value or label.value or label.op.value
+#
+.ignorecondition <- function(x,...){ # convert conditional tests to canonical form
+  # x is a single condition of the form value or label.value or label.op.value
   x <- strsplit(x,'.',fixed=TRUE)[[1]]
   stopifnot(length(x) %in% c(1:3))
   #label the list members
@@ -307,15 +317,13 @@ superset <- function(
   x['value'] <- sub("'$",'',x['value'])
   x
 }
-#debug(.nmignore.nmctl)
-#.nmignore('../../model/abeta/1249/1249.ctl')
 .nmdataoptions <- function(x,...)UseMethod('.nmdataoptions')
-.nmdataoptions.default <- function(x,...){
+.nmdataoptions.default <- function(x,...){#assume x is path to control stream
   if (!file.exists(x)) stop(x, " not found", call. = FALSE)
   control <- read.nmctl(x)
   .nmdataoptions(control)
 }
-.nmdataoptions.nmctl <- function(x,...){
+.nmdataoptions.nmctl <- function(x,...){# extract data options from control stream (especially IGNORE/ACCEPT)
   if (!"data" %in% names(x))stop("data record not found in control stream")
   rec <- x$data
   rec <- sub(';.*','',rec)
@@ -335,4 +343,3 @@ superset <- function(
   splits <- sub('[[:space:]]+$','',splits)
   splits # a character vector
 }
-#.nmdataoptions('../../model/abeta/1249/1249.ctl')

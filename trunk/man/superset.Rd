@@ -1,5 +1,6 @@
 \name{superset}
 \alias{superset}
+\alias{ignored}
 \title{Augment NONMEM Input with Table Output}
 \description{Given the name of a NONMEM run, create a superset
 of data that has all of the run input data and any data recoverable
@@ -26,7 +27,12 @@ superset(
 		check.names = FALSE
 	), 
 	exclusive=NULL,
-	as.logical=FALSE,
+	...
+)ignored(
+	run, 
+	project = getwd(), 
+	rundir = filename(project, run), 
+	ctlfile = filename(rundir, run, ".ctl"), 
 	...
 )
 }
@@ -39,7 +45,7 @@ superset(
   \item{read.input}{a methodology for acquiring the input}
   \item{read.output}{a methodology for acquiring the output}
   \item{exclusive}{character vector of output column names to exclude; or logical: whether to keep columns with re-used names}
-  \item{as.logical}{whether to return just an index to dropped rows}
+  \item{as.logical}{(experimental) whether to return just an index to dropped rows}
   \item{\dots}{ignored}
 }
 \details{
@@ -75,15 +81,18 @@ superset(
 	(not NA and not zero, but original is NA) or if it is an alteration (non-NA,
 	and different from non-NA original). 
 	
-	Column redundancy among output tablesis not checked: i.e., if both 
-	table 1 and table 2 report DV, both variants may be checked for 
-	informativeness relative to input DV, but not relative 
-	to eachother.
+	Only the first instance of any column among successive output tables is retained.
+	
+	\code{ignored} takes a subset of \code{superset} arguments and returns just
+	a logical vector showing which input rows are dropped. Note that it is 
+	possible (for both functions) to invoke using just \code{run}, just \code{rundir},
+	or just \code{ctlfile}, supplying \code{project} as necessary.  Normally these 
+	four are tightly coordinated and may be inferred from eachother.  
 
 }
 \value{
-	data.frame where row count is a multiple of input row count; 
-	or if \code{as.logical=TRUE}, a logical vector indicating which rows
+	\code{superset}: data.frame where row count is a multiple of (usually equal to) input row count; 
+	\code{ignore} a logical vector indicating which rows
 	were dropped.
 }
 \references{\url{http://metrumrg.googlecode.com}}
@@ -91,6 +100,8 @@ superset(
 \author{ Tim Bergsma }
 \seealso{
 	\itemize{
+		\item \code{\link{PLOTR}}
+		\item \code{\link{dataSynthesis}}
 		\item \code{\link{raised.keyed}}
 	}
 }
