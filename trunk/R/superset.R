@@ -111,7 +111,7 @@ ignored <- function(
   names(x)[fix] <- map(names(x)[fix],from=labels,to=analogs)
   x
 }
-.tablePaths <- function(tables)sapply(#try to extract paths to tables from control stream fragments
+.tablePaths <- function(tables,rundir)sapply(#try to extract paths to tables from control stream fragments
   seq_along(tables), 
   function(recnum)tryCatch(
     extfile(
@@ -147,7 +147,7 @@ superset <- function(
   if (!file.exists(datafile))stop(dname, " not visible from ", rundir, call. = FALSE)
   outputdomain <- names(control) %contains% "tab"
   tables <- control[outputdomain]
-  paths <- .tablePaths(tables)
+  paths <- .tablePaths(tables,rundir)
   labels <- .nminput(control)
   input <- .read.any(file=datafile,args=read.input)
   stopifnot(nrow(input)==length(dropped))

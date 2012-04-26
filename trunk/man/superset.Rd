@@ -28,11 +28,13 @@ superset(
 	), 
 	exclusive=NULL,
 	...
-)ignored(
+)
+ignored(
 	run, 
 	project = getwd(), 
 	rundir = filename(project, run), 
 	ctlfile = filename(rundir, run, ".ctl"), 
+	read.input=list(read.csv,header=TRUE,as.is=TRUE,na.strings='.'),
 	...
 )
 }
@@ -45,7 +47,6 @@ superset(
   \item{read.input}{a methodology for acquiring the input}
   \item{read.output}{a methodology for acquiring the output}
   \item{exclusive}{character vector of output column names to exclude; or logical: whether to keep columns with re-used names}
-  \item{as.logical}{(experimental) whether to return just an index to dropped rows}
   \item{\dots}{ignored}
 }
 \details{
