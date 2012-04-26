@@ -1,3 +1,15 @@
+.absDir <- function (directory) 
+{
+    if (missing(directory)) 
+        stop("argument 'directory' is missing")
+    start <- getwd()
+    if (!file_test("-d", directory)) 
+        stop(paste("nonexistent directory:", directory))
+    setwd(directory)
+    abs <- getwd()
+    setwd(start)
+    abs
+}
 .restore <- function(x,dropped,...){ # add records wherever dropped is TRUE
   stopifnot(is.data.frame(x),is.logical(dropped))
   if(any(is.na(dropped)))stop['dropped must not contain NA']
@@ -34,7 +46,21 @@
     z <- as.data.frame(z,...)
     .markup(c(list(z),lst),key=key,...)
 }
-.superbind <- function(lst,i=0,exclusive=NULL){ # recursively cbind with auto-rename and exclusivity options
+.informative <- function(x,y,digits=5){
+      stopifnot(length(x)==length(y))
+      # convert x and y to canonical form
+      x <- as.best(x)
+      y <- as.best(y)
+      if(is.numeric(x))x <- signif(x,digits=digits)
+      if(is.numeric(y))y <- signif(y,digits=digits)
+      # detect informative elements of y
+      generated <- is.na(x) & !is.na(y) & y!=0 #y:0 is probably just NONMEM substitute for NA
+      degenerated <- !is.na(x) & is.na(y)
+      altered <- !is.na(x) & !is.na(y) & x != y
+      any(generated | altered)
+}
+
+.superbind <- function(lst,i=0,exclusive=NULL,digits=5){ # recursively cbind with auto-rename and exclusivity options
     stopifnot(is.list(lst),!!length(lst),is.data.frame(lst[[1]]))
     x <- lst[[1]]
     i <- i + 1
@@ -52,29 +78,21 @@
     }
     analogs <- intersect(names(x),names(y))
     #(implicitly, y cols with new names are informative.)
-    informative <- function(x,y){
-      stopifnot(length(x)==length(y))
-      # first, we detect informative elements of y
-      generated <- is.na(x) & !is.na(y) & y!=0 #y:0 is probably just NONMEM substitute for NA
-      degenerated <- !is.na(x) & is.na(y)
-      altered <- !is.na(x) & !is.na(y) & x!=y
-      any(generated | altered)
-    }
-    index <- sapply(analogs, function(col)informative(x[[col]],y[[col]]))
-    goodDups <- analogs[index]
+    index <- sapply(analogs, function(col).informative(x[[col]],y[[col]],digits=digits))
+    goodDups <- character(0)
+    if(length(analogs))goodDups <- analogs[index]
     badDups <- setdiff(analogs,goodDups)
-    newname <- function(x,i)glue(names(x),'.',i)
     
     #every analog y column will be renamed or dropped (or both).
     if(is.character(exclusive)) y <- y[,!names(y) %in% exclusive,drop=FALSE]
     else{
       if(is.null(exclusive)) y <- y[,!names(y) %in% badDups,drop=FALSE]
-      else if(as.logical(exclusive)) y <- y[,!names(y) %in% goodDups,drop=FALSE]
+      else if(as.logical(exclusive)) y <- y[,!names(y) %in% analogs,drop=FALSE]
     }
     fix <- names(y) %in% analogs
-    names(y)[fix] <- map(names(y)[fix],from=analogs,to=newname(analogs))
+    if(any(fix))names(y)[fix] <- map(names(y)[fix],from=analogs,to=glue(analogs,'.',i))
     z <- cbind(x,y)
-    .superbind(c(list(z),lst), i=i, exclusive=exclusive)
+    .superbind(c(list(z),lst), i=i, exclusive=exclusive,digits=digits)
 }
 .read.any <- function(file,args){ # read a file according to a protocol (first arg is function ref.) 
     fun <- match.fun(args[[1]])
@@ -88,12 +106,18 @@ ignored <- function(
   project=getwd(),
   rundir = filename(project,run), 
   ctlfile = filename(rundir, run, ".ctl"),
-  read.input=list(read.csv,header=TRUE,as.is=TRUE,na.strings='.'),
+  read.input=list(read.csv,header=TRUE,as.is=TRUE),
   ...
 ){
   stopifnot('header' %in% names(read.input))
-  if(missing(rundir))rundir <- dirname(ctlfile)
-  if(rundir!=dirname(ctlfile))warning('rundir does not specify parent of ctlfile') 
+  if(!missing(run))run <- as.character(run)
+  if(!missing(rundir))rundir <- as.character(rundir)
+  if(missing(run) & missing(rundir) & missing(ctlfile))stop('one of run, rundir, or ctlfile must be supplied')
+  if(missing(run) & missing(ctlfile)) run <- basename(rundir)  	  
+  if(missing(run) & missing(rundir))run <- sub('[.][^.]+$','',basename(ctlfile))
+  if(missing(project) & !missing(rundir))project <- dirname(rundir)
+  if(missing(project) & missing(rundir) & !missing(ctlfile))project <- dirname(dirname(ctlfile))
+  if(.absDir(rundir)!=.absDir(dirname(ctlfile)))warning('rundir does not specify parent of ctlfile')
   control <- read.nmctl(ctlfile)
   dname <- getdname(control)
   datafile <- resolve(dname,rundir)
@@ -132,14 +156,21 @@ superset <- function(
   rundir = filename(project,run), 
   ctlfile = filename(rundir, run, ".ctl"),
   key=character(0),
-  read.input=list(read.csv,header=TRUE,as.is=TRUE,na.strings='.'),
+  read.input=list(read.csv,header=TRUE,as.is=TRUE),
   read.output=list(read.table,header=TRUE,as.is=TRUE,skip=1,comment.char='',check.names=FALSE),
   exclusive=NULL,
+  digits=5,
   ...
 ){
-  stopifnot('header' %in% names(read.input))
-  if(missing(rundir))rundir <- dirname(ctlfile)
-  if(rundir!=dirname(ctlfile))warning('rundir does not specify parent of ctlfile')
+  #stopifnot('header' %in% names(read.input))
+  if(!missing(run))run <- as.character(run)
+  if(!missing(rundir))rundir <- as.character(rundir)
+  if(missing(run) & missing(rundir) & missing(ctlfile))stop('one of run, rundir, or ctlfile must be supplied')
+  if(missing(run) & missing(ctlfile)) run <- basename(rundir)  	  
+  if(missing(run) & missing(rundir))run <- sub('[.][^.]+$','',basename(ctlfile))
+  if(missing(project) & !missing(rundir))project <- dirname(rundir)
+  if(missing(project) & missing(rundir) & !missing(ctlfile))project <- dirname(dirname(ctlfile))
+  #if(.absDir(rundir)!=.absDir(dirname(ctlfile)))warning('rundir does not specify parent of ctlfile')
   dropped <- ignored(run=run,project=project,rundir=rundir,ctlfile=ctlfile,read.input=read.input,...)
   control <- read.nmctl(ctlfile)
   dname <- getdname(control)
@@ -163,7 +194,7 @@ superset <- function(
   if(length(key)) return(.markup(lst=c(list(input),output),key=key))
   output <- .distill(output)#drop repeat columns
   output <- lapply(output,.restore,dropped=dropped)#expand
-  res <- .superbind(c(list(input),output),exclusive=exclusive)
+  res <- .superbind(c(list(input),output),exclusive=exclusive,digits=digits)
   rownames(res) <- NULL
   res
 }

@@ -15,8 +15,7 @@ superset(
 	read.input = list(
 		read.csv, 
 		header = TRUE, 
-		as.is = TRUE,
-		na.strings='.'
+		as.is = TRUE
 	), 
 	read.output = list(
 		read.table, 
@@ -27,6 +26,7 @@ superset(
 		check.names = FALSE
 	), 
 	exclusive=NULL,
+	digits=5,
 	...
 )
 ignored(
@@ -34,7 +34,7 @@ ignored(
 	project = getwd(), 
 	rundir = filename(project, run), 
 	ctlfile = filename(rundir, run, ".ctl"), 
-	read.input=list(read.csv,header=TRUE,as.is=TRUE,na.strings='.'),
+	read.input=list(read.csv,header=TRUE,as.is=TRUE),
 	...
 )
 }
@@ -47,6 +47,7 @@ ignored(
   \item{read.input}{a methodology for acquiring the input}
   \item{read.output}{a methodology for acquiring the output}
   \item{exclusive}{character vector of output column names to exclude; or logical: whether to keep columns with re-used names}
+  \item{digits}{significant digits for assessing informativeness when \code{exclusive=NULL}}
   \item{\dots}{ignored}
 }
 \details{
@@ -80,15 +81,16 @@ ignored(
 	columns will be retained and renamed.  A column is informative if any 
 	element is informative.  An element is informative if it is newly generated
 	(not NA and not zero, but original is NA) or if it is an alteration (non-NA,
-	and different from non-NA original). 
+	and different from non-NA original). If the column pair can be interpreted
+	as numeric, "different" is determined using only the first \code{digits} digits.
 	
 	Only the first instance of any column among successive output tables is retained.
 	
 	\code{ignored} takes a subset of \code{superset} arguments and returns just
 	a logical vector showing which input rows are dropped. Note that it is 
-	possible (for both functions) to invoke using just \code{run}, just \code{rundir},
+	possible to invoke either function using just \code{run}, just \code{rundir},
 	or just \code{ctlfile}, supplying \code{project} as necessary.  Normally these 
-	four are tightly coordinated and may be inferred from each other.  
+	three are tightly coordinated and may be inferred from each other.  
 
 }
 \value{
