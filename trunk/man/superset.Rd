@@ -88,13 +88,14 @@ ignored(
 	a logical vector showing which input rows are dropped. Note that it is 
 	possible (for both functions) to invoke using just \code{run}, just \code{rundir},
 	or just \code{ctlfile}, supplying \code{project} as necessary.  Normally these 
-	four are tightly coordinated and may be inferred from eachother.  
+	four are tightly coordinated and may be inferred from each other.  
 
 }
 \value{
-	\code{superset}: data.frame where row count is a multiple of (usually equal to) input row count; 
-	\code{ignore} a logical vector indicating which rows
-	were dropped.
+	\itemize{
+	\item \code{superset}: data.frame where row count is a multiple of (usually equal to) input row count 
+	\item \code{ignored} a logical vector indicating which rows were dropped.
+	}
 }
 \references{\url{http://metrumrg.googlecode.com}}
 
