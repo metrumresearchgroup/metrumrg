@@ -151,7 +151,7 @@ superset <- function(
   labels <- .nminput(control)
   input <- .read.any(file=datafile,args=read.input)
   stopifnot(nrow(input)==length(dropped))
-  input[run] <- as.integer(dropped)
+  input[as.character(run)] <- as.integer(dropped)
   if(!length(paths))return(input)
   if(length(labels)>ncol(input))stop('more nonmem aliases than data columns')
   output <- lapply(paths, .read.any, args=read.output)
