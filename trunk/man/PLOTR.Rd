@@ -104,7 +104,7 @@ PLOTR(
   to annotate parameter and gradient search plots.}
   
   \item{superset}{(experimental) whether to use \code{superset} as an intermediate 
-  	  for dataset creation (instead of dataSynthesis).  Could give time-varying
+  	  for dataset creation (instead of \code{dataSynthesis}).  Could give time-varying
   covariates, whereas the default gives only static covariates.}
 
   \item{\dots}{additional arguments passed to functions that accept them. For example,
