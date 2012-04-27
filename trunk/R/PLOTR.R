@@ -18,39 +18,34 @@
 	superset = FALSE,
 	...
 ){
-    
-    #process data
-    if(superset) {
-    	data <- superset(
-    	  run=run,
- 	  project=project,
- 	  rundir=rundir,
- 	  ...
-        )
-        data <- data[is.na(data$C),,drop=FALSE]
-        if(logtrans) data <- backtrans(data,intersect(names(data),c('DV','PRED','IPRE','IPRED')))
-        missing <- as.numeric(as.character(missing))
-	for(col in cont.cov) data[[col]] <- as.numeric(as.character(data[[col]]))
-	for(col in cont.cov) data[[col]][!is.na(data[[col]]) & data[[col]]==missing] <- NA
-	if(is.null(grp))data$grpnames <- 'all'
-	if(is.null(grp))grp <- 'grpnames'
-	data$grpnames <- groupnames(data,grp,grpnames,run)
-    }else{
-    	data <- dataSynthesis(
-    	  run=run,
-	  project=project,
-	  logtrans=logtrans,
-	  grp=grp,
-	  grpnames=grpnames,
-	  cont.cov=cont.cov,
-	  cat.cov=cat.cov,
-	  par.list=par.list,
-	  eta.list=eta.list,
-	  missing=missing,
-	  rundir=rundir,
-	  ...
-      )
-    }
+    if(superset) data <- .dataSuperset(
+    	run=run,
+    	project=project,
+    	logtrans=logtrans,
+    	grp=grp,
+    	grpnames=grpnames,
+    	cont.cov=cont.cov,
+    	cat.cov=cat.cov,
+    	par.list=par.list,
+    	eta.list=eta.list,
+    	missing=missing,
+    	rundir=rundir,
+    	...
+    ) 
+    else data <- dataSynthesis(
+       	run=run,
+    	project=project,
+    	logtrans=logtrans,
+    	grp=grp,
+    	grpnames=grpnames,
+    	cont.cov=cont.cov,
+    	cat.cov=cat.cov,
+    	par.list=par.list,
+    	eta.list=eta.list,
+    	missing=missing,
+    	rundir=rundir,
+    	...
+    )
     write.csv(data,filename(rundir,ext='_syn.csv'),row.names=FALSE)
     available <- names(data)
     cont.cov <- strain(cont.cov,available)
@@ -301,24 +296,58 @@ dataFormat <- function(
     data$grpnames <- groupnames(data,grp,grpnames,run)
     data
 }
+# alternate generation of data format
+.dataSuperset <- function(
+  run,
+  project=getwd(),
+  logtrans=FALSE,
+  rundir=filename(project, run),
+  ctlfile = filename(rundir,run,'.ctl'),
+  grp= NULL,
+  grpnames= NULL,
+  cont.cov= NULL,
+  cat.cov= NULL,
+  par.list= NULL,
+  eta.list= NULL,
+  missing=-99,
+  ...
+){
+  data <- superset(run=run,project=project,rundir=rundir,ctlfile=ctlfile,...)
+  data <- as.best(data)
+  data <- data[!!data[as.character(run)],,drop=FALSE]
+  if(logtrans) data <- backtrans(data,intersect(names(data),c('DV','PRED','IPRE','IPRED')))
+  available <- names(data)
+  grp <- strain(grp,available)
+  cont.cov <- strain(cont.cov,available)
+  cat.cov <- strain(cat.cov,available)
+  par.list <- strain(par.list,available)
+  eta.list <- strain(eta.list,available)
+  missing <- as.numeric(as.character(missing))
+  for(col in cont.cov) data[[col]] <- as.numeric(as.character(data[[col]]))
+  for(col in cont.cov) data[[col]][!is.na(data[[col]]) & data[[col]]==missing] <- NA
+  if(is.null(grp))data$grpnames <- 'all'
+  if(is.null(grp))grp <- 'grpnames'
+  data$grpnames <- groupnames(data,grp,grpnames,run)
+  data
+}
 
 #generates the plotting data set, given project, run, etc.
 dataSynthesis <- function(
-	run, 
-	project=getwd(), 
-	logtrans = FALSE,
-	grp = NULL, 
-	grpnames = NULL,
-	cont.cov = NULL,
-	cat.cov = NULL,
-	par.list = NULL,
-	eta.list = NULL,
-	missing = -99,
-	rundir  = filename(project, run),
-	ctlfile = filename(rundir,run,'.ctl'),
-	outfile = filename(rundir,run,'.lst'),
-	datfile = getdname(ctlfile),
-	...
+    run, 
+    project=getwd(), 
+    logtrans = FALSE,
+    grp = NULL, 
+    grpnames = NULL,
+    cont.cov = NULL,
+    cat.cov = NULL,
+    par.list = NULL,
+    eta.list = NULL,
+    missing = -99,
+    rundir  = filename(project, run),
+    ctlfile = filename(rundir,run,'.ctl'),
+    outfile = filename(rundir,run,'.lst'),
+    datfile = getdname(ctlfile),
+    ...
 ){
     #cleanup arguments
     force(datfile)

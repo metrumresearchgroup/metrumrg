@@ -59,13 +59,17 @@ ignored(
 	\code{read.output} are lists consisting of functions and arguments
 	appropriate for reading input and output file formats, respectively.
 	The ignore criteria will be reconstructed per row so that output can be
-	mapped unambiguously to input.  Alternatively, if \code{key} is provided,
+	mapped unambiguously to input. A column with \code{run} as its name
+	is bound to the input data, showing 1 where a record was visible to NONMEM,
+	and 0 otherwise.
+	
+	Normally, \code{superset} tries to bind output columns directly to input.
+	Alternatively, if \code{key} is provided,
 	it is used as an object model to allow an inferential left join of output
 	onto intput; this approach is riskier, but can back fill NA cells with 
 	values that are otherwise constant within left-subsets of the key.
 	
-	For the usual invocation (zero-length key) \code{superset} tries to load
-	columns from output tables onto the input table. Naming convention of
+	During integration, naming convention of
 	the input is retained, and output column names are mapped by position, 
 	using the control stream input criteria. Output tables are restored to 
 	input dimensions using the "ignore" criteria, then checked for length: 
