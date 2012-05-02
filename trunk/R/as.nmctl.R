@@ -4,6 +4,7 @@ function(x,...)UseMethod('as.nmctl')
 as.character.nmctl <-
 function(x,...){
 	if(length(x)==0) return(character(0))
+	x[] <- lapply(x,as.character) # to accommodate novel underlying object types
 	order <- sapply(x,length)
 	recnums <- 1:length(x)
 	record <- rep(recnums,order)
@@ -24,6 +25,7 @@ function(
 	pattern='^ *\\$([^ ]+)( .*)?$',
 	head='\\1',
 	tail='\\2',
+  parse=FALSE,
 	...
 ){
 	flag <- contains(pattern,x)
@@ -36,6 +38,8 @@ function(
 	content[['0']] <- NULL	
 	names(content) <- nms
 	class(content) <- c('nmctl',class(content))
+  thetas <- names(content)=='theta'
+  if(parse)content[thetas] <- lapply(content[thetas],as.initList)
 	content
 }
 
