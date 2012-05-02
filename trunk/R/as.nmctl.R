@@ -50,7 +50,7 @@ print.nmctl <-
 function(x,...)print(format(x,...))
 
 read.nmctl <-
-function(con,...)as.nmctl(readLines(con,...),...)
+function(con,parse=FALSE,...)as.nmctl(readLines(con,...),parse=parse,...)
 
 write.nmctl <-
 function(x, file='data',ncolumns=1,append=FALSE, sep=" ",...){

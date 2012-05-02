@@ -21,12 +21,10 @@
 \alias{$<-.init}
 \alias{[.initList}
 
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-}
+\title{Work with Initial Estimates as Objects Instead of Character Vectors}
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{as.nmctl} and \code{read.nmctl} normally return a list of character vectors as class \code{nmctl}.  Users are free to modify these using conventional techniques for text.  The \code{theta} record can be converted to \code{initList} manually, or by the 
+functions above, using \code{parse=TRUE}.  \code{initList} is a list of \code{init}, each of which displays conventionally, but can be modified using regular R syntax for lists and vectors.  In particular, if x is class \code{nmctl}, x$theta[[3]] refers to THETA3, not just the third line of text.
 }
 \usage{
 as.init.numeric(x = numeric(0), fixed = FALSE, comment = character(0), ...)
@@ -35,48 +33,25 @@ as.initList.numeric(x, fixed = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
-}
+  \item{x}{object of interest}
+  \item{fixed}{logical: whether the value should be fixed at the initial estimate.}
+  \item{comment}{character: a comment}
+  \item{\dots}{ignored}
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+object of class \code{init}, or a numbered set of these of class \code{initList}.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
+\references{\url{http://metrumrg.googlecode.com}}
+\author{Tim Bergsma}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+  \itemize{
+  	\item \code{\link{as.nmctl}}
+	}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
-function (x, ...) 
-UseMethod("as.init")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{manip}

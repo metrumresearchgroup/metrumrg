@@ -21,7 +21,9 @@ functions (not generic) convert \code{nmctl} to and from file format.  The
 print, format, and \code{as.character} methods display \code{nmctl} as it normally looks
 in a text editor.  \code{as.list.nmctl} simply unclasses its argument.
 \code{as.nmctl.character} does the heavy work, breaking up a character
-vector into records and storing as a list.
+vector into records and storing as a list.  If \code{parse} is \code{TRUE}, 
+\code{as.nmctl} attempts to convert certain records to higher-level objects: currently
+the \code{theta} record will be converted to \code{initList}.
 }
 \usage{
 \method{as.character}{nmctl}(x, ...)
@@ -31,11 +33,12 @@ vector into records and storing as a list.
 	pattern='^ *\\\\$([^ ]+)( .*)?$',
 	head='\\\\1',
 	tail='\\\\2',
+  parse=FALSE,
 	...
 )
 \method{format}{nmctl}(x, ...)
 \method{print}{nmctl}(x, ...)
-read.nmctl(con, ...)
+read.nmctl(con,parse=FALSE, ...)
 write.nmctl(
 	x, 
 	file = "data", 
@@ -55,6 +58,7 @@ write.nmctl(
   \item{head}{regular expression (relative to \code{pattern}) giving the name of the control record}
   \item{tail}{regular expression (relative to \code{pattern}) giving the balance of the control record}
   \item{con}{a connection or the name of a file to open}
+  \item{parse}{whether to create R objects from the character vectors serving as records}
   \item{file}{passed to \code{write}}
   \item{ncolumns}{passed to \code{write}}
   \item{append}{passed to \code{write}}
@@ -69,6 +73,8 @@ in the control stream.  The user is free to add, delete, rearrange, and edit
 records using standard list manipulation techniques. When printed, records 
 appear in list order. The write function warns if the 80 character limit is exceeded
 (not including comments).
+
+
 }
 \value{
 \item{as.character.nmctl }{a character vector representing a control stream}
@@ -83,7 +89,8 @@ appear in list order. The write function warns if the 80 character limit is exce
 \author{Tim Bergsma}
 \seealso{
 	\itemize{
-		\item \code{\link{write}}
+  	\item \code{\link{as.initList}}
+  	\item \code{\link{write}}
 	}
 }
 \keyword{manip}
