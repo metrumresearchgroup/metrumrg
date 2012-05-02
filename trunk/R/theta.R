@@ -150,7 +150,38 @@ as.initList.character <- function(x,...){
     halves <- strsplit(x,')',fixed=TRUE)
     halves <- lapply(halves,.space2comma)
   }
-  
+`[.initList` <- function (x, ..., drop = TRUE){
+  cl <- oldClass(x)
+  class(x) <- NULL
+  val <- NextMethod("[")
+  class(val) <- cl
+  val
+}
+as.initList.numeric <- function(x,fixed=FALSE,...){
+  stopifnot(is.logical(fixed))
+  fixed <- rep(fixed,length.out=length(x))
+  y <- lapply(
+    seq_along(x),
+    function(i)as.init(x[[i]],fixed=fixed[[i]])
+  )
+  y <- as.initList(y)
+  y
+}
+`$.init` <- function(x,name)x[[name]]
+`$<-.init` <- function(x,name,value){
+  if(!name %in% c('low','init','up'))stop('attempt to set an invalid init element')
+  if(is.null(value))stop('attempt to delete a required init element')
+  x[name] <- value
+  x
+}
+fixed.initList <- function(x,...)sapply(x,fixed)
+`fixed<-.initList` <- function(x,value){
+	stopifnot(is.logical(value))
+	value <- rep(value,length.out=length(x))
+	for(i in seq_along(value))fixed(x[[i]]) <- value[[i]]
+	x
+}
+
 x<-c(
     ' ;from model 1001',
     '(0,3) 2 FIXED (0 .6 1) 10 (-INF,-2.7,0) (37 FIXED) ; structural parameters',
@@ -162,6 +193,6 @@ x<-c(
     ');end of data'
   )
 
-  
+
   
   
