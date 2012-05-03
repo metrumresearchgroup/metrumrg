@@ -23,7 +23,7 @@ in a text editor.  \code{as.list.nmctl} simply unclasses its argument.
 \code{as.nmctl.character} does the heavy work, breaking up a character
 vector into records and storing as a list.  If \code{parse} is \code{TRUE}, 
 \code{as.nmctl} attempts to convert certain records to higher-level objects: currently
-the \code{theta} record will be converted to \code{initList}.
+the \code{theta} record will be converted to \code{\link{initList}}.
 }
 \usage{
 \method{as.character}{nmctl}(x, ...)
@@ -67,7 +67,7 @@ write.nmctl(
 }
 \details{
 Serendipitously, the record indicator in NONMEM control stream syntax is the 
-same as the element selector in R list syntax: \$.  The convention is that names
+same as the element selector in R list syntax: $.  The convention is that names
 of elements in \code{nmctl} (lower case) are converted to record types (upper case)
 in the control stream.  The user is free to add, delete, rearrange, and edit
 records using standard list manipulation techniques. When printed, records 

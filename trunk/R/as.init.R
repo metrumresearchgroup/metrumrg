@@ -104,14 +104,15 @@ print.initList <-function(x,...)print(format(x,...))
   class(val) <- cl
   val
 }
-as.initList.numeric <- function(x,fixed=FALSE,...){
-  stopifnot(is.logical(fixed))
+as.initList.numeric <- function(x,fixed=FALSE,comment=character(0),...){
+  stopifnot(is.logical(fixed),is.character(comment))
   fixed <- rep(fixed,length.out=length(x))
   y <- lapply(
     seq_along(x),
     function(i)as.init(x[[i]],fixed=fixed[[i]])
   )
   y <- as.initList(y)
+  if(length(comment)) comment(y) <- comment
   y
 }
 `$.init` <- function(x,name)x[[name]]
@@ -234,26 +235,3 @@ as.initList.character <- function(x,...){
   x <- as.init(x,fixed=fixed,comment=comment,...)
   x
 }
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  

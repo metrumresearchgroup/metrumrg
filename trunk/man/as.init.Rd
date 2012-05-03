@@ -27,12 +27,12 @@
 \title{Work with Initial Estimates as Objects}
 \description{
 \code{as.nmctl} and \code{read.nmctl} normally return a list of character vectors as class \code{nmctl}.  Users are free to modify these using conventional techniques for text.  Optionally, the \code{theta} record can be converted to an object of class \code{initList} -- either manually, using \code{as.initList}, or by the 
-functions above, passing \code{parse=TRUE}.  \code{initList} is a numbered list of objects of class \code{init}, each of which can be modified using regular R syntax for lists and vectors.  Conveniently, the object number is the same as the THETA index as regarded by NONMEM: e.g. \code{ctl$theta[[3]]} represents THETA3.
+functions above, passing \code{parse=TRUE}.  \code{initList} is a numbered list of objects of class \code{init}, each of which can be modified using regular R syntax for lists and vectors.  Conveniently, the object number is the same as NONMEM's index for THETA: e.g. \code{ctl$theta[[3]]} represents THETA3.
 }
 \usage{
 \method{as.init}{numeric}(x = numeric(0), fixed = FALSE, comment = character(0), ...)
 \method{as.initList}{character}(x, ...)
-\method{as.initList}{numeric}(x, fixed = FALSE, ...)
+\method{as.initList}{numeric}(x, fixed = FALSE, comment = character(0), ...)
 }
 \arguments{
   \item{x}{object of interest}
@@ -49,11 +49,11 @@ In contrast, a subset of class \code{initList} retains its class.  \code{initLis
 
 The concept "fixed" is supported.  \code{fixed()} checks whether an \code{init} is fixed, either singly or member-wise for elements of \code{initList}.  \code{fixed() <-} assigns the value \code{TRUE} or \code{FALSE}; for \code{initList}, the supplied value is recycled as necessary to match the length of the primary object. Internally, "fixed" simply means that "low", "init", and "up" are finite and identical.  
 
-Comments are supported. Comments can be multiline, and will be printed following a line representing the initial estimate itself.  When parsing, comments on the same line or following a set of estimates are replicated for all such estimates (perhaps only one).  If an estimate is split across lines, comments for each of those lines are aggregated and associated with the estimate as a whole. Comments are accessed using \code{comment()} and assigned using \code{comment() <- }.
+Comments are supported. Comments can be multi-line, and will be printed following a line representing the initial estimate itself.  When parsing, comments on the same line as -- or following a set of -- estimates are replicated for all such estimates (perhaps only one).  If an estimate is split across lines, comments for each of those lines are aggregated and associated with the estimate as a whole (and are printed after the estimate). Comments occuring before the first line of numeric material will be associated with the list as a whole, and will be printed before the list.  Comments may be accessed using \code{comment()} and assigned using \code{comment() <- }.
 
 }
 \value{
-object of class \code{init}, or a numbered set of these of class \code{initList}.
+object of class \code{init}, or a numbered set of these, having class \code{initList}.
 }
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
