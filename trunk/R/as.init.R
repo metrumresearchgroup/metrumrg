@@ -181,18 +181,3 @@ fixed.initList <- function(x,...)sapply(x,fixed)
 	for(i in seq_along(value))fixed(x[[i]]) <- value[[i]]
 	x
 }
-
-x<-c(
-    ' ;from model 1001',
-    '(0,3) 2 FIXED (0 .6 1) 10 (-INF,-2.7,0) (37 FIXED) ; structural parameters',
-    ';ref A',
-    '(;comment will be lost',
-    '1,;ref B',
-    '2,;ref C',
-    '3',
-    ');end of data'
-  )
-
-
-  
-  
