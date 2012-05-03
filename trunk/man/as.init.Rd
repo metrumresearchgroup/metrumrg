@@ -3,6 +3,7 @@
 \alias{initList}
 \alias{as.character.init}
 \alias{as.character.initList}
+\alias{as.init}
 \alias{as.init.numeric}
 \alias{as.init.init}
 \alias{as.initList.character}

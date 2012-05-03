@@ -76,6 +76,7 @@
 \item \link{as.halfmatrix.default} convert a vector to halfmatrix
 \item \link{as.halfmatrix.halfmatrix} preserve halfmatrix
 \item \link{as.halfmatrix} generic
+\item \link{as.init} convert to init
 \item \link{as.init.init} convert init to init
 \item \link{as.init.numeric} convert numeric to init
 \item \link{as.initList} convert to initList (generic)
