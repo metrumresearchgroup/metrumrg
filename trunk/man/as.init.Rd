@@ -1,8 +1,10 @@
 \name{as.init}
-\alias{as.init}
+\alias{init}
+\alias{initList}
 \alias{as.character.init}
 \alias{as.character.initList}
 \alias{as.init.numeric}
+\alias{as.init.init}
 \alias{as.initList.character}
 \alias{as.initList.list}
 \alias{as.initList.numeric}
@@ -40,7 +42,7 @@ functions above, passing \code{parse=TRUE}.  \code{initList} is a numbered list 
 \details{
 Class \code{init} represents an initial estimate, e.g. for an element of THETA.  Using the NONMEM help conventions, the estimate is composed of three elements: a lower bound, the estimate itself, and an upper bound; these are named "low", "init", and "up", respectively. They are always present, whether or not displayed. Each may have a numeric value. Furthermore, "low" may be \code{-Inf} (default), "init" may be \code{NA} (if "low" and "up" are finite) and "up" may be \code{Inf} (default). \code{init} may be constructed from numeric vector of length one ('init'), two ('low' and 'init') or three ('low','init','up').
 
-Elements of class \code{init} may be accessed using subset operators (\code{[]}, or either version of the element-select operator (\code{[[]]},\code{$}); assignment is supported for all three cases. Note that a subset of \class{init} is not itself of that class.
+Elements of class \code{init} may be accessed using subset operators (\code{[]}, or either version of the element-select operator (\code{[[]]},\code{$}); assignment is supported for all three cases. Note that a subset of class \code{init} is not itself of that class.
 
 In contrast, a subset of class \code{initList} retains its class.  \code{initList} is a list of objects of class \code{init}. Members may be accessed and assigned using \code{[]} and \code{[[]]}. \code{initList} may be created by parsing a file or by calling \code{as.initList} on a character or numeric vector.
 
@@ -64,17 +66,20 @@ path <- system.file('example/project/nonmem/ctl/1005.ctl',package='metrumrg')
 ctl <- read.nmctl(path,parse=TRUE)
 theta <- ctl$theta
 theta[[3]]$init
-x <- as.initlist('(0,3) 2 FIXED (0 .6 1) 10 (-INF,-2.7,0) (37 FIXED) ')
+x <- as.initList('(0,3) 2 FIXED (0 .6 1) 10 (-INF,-2.7,0) (37 FIXED) ')
 x
 fixed(x)
 fixed(x) <- TRUE
 x
+writeLines(as.character(x))
 fixed(x) <- FALSE
 x
+x[[1]]
 as.init(1:3)
 as.initList(1:3)
 as.initList(1:3,fixed=TRUE)
 x <- as.initList(1:4)
+x
 x[1:3]
 x[1:2] <- x[3:4]
 x
@@ -90,15 +95,13 @@ x[[4]][c('low','up')]
 x <- c(
   ';thetas',
   '10 20; structural',
-  ';literature',
+  '; literature',
   '(',
   '0,;ref A',
   '5,;ref B',
   '10)'
 )
-as.initList(x)
-
-
+writeLines(as.character(as.initList(x)))
 
 }
 \keyword{manip}
