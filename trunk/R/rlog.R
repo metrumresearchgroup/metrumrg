@@ -104,7 +104,7 @@ runstate <- function(
 	queued=   c(0,0,0),
 	compiled= c(1,0,0),
 	running=  c(1,1,1),
-	done=     c(1,0,1),
+	done=     c(NA,0,1),
 	...
 ){
 	#FCON: nm/ABLOCK.f
@@ -119,9 +119,11 @@ runstate <- function(
 		length(running)==length(testfile),
 		length(done)==length(testfile)
 	)
-	if(!file.exists(rundir))return('indeterminate')
+	#For any given run, NONR supports run/, run.lock/, and run.boot/.
+	variants <- glue(rundir,c('.boot','.lock',''))
+	variants <- variants[file.exists(variants)]
+	if(length(variants))rundir <- variants[[1]] else return('indeterminate')
 	testpath=file.path(rundir,testfile)
-
 	state <- file.exists(testpath)
 	possible <- rbind(queued,compiled,running,done)
 	dimnames(possible)[[2]] <- testfile
@@ -131,11 +133,11 @@ runstate <- function(
 		dimnames=dimnames(possible)
 	)
 	possible <- possible[
-		apply(possible,MARGIN=1,FUN=function(x)all(x==state)),
+		apply(possible,MARGIN=1,FUN=function(x)all(x[!is.na(x)]==state[!is.na(x)])),
 		,
 		drop=FALSE
 	]
-	if(dim(possible)[[1]]==1) return(rownames(possible))
+	if(nrow(possible)==1) return(rownames(possible))
 	else return('indeterminate')
 }
 	
