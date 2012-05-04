@@ -19,7 +19,7 @@ rlog(
         pattern = c(
         	'^F[ISRCMP]','^OU','^nonmem','^nul$', 
         	'WK', 'LNK$', 'fort', '^nm', 'lnk$', 
-        	'set$','^gar', 'INT', '^temp', '^tr', 
+        	'set$','^gar', '^temp', '^tr', 
         	'^new', '^FD','^Run\\\\d+\\\\.o\\\\d+$','^prsizes'
         ),
  	...

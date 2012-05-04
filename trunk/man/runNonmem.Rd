@@ -43,7 +43,7 @@ runNonmem(
 	remove = c(
 		"^F[ISRCMP]","^OU","^nonmem", "^nul$",
 		"WK","LNK$","fort","^nm","lnk$","set$",
-		"^gar","INT","^temp","^tr","^new",
+		"^gar","^temp","^tr","^new",
 		if(fdata)c('^FD','^PR')
 	),
 	sync=if(boot)'n'else'y',
