@@ -178,7 +178,8 @@ NONR72(
 
   \item{diag}{whether to plot standard diagnostic plots. Default: \code{TRUE} for 
   non-bootstrap runs. You can override the default file name by passing 
-  \code{plotfile}.  See \code{PLOTR} for details.}
+  \code{plotfile}.  See \code{\link{PLOTR}} for details. Also see Note below for
+  required control stream syntax, e.g. expected tables.}
  
   \item{fdata}{whether to attempt deletion of NONMEM files FDATA and
   PRDERR. Default: \code{TRUE}.}  
