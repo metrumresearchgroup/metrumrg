@@ -8,7 +8,7 @@ partab(
 	run, 
 	project = getwd(), 
 	boot = FALSE, 
-	tool = "nm6", 
+	tool = "nm7", 
 	file = filename(rundir, run, ".ctl"), 
 	rundir = filename(project, run, if (boot) ".boot" else ""), 
 	nmlog = file.path(rundir, "NonmemRunLog.csv"), 
@@ -44,7 +44,7 @@ wikitab(
   \item{run}{scalar run name (number)}
   \item{project}{path to the directory containing run subdirectories}
   \item{boot}{Were these runs in \file{.boot} directories?}
-  \item{tool}{\sQuote{nm6} or \sQuote{nm7}: controls methodology}
+  \item{tool}{\sQuote{nm6} or \sQuote{nm7}: controls methodology. Defaults to 'nm7' as of version 5.18.}
   \item{file}{the run-specific input file to read, contra \code{rlog}}
   \item{rundir}{path to run subdirectory}
   \item{nmlog}{The run-specific input file to read (nm6 only). See \code{rlog}.}

@@ -83,7 +83,7 @@ as.unilog.run <- function(
 		dirname(outfile),
 		paste(run,'ext',sep='.')
 	),
-	tool='nm6',
+	tool='nm7',
 	...
 ){
 	pars <- if(tool=='nm6')as.unilog.runlog(

@@ -3,7 +3,7 @@ function(
     run, 
     project = getwd(), 
     boot = FALSE, 
-    tool = "nm6", 
+    tool = "nm7", 
     file = filename(rundir,run,'.ctl'), 
     rundir = filename(project, run, if (boot) ".boot" else ""),
     nmlog = file.path(rundir, "NonmemRunLog.csv"), 

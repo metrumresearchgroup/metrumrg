@@ -3,7 +3,7 @@
 	project=getwd(), 
 	boot=FALSE, 
 	append=TRUE,
-	tool='nm6',
+	tool='nm7',
 	file=filename(project,'CombRunLog.csv'),
 	rundir = filename(project, run, if(boot) '.boot' else ''),
 	nmlog = file.path(rundir,'NonmemRunLog.csv'),

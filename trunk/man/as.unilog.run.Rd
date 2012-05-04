@@ -6,7 +6,8 @@
   comma-separated listing of parameter estimates and their percent relative
   standard errors.  This function emulates that data, using the \file{.ext} file
   produced under NONMEM7. \code{as.runlog.unilog} converts the output to the
-  format used for NONMEM6.
+  format used for NONMEM6. The default for \code{tool} changed from 'nm6' to 'nm7' at
+  version 5.18.
 }
 \usage{
 as.unilog.run(
@@ -17,7 +18,7 @@ as.unilog.run(
 		dirname(outfile),
 		paste(run,'ext',sep='.')
 	),
-	tool='nm6',
+	tool='nm7',
 	...
 )
 }
