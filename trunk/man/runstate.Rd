@@ -9,7 +9,7 @@ runstate(
 	run,
 	project=getwd(),
 	rundir=file.path(project,run),
-	testfile=c('FCON','FILE10','OUTPUT'),
+	testfile=c('FCON','FILE10','INTER'),
 	queued=   c(0, 0, 0),
 	compiled= c(1, 0, 0),
 	running=  c(1, 1, 1),
