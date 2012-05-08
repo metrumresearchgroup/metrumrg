@@ -53,9 +53,9 @@ read.nmctl <-
 function(con,parse=FALSE,...)as.nmctl(readLines(con,...),parse=parse,...)
 
 write.nmctl <-
-function(x, file='data',ncolumns=1,append=FALSE, sep=" ",...){
+function(x, file='data',ncolumns=1,append=FALSE, sep=" ",verbose=FALSE,...){
 	out <- format(x)
-	if(maxChar(clear(out,drop=';.*'))>80)warning('80 character limit exceeded')
+	if(verbose)if(maxChar(clear(out,drop=';.*'))>80)warning('80 character limit exceeded')
 	write(
 		out,
 		file=file,

@@ -33,7 +33,7 @@ the \code{theta} record will be converted to \code{\link{initList}} .
 	pattern='^ *\\\\$([^ ]+)( .*)?$',
 	head='\\\\1',
 	tail='\\\\2',
-  parse=FALSE,
+	parse=FALSE,
 	...
 )
 \method{format}{nmctl}(x, ...)
@@ -45,6 +45,7 @@ write.nmctl(
 	ncolumns = 1, 
 	append = FALSE, 
 	sep = " ", 
+	verbose=FALSE,
 	...
 )
 \method{[}{nmctl}(x, ..., drop = TRUE)
@@ -63,6 +64,7 @@ write.nmctl(
   \item{ncolumns}{passed to \code{write}}
   \item{append}{passed to \code{write}}
   \item{sep}{passed to \code{write}}
+  \item{verbose}{whether to warn if 80 column limit is exceeded}
   \item{drop}{coerce to lowest possible dimension}
 }
 \details{

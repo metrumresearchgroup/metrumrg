@@ -13,7 +13,10 @@
 .restore <- function(x,dropped,...){ # add records wherever dropped is TRUE
   stopifnot(is.data.frame(x),is.logical(dropped))
   if(any(is.na(dropped)))stop['dropped must not contain NA']
-  if(sum(!dropped)!=nrow(x))warning('row count does not match sum of non-dropped')
+  #if(sum(!dropped)!=nrow(x))warning('row count does not match sum of non-dropped')
+  if(nrow(x)%%sum(!dropped)!=0)warning('row count not a multiple of non-dropped')
+  scale <- nrow(x)%/%sum(!dropped)
+  dropped <- rep(dropped,scale)
   index <- rep(NA,length(dropped))
   index[!dropped] <- rownames(x)
   x[index,,drop=FALSE]

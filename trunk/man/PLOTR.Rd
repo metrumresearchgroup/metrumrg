@@ -78,13 +78,13 @@ PLOTR(
   \item{cont.cov}{vector of
   continuous covariate names. Names must match those used as column
   headers in the data file (identified in the control stream).  
-  Values are retrieved from the data file if not part of the NONMEM \$TABLE step. Default
+  Values are retrieved from the data file if not part of the NONMEM $TABLE step. Default
   value is \code{NULL}.  Example: \code{cont.cov=c('AGE','WT','CLCR')}}
 
   \item{cat.cov}{vector of categorical covariate names. Names must match
   those used as column headers in \code{DataFile}.  Values are retrieved
-  from the data file if not part of the NONMEM
-  \$TABLE step. Default value is \code{NULL}.  Example: \code{cat.cov=c('SEX','FOOD')}} 
+  from the data file if not part of the NONMEM $TABLE step. Default value is \code{NULL}.  
+  Example: \code{cat.cov=c('SEX','FOOD')}} 
 
   \item{par.list}{vector of NONMEM model
   	  parameter names.  Values are retrieved from \file{*par.TAB} created in
@@ -130,7 +130,7 @@ PLOTR(
   the name (or naming strategy) for the diagnostic plots; it is passed to \code{pdf}
   and has a suitable default.  If an alternative is specified, \sQuote{*} will be 
   replaced with \code{run}, the run name.  
-  For example, the default \file{pdf} name is \file{project/DiagnosticPlotReview\_*.pdf}, 
+  For example, the default \file{pdf} name is \file{project/DiagnosticPlotReview_*.pdf}, 
   but you could change it to \file{project/*/DiagnosticPlotReview.pdf}.
      
 }
