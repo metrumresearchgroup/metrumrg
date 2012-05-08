@@ -68,14 +68,15 @@
     x <- lst[[1]]
     i <- i + 1
     lst <- lst[-1]
+    if(is.character(exclusive))x <- x[,!names(x) %in% exclusive]
     if(!length(lst))return(x)
     y <- lst[[1]]
     lst <- lst[-1]
-    if(nrow(y) < nrow(x)){
-      message('ignoring table ',i,': expected ', nrow(x),' rows but found ',nrow(y),'.')
-      return(x)
-    }
-    if(nrow(y) %% nrow(x) != 0){
+    #if(nrow(y) < nrow(x)){
+    #  message('ignoring table ',i,': expected ', nrow(x),' rows but found ',nrow(y),'.')
+    #  return(x)
+    #}
+    if(nrow(y) %% nrow(x) != 0 & nrow(x) %% nrow(y) != 0){
       message('ignoring table ',i,': expected ', nrow(x),' rows but found ',nrow(y),' (not a multiple).')
       return(x)
     }
