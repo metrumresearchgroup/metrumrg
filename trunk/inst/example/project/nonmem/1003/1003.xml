@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2012-04-03T15:06:17.099</nm:start_datetime>
+<nm:start_datetime>2012-05-08T01:55:49.215</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -48,8 +48,8 @@ $TABLE NOPRINT FILE=./1003par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 <nm:license_information><![CDATA[
 License Registered to: Metrum Research Group
 Expiration Date:    14 JUL 2012
-Current Date:        3 APR 2012
-Days until program expires : 101
+Current Date:        8 MAY 2012
+Days until program expires :  66
 ]]></nm:license_information>
 <nm:program_information><![CDATA[
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
@@ -236,7 +236,7 @@ Days until program expires : 101
 <nm:col nm:cname='EPS1'>9.25782959172016</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>26.82</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>22.54</nm:estimation_elapsed_time>
 <nm:covariance_information><![CDATA[
 0R MATRIX ALGORITHMICALLY NON-POSITIVE-SEMIDEFINITE
  BUT NONSINGULAR
@@ -244,7 +244,7 @@ Days until program expires : 101
 0COVARIANCE STEP ABORTED
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='1' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>5.23</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>4.31</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2569.89393760215</nm:final_objective_function>
 <nm:theta>
@@ -295,5 +295,5 @@ Days until program expires : 101
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2012-04-03T15:06:49.382</nm:stop_datetime>
+<nm:stop_datetime>2012-05-08T01:56:16.303</nm:stop_datetime>
 </nm:output>
