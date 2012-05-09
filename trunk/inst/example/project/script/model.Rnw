@@ -18,6 +18,7 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \section{Model Development}
 \subsection{Set up for NONMEM run.}
 <<model>>=
+#Be sure to set directory to the script directory that contains this file.
 library(metrumrg)
 #command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
 cat.cov='SEX'
@@ -28,27 +29,34 @@ eta.list=paste('ETA',1:10,sep='')
 \subsection{Run NONMEM.}
 <<run>>=
 NONR72(
-     run=1001:1005,
-     #command=command,
-     project='../nonmem',
-     grid=FALSE,
-     nice=TRUE,
-     checkrunno=FALSE,
-     cont.cov=cont.cov,
+     run=1001:1005,                       # 5 models, ctl pre-written
+     #command=command,                    # this version will search for NONMEM
+     project='../nonmem',                 # must specify, unless ctl in getwd()
+     grid=TRUE,                           # set to FALSE for better error messaging (but slower)
+     nice=TRUE,                           # don't delete subversioned directories
+     checkrunno=FALSE,                    # TRUE auto-replaces conflicting run numbers 
+     cont.cov=cont.cov,                   # see help for following
      cat.cov=cat.cov,
      par.list=par.list,
      eta.list=eta.list,
-     grp='SEX',
-     grpnames=c('female','male'),
-     include.all=TRUE,
-     plotfile='../nonmem/*/*.pdf',
-     streams='../nonmem/ctl'
+     grp='SEX',                           # separate diagnostic plots for each level of SEX
+     grpnames=c('female','male'),         # use these instead of 0, 1, when plotting by SEX
+     include.all=TRUE,                    # also show diagnostics with groups combined
+     plotfile='../nonmem/*/*.pdf',        # use the run dir and run name for the plot file 
+     streams='../nonmem/ctl'              # expect the control streams here, not locally
 )
+ready <- FALSE
+while (!ready){
+  state <- sapply(1001:1005,runstate,project='../nonmem')  # infer run progress from file presence/absence
+  print(state)
+  if(all(state=='done'))ready <- TRUE     #continue only when runs complete
+  Sys.sleep(3)                            #wait three seconds and check again
+}
 @
 Covariance succeeded on model 1005.
 We can make a quick run log using some simple tools. Table \ref{runlog}.
 <<runlog>>=
-log <- rlog(1001:1005,'../nonmem',tool='nm7',file=NULL)
+log <- rlog(1001:1005,'../nonmem',file=NULL) #don't want the 'wide' file, just the 'long' R object
 head(log)
 tail(log)
 sapply(log,class)
@@ -79,24 +87,24 @@ ctl <- read.nmctl('../nonmem/ctl/1005.ctl')
 @
 Strip comments and view.
 <<strip>>=
-ctl[] <- lapply(ctl,function(rec)sub(' *;.*','',rec))
-ctl
+ctl[] <- lapply(ctl,function(rec)sub(' *;.*','',rec))          # read control stream into a list
+ctl                                                            # print it like text
 @
 Fix records of interest.
 <<fix>>=
-ctl$prob
-ctl$prob <- sub('1005','1105',ctl$prob)
+ctl$prob                                                       # problem statement
+ctl$prob <- sub('1005','1105',ctl$prob)                        # substitute new run number
 names(ctl)
-names(ctl)[names(ctl)=='theta'] <- 'msfi'
+names(ctl)[names(ctl)=='theta'] <- 'msfi'                      # replace theta with final msfi
 ctl$msfi <- '=../1005/1005.msf'
-ctl$omega <- NULL
+ctl$omega <- NULL                                              # drop omega, sigma
 ctl$sigma <- NULL
-names(ctl)[names(ctl)=='estimation'] <- 'simulation'
-ctl$simulation <- 'ONLYSIM (1968) SUBPROBLEMS=500'
-ctl$cov <- NULL
+names(ctl)[names(ctl)=='estimation'] <- 'simulation'           # simulate instead of estimate
+ctl$simulation <- 'ONLYSIM (1968) SUBPROBLEMS=500'             
+ctl$cov <- NULL                                                # drop covariance step
+ctl$table <- NULL                                              # replace multiple tables with one
 ctl$table <- NULL
-ctl$table <- NULL
-ctl$table <- 'DV NOHEADER NOPRINT FILE=./1105.tab FORWARD NOAPPEND'
+ctl$table <- 'DV NOHEADER NOPRINT FILE=./1105.tab FORWARD NOAPPEND' # only really need DV, save file space
 write.nmctl(ctl,'../nonmem/ctl/1105.ctl')
 @
 \subsection{Run the simulation.}
@@ -106,39 +114,32 @@ NONR72(
      run=1105,
      #command=command,
      project='../nonmem',
-     grid=FALSE,
+     grid=TRUE,
      nice=TRUE,
      diag=FALSE,
      streams='../nonmem/ctl'
 )
+while (runstate(1105,project='../nonmem')!='done')Sys.sleep(5)
 @
-\subsection{Recover and format the original dataset.}
-Now we fetch the results and integrate them with the other data.
-<<fetch>>=   
-phase1 <- read.csv('../data/derived/phase1.csv',na.strings='.')
-head(phase1)
-phase1 <- phase1[is.na(phase1$C),c('SUBJ','TIME','DV')]
-records <- nrow(phase1)
-records
-phase1 <- phase1[rep(1:records,500),]
-nrow(phase1)
-phase1$SIM <- rep(1:500,each=records)
-#head(phase1,300)
-with(phase1,DV[SIM==1 & SUBJ==12])
-with(phase1,DV[SIM==2 & SUBJ==12])
-@
-\subsection{Recover and format the simulation results.}
-<<preds>>=
-pred <- scan('../nonmem/1105/1105.tab')
-nrow(phase1)
-length(pred)
-@ 
 \subsection{Combine the original data and the simulation data.}
-<<combine>>=
-phase1$PRED <- pred
-head(phase1)
-phase1 <- phase1[!is.na(phase1$DV),]
-head(phase1)
+Now we fetch the results and integrate them with the other data.
+<<fetch>>= 
+x <- superset(
+  run=1105,
+  project='../nonmem',
+  read.output=list(read.table,header=FALSE)
+)
+x <- x[,c('SUBJ','TIME','DV','V1','1105')]
+read.nmctl('../nonmem/1105/1105.ctl')$simulation
+x$SIM <- rep(1:500,each=nrow(x)/500)
+colname(x) <- c(V1='PRED')
+x <- x[x$`1105`==1,]
+x$`1105` <- NULL
+head(x)
+nrow(x)
+str(x)
+x <- x[x$DV != '.',]
+x$DV <- as.numeric(x$DV)
 @
 \subsection{Plot predictive checks.}
 \subsubsection{Aggregate data within subject.}
@@ -147,8 +148,8 @@ be useful to look at predictions from a subject-centric perspective.
 Therefore, we wish to calculate summary statistics for each subject, 
 (observed and predicted) and then make obspred comparisons therewith.
 <<subject>>=
-head(phase1)
-subject <- melt(phase1,measure.var=c('DV','PRED'))
+head(x)
+subject <- melt(x,measure.var=c('DV','PRED'))
 head(subject)
 @
 We are going to aggregate each subject's DV and PRED values using cast().
@@ -270,25 +271,30 @@ dir.create('../nonmem/1005.boot/ctl')
 @
 \subsection{Create replicate control streams.}
 <<control>>=
-t <- metaSub(
-     clear(readLines('../nonmem/ctl/1005.ctl'),';.+',fixed=FALSE),
-     names=1:300,
-     pattern=c(
-         '1005',
-         '../../data/derived/phase1.csv',
-         '$COV',
-         '$TABLE'
-     ),
-     replacement=c(
-         '*',
-         '../data/*.csv',
-         ';$COV',
-         ';$TABLE'
-    ),
-    fixed=TRUE,
-    out='../nonmem/1005.boot/ctl',
-    suffix='.ctl'
- )
+ctl <- clear(readLines('../nonmem/ctl/1005.ctl'),';.+',fixed=FALSE)
+ctl <- read.nmctl('../nonmem/1005/1005.ctl')
+ctl <- as.nmctl(ctl)
+names(ctl)
+ctl$cov <- NULL
+ctl$table <- NULL
+ctl$table <- NULL
+ctl$prob
+ctl$data
+invisible(
+  lapply(
+    1:300,
+    function(i,ctl){
+      ctl$prob <- sub('1005',i,ctl$prob)
+      ctl$data <- sub(
+        '../../data/derived/phase1.csv',
+        sub('\\*',i,'../data/*.csv'),
+        ctl$data
+      )
+      write.nmctl(ctl,file=glue('../nonmem/1005.boot/ctl/',i,'.ctl'))
+    },
+    ctl=ctl
+  )
+)
 @
 \subsection{Create replicate data sets by resampling original.}
 <<resample>>=
@@ -306,16 +312,20 @@ t <- metaSub(
 <<boot>>=
 NONR72(
      run=1:300,
-     #command=command,
-     project='../nonmem/1005.boot/',
      boot=TRUE,
-     nice=TRUE,
-     grid=TRUE,
-     #concurrent=TRUE,
+     concurrent=FALSE,
+     project='../nonmem/1005.boot',
      streams='../nonmem/1005.boot/ctl'
 )
-nms <- paste('../nonmem/1005.boot/',1:300,'.boot/',1:300,'.log.xml',sep='')
-while(!(all(file.exists(nms))))Sys.sleep(10)
+length(dir('../nonmem/1005.boot',recursive = TRUE))
+system('qstat -f')
+ready <- FALSE
+while (!ready){
+  state <- sapply(1:300,runstate,project='../nonmem/1005.boot')  # infer run progress from file presence/absence
+  print(table(state))
+  if(all(state=='done'))ready <- TRUE     #continue only when runs complete
+  Sys.sleep(10)                            #wait 10 seconds and check again
+}
 boot <- rlog(
 	run=1:300,
 	project='../nonmem/1005.boot',
