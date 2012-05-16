@@ -66,12 +66,21 @@
   
 
   #set up the call
-  execute <- function(command,intern,minimized,invisible,win){
-	args <- list(command, intern=intern)
-        if (win()) args <- c(args,list(minimized=minimized, invisible=invisible))
-        do.call(system,args)
+  execute <- function(command,intern,minimized,invisible,win,run,rdir){
+	  args <- list(command, intern=intern)
+    if (win()) args <- c(args,list(minimized=minimized, invisible=invisible))
+    result <- tryCatch(
+      do.call(system,args),
+      error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
+    )
+    if (is.integer(result)) result <- paste('Run',run,'has exit code',result)
+    writeLines(text=result,con=file.path(rdir,glue(run,'.runCommand')))
+    return(result) #visible
   }
-  lapply(command,execute,intern=intern,minimized=minimized,invisible=invisible,win=win)
+  ret <- lapply(command,execute,intern=intern,minimized=minimized,invisible=invisible,win=win,run=run,rdir=rdir)
+  ret <- unlist(ret)
+  ret <- unique(ret)
+  return(ret)
 }
 
 

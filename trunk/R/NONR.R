@@ -46,10 +46,10 @@ function (
     	message('using command: ',candidate)
     	command <- candidate
     }    
-    for (each in run) {
+    for (this in run) {
     	Sys.sleep(delay/1000)
         args <- list(
-		run = each, 
+		run = this, 
 		command = command, 
 		project = project, 
 		boot = boot,
@@ -82,16 +82,14 @@ function (
             suppressWarnings(handleSIGCLD())
             pid <- fork::fork(NULL)
             if (pid == 0) {
-            
-            #library(multicore)
-            #pid <- multicore::fork()
-            #if(inherits(pid,'masterProcess'){
-            	    
                 tryCatch(
                 	do.call("runNonmem", args),
-                	error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
+                	#error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
+                  error=function(e)writeLines(e$message,glue(this,'.nonr'))
                 )
                 exit()
+            } else {
+              message('launching run ',this,' on pid ',pid)
             }
         } else tryCatch(
         		do.call('runNonmem', args),

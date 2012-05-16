@@ -104,24 +104,26 @@ function (
   }
   #Run NONMEM.
   if(command=='')message('skipping command')
-  else runCommand(
-  	command=command,
-	run=run,
-	rdir=rundir,
-	boot=boot,
-	urgent=urgent,
-	checksum=checksum,
-	grid=grid,
-	udef=udef,
-	ctlfile=file.path(rundir,basename(ctlfile)),
-	outfile=outfile,
-	invisible=invisible,
-	compile=compile,
-	execute=execute,
-	split=split,
-	sync=sync,
-	interface=interface,
-	...
+  else print(
+    runCommand(
+    	command=command,
+    	run=run,
+    	rdir=rundir,
+    	boot=boot,
+    	urgent=urgent,
+    	checksum=checksum,
+    	grid=grid,
+    	udef=udef,
+    	ctlfile=file.path(rundir,basename(ctlfile)),
+    	outfile=outfile,
+    	invisible=invisible,
+    	compile=compile,
+    	execute=execute,
+    	split=split,
+    	sync=sync,
+    	interface=interface,
+    	...
+    )
   )
   #Clean up.
   if(execute){

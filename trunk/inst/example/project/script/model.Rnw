@@ -266,8 +266,8 @@ print(
 <<bootstrap>>=
 getwd()
 dir.create('../nonmem/1005.boot')
-dir.create('../nonmem/1005.boot/data')
-dir.create('../nonmem/1005.boot/ctl')
+dir.create('../nonmem/1005.bootdata')
+dir.create('../nonmem/1005.bootctl')
 @
 \subsection{Create replicate control streams.}
 <<control>>=
@@ -280,17 +280,19 @@ ctl$table <- NULL
 ctl$table <- NULL
 ctl$prob
 ctl$data
+run <- sprintf('%03.0f',1:300)
 invisible(
   lapply(
-    1:300,
+    run,
     function(i,ctl){
       ctl$prob <- sub('1005',i,ctl$prob)
       ctl$data <- sub(
         '../../data/derived/phase1.csv',
-        sub('\\*',i,'../data/*.csv'),
+        sub('\\*',i,'../../1005.bootdata/*.csv'),
         ctl$data
       )
-      write.nmctl(ctl,file=glue('../nonmem/1005.boot/ctl/',i,'.ctl'))
+      ctl$estimation <- sub('MAXEVAL=9999','MAXEVAL=0',ctl$estimation)
+      write.nmctl(ctl,file=glue('../nonmem/1005.bootctl/',i,'.ctl'))
     },
     ctl=ctl
   )
@@ -301,21 +303,20 @@ invisible(
  bootset <- read.csv('../data/derived/phase1.csv')
  r <- resample(
  	bootset,
- 	names=1:300,
+ 	names=run,
  	key='ID',
  	rekey=TRUE,
- 	out='../nonmem/1005.boot/data',
+ 	out='../nonmem/1005.bootdata',
  	stratify='SEX'
  )
 @
 \subsection{Run bootstrap models.}
 <<boot>>=
 NONR72(
-     run=1:300,
+     run=run[2],
      boot=TRUE,
-     concurrent=FALSE,
      project='../nonmem/1005.boot',
-     streams='../nonmem/1005.boot/ctl'
+     streams='../nonmem/1005.bootctl'
 )
 length(dir('../nonmem/1005.boot',recursive = TRUE))
 system('qstat -f')
