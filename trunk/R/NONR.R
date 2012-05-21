@@ -85,7 +85,7 @@ function (
                 tryCatch(
                 	do.call("runNonmem", args),
                 	#error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
-                  error=function(e)writeLines(e$message,glue(this,'.nonr'))
+                	error=function(e)writeLines(e$message,glue(this,'.nonr'))
                 )
                 exit()
             } else {
