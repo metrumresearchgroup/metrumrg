@@ -19,6 +19,7 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \subsection{Set up for NONMEM run.}
 \begin{Schunk}
 \begin{Sinput}
+> #Be sure to set directory to the script directory that contains this file.
 > library(metrumrg)
 > #command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
 > cat.cov='SEX'
@@ -31,29 +32,61 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \begin{Schunk}
 \begin{Sinput}
 > NONR72(
-+      run=1001:1005,
-+      #command=command,
-+      project='../nonmem',
-+      grid=FALSE,
-+      nice=TRUE,
-+      checkrunno=FALSE,
-+      cont.cov=cont.cov,
++      run=1001:1005,                       # 5 models, ctl pre-written
++      #command=command,                    # this version will search for NONMEM
++      project='../nonmem',                 # must specify, unless ctl in getwd()
++      grid=TRUE,                           # set to FALSE for better error messaging (but slower)
++      nice=TRUE,                           # don't delete subversioned directories
++      checkrunno=FALSE,                    # TRUE auto-replaces conflicting run numbers 
++      cont.cov=cont.cov,                   # see help for following
 +      cat.cov=cat.cov,
 +      par.list=par.list,
 +      eta.list=eta.list,
-+      grp='SEX',
-+      grpnames=c('female','male'),
-+      include.all=TRUE,
-+      plotfile='../nonmem/*/*.pdf',
-+      streams='../nonmem/ctl'
++      grp='SEX',                           # separate diagnostic plots for each level of SEX
++      grpnames=c('female','male'),         # use these instead of 0, 1, when plotting by SEX
++      include.all=TRUE,                    # also show diagnostics with groups combined
++      plotfile='../nonmem/*/*.pdf',        # use the run dir and run name for the plot file 
++      streams='../nonmem/ctl'              # expect the control streams here, not locally
 + )
+\end{Sinput}
+\begin{Soutput}
+Installing SIGCHLD signal handler...Done.
+\end{Soutput}
+\begin{Sinput}
+> ready <- FALSE
+> while (!ready){
++   state <- sapply(1001:1005,runstate,project='../nonmem')  # infer run progress from file presence/absence
++   print(state)
++   if(all(state=='done'))ready <- TRUE     #continue only when runs complete
++   Sys.sleep(3)                            #wait three seconds and check again
++ }
+\end{Sinput}
+\begin{Soutput}
+[1] "queued" "done"   "done"   "queued" "queued"
+[1] "compiled" "compiled" "compiled" "compiled" "compiled"
+[1] "compiled" "compiled" "compiled" "compiled" "compiled"
+[1] "compiled" "compiled" "compiled" "compiled" "compiled"
+[1] "compiled" "compiled" "compiled" "compiled" "compiled"
+[1] "running" "running" "running" "running" "running"
+[1] "running" "running" "running" "running" "running"
+[1] "done"    "running" "running" "running" "running"
+[1] "done"    "running" "running" "running" "running"
+[1] "done"    "running" "running" "done"    "running"
+[1] "done"    "running" "running" "done"    "done"   
+[1] "done"    "running" "running" "done"    "done"   
+[1] "done"    "running" "running" "done"    "done"   
+[1] "done"    "done"    "running" "done"    "done"   
+[1] "done" "done" "done" "done" "done"
+\end{Soutput}
+\begin{Sinput}
+> Sys.sleep(10)                             #wait briefly to ensure all processes complete
 \end{Sinput}
 \end{Schunk}
 Covariance succeeded on model 1005.
 We can make a quick run log using some simple tools. Table \ref{runlog}.
 \begin{Schunk}
 \begin{Sinput}
-> log <- rlog(1001:1005,'../nonmem',tool='nm7',file=NULL)
+> log <- rlog(1001:1005,'../nonmem',file=NULL) #don't want the 'wide' file, just the 'long' R object
 > head(log)
 \end{Sinput}
 \begin{Soutput}
@@ -186,8 +219,8 @@ Convert control stream to R object.
 Strip comments and view.
 \begin{Schunk}
 \begin{Sinput}
-> ctl[] <- lapply(ctl,function(rec)sub(' *;.*','',rec))
-> ctl
+> ctl[] <- lapply(ctl,function(rec)sub(' *;.*','',rec))          # read control stream into a list
+> ctl                                                            # print it like text
 \end{Sinput}
 \begin{Soutput}
  [1] "$PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3"                                   
@@ -258,13 +291,13 @@ Strip comments and view.
 Fix records of interest.
 \begin{Schunk}
 \begin{Sinput}
-> ctl$prob
+> ctl$prob                                                       # problem statement
 \end{Sinput}
 \begin{Soutput}
 [1] "1005 phase1 2 CMT like 1004 but diff. initial on V3"
 \end{Soutput}
 \begin{Sinput}
-> ctl$prob <- sub('1005','1105',ctl$prob)
+> ctl$prob <- sub('1005','1105',ctl$prob)                        # substitute new run number
 > names(ctl)
 \end{Sinput}
 \begin{Soutput}
@@ -273,16 +306,16 @@ Fix records of interest.
 [11] "cov"        "table"      "table"     
 \end{Soutput}
 \begin{Sinput}
-> names(ctl)[names(ctl)=='theta'] <- 'msfi'
+> names(ctl)[names(ctl)=='theta'] <- 'msfi'                      # replace theta with final msfi
 > ctl$msfi <- '=../1005/1005.msf'
-> ctl$omega <- NULL
+> ctl$omega <- NULL                                              # drop omega, sigma
 > ctl$sigma <- NULL
-> names(ctl)[names(ctl)=='estimation'] <- 'simulation'
-> ctl$simulation <- 'ONLYSIM (1968) SUBPROBLEMS=500'
-> ctl$cov <- NULL
+> names(ctl)[names(ctl)=='estimation'] <- 'simulation'           # simulate instead of estimate
+> ctl$simulation <- 'ONLYSIM (1968) SUBPROBLEMS=500'             
+> ctl$cov <- NULL                                                # drop covariance step
+> ctl$table <- NULL                                              # replace multiple tables with one
 > ctl$table <- NULL
-> ctl$table <- NULL
-> ctl$table <- 'DV NOHEADER NOPRINT FILE=./1105.tab FORWARD NOAPPEND'
+> ctl$table <- 'DV NOHEADER NOPRINT FILE=./1105.tab FORWARD NOAPPEND' # only really need DV, save file space
 > write.nmctl(ctl,'../nonmem/ctl/1105.ctl')
 \end{Sinput}
 \end{Schunk}
@@ -294,112 +327,67 @@ This run makes the predictions (simulations).
 +      run=1105,
 +      #command=command,
 +      project='../nonmem',
-+      grid=FALSE,
++      grid=TRUE,
 +      nice=TRUE,
 +      diag=FALSE,
 +      streams='../nonmem/ctl'
 + )
+> while (runstate(1105,project='../nonmem')!='done')Sys.sleep(5)
+> Sys.sleep(30) # let all processes complete
 \end{Sinput}
 \end{Schunk}
-\subsection{Recover and format the original dataset.}
+\subsection{Combine the original data and the simulation data.}
 Now we fetch the results and integrate them with the other data.
 \begin{Schunk}
 \begin{Sinput}
-> phase1 <- read.csv('../data/derived/phase1.csv',na.strings='.')
-> head(phase1)
+> x <- superset(
++   run=1105,
++   project='../nonmem',
++   read.output=list(read.table,header=FALSE)
++ )
+> x <- x[,c('SUBJ','TIME','DV','V1','1105')]
+> read.nmctl('../nonmem/1105/1105.ctl')$simulation
 \end{Sinput}
 \begin{Soutput}
-     C ID TIME SEQ EVID  AMT    DV SUBJ HOUR TAFD  TAD LDOS MDV HEIGHT WEIGHT
-1    C  1 0.00   0    0   NA 0.000    1 0.00 0.00   NA   NA   0    174   74.2
-2 <NA>  1 0.00   1    1 1000    NA    1 0.00 0.00 0.00 1000   1    174   74.2
-3 <NA>  1 0.25   0    0   NA 0.363    1 0.25 0.25 0.25 1000   0    174   74.2
-4 <NA>  1 0.50   0    0   NA 0.914    1 0.50 0.50 0.50 1000   0    174   74.2
-5 <NA>  1 1.00   0    0   NA 1.120    1 1.00 1.00 1.00 1000   0    174   74.2
-6 <NA>  1 2.00   0    0   NA 2.280    1 2.00 2.00 2.00 1000   0    174   74.2
-  SEX  AGE DOSE FED SMK DS CRCN predose zerodv
-1   0 29.1 1000   1   0  0 83.5       1      0
-2   0 29.1 1000   1   0  0 83.5       0      0
-3   0 29.1 1000   1   0  0 83.5       0      0
-4   0 29.1 1000   1   0  0 83.5       0      0
-5   0 29.1 1000   1   0  0 83.5       0      0
-6   0 29.1 1000   1   0  0 83.5       0      0
+[1] "ONLYSIM (1968) SUBPROBLEMS=500"
 \end{Soutput}
 \begin{Sinput}
-> phase1 <- phase1[is.na(phase1$C),c('SUBJ','TIME','DV')]
-> records <- nrow(phase1)
-> records
+> x$SIM <- rep(1:500,each=nrow(x)/500)
+> colname(x) <- c(V1='PRED')
+> x <- x[x$`1105`==1,]
+> x$`1105` <- NULL
+> head(x)
 \end{Sinput}
 \begin{Soutput}
-[1] 550
+  SUBJ TIME    DV    PRED SIM
+2    1 0.00     . 0.00000   1
+3    1 0.25 0.363 0.72542   1
+4    1 0.50 0.914 1.38320   1
+5    1 1.00  1.12 2.06720   1
+6    1 2.00  2.28 3.48570   1
+7    1 3.00  1.63 5.44600   1
 \end{Soutput}
 \begin{Sinput}
-> phase1 <- phase1[rep(1:records,500),]
-> nrow(phase1)
+> nrow(x)
 \end{Sinput}
 \begin{Soutput}
 [1] 275000
 \end{Soutput}
 \begin{Sinput}
-> phase1$SIM <- rep(1:500,each=records)
-> #head(phase1,300)
-> with(phase1,DV[SIM==1 & SUBJ==12])
+> str(x)
 \end{Sinput}
 \begin{Soutput}
- [1]     NA  2.260  2.830  8.730 19.300 15.200 16.200  8.830 12.900 12.700
-[11]  7.140  5.740  1.980  0.791
+'data.frame':	275000 obs. of  5 variables:
+ $ SUBJ: int  1 1 1 1 1 1 1 1 1 1 ...
+ $ TIME: num  0 0.25 0.5 1 2 3 4 6 8 12 ...
+ $ DV  : chr  "." "0.363" "0.914" "1.12" ...
+ $ PRED: num  0 0.725 1.383 2.067 3.486 ...
+ $ SIM : int  1 1 1 1 1 1 1 1 1 1 ...
 \end{Soutput}
 \begin{Sinput}
-> with(phase1,DV[SIM==2 & SUBJ==12])
+> x <- x[x$DV != '.',]
+> x$DV <- as.numeric(x$DV)
 \end{Sinput}
-\begin{Soutput}
- [1]     NA  2.260  2.830  8.730 19.300 15.200 16.200  8.830 12.900 12.700
-[11]  7.140  5.740  1.980  0.791
-\end{Soutput}
-\end{Schunk}
-\subsection{Recover and format the simulation results.}
-\begin{Schunk}
-\begin{Sinput}
-> pred <- scan('../nonmem/1105/1105.tab')
-> nrow(phase1)
-\end{Sinput}
-\begin{Soutput}
-[1] 275000
-\end{Soutput}
-\begin{Sinput}
-> length(pred)
-\end{Sinput}
-\begin{Soutput}
-[1] 275000
-\end{Soutput}
-\end{Schunk}
-\subsection{Combine the original data and the simulation data.}
-\begin{Schunk}
-\begin{Sinput}
-> phase1$PRED <- pred
-> head(phase1)
-\end{Sinput}
-\begin{Soutput}
-  SUBJ TIME    DV SIM    PRED
-2    1 0.00    NA   1 0.00000
-3    1 0.25 0.363   1 0.72542
-4    1 0.50 0.914   1 1.38320
-5    1 1.00 1.120   1 2.06720
-6    1 2.00 2.280   1 3.48570
-7    1 3.00 1.630   1 5.44600
-\end{Soutput}
-\begin{Sinput}
-> phase1 <- phase1[!is.na(phase1$DV),]
-> head(phase1)
-\end{Sinput}
-\begin{Soutput}
-  SUBJ TIME    DV SIM    PRED
-3    1 0.25 0.363   1 0.72542
-4    1 0.50 0.914   1 1.38320
-5    1 1.00 1.120   1 2.06720
-6    1 2.00 2.280   1 3.48570
-7    1 3.00 1.630   1 5.44600
-8    1 4.00 2.040   1 2.99140
-\end{Soutput}
 \end{Schunk}
 \subsection{Plot predictive checks.}
 \subsubsection{Aggregate data within subject.}
@@ -409,19 +397,19 @@ Therefore, we wish to calculate summary statistics for each subject,
 (observed and predicted) and then make obspred comparisons therewith.
 \begin{Schunk}
 \begin{Sinput}
-> head(phase1)
+> head(x)
 \end{Sinput}
 \begin{Soutput}
-  SUBJ TIME    DV SIM    PRED
-3    1 0.25 0.363   1 0.72542
-4    1 0.50 0.914   1 1.38320
-5    1 1.00 1.120   1 2.06720
-6    1 2.00 2.280   1 3.48570
-7    1 3.00 1.630   1 5.44600
-8    1 4.00 2.040   1 2.99140
+  SUBJ TIME    DV    PRED SIM
+3    1 0.25 0.363 0.72542   1
+4    1 0.50 0.914 1.38320   1
+5    1 1.00 1.120 2.06720   1
+6    1 2.00 2.280 3.48570   1
+7    1 3.00 1.630 5.44600   1
+8    1 4.00 2.040 2.99140   1
 \end{Soutput}
 \begin{Sinput}
-> subject <- melt(phase1,measure.var=c('DV','PRED'))
+> subject <- melt(x,measure.var=c('DV','PRED'))
 > head(subject)
 \end{Sinput}
 \begin{Soutput}
@@ -718,36 +706,59 @@ We also show densityplots of predictions at those quartiles.
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/data/metrumrg/inst/example/project/script"
+[1] "/data/project/metrumrg/inst/example/project/script"
 \end{Soutput}
 \begin{Sinput}
-> dir.create('../nonmem/1005.boot')
-> dir.create('../nonmem/1005.boot/data')
-> dir.create('../nonmem/1005.boot/ctl')
+> dir.create('../nonmem/1005boot')
+> dir.create('../nonmem/1005bootdata')
+> dir.create('../nonmem/1005bootctl')
 \end{Sinput}
 \end{Schunk}
 \subsection{Create replicate control streams.}
 \begin{Schunk}
 \begin{Sinput}
-> t <- metaSub(
-+      clear(readLines('../nonmem/ctl/1005.ctl'),';.+',fixed=FALSE),
-+      names=1:300,
-+      pattern=c(
-+          '1005',
-+          '../../data/derived/phase1.csv',
-+          '$COV',
-+          '$TABLE'
-+      ),
-+      replacement=c(
-+          '*',
-+          '../data/*.csv',
-+          ';$COV',
-+          ';$TABLE'
-+     ),
-+     fixed=TRUE,
-+     out='../nonmem/1005.boot/ctl',
-+     suffix='.ctl'
-+  )
+> ctl <- clear(readLines('../nonmem/ctl/1005.ctl'),';.+',fixed=FALSE)
+> #ctl <- read.nmctl('../nonmem/1005/1005.ctl')
+> ctl <- as.nmctl(ctl)
+> names(ctl)
+\end{Sinput}
+\begin{Soutput}
+ [1] "prob"       "input"      "data"       "subroutine" "pk"        
+ [6] "error"      "theta"      "omega"      "sigma"      "estimation"
+[11] "cov"        "table"      "table"     
+\end{Soutput}
+\begin{Sinput}
+> ctl$cov <- NULL
+> ctl$table <- NULL
+> ctl$table <- NULL
+> ctl$prob
+\end{Sinput}
+\begin{Soutput}
+[1] "1005 phase1 2 CMT like 1004 but diff. initial on V3"
+\end{Soutput}
+\begin{Sinput}
+> ctl$data
+\end{Sinput}
+\begin{Soutput}
+[1] "../../data/derived/phase1.csv IGNORE=C"
+\end{Soutput}
+\begin{Sinput}
+> run <- sprintf('%03.0f',1:300)
+> invisible(
++   lapply(
++     run,
++     function(i,ctl){
++       ctl$prob <- sub('1005',i,ctl$prob)
++       ctl$data <- sub(
++         '../../data/derived/phase1.csv',
++         sub('\\*',i,'../../1005bootdata/*.csv'),
++         ctl$data
++       )
++       write.nmctl(ctl,file=glue('../nonmem/1005bootctl/',i,'.ctl'))
++     },
++     ctl=ctl
++   )
++ )
 \end{Sinput}
 \end{Schunk}
 \subsection{Create replicate data sets by resampling original.}
@@ -756,10 +767,10 @@ We also show densityplots of predictions at those quartiles.
 >  bootset <- read.csv('../data/derived/phase1.csv')
 >  r <- resample(
 +  	bootset,
-+  	names=1:300,
++  	names=run,
 +  	key='ID',
 +  	rekey=TRUE,
-+  	out='../nonmem/1005.boot/data',
++  	out='../nonmem/1005bootdata',
 +  	stratify='SEX'
 +  )
 \end{Sinput}
@@ -768,31 +779,161 @@ We also show densityplots of predictions at those quartiles.
 \begin{Schunk}
 \begin{Sinput}
 > NONR72(
-+      run=1:300,
-+      #command=command,
-+      project='../nonmem/1005.boot/',
++      run=run,
 +      boot=TRUE,
-+      nice=TRUE,
-+      grid=TRUE,
-+      #concurrent=TRUE,
-+      streams='../nonmem/1005.boot/ctl'
++      project='../nonmem/1005boot',
++      streams='../nonmem/1005bootctl'
 + )
 \end{Sinput}
 \begin{Soutput}
-Installing SIGCHLD signal handler...Done.
+1] "Run 285 has exit code 0"
+ "Run 116 has exit code 0"
 \end{Soutput}
 \begin{Sinput}
-> nms <- paste('../nonmem/1005.boot/',1:300,'.boot/',1:300,'.log.xml',sep='')
-> while(!(all(file.exists(nms))))Sys.sleep(10)
+> length(dir('../nonmem/1005boot'))
+\end{Sinput}
+\begin{Soutput}
+[1] 300
+\end{Soutput}
+\begin{Sinput}
+> system('qstat -f')
+> ready <- FALSE
+> while (!ready){
++   state <- sapply(run,runstate,project='../nonmem/1005boot')  # infer run progress from file presence/absence
++   print(table(state))
++   if(all(state=='done'))ready <- TRUE     #continue only when runs complete
++   Sys.sleep(10)                            #wait 10 seconds and check again
++ }
+\end{Sinput}
+\begin{Soutput}
+state
+compiled   queued 
+      40      260 
+state
+compiled   queued  running 
+      32      260        8 
+state
+compiled     done   queued  running 
+      21        7      260       12 
+state
+compiled     done   queued  running 
+      12       21      253       14 
+state
+compiled     done   queued  running 
+      20       38      240        2 
+state
+compiled     done   queued  running 
+      34       40      225        1 
+state
+compiled     done   queued  running 
+      31       40      221        8 
+state
+     compiled          done indeterminate        queued       running 
+           22            48             1           218            11 
+state
+compiled     done   queued  running 
+      22       58      212        8 
+state
+compiled     done   queued  running 
+      15       71      207        7 
+state
+compiled     done   queued  running 
+      11       79      199       11 
+state
+compiled     done   queued  running 
+      18       90      189        3 
+state
+compiled     done   queued  running 
+      28       92      176        4 
+state
+compiled     done   queued  running 
+      27       95      172        6 
+state
+     compiled          done indeterminate        queued       running 
+            6           102             1           171            20 
+state
+compiled     done   queued  running 
+       9      122      164        5 
+state
+compiled     done   queued  running 
+      27      127      143        3 
+state
+compiled     done   queued  running 
+      25      130      138        7 
+state
+compiled     done   queued  running 
+      17      136      134       13 
+state
+compiled     done   queued  running 
+      11      148      130       11 
+state
+compiled     done   queued  running 
+      15      161      120        4 
+state
+compiled     done   queued  running 
+      20      165      108        7 
+state
+compiled     done   queued  running 
+      22      172       99        7 
+state
+compiled     done   queued  running 
+      15      181       95        9 
+state
+compiled     done   queued  running 
+      16      188       85       11 
+state
+compiled     done   queued  running 
+      14      198       81        7 
+state
+compiled     done   queued  running 
+      16      205       69       10 
+state
+compiled     done   queued  running 
+      18      215       61        6 
+state
+compiled     done   queued  running 
+      20      221       54        5 
+state
+compiled     done   queued  running 
+      22      227       45        6 
+state
+compiled     done   queued  running 
+      14      235       38       13 
+state
+compiled     done   queued  running 
+      12      246       31       11 
+state
+compiled     done   queued  running 
+      21      257       18        4 
+state
+compiled     done   queued  running 
+      21      260       11        8 
+state
+compiled     done   queued  running 
+      15      266        4       15 
+state
+compiled     done  running 
+      10      281        9 
+state
+compiled     done  running 
+       3      292        5 
+state
+   done running 
+    299       1 
+state
+done 
+ 300 
+\end{Soutput}
+\begin{Sinput}
 > boot <- rlog(
-+ 	run=1:300,
-+ 	project='../nonmem/1005.boot',
++ 	run=run,
++ 	project='../nonmem/1005boot',
 + 	boot=TRUE,
 + 	append=FALSE,
 + 	tool='nm7',
 +   file=NULL
 + )
-> write.csv(boot, '../nonmem/1005.bootlog.csv')
+> write.csv(boot, '../nonmem/1005bootlog.csv')
 \end{Sinput}
 \end{Schunk}
 \section{File Disposition}
@@ -800,7 +941,9 @@ Predictive checks and bootstraps make huge files that need not be retained.
 \begin{Schunk}
 \begin{Sinput}
 > unlink('../nonmem/1105',recursive=TRUE)
-> unlink('../nonmem/1005.boot',recursive=TRUE)
+> unlink('../nonmem/1005boot',recursive=TRUE)
+> unlink('../nonmem/1005bootdata',recursive=TRUE)
+> unlink('../nonmem/1005bootctl',recursive=TRUE)
 \end{Sinput}
 \end{Schunk}
 \end{document}

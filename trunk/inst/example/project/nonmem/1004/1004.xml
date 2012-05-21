@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2012-05-08T01:55:47.226</nm:start_datetime>
+<nm:start_datetime>2012-05-21T18:17:36.189</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1004 phase1 2 CMT like 1003 but better bounds
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -48,8 +48,8 @@ $TABLE NOPRINT FILE=./1004par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 <nm:license_information><![CDATA[
 License Registered to: Metrum Research Group
 Expiration Date:    14 JUL 2012
-Current Date:        8 MAY 2012
-Days until program expires :  66
+Current Date:       21 MAY 2012
+Days until program expires :  53
 ]]></nm:license_information>
 <nm:program_information><![CDATA[
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
@@ -228,11 +228,11 @@ Days until program expires :  66
 <nm:col nm:cname='EPS1'>9.47688053553475</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>5.61</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>6.56</nm:estimation_elapsed_time>
 <nm:covariance_information><![CDATA[
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='0' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>4.21</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>5.07</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2570.45022637547</nm:final_objective_function>
 <nm:theta>
@@ -651,5 +651,5 @@ Days until program expires :  66
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2012-05-08T01:55:57.299</nm:stop_datetime>
+<nm:stop_datetime>2012-05-21T18:17:48.111</nm:stop_datetime>
 </nm:output>

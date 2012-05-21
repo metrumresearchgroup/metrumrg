@@ -52,6 +52,7 @@ while (!ready){
   if(all(state=='done'))ready <- TRUE     #continue only when runs complete
   Sys.sleep(3)                            #wait three seconds and check again
 }
+Sys.sleep(10)                             #wait briefly to ensure all processes complete
 @
 Covariance succeeded on model 1005.
 We can make a quick run log using some simple tools. Table \ref{runlog}.
@@ -120,6 +121,7 @@ NONR72(
      streams='../nonmem/ctl'
 )
 while (runstate(1105,project='../nonmem')!='done')Sys.sleep(5)
+Sys.sleep(30) # let all processes complete
 @
 \subsection{Combine the original data and the simulation data.}
 Now we fetch the results and integrate them with the other data.
@@ -265,14 +267,14 @@ print(
 \subsection{Create directories.}
 <<bootstrap>>=
 getwd()
-dir.create('../nonmem/1005.boot')
-dir.create('../nonmem/1005.bootdata')
-dir.create('../nonmem/1005.bootctl')
+dir.create('../nonmem/1005boot')
+dir.create('../nonmem/1005bootdata')
+dir.create('../nonmem/1005bootctl')
 @
 \subsection{Create replicate control streams.}
 <<control>>=
 ctl <- clear(readLines('../nonmem/ctl/1005.ctl'),';.+',fixed=FALSE)
-ctl <- read.nmctl('../nonmem/1005/1005.ctl')
+#ctl <- read.nmctl('../nonmem/1005/1005.ctl')
 ctl <- as.nmctl(ctl)
 names(ctl)
 ctl$cov <- NULL
@@ -280,7 +282,9 @@ ctl$table <- NULL
 ctl$table <- NULL
 ctl$prob
 ctl$data
+
 run <- sprintf('%03.0f',1:300)
+
 invisible(
   lapply(
     run,
@@ -288,11 +292,10 @@ invisible(
       ctl$prob <- sub('1005',i,ctl$prob)
       ctl$data <- sub(
         '../../data/derived/phase1.csv',
-        sub('\\*',i,'../../1005.bootdata/*.csv'),
+        sub('\\*',i,'../../1005bootdata/*.csv'),
         ctl$data
       )
-      ctl$estimation <- sub('MAXEVAL=9999','MAXEVAL=0',ctl$estimation)
-      write.nmctl(ctl,file=glue('../nonmem/1005.bootctl/',i,'.ctl'))
+      write.nmctl(ctl,file=glue('../nonmem/1005bootctl/',i,'.ctl'))
     },
     ctl=ctl
   )
@@ -306,41 +309,43 @@ invisible(
  	names=run,
  	key='ID',
  	rekey=TRUE,
- 	out='../nonmem/1005.bootdata',
+ 	out='../nonmem/1005bootdata',
  	stratify='SEX'
  )
 @
 \subsection{Run bootstrap models.}
 <<boot>>=
 NONR72(
-     run=run[2],
+     run=run,
      boot=TRUE,
-     project='../nonmem/1005.boot',
-     streams='../nonmem/1005.bootctl'
+     project='../nonmem/1005boot',
+     streams='../nonmem/1005bootctl'
 )
-length(dir('../nonmem/1005.boot',recursive = TRUE))
+length(dir('../nonmem/1005boot'))
 system('qstat -f')
 ready <- FALSE
 while (!ready){
-  state <- sapply(1:300,runstate,project='../nonmem/1005.boot')  # infer run progress from file presence/absence
+  state <- sapply(run,runstate,project='../nonmem/1005boot')  # infer run progress from file presence/absence
   print(table(state))
   if(all(state=='done'))ready <- TRUE     #continue only when runs complete
   Sys.sleep(10)                            #wait 10 seconds and check again
 }
 boot <- rlog(
-	run=1:300,
-	project='../nonmem/1005.boot',
+	run=run,
+	project='../nonmem/1005boot',
 	boot=TRUE,
 	append=FALSE,
 	tool='nm7',
   file=NULL
 )
-write.csv(boot, '../nonmem/1005.bootlog.csv')
+write.csv(boot, '../nonmem/1005bootlog.csv')
 @
 \section{File Disposition}
 Predictive checks and bootstraps make huge files that need not be retained.
 <<cleanup>>=
 unlink('../nonmem/1105',recursive=TRUE)
-unlink('../nonmem/1005.boot',recursive=TRUE)
+unlink('../nonmem/1005boot',recursive=TRUE)
+unlink('../nonmem/1005bootdata',recursive=TRUE)
+unlink('../nonmem/1005bootctl',recursive=TRUE)
 @
 \end{document}

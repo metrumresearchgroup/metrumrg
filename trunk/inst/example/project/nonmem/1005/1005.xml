@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2012-05-08T01:55:48.925</nm:start_datetime>
+<nm:start_datetime>2012-05-21T18:17:36.722</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
 $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
@@ -82,8 +82,8 @@ $TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 <nm:license_information><![CDATA[
 License Registered to: Metrum Research Group
 Expiration Date:    14 JUL 2012
-Current Date:        8 MAY 2012
-Days until program expires :  66
+Current Date:       21 MAY 2012
+Days until program expires :  53
 ]]></nm:license_information>
 <nm:program_information><![CDATA[
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
@@ -272,11 +272,11 @@ Days until program expires :  66
 <nm:col nm:cname='EPS2'>7.05017316539999</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>6.06</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>6.01</nm:estimation_elapsed_time>
 <nm:covariance_information><![CDATA[
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='0' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>8.27</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>8.22</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2405.91625845151</nm:final_objective_function>
 <nm:theta>
@@ -919,5 +919,5 @@ Days until program expires :  66
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2012-05-08T01:56:03.521</nm:stop_datetime>
+<nm:stop_datetime>2012-05-21T18:17:51.261</nm:stop_datetime>
 </nm:output>
