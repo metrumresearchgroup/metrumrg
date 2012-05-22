@@ -34,13 +34,13 @@ function (
     if (win())  grid <- FALSE
     if (win())  concurrent <- FALSE
     run <- unique(run)
-    if (missing(command))if(verbose){
-    	message('argument "command" was not supplied')
-    	message('searching for NONMEM ...')
+    if (missing(command)){
+    	if(verbose)message('argument "command" was not supplied')
+    	if(verbose)message('searching for NONMEM ...')
     	candidate <- safe.call(findNonmemCommand,...)
     	if(!length(candidate))stop('NONMEM not detected. Specify "command" directly or see help for findNonmemCommand.')
     	if(length(candidate) > 1 ){
-    		message('found: ',paste(collapse=', ',candidate))
+    		if(verbose)message('found: ',paste(collapse=', ',candidate))
     		candidate <- candidate[[1]]
     	}
     	#now candidate is length 1
