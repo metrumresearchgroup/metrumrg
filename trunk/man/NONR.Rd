@@ -43,6 +43,7 @@ NONR(
 	eta.list = NULL, 
 	missing = -99, 
 	delay = 0,
+	verbose = TRUE,
 	...
 )
 NONR72(
@@ -74,6 +75,7 @@ NONR72(
 	eta.list = NULL, 
 	missing = -99, 
 	delay = 0,
+	verbose = TRUE,
 	...,
 	interface='autolog.pl',
 	q='all.q'
@@ -214,6 +216,7 @@ NONR72(
   \item{eta.list}{passed to \code{PLOTR}}
   \item{missing}{passed to \code{PLOTR}}
   \item{delay}{time (msec) to wait before starting each run}
+  \item{verbose}{logical: whether to report messages, warnings, etc.}
   \item{interface}{the name of a function to prepare NONMEM command lines}
   \item{q}{choice of queue, passed to \code{qsub}}
   \item{\dots}{additional arguments passed to functions that accept them. For example,

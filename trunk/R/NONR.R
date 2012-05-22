@@ -28,12 +28,13 @@ function (
 	eta.list = NULL, 
 	missing = -99, 
 	delay = 0,
+	verbose = TRUE,
 	...
 ){
     if (win())  grid <- FALSE
     if (win())  concurrent <- FALSE
     run <- unique(run)
-    if (missing(command)){
+    if (missing(command))if(verbose){
     	message('argument "command" was not supplied')
     	message('searching for NONMEM ...')
     	candidate <- safe.call(findNonmemCommand,...)
@@ -43,7 +44,7 @@ function (
     		candidate <- candidate[[1]]
     	}
     	#now candidate is length 1
-    	message('using command: ',candidate)
+    	if(verbose)message('using command: ',candidate)
     	command <- candidate
     }    
     for (this in run) {
@@ -75,6 +76,7 @@ function (
 		split = split,
 		compile = compile,
 		execute = execute,
+		verbose = verbose,
 		...
 	)
         if (concurrent){
@@ -83,20 +85,22 @@ function (
             pid <- fork::fork(NULL)
             if (pid == 0) {
                 tryCatch(
-                	do.call("runNonmem", args),
+                	if(verbose)do.call("runNonmem", args) 
+                	else suppressMessages(suppressWarnings(do.call("runNonmem",args))),
                 	#error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
-                	error=function(e)writeLines(e$message,glue(this,'.nonr'))
+                	error=function(e)if(verbose)writeLines(e$message,glue(this,'.nonr'))
                 )
                 exit()
             } else {
-              message('launching run ',this,' on pid ',pid)
+              if(verbose)message('launching run ',this,' on pid ',pid)
             }
         } else tryCatch(
-        		do.call('runNonmem', args),
+        		if(verbose)do.call('runNonmem', args)
+        		else suppressMessages(suppressWarnings(do.call("runNonmem",args))),
         		error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
         	)
     }
-    message("NONR complete.")
+    if(verbose)message("NONR complete.")
 }
 nix <- function().Platform$OS.type == 'unix'
 win <- function().Platform$OS.type == 'windows'
@@ -129,6 +133,7 @@ NONR72 <- function(
 	eta.list = NULL, 
 	missing = -99, 
 	delay = 0,
+	verbose = TRUE, 
 	...,
 	interface='autolog.pl',
 	q='all.q'
@@ -161,6 +166,7 @@ NONR72 <- function(
 	eta.list=eta.list,
 	missing= missing,
 	delay = delay,
+	verbose=verbose,
 	...,
 	interface=interface,
 	q=q

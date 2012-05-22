@@ -49,7 +49,8 @@ runCommand(
 	compile = TRUE,
 	execute = TRUE,
 	background=FALSE,
-	interface = 'nm.pl'
+	interface = 'nm.pl',
+	verbose = TRUE
 )
 }
 \arguments{
@@ -87,6 +88,7 @@ runCommand(
   \item{background}{\code{TRUE} appends \sQuote{l} to command lines to put the 
   process in the background.  Defunct?}
   \item{interface}{the name of a function to prepare NONMEM command lines}
+  \item{verbose}{whether to acknowledge 'stdout' and 'stderr' from the system call}
   \item{\dots}{passed to \code{nm.pl} and \code{qsub}}
 }
 \details{

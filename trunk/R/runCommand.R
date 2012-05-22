@@ -39,10 +39,13 @@
 	compile=TRUE,
 	execute=TRUE,
 	background=FALSE,
-	interface = 'nm.pl'
+	interface = 'nm.pl',
+	verbose = TRUE
 ){
   force(L) #before command changes
   if(nix())internal <- FALSE
+  ignore.stdout <- !verbose
+  ignore.stderr <- !verbose
 
   #draft a command
   if(!udef)command <- match.fun(interface)(
@@ -66,8 +69,8 @@
   
 
   #set up the call
-  execute <- function(command,intern,minimized,invisible,win,run,rdir){
-	  args <- list(command, intern=intern)
+  execute <- function(command,intern,minimized,invisible,win,run,rdir,ignore.stdout,ignore.stderr){
+	  args <- list(command, intern=intern,ignore.stdout=ignore.stdout,ignore.stderr=ignore.stderr)
     if (win()) args <- c(args,list(minimized=minimized, invisible=invisible))
     result <- tryCatch(
       do.call(system,args),
@@ -77,7 +80,7 @@
     writeLines(text=result,con=file.path(rdir,glue(run,'.runCommand')))
     return(result) #visible
   }
-  ret <- lapply(command,execute,intern=intern,minimized=minimized,invisible=invisible,win=win,run=run,rdir=rdir)
+  ret <- lapply(command,execute,intern=intern,minimized=minimized,invisible=invisible,win=win,run=run,rdir=rdir,ignore.stdout=ignore.stdout,ignore.stderr=ignore.stderr)
   ret <- unlist(ret)
   ret <- unique(ret)
   return(ret)
