@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2012-05-21T18:17:36.626</nm:start_datetime>
+<nm:start_datetime>2012-05-25T20:10:17.271</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1002 phase1 2 CMT
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -48,8 +48,8 @@ $TABLE NOPRINT FILE=./1002par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 <nm:license_information><![CDATA[
 License Registered to: Metrum Research Group
 Expiration Date:    14 JUL 2012
-Current Date:       21 MAY 2012
-Days until program expires :  53
+Current Date:       25 MAY 2012
+Days until program expires :  49
 ]]></nm:license_information>
 <nm:program_information><![CDATA[
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
@@ -244,7 +244,7 @@ Days until program expires :  53
 <nm:col nm:cname='EPS2'>9.17026780257756</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>25.80</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>26.13</nm:estimation_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2525.96526753388</nm:final_objective_function>
 <nm:theta>
@@ -329,5 +329,5 @@ Days until program expires :  53
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2012-05-21T18:18:02.738</nm:stop_datetime>
+<nm:stop_datetime>2012-05-25T20:10:43.702</nm:stop_datetime>
 </nm:output>

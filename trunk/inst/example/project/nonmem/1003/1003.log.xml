@@ -74,11 +74,11 @@
          </job>
          <job>
           <do>date</do>
-          <so>Mon May 21 18:17:26 UTC 2012</so>
+          <so>Fri May 25 20:10:08 UTC 2012</so>
          </job>
          <job>
           <do>perl -e "use POSIX; print join qq(,),uname"</do>
-          <so>Linux,node003,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+          <so>Linux,node004,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
          </job>
          <job>
           <do>echo $SHELL</do>
@@ -90,7 +90,7 @@
          </job>
          <job>
           <do>echo $PATH</do>
-          <so>/tmp/961.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+          <so>/tmp/944.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
          </job>
          <job>
           <do>/opt/NONMEM/nm72/util/nmfe72 ce 1003.ctl 1003.lst</do>
@@ -106,8 +106,8 @@
           Starting nonmem execution ...
           License Registered to: Metrum Research Group
           Expiration Date:    14 JUL 2012
-          Current Date:       21 MAY 2012
-          Days until program expires :  53
+          Current Date:       25 MAY 2012
+          Days until program expires :  49
            
            
            First Order Conditional Estimation with Interaction
@@ -747,14 +747,14 @@
            NPARAMETR:  1.1066E+01  9.1623E+00  4.3618E-02  7.4128E+06  3.6601E+00  2.5108E-01  4.2485E-01  6.4964E-02  7.4927E-02
            PARAMETER:  1.1066E-01  9.1623E-02  2.1809E-02  7.4128E+04  3.6601E-02  6.1297E-01  8.7596E-01 -6.2991E-02  8.3511E-03
            GRADIENT:   1.4186E-02  2.2025E-01 -3.8948E-01  1.1255E-08 -1.6422E-01 -1.0472E-02  2.7684E-02  5.1434E-02  3.4413E-02
-           Elapsed estimation time in seconds:    22.48
-           Elapsed covariance time in seconds:     4.34</so>
+           Elapsed estimation time in seconds:    22.35
+           Elapsed covariance time in seconds:     4.31</so>
          </job>
          <job>
           <do>if [ -e 1003.xml ];then cat 1003.xml;else echo \&lt;nofile/\>; fi</do>
           <so>
            <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-            <nm:start_datetime>2012-05-21T18:17:37.024</nm:start_datetime>
+            <nm:start_datetime>2012-05-25T20:10:18.613</nm:start_datetime>
             <nm:control_stream>
             $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
             $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -795,8 +795,8 @@
              <nm:license_information>
              License Registered to: Metrum Research Group
              Expiration Date:    14 JUL 2012
-             Current Date:       21 MAY 2012
-             Days until program expires :  53</nm:license_information>
+             Current Date:       25 MAY 2012
+             Days until program expires :  49</nm:license_information>
              <nm:program_information>
              1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
               ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -979,14 +979,14 @@
                  <nm:col nm:cname="EPS1">9.25782959172016</nm:col>
                 </nm:row>
                </nm:epsshrink>
-               <nm:estimation_elapsed_time>22.48</nm:estimation_elapsed_time>
+               <nm:estimation_elapsed_time>22.35</nm:estimation_elapsed_time>
                <nm:covariance_information>
                0R MATRIX ALGORITHMICALLY NON-POSITIVE-SEMIDEFINITE
                 BUT NONSINGULAR
                0R MATRIX IS OUTPUT
                0COVARIANCE STEP ABORTED</nm:covariance_information>
                <nm:covariance_status nm:error="1" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000" />
-               <nm:covariance_elapsed_time>4.34</nm:covariance_elapsed_time>
+               <nm:covariance_elapsed_time>4.31</nm:covariance_elapsed_time>
                <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
                <nm:final_objective_function>2569.89393760215</nm:final_objective_function>
                <nm:theta>
@@ -1037,7 +1037,7 @@
               </nm:estimation>
              </nm:problem>
             </nm:nonmem>
-            <nm:stop_datetime>2012-05-21T18:18:04.110</nm:stop_datetime>
+            <nm:stop_datetime>2012-05-25T20:10:45.601</nm:stop_datetime>
            </nm:output>
           </so>
          </job>
