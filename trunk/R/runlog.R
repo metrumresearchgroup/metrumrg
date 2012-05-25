@@ -126,8 +126,8 @@ as.runlog.unilog <- function(x,...){
 	if(any(duplicated(scalar[,c('run','precedent','parameter')])))stop('prob, min, cov, ofv should be unique within run')
 	if(!all(scalar$moment[scalar$parameter=='ofv'] == 'minimum'))stop('ofv moment should be minimum')
 	scalar <- data.frame(cast(scalar,run + precedent ~ parameter))
-	names(scalar)[names(scalar)=='ofv'] <- 'mvof'
 	for(col in regular)if(!col %in% names(scalar))scalar[[col]] <- NA
+	names(scalar)[names(scalar)=='ofv'] <- 'mvof'
 	scalar <- scalar[,c('run','precedent','prob','min','cov','mvof','data')]
 	poly <- x[!x$parameter %in% regular,]
 	pars <- unique(poly$parameter)

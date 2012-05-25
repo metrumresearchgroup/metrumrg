@@ -148,6 +148,7 @@ progress <- function(run, project=getwd(),...){
 	states <- c('queued','compiled','running','done','indeterminate')
 	state <- sapply(run,runstate,project=project,...)
 	table <- table(state)
+	table <- table[states]
 	names(table) <- states
 	is.na(table) <- 0
 	table

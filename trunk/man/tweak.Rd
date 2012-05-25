@@ -12,13 +12,14 @@ means to jitter the initial estimates.  By default, the estimate itself is scale
 by a value drawn at random from a normal distribution centered at 1 with standard 
 deviation \code{sd}.  The default of 0.13 gives about +/- 10 percent change, on average.}
 \usage{
-\method{tweak}{init}(x,sd=0.13,...)
-\method{tweak}{initList}(x,sd=0.13,...)
-\method{tweak}{nmctl}(x,sd=0.13,...)
+\method{tweak}{init}(x,sd=0.13,digits=3,...)
+\method{tweak}{initList}(x,sd=0.13,digits=3,...)
+\method{tweak}{nmctl}(x,sd=0.13,digits=3,...)
 }
 \arguments{
   \item{x}{object of interest}
   \item{sd}{passed to \code{\link{rnorm}}}
+  \item{digits}{passed to \code{\link{signif}}}
   \item{\dots}{passed to other functions}
 }
 \details{
@@ -38,16 +39,14 @@ object of class \code{init}, or a numbered set of these, having class \code{init
 \examples{
 path <- system.file('example/project/nonmem/ctl/1005.ctl',package='metrumrg')
 ctl <- read.nmctl(path,parse=TRUE)
-theta <- ctl$theta
-theta[[3]]$init
+ctl$theta[] <- lapply(ctl$theta,`comment<-`,value=NULL)
 set.seed(0)
-tweak(theta)
+tweak(ctl$theta)
 x <- as.initList('(0,3) 2 FIXED (0 .6 1) 10 (-INF,-2.7,0) (37 FIXED) ')
 x
 fixed(x)
 fixed(x) <- TRUE
 fixed(x) <- FALSE
 tweak(x)
-tweak(ctl)$theta
 }
 \keyword{manip}

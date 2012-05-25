@@ -6,11 +6,10 @@
  Thin wrapper in R for SGE Command Line qstat.
 }
 \usage{
-qstat(u=Sys.info()[["login"]],f='',...)
+qstat(f='',...)
 }
 
 \arguments{
-  \item{u}{character}
   \item{f}{character}
   \item{\dots}{extra arguments to `qstat' or \code{system}}
 }
