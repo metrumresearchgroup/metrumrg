@@ -38,6 +38,10 @@ follow(
   \item{compiled}{logical vector (or coercible); see details}
   \item{running}{logical vector (or coercible); see details}
   \item{done}{logical vector (or coercible); see details}
+  \item{interval}{integer}
+  \item{watch}{character}
+  \item{until}{integer}
+  \item{visible}{logical}
   \item{\dots}{passed to called functions}
 }
 

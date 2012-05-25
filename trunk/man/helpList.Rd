@@ -390,6 +390,7 @@
 \item \link{purge.dir} purge a directory (internal)
 \item \link{purge.files} purge files (internal)
 \item \link{qsub} prepare commandlines for qsub
+\item \link{qstat} invoke SGE qstat
 \item \link{raised.keyed} produce sequential left join of two keyed data frames
 \item \link{read.cwres.data} compute conditional weighted residuals (internal)
 \item \link{read.nm} read a csv file and try to transform to nm

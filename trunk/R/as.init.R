@@ -235,13 +235,13 @@ as.initList.character <- function(x,...){
   x <- as.init(x,fixed=fixed,comment=comment,...)
   x
 }
-as.initList.initList <- function(x)x
+as.initList.initList <- function(x,...)x
 
 tweak <- function(x,...)UseMethod('tweak')
 tweak.init <- function(x,sd=0.13,...){
 	scale <- rnorm(1,mean=1,sd=sd)
 	y <- x$init * scale
-	if(y < x$low | y > x$up) return(tweak.init(x,sd=sd,...)
+	if(y < x$low | y > x$up) return(tweak.init(x,sd=sd,...))
 	x$init <- y
 	x
 }

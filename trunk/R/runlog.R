@@ -82,7 +82,6 @@ as.unilog.pxml <- function(x,run,tool='nm7',...){
 		free(tree)
 		result
 }
-}
 as.unilog.run <- function(
 	run,
 	logfile='NonmemRunLog.csv',
@@ -107,10 +106,10 @@ as.unilog.run <- function(
 	other <- as.unilog.lst(file=outfile,run=run,tool=tool,...)
 	
 	out <- rbind(pars,other)
-	if(tool='nm7')try{
+	if(tool=='nm7'){
 		xml <- sub('ext$','xml',extfile)
-		min <- .minstat(xml)
-		out[with(out,paramter=='min' & moment=='status'),'value'] <- min
+		try(min <- .minstat(xml))
+		try(out[with(out,paramter=='min' & moment=='status'),'value'] <- min)
 	
 	}
 	out

@@ -19,7 +19,6 @@ deviation \code{sd}.  The default of 0.13 gives about +/- 10 percent change, on 
 \arguments{
   \item{x}{object of interest}
   \item{sd}{passed to \code{\link{rnorm}}}
-  \item{comment}{character: a comment}
   \item{\dots}{passed to other functions}
 }
 \details{

@@ -11,7 +11,7 @@ padded(x,width = 4,...)
 \arguments{
   \item{x}{numeric}
   \item{decimal.mark}{character indicating decimal}
-  \item{width}
+  \item{width}{numeric indicating total digits}
   \item{\dots}{ignored}
 }
 \details{for \code{align.decimal}, each element is formatted separately using
