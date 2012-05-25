@@ -45,23 +45,48 @@ NONR72(
      plotfile='../nonmem/*/*.pdf',        # use the run dir and run name for the plot file 
      streams='../nonmem/ctl'              # expect the control streams here, not locally
 )
-ready <- FALSE
-while (!ready){
-  state <- sapply(1001:1005,runstate,project='../nonmem')  # infer run progress from file presence/absence
-  print(state)
-  if(all(state=='done'))ready <- TRUE     #continue only when runs complete
-  Sys.sleep(3)                            #wait three seconds and check again
-}
+progress(1001:1005,project='../nonmem')
+follow(1001:1005,project='../nonmem')
 Sys.sleep(10)                             #wait briefly to ensure all processes complete
 @
 Covariance succeeded on model 1005.
+We confirm that we can get similar results with different initial estimates.
+<<tweak>>=
+getwd()
+ctl <- read.nmctl('../nonmem/1005/1005.ctl',parse=TRUE)
+names(ctl)
+ctl$theta[] <- lapply(ctl$theta,`comment<-`,value=NULL)
+writeLines(format(ctl$theta))
+set.seed(0)
+ctl$theta <- tweak(ctl$theta)
+writeLines(format(ctl$theta))
+ctl$prob
+ctl$prob <- '1006 like 1005 with tweaked initial estimates'
+write.nmctl(ctl,'../nonmem/ctl/1006.ctl')
+NONR72(
+     run=1006,
+     project='../nonmem',
+     grid=TRUE,
+     nice=TRUE,
+     checkrunno=TRUE,                     # default
+     diag=FALSE,
+     streams='../nonmem/ctl'
+)
+Sys.sleep(5)
+qstat()
+follow(1006,project='../nonmem')
+Sys.sleep(10)
+@
 We can make a quick run log using some simple tools. Table \ref{runlog}.
 <<runlog>>=
-log <- rlog(1001:1005,'../nonmem',file=NULL) #don't want the 'wide' file, just the 'long' R object
+# intentionally including a bogus run, to test effect
+# don't want the 'wide' file, just the 'long' R object
+log <- rlog(1001:1007,'../nonmem',file=NULL) 
 head(log)
 tail(log)
 sapply(log,class)
 log$tool <- NULL
+log <- log[log$run!=1007,]
 unique(log$parameter)
 log <- log[log$parameter %in% c('ofv','prob','cov','min'),]
 log
@@ -120,8 +145,8 @@ NONR72(
      diag=FALSE,
      streams='../nonmem/ctl'
 )
-while (runstate(1105,project='../nonmem')!='done')Sys.sleep(5)
-Sys.sleep(30) # let all processes complete
+follow(1105,project='../nonmem')
+Sys.sleep(5) # let all processes complete
 @
 \subsection{Combine the original data and the simulation data.}
 Now we fetch the results and integrate them with the other data.
@@ -283,11 +308,12 @@ ctl$table <- NULL
 ctl$prob
 ctl$data
 
-run <- sprintf('%03.0f',1:300)
+#makes nice padded run directories like 001 instead of 1 (better directory sorting) to be used below
+RUN <- padded(1:300) 
 
 invisible(
   lapply(
-    run,
+    RUN,
     function(i,ctl){
       ctl$prob <- sub('1005',i,ctl$prob)
       ctl$data <- sub(
@@ -306,7 +332,7 @@ invisible(
  bootset <- read.csv('../data/derived/phase1.csv')
  r <- resample(
  	bootset,
- 	names=run,
+ 	names=RUN,
  	key='ID',
  	rekey=TRUE,
  	out='../nonmem/1005bootdata',
@@ -315,23 +341,27 @@ invisible(
 @
 \subsection{Run bootstrap models.}
 <<boot>>=
+#intentionally trying a non-existent run ... 1 should be 001 per above. 
+#Parentheses force display of invisible NONR result.
+(NONR72(
+     run=1,
+     boot=TRUE,
+     project='../nonmem/1005boot',
+     streams='../nonmem/1005bootctl'
+))
 NONR72(
-     run=run,
+     run=RUN,
      boot=TRUE,
      project='../nonmem/1005boot',
      streams='../nonmem/1005bootctl'
 )
-length(dir('../nonmem/1005boot'))
-system('qstat -f')
-ready <- FALSE
-while (!ready){
-  state <- sapply(run,runstate,project='../nonmem/1005boot')  # infer run progress from file presence/absence
-  print(table(state))
-  if(all(state=='done'))ready <- TRUE     #continue only when runs complete
-  Sys.sleep(10)                            #wait 10 seconds and check again
-}
+
+qstat()
+follow(RUN,project='../nonmem/1005boot')
+Sys.sleep(5)
+
 boot <- rlog(
-	run=run,
+	run=RUN,
 	project='../nonmem/1005boot',
 	boot=TRUE,
 	append=FALSE,

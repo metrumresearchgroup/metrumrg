@@ -53,40 +53,120 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 Installing SIGCHLD signal handler...Done.
 \end{Soutput}
 \begin{Sinput}
-> ready <- FALSE
-> while (!ready){
-+   state <- sapply(1001:1005,runstate,project='../nonmem')  # infer run progress from file presence/absence
-+   print(state)
-+   if(all(state=='done'))ready <- TRUE     #continue only when runs complete
-+   Sys.sleep(3)                            #wait three seconds and check again
-+ }
+> progress(1001:1005,project='../nonmem')
 \end{Sinput}
 \begin{Soutput}
-[1] "queued" "done"   "done"   "queued" "queued"
-[1] "compiled" "compiled" "compiled" "compiled" "compiled"
-[1] "compiled" "compiled" "compiled" "compiled" "compiled"
-[1] "compiled" "compiled" "compiled" "compiled" "compiled"
-[1] "compiled" "compiled" "compiled" "compiled" "compiled"
-[1] "running" "running" "running" "running" "running"
-[1] "running" "running" "running" "running" "running"
-[1] "done"    "running" "running" "running" "running"
-[1] "done"    "running" "running" "running" "running"
-[1] "done"    "running" "running" "done"    "running"
-[1] "done"    "running" "running" "done"    "done"   
-[1] "done"    "running" "running" "done"    "done"   
-[1] "done"    "running" "running" "done"    "done"   
-[1] "done"    "done"    "running" "done"    "done"   
-[1] "done" "done" "done" "done" "done"
+       queued      compiled       running          done indeterminate 
+            5             0             0             0             0 
+\end{Soutput}
+\begin{Sinput}
+> follow(1001:1005,project='../nonmem')
+\end{Sinput}
+\begin{Soutput}
+       queued      compiled       running          done indeterminate 
+            5             0             0             0             0 
+       queued      compiled       running          done indeterminate 
+            0             5             0             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             4             1             0 
+       queued      compiled       running          done indeterminate 
+            0             0             2             3             0 
+       queued      compiled       running          done indeterminate 
+            0             0             0             5             0 
 \end{Soutput}
 \begin{Sinput}
 > Sys.sleep(10)                             #wait briefly to ensure all processes complete
 \end{Sinput}
 \end{Schunk}
 Covariance succeeded on model 1005.
+We confirm that we can get similar results with different initial estimates.
+\begin{Schunk}
+\begin{Sinput}
+> getwd()
+\end{Sinput}
+\begin{Soutput}
+[1] "/data/project/metrumrg/inst/example/project/script"
+\end{Soutput}
+\begin{Sinput}
+> ctl <- read.nmctl('../nonmem/1005/1005.ctl',parse=TRUE)
+> names(ctl)
+\end{Sinput}
+\begin{Soutput}
+ [1] "prob"       "input"      "data"       "subroutine" "pk"        
+ [6] "error"      "theta"      "omega"      "sigma"      "estimation"
+[11] "cov"        "table"      "table"     
+\end{Soutput}
+\begin{Sinput}
+> ctl$theta[] <- lapply(ctl$theta,`comment<-`,value=NULL)
+> writeLines(format(ctl$theta))
+\end{Sinput}
+\begin{Soutput}
+; 
+(0,10,50)
+(0,10,100)
+(0,0.2,5)
+(0,10,50)
+(0,100,1000)
+(0,1,2)
+(0,0.75,3)
+\end{Soutput}
+\begin{Sinput}
+> set.seed(0)
+> ctl$theta <- tweak(ctl$theta)
+> writeLines(format(ctl$theta))
+\end{Sinput}
+\begin{Soutput}
+; 
+(0,11.6,50)
+(0,9.58,100)
+(0,0.235,5)
+(0,11.7,50)
+(0,105,1000)
+(0,0.8,2)
+(0,0.659,3)
+\end{Soutput}
+\begin{Sinput}
+> ctl$prob
+\end{Sinput}
+\begin{Soutput}
+[1] "1005 phase1 2 CMT like 1004 but diff. initial on V3"
+\end{Soutput}
+\begin{Sinput}
+> ctl$prob <- '1006 like 1005 with tweaked initial estimates'
+> write.nmctl(ctl,'../nonmem/ctl/1006.ctl')
+> NONR72(
++      run=1006,
++      project='../nonmem',
++      grid=TRUE,
++      nice=TRUE,
++      checkrunno=TRUE,                     # default
++      diag=FALSE,
++      streams='../nonmem/ctl'
++ )
+> Sys.sleep(5)
+> qstat()
+> follow(1006,project='../nonmem')
+\end{Sinput}
+\begin{Soutput}
+       queued      compiled       running          done indeterminate 
+            0             1             0             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             1             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             1             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             0             1             0 
+\end{Soutput}
+\begin{Sinput}
+> Sys.sleep(10)
+\end{Sinput}
+\end{Schunk}
 We can make a quick run log using some simple tools. Table \ref{runlog}.
 \begin{Schunk}
 \begin{Sinput}
-> log <- rlog(1001:1005,'../nonmem',file=NULL) #don't want the 'wide' file, just the 'long' R object
+> # intentionally including a bogus run, to test effect
+> # don't want the 'wide' file, just the 'long' R object
+> log <- rlog(1001:1007,'../nonmem',file=NULL) 
 > head(log)
 \end{Sinput}
 \begin{Soutput}
@@ -102,20 +182,13 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
 > tail(log)
 \end{Sinput}
 \begin{Soutput}
-    tool  run parameter   moment
-245  nm7 1005  SIGMA2.2     prse
-246  nm7 1005  SIGMA2.2       se
-247  nm7 1005       cov   status
-248  nm7 1005      prob     text
-249  nm7 1005       min   status
-250  nm7 1005      data filename
-                                                  value
-245                                                33.5
-246                                           0.0676412
-247                                                   0
-248 1005 phase1 2 CMT like 1004 but diff. initial on V3
-249                                                   0
-250                       ../../data/derived/phase1.csv
+    tool  run parameter   moment                                         value
+299  nm7 1006  SIGMA2.2       se                                     0.0675857
+300  nm7 1006       cov   status                                             0
+301  nm7 1006      prob     text 1006 like 1005 with tweaked initial estimates
+302  nm7 1006       min   status                                             0
+303  nm7 1006      data filename                 ../../data/derived/phase1.csv
+304  nm7 1007       min   status                                            -1
 \end{Soutput}
 \begin{Sinput}
 > sapply(log,class)
@@ -126,6 +199,7 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
 \end{Soutput}
 \begin{Sinput}
 > log$tool <- NULL
+> log <- log[log$run!=1007,]
 > unique(log$parameter)
 \end{Sinput}
 \begin{Soutput}
@@ -161,6 +235,10 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
 247 1005       cov  status
 248 1005      prob    text
 249 1005       min  status
+251 1006       ofv minimum
+300 1006       cov  status
+301 1006      prob    text
+302 1006       min  status
                                                           value
 1                                              2526.39867230031
 38                                                            0
@@ -169,7 +247,7 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
 42                                             2525.96526753388
 112                                                           1
 113                                           1002 phase1 2 CMT
-114                                                           1
+114                                                         134
 116                                            2569.89393760215
 153                                                           1
 154 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
@@ -182,6 +260,10 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
 247                                                           0
 248         1005 phase1 2 CMT like 1004 but diff. initial on V3
 249                                                           0
+251                                            2405.91626089908
+300                                                           0
+301               1006 like 1005 with tweaked initial estimates
+302                                                           0
 \end{Soutput}
 \begin{Sinput}
 > with(log, constant(moment,within=parameter))#i.e., moment is non-informative here.
@@ -201,11 +283,12 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
   \begin{tabular}{rlllr}
     \hline \hline
    run & prob & cov & min & ofv \\ \hline
-   \verb#1001# & 1001 phase1 1CMT                                            & 0 & 0 & \verb#2526.40# \\
-   \verb#1002# & 1002 phase1 2 CMT                                           & 1 & 1 & \verb#2525.97# \\
-   \verb#1003# & 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err & 1 & 0 & \verb#2569.89# \\
-   \verb#1004# & 1004 phase1 2 CMT like 1003 but better bounds               & 0 & 0 & \verb#2570.45# \\
-   \verb#1005# & 1005 phase1 2 CMT like 1004 but diff. initial on V3         & 0 & 0 & \verb#2405.92# \\ \hline
+   \verb#1001# & 1001 phase1 1CMT                                            & 0 & 0   & \verb#2526.40# \\
+   \verb#1002# & 1002 phase1 2 CMT                                           & 1 & 134 & \verb#2525.97# \\
+   \verb#1003# & 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err & 1 & 0   & \verb#2569.89# \\
+   \verb#1004# & 1004 phase1 2 CMT like 1003 but better bounds               & 0 & 0   & \verb#2570.45# \\
+   \verb#1005# & 1005 phase1 2 CMT like 1004 but diff. initial on V3         & 0 & 0   & \verb#2405.92# \\
+   \verb#1006# & 1006 like 1005 with tweaked initial estimates               & 0 & 0   & \verb#2405.92# \\ \hline
   \end{tabular}
  \end{center}
 \end{table}\section{Predictive Check}
@@ -332,8 +415,26 @@ This run makes the predictions (simulations).
 +      diag=FALSE,
 +      streams='../nonmem/ctl'
 + )
-> while (runstate(1105,project='../nonmem')!='done')Sys.sleep(5)
-> Sys.sleep(30) # let all processes complete
+> follow(1105,project='../nonmem')
+\end{Sinput}
+\begin{Soutput}
+       queued      compiled       running          done indeterminate 
+            0             0             0             0             1 
+       queued      compiled       running          done indeterminate 
+            0             1             0             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             1             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             1             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             1             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             1             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             0             1             0 
+\end{Soutput}
+\begin{Sinput}
+> Sys.sleep(5) # let all processes complete
 \end{Sinput}
 \end{Schunk}
 \subsection{Combine the original data and the simulation data.}
@@ -743,10 +844,11 @@ We also show densityplots of predictions at those quartiles.
 [1] "../../data/derived/phase1.csv IGNORE=C"
 \end{Soutput}
 \begin{Sinput}
-> run <- sprintf('%03.0f',1:300)
+> #makes nice padded run directories like 001 instead of 1 (better directory sorting) to be used below
+> RUN <- padded(1:300) 
 > invisible(
 +   lapply(
-+     run,
++     RUN,
 +     function(i,ctl){
 +       ctl$prob <- sub('1005',i,ctl$prob)
 +       ctl$data <- sub(
@@ -767,7 +869,7 @@ We also show densityplots of predictions at those quartiles.
 >  bootset <- read.csv('../data/derived/phase1.csv')
 >  r <- resample(
 +  	bootset,
-+  	names=run,
++  	names=RUN,
 +  	key='ID',
 +  	rekey=TRUE,
 +  	out='../nonmem/1005bootdata',
@@ -778,155 +880,93 @@ We also show densityplots of predictions at those quartiles.
 \subsection{Run bootstrap models.}
 \begin{Schunk}
 \begin{Sinput}
+> #intentionally trying a non-existent run ... 1 should be 001 per above. 
+> #Parentheses force display of invisible NONR result.
+> (NONR72(
++      run=1,
++      boot=TRUE,
++      project='../nonmem/1005boot',
++      streams='../nonmem/1005bootctl'
++ ))
+\end{Sinput}
+\begin{Soutput}
+[[1]]
+[1] "../nonmem/1005bootctl/1.ctl not found"
+\end{Soutput}
+\begin{Sinput}
 > NONR72(
-+      run=run,
++      run=RUN,
 +      boot=TRUE,
 +      project='../nonmem/1005boot',
 +      streams='../nonmem/1005bootctl'
 + )
+> qstat()
+> follow(RUN,project='../nonmem/1005boot')
 \end{Sinput}
 \begin{Soutput}
-1] "Run 285 has exit code 0"
- "Run 116 has exit code 0"
+       queued      compiled       running          done indeterminate 
+          252            13            18            16             1 
+       queued      compiled       running          done indeterminate 
+          237            16             9            38             0 
+       queued      compiled       running          done indeterminate 
+          220            32             1            47             0 
+       queued      compiled       running          done indeterminate 
+          210            26            16            48             0 
+       queued      compiled       running          done indeterminate 
+          204            29             8            59             0 
+       queued      compiled       running          done indeterminate 
+          195            33             9            63             0 
+       queued      compiled       running          done indeterminate 
+          189            26            14            71             0 
+       queued      compiled       running          done indeterminate 
+          182             9            18            91             0 
+       queued      compiled       running          done indeterminate 
+          170            16             8           106             0 
+       queued      compiled       running          done indeterminate 
+          147            37             3           113             0 
+       queued      compiled       running          done indeterminate 
+          141            39             5           114             1 
+       queued      compiled       running          done indeterminate 
+          138            21            23           118             0 
+       queued      compiled       running          done indeterminate 
+          137             3            26           134             0 
+       queued      compiled       running          done indeterminate 
+          122            17             2           159             0 
+       queued      compiled       running          done indeterminate 
+           98            38             3           161             0 
+       queued      compiled       running          done indeterminate 
+           92            31            16           161             0 
+       queued      compiled       running          done indeterminate 
+           91            20            13           176             0 
+       queued      compiled       running          done indeterminate 
+           80            17            13           190             0 
+       queued      compiled       running          done indeterminate 
+           69            21             4           206             0 
+       queued      compiled       running          done indeterminate 
+           54            26            11           209             0 
+       queued      compiled       running          done indeterminate 
+           46            23            12           218             1 
+       queued      compiled       running          done indeterminate 
+           39            23            10           228             0 
+       queued      compiled       running          done indeterminate 
+           26            25            12           237             0 
+       queued      compiled       running          done indeterminate 
+           20            15            18           247             0 
+       queued      compiled       running          done indeterminate 
+            9            15            11           265             0 
+       queued      compiled       running          done indeterminate 
+            0            19             7           274             0 
+       queued      compiled       running          done indeterminate 
+            0             5            15           280             0 
+       queued      compiled       running          done indeterminate 
+            0             0             1           299             0 
+       queued      compiled       running          done indeterminate 
+            0             0             0           300             0 
 \end{Soutput}
 \begin{Sinput}
-> length(dir('../nonmem/1005boot'))
-\end{Sinput}
-\begin{Soutput}
-[1] 300
-\end{Soutput}
-\begin{Sinput}
-> system('qstat -f')
-> ready <- FALSE
-> while (!ready){
-+   state <- sapply(run,runstate,project='../nonmem/1005boot')  # infer run progress from file presence/absence
-+   print(table(state))
-+   if(all(state=='done'))ready <- TRUE     #continue only when runs complete
-+   Sys.sleep(10)                            #wait 10 seconds and check again
-+ }
-\end{Sinput}
-\begin{Soutput}
-state
-compiled   queued 
-      40      260 
-state
-compiled   queued  running 
-      32      260        8 
-state
-compiled     done   queued  running 
-      21        7      260       12 
-state
-compiled     done   queued  running 
-      12       21      253       14 
-state
-compiled     done   queued  running 
-      20       38      240        2 
-state
-compiled     done   queued  running 
-      34       40      225        1 
-state
-compiled     done   queued  running 
-      31       40      221        8 
-state
-     compiled          done indeterminate        queued       running 
-           22            48             1           218            11 
-state
-compiled     done   queued  running 
-      22       58      212        8 
-state
-compiled     done   queued  running 
-      15       71      207        7 
-state
-compiled     done   queued  running 
-      11       79      199       11 
-state
-compiled     done   queued  running 
-      18       90      189        3 
-state
-compiled     done   queued  running 
-      28       92      176        4 
-state
-compiled     done   queued  running 
-      27       95      172        6 
-state
-     compiled          done indeterminate        queued       running 
-            6           102             1           171            20 
-state
-compiled     done   queued  running 
-       9      122      164        5 
-state
-compiled     done   queued  running 
-      27      127      143        3 
-state
-compiled     done   queued  running 
-      25      130      138        7 
-state
-compiled     done   queued  running 
-      17      136      134       13 
-state
-compiled     done   queued  running 
-      11      148      130       11 
-state
-compiled     done   queued  running 
-      15      161      120        4 
-state
-compiled     done   queued  running 
-      20      165      108        7 
-state
-compiled     done   queued  running 
-      22      172       99        7 
-state
-compiled     done   queued  running 
-      15      181       95        9 
-state
-compiled     done   queued  running 
-      16      188       85       11 
-state
-compiled     done   queued  running 
-      14      198       81        7 
-state
-compiled     done   queued  running 
-      16      205       69       10 
-state
-compiled     done   queued  running 
-      18      215       61        6 
-state
-compiled     done   queued  running 
-      20      221       54        5 
-state
-compiled     done   queued  running 
-      22      227       45        6 
-state
-compiled     done   queued  running 
-      14      235       38       13 
-state
-compiled     done   queued  running 
-      12      246       31       11 
-state
-compiled     done   queued  running 
-      21      257       18        4 
-state
-compiled     done   queued  running 
-      21      260       11        8 
-state
-compiled     done   queued  running 
-      15      266        4       15 
-state
-compiled     done  running 
-      10      281        9 
-state
-compiled     done  running 
-       3      292        5 
-state
-   done running 
-    299       1 
-state
-done 
- 300 
-\end{Soutput}
-\begin{Sinput}
+> Sys.sleep(5)
 > boot <- rlog(
-+ 	run=run,
++ 	run=RUN,
 + 	project='../nonmem/1005boot',
 + 	boot=TRUE,
 + 	append=FALSE,
