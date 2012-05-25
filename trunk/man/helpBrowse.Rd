@@ -8,7 +8,7 @@
 
 I want to ....
 \itemize{
-	\item \href{http://metrumrg.googlecode.com/svn/trunk/inst/example/project/script/assemble.pdf}{assemble a data set} | \link[=as.nm]{as.nm}
+\item \href{http://metrumrg.googlecode.com/svn/trunk/inst/example/project/script/assemble.pdf}{assemble a data set} | \link[=as.nm]{as.nm}
 \item \href{http://metrumrg.googlecode.com/svn/trunk/inst/example/project/script/model.pdf}{run models, make run logs, run predictive checks, launch bootstraps} | \link[=NONR]{NONR}
 \item \href{http://metrumrg.googlecode.com/svn/trunk/inst/example/project/script/covplot.pdf}{plot covariate effects} | \link[=covplot]{covplot}
 \item \href{http://metrumrg.googlecode.com/svn/trunk/inst/example/project/script/parameters.pdf}{generate parameter tables} | \link[=partab]{partab}

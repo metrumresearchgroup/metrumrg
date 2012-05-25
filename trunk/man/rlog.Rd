@@ -54,6 +54,11 @@ rlog(
   Combined runlog is returned invisibly in the unilog format.  Side effect: if
   \code{file} is specified, runlog format is written to disk.
 }
+\note{
+  As of version 5.18, if the attempt to create a unilog for the run
+  fails, rlog generates a surrogate entry for parameter "min" with value "-1" (moment: "status").
+  Formerly, the error was converted to a warning and reported at the console.
+}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{written by Bill Knebel; modified by Tim Bergsma.}
 \seealso{

@@ -26,10 +26,6 @@
   testfile <- c('FCON','FILE10','INTER')
   if(tool=='nm6')testfile <- c('FCON','FILE10','OUTPUT')
   state <- sapply(rundir,function(dir,...)runstate(rundir=dir,testfile=testfile,...),...)
-  #run <- run[state=='done']
-  #rundir <- rundir[state=='done']
-  #nmout <- nmout[state=='done']
-  #nmlog <- nmlog[state=='done']
   if(!append)if(length(file))if(file.exists(file)) file.remove(file)
   specialize <- function(path,run,nm){
   		if(
@@ -60,15 +56,22 @@
   unilist <- lapply(
   	seq(length.out=length(run)),
   	function(index,run,nmlog,nmout,tool){
-  		res <- try(
+  		res <- tryCatch(
   			as.unilog.run(
   				run=run[[index]],
   				logfile=nmlog[[index]],
   				outfile=nmout[[index]],
   				tool=tool
+  			),
+  			error=function(e)data.frame(
+  				stringsAsFactors=FALSE,
+  				tool=tool,
+  				run=run[[index]],
+  				parameter='min',
+  				moment='status',
+  				value='-1'
   			)
   		)
-  		if(inherits(res,'try-error'))return(NULL)
   		res
   	},
   	run=run,
@@ -139,6 +142,33 @@ runstate <- function(
 	]
 	if(nrow(possible)==1) return(rownames(possible))
 	else return('indeterminate')
+}
+
+progress <- function(run, project=getwd(),...){
+	states <- c('queued','compiled','running','done','indeterminate')
+	state <- sapply(run,runstate,project=project,...)
+	table <- table(state)
+	names(table) <- states
+	is.na(table) <- 0
+	table
+}
+	
+follow <- function(run,project=getwd(),interval=10,watch='done',until=length(run),visible=TRUE,...){
+	progress <- progress(run=run,project=project,...)
+	if(visible)print(progress)
+	if(progress[watch]< until){
+		Sys.sleep(interval)
+		follow(
+			run=run,
+			project=project,
+			interval=interval,
+			watch=watch,
+			until=until,
+			visible=visible,
+			...
+		)
+	}
+	invisible(NULL)
 }
 	
 

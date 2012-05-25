@@ -91,7 +91,7 @@ runNonmem(
   \item{\dots}{extra arguments for other functions}
   \item{perm.cond}{passed to PLOTR; defined here to prevent partial matching of \code{pe} argument to \code{qsub}}
 }
-\value{used for side effects}
+\value{the result of the call to \code{\link{runCommand}}; or '' if \code{command} is ''.}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{

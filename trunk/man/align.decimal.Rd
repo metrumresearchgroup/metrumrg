@@ -1,21 +1,29 @@
 \name{align.decimal}
 \alias{align.decimal}
-\title{Format a Vector Aligning on Decimal}
-\description{Formats a numeric vector so that decimal mark
-is a constant distance from the end of each element.}
+\alias{padded}
+\title{Format Numeric Vectors Specially.}
+\description{Format a numeric vector so that decimal mark
+is a constant distance from the end or beginning of each element.}
 \usage{
 align.decimal(x, decimal.mark = ".", ...)
+padded(x,width = 4,...)
 }
 \arguments{
   \item{x}{numeric}
   \item{decimal.mark}{character indicating decimal}
+  \item{width}
   \item{\dots}{ignored}
 }
-\details{Each element is formatted separately using
+\details{for \code{align.decimal}, each element is formatted separately using
 \code{prettyNum}, then the character results are 
 padded with spaces on the right, so that the decimals
 align.  Whole numbers without the decimal mark get an 
-extra space in its place.}
+extra space in its place.
+
+For \code{padded}, x (numeric) is formatted with zero decimal places, no decimal, and enough
+leading zeros to ensure width \code{width}.
+
+}
 \value{character}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}

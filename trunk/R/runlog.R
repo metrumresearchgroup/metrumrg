@@ -75,6 +75,14 @@ as.unilog.pxml <- function(x,run,tool='nm7',...){
 	row.names(uni) <- NULL
 	uni
 }
+.minstat <- function(x){
+		tree <- xmlParse(readLines(x),asText=TRUE)
+		dpath <- glue('//nm:termination_status/text()')
+		result <- xpathSApply(tree,dpath)
+		free(tree)
+		result
+}
+}
 as.unilog.run <- function(
 	run,
 	logfile='NonmemRunLog.csv',
@@ -97,7 +105,15 @@ as.unilog.run <- function(
 	requested <- 'cov' %in% names(read.nmctl(outfile))
 	if(tool=='nm7')if(!requested) pars$value[pars$parameter=='cov' & pars$moment=='status'] <- '0'		
 	other <- as.unilog.lst(file=outfile,run=run,tool=tool,...)
-	rbind(pars,other)
+	
+	out <- rbind(pars,other)
+	if(tool='nm7')try{
+		xml <- sub('ext$','xml',extfile)
+		min <- .minstat(xml)
+		out[with(out,paramter=='min' & moment=='status'),'value'] <- min
+	
+	}
+	out
 }
 #runlog has implicit columns:
 #run, problem, rseflag, min, cov, mvof, p1...pn, run, (percent)

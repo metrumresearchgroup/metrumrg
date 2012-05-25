@@ -111,6 +111,7 @@ align.decimal <- function(x,decimal.mark='.',...){
 	}
 	x
 }
+padded <- function(x,width=4,...)sprintf('%03.0f',1:300)
 as.ltable <- function(x,...)UseMethod('ltable')
 ltable <- function(x,...)UseMethod('ltable')
 ltable.data.frame <- function(

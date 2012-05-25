@@ -81,6 +81,7 @@
 \item \link{as.init.numeric} convert numeric to init
 \item \link{as.initList} convert to initList (generic)
 \item \link{as.initList.character} convert character to initList
+\item \link{as.initList.initList} convert initList to initList
 \item \link{as.initList.list} convert list (of init) to initList
 \item \link{as.initList.numeric} convert numeric to initList
 \item \link{as.isolated.digest} convert digest to isolated
@@ -228,6 +229,7 @@
 \item \link{fixedwidth} convert to fixed-width format
 \item \link{fixFile} rewrite run name in control stream file specifications
 \item \link{fixProblem} rewrite run name in control stream PROBLEM statement
+\item \link{follow} follow progress of NONMEM runs
 \item \link{forbak} impute NAs using last observation carried forward and then next observation carried backward
 \item \link{format.comment} format comment 
 \item \link{format.flag} format flag
@@ -347,6 +349,7 @@
 \item \link{ord.halfmatrix} compute the order of a half matrix
 \item \link{ord.matrix} compute the order of a symmetric matrix
 \item \link{ord} generic
+\item \link{padded} pad a numeric with leading zeros
 \item \link{packageCheck} load a package and run package-level examples
 \item \link{panel.bar} for each level, plot vertical (or horizontal) bars corresponding to x (y).
 \item \link{panel.covplot} plot distributions with respect to reference values; i.e. combine panel.cuts, panel.densitystrip, and panel.ref
@@ -374,6 +377,7 @@
 \item \link{predoseDv.nm} DV is defined before the first record within SUBJ where EVID is 1
 \item \link{predoseDv} generic
 \item \link{prev} calculate the previous element for each element of x
+\item \link{progress} summarize progress of NONMEM runs
 \item \link{print.comment} print comment
 \item \link{print.flag} print flag
 \item \link{print.halfmatrix} print halfmatrix
@@ -462,6 +466,10 @@
 \item \link{tos} extract thetas, omegas, and sigmas from wikimath
 \item \link{totitle} convert mixed case to title case, not strictly by default
 \item \link{transform.keyed} transform a keyed data frame, preserving class
+\item \link{tweak} randomly adjust a value
+\item \link{tweak.init} randomly adjust an initial parameter value 
+\item \link{tweak.initList} randomly adjust a list of initial parameter values
+\item \link{tweak.nmctl} randomly adjust the initial fixed effect parameters in a control stream
 \item \link{uniKey.keyed} create a single character vector from all the key columns
 \item \link{uniKey} generic
 \item \link{unilog} create a zero-row unilog

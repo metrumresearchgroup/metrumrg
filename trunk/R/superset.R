@@ -1,15 +1,3 @@
-.absDir <- function (directory) 
-{
-    if (missing(directory)) 
-        stop("argument 'directory' is missing")
-    start <- getwd()
-    if (!file_test("-d", directory)) 
-        stop(paste("nonexistent directory:", directory))
-    setwd(directory)
-    abs <- getwd()
-    setwd(start)
-    abs
-}
 .restore <- function(x,dropped,...){ # add records wherever dropped is TRUE
   stopifnot(is.data.frame(x),is.logical(dropped))
   if(any(is.na(dropped)))stop['dropped must not contain NA']
@@ -114,7 +102,7 @@ ignored <- function(
   if(missing(run) & missing(rundir))run <- sub('[.][^.]+$','',basename(ctlfile))
   if(missing(project) & !missing(rundir))project <- dirname(rundir)
   if(missing(project) & missing(rundir) & !missing(ctlfile))project <- dirname(dirname(ctlfile))
-  if(.absDir(rundir)!=.absDir(dirname(ctlfile)))warning('rundir does not specify parent of ctlfile')
+  if(normalizePath(rundir)!=normalizePath(dirname(ctlfile)))warning('rundir does not specify parent of ctlfile')
   control <- read.nmctl(ctlfile)
   dname <- getdname(control)
   datafile <- resolve(dname,rundir)
@@ -167,7 +155,6 @@ superset <- function(
   if(missing(run) & missing(rundir))run <- sub('[.][^.]+$','',basename(ctlfile))
   if(missing(project) & !missing(rundir))project <- dirname(rundir)
   if(missing(project) & missing(rundir) & !missing(ctlfile))project <- dirname(dirname(ctlfile))
-  #if(.absDir(rundir)!=.absDir(dirname(ctlfile)))warning('rundir does not specify parent of ctlfile')
   dropped <- ignored(run=run,project=project,rundir=rundir,ctlfile=ctlfile,read.input=read.input,...)
   control <- read.nmctl(ctlfile)
   dname <- getdname(control)

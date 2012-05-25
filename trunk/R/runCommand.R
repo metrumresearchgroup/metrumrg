@@ -39,13 +39,10 @@
 	compile=TRUE,
 	execute=TRUE,
 	background=FALSE,
-	interface = 'nm.pl',
-	verbose = TRUE
+	interface = 'nm.pl'
 ){
   force(L) #before command changes
   if(nix())internal <- FALSE
-  ignore.stdout <- !verbose
-  ignore.stderr <- !verbose
 
   #draft a command
   if(!udef)command <- match.fun(interface)(
@@ -69,18 +66,18 @@
   
 
   #set up the call
-  execute <- function(command,intern,minimized,invisible,win,run,rdir,ignore.stdout,ignore.stderr){
-	  args <- list(command, intern=intern,ignore.stdout=ignore.stdout,ignore.stderr=ignore.stderr)
+  execute <- function(command,intern,minimized,invisible,win,run,rdir){
+	  args <- list(command, intern=intern)
     if (win()) args <- c(args,list(minimized=minimized, invisible=invisible))
     result <- tryCatch(
       do.call(system,args),
       error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
     )
     if (is.integer(result)) result <- paste('Run',run,'has exit code',result)
-    writeLines(text=result,con=file.path(rdir,glue(run,'.runCommand')))
+    cat(result,file=file.path(rdir,glue(run,'.cat')),sep='\n',append=TRUE)
     return(result) #visible
   }
-  ret <- lapply(command,execute,intern=intern,minimized=minimized,invisible=invisible,win=win,run=run,rdir=rdir,ignore.stdout=ignore.stdout,ignore.stderr=ignore.stderr)
+  ret <- lapply(command,execute,intern=intern,minimized=minimized,invisible=invisible,win=win,run=run,rdir=rdir)
   ret <- unlist(ret)
   ret <- unique(ret)
   return(ret)

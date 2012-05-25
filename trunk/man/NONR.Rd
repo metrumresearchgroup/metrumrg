@@ -20,7 +20,7 @@ NONR(
 	project = getwd(), 
 	boot = FALSE,
 	grid = boot, 
-	concurrent = grid,
+	concurrent = grid & !boot,
 	urgent = !boot,
 	udef= FALSE, 
 	invisible=udef,
@@ -42,8 +42,7 @@ NONR(
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
-	delay = 0,
-	verbose = TRUE,
+
 	...
 )
 NONR72(
@@ -52,7 +51,7 @@ NONR72(
 	project = getwd(), 
 	boot = FALSE,
 	grid = boot, 
-	concurrent = grid,
+	concurrent = grid & !boot,
 	urgent = !boot,
 	udef= FALSE, 
 	invisible=udef,
@@ -74,8 +73,6 @@ NONR72(
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
-	delay = 0,
-	verbose = TRUE,
 	...,
 	interface='autolog.pl',
 	q='all.q'
@@ -124,9 +121,16 @@ NONR72(
   
   \item{concurrent}{
   Should the runs represented by elements of \code{run} be run 
-  concurrently as separate processes?  \code{TRUE} if \code{grid} is \code{TRUE},
-  by default, since this is the primary advantage of using a grid.
+  concurrently as separate processes?  Normally \code{TRUE} if \code{grid} is 
+  \code{TRUE}, since this is the primary advantage of using a grid.
   Coerced to \code{FALSE} on Windows.  Concurrency is implemented using the package \pkg{fork}.
+  
+  As of version 5.18, this argument defaults to \code{TRUE} only for non-bootstrap
+  runs on the grid. Bootstrap runs on the grid return control to the console 
+  almost immediately (\code{sync='n'}) so there is little advantage for each
+  run to have its own process.
+  
+  
  }
   
   \item{urgent}{
@@ -215,8 +219,6 @@ NONR72(
   \item{par.list}{passed to \code{PLOTR}}
   \item{eta.list}{passed to \code{PLOTR}}
   \item{missing}{passed to \code{PLOTR}}
-  \item{delay}{time (msec) to wait before starting each run}
-  \item{verbose}{logical: whether to report messages, warnings, etc.}
   \item{interface}{the name of a function to prepare NONMEM command lines}
   \item{q}{choice of queue, passed to \code{qsub}}
   \item{\dots}{additional arguments passed to functions that accept them. For example,
@@ -250,7 +252,7 @@ File names and locations can be manipulated somewhat, i.e., by over-riding
 \code{ctlfile}, and \code{remove}.
 }
 
-\value{used for side effects}
+\value{an invisible list of the results of calls to \code{\link{runNonmem}}}
 \note{
   Specific control stream syntax is expected
   when running \code{NONR} and the other functions present in the \pkg{metrumrg} package.
@@ -307,6 +309,51 @@ File names and locations can be manipulated somewhat, i.e., by over-riding
 }
 \examples{
 metrumrgURL('example/project/script/model.pdf')
+\dontrun{
+#Assuming an NMQual-mediated NONMEM wrapper: /opt/NONMEM/nm72/nmqual/autolog.pl
+#Assuming this is some script directory, and contol streams (e.g. 1.ctl) are in a sibling directory "nonmem"
+
+#regular run, no grid
+path <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
+NONR72(
+	run=1,
+	command=path,
+	project='../nonmem',
+	boot=FALSE,                #default
+	grid=FALSE,                #default
+	diag=TRUE                  #default
+)
+
+#regular run on grid
+NONR72(
+	run=1,
+	command=path,
+	project='../nonmem',
+	boot=FALSE,                #default
+	grid=TRUE,
+	diag=TRUE                  #default
+)
+
+#bootstrap run, no grid (uncommon)
+NONR72(
+	run=1,
+	command=path,
+	project='../nonmem',
+	boot=TRUE,                 
+	grid=FALSE,
+	diag=FALSE                 #default
+)
+
+#bootstrap run on grid
+NONR72(
+	run=1,
+	command=path,
+	project='../nonmem',
+	boot=TRUE,
+	grid=TRUE,                 #default
+	diag=FALSE                 #default
+)
+}
 }
 \keyword{manip}
 

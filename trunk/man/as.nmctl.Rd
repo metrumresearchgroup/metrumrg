@@ -44,8 +44,7 @@ write.nmctl(
 	file = "data", 
 	ncolumns = 1, 
 	append = FALSE, 
-	sep = " ", 
-	verbose=FALSE,
+	sep = " ",
 	...
 )
 \method{[}{nmctl}(x, ..., drop = TRUE)
@@ -64,7 +63,6 @@ write.nmctl(
   \item{ncolumns}{passed to \code{write}}
   \item{append}{passed to \code{write}}
   \item{sep}{passed to \code{write}}
-  \item{verbose}{whether to warn if 80 column limit is exceeded}
   \item{drop}{coerce to lowest possible dimension}
 }
 \details{

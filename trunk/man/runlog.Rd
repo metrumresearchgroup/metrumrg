@@ -74,6 +74,9 @@ in the runlog or unilog format.
 \note{
 These functions are not vectorized: their first arguments are expected to 
 represent a single model run.
+
+As of 5.18, as.unilog.run tries to give a more meaningful value of 'min' than just 1 or 0 for NONMEM 7.
+Not supported on NONMEM 7.1.2, since it requires the .xml file available under 7.2.
 }
 \seealso{
 	\itemize{

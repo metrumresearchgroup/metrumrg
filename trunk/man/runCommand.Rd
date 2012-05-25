@@ -49,8 +49,7 @@ runCommand(
 	compile = TRUE,
 	execute = TRUE,
 	background=FALSE,
-	interface = 'nm.pl',
-	verbose = TRUE
+	interface = 'nm.pl'
 )
 }
 \arguments{
@@ -88,7 +87,6 @@ runCommand(
   \item{background}{\code{TRUE} appends \sQuote{l} to command lines to put the 
   process in the background.  Defunct?}
   \item{interface}{the name of a function to prepare NONMEM command lines}
-  \item{verbose}{whether to acknowledge 'stdout' and 'stderr' from the system call}
   \item{\dots}{passed to \code{nm.pl} and \code{qsub}}
 }
 \details{
@@ -106,7 +104,7 @@ length one for a normal run, and of length two if \code{split} is \code{TRUE} (t
 runs as well as the execute halves of split runs are diverted to \sQuote{all.q} if urgent,
 and \sQuote{bootstrap.q} otherwise.
 }
-\value{Used for side effects}
+\value{character vector showing the result(s) of the system call(s)}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{

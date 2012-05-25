@@ -9,6 +9,7 @@
 \alias{as.initList.character}
 \alias{as.initList.list}
 \alias{as.initList.numeric}
+\alias{as.initList.initList}
 \alias{as.initList}
 \alias{fixed.init}
 \alias{fixed.initList}
@@ -90,6 +91,7 @@ fixed(x[[4]]) <- TRUE
 x
 x[[4]]$up
 x[[4]]$up <- Inf
+x[[4]]
 fixed(x[[4]])
 x[[4]][['up']]
 x[[4]][c('low','up')]
