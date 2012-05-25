@@ -59,13 +59,24 @@ function (
   ctlfile <- star(ctlfile,run)
   outfile <- star(outfile,run)
   catfile <- file.path(rundir,glue(run,'.cat'))
+  
+  #Immediately we need to get the run directory and cat file open, or return an error.
+  if(command!='')if(compile){
+  	  purge.dir(final(rundir),nice)
+	  if(rundir!=final(rundir))purge.dir(rundir) #deliberately not "nice"
+	  if(!file.exists(dirname(rundir)))stop('cannot find ',dirname(rundir))
+	  if(!file.exists(rundir))if(!dir.create(rundir))stop('cannot create ',rundir)
+  	  cat(date(),file=catfile,sep='\n') #append is FALSE
+  }
+  
+  #Continue
   if(!file.exists(ctlfile)){
   	  msg <- glue(ctlfile,' not found')
   	  cat(msg,file=catfile,append=TRUE,sep='\n')
   	  return(msg)
   }
   control <- read.nmctl(ctlfile)
-  #outputdomain <- names(control) =='table' | contains('est',names(control))
+  #outputdomain <- names(control) =='table' | contains('est',names(control))£
   outputdomain <- names(control) %contains% 'tab|est'
   control[outputdomain] <- lapply(control[outputdomain],explicitPath)
   if (checkrunno) {
@@ -78,12 +89,12 @@ function (
   parfile <- ''
   msffile <- ''
   control <- as.character(control[outputdomain])
-  #tryCatch(tabfile <- tabfile(control,dir=final(rundir),...),error=function(e)warning('cannot locate *.tab in control stream for run ',run,call.=FALSE,immediate.=TRUE))
-  #tryCatch(parfile <- parfile(control,dir=final(rundir),...),error=function(e)warning('cannot locate *par.tab in control stream for run ', run,call.=FALSE,immediate.=TRUE))
-  #tryCatch(msffile <- msffile(control,dir=final(rundir),...),error=function(e)warning('cannot locate *.msf in control stream for run ',run,call.=FALSE,immediate.=TRUE))
-  tabfile <- try(tabfile(control,dir=final(rundir),...))
-  parfile <- try(parfile(control,dir=final(rundir),...))
-  msffile <- try(msffile(control,dir=final(rundir),...))
+  tryCatch(tabfile <- tabfile(control,dir=final(rundir),...),error=function(e)cat('cannot locate *.tab in control stream for run ',file=catfile,append=TRUE,sep='\n'))
+  tryCatch(parfile <- parfile(control,dir=final(rundir),...),error=function(e)cat('cannot locate *par.tab in control stream for run ',file=catfile,append=TRUE,sep='\n'))
+  tryCatch(msffile <- msffile(control,dir=final(rundir),...),error=function(e)cat('cannot locate *.msf in control stream for run ',file=catfile,append=TRUE,sep='\n'))
+  #tabfile <- try(tabfile(control,dir=final(rundir),...))
+  #parfile <- try(parfile(control,dir=final(rundir),...))
+  #msffile <- try(msffile(control,dir=final(rundir),...))
   script <- NULL
   epimatch <- try(match.fun(epilog),silent=TRUE)
   if(is.function(epimatch))epilog <- epimatch
@@ -99,9 +110,6 @@ function (
 	  if(file.exists(tabfile))file.remove(tabfile)
 	  if(file.exists(parfile))file.remove(parfile)
 	  if(file.exists(msffile))file.remove(msffile)
-	  purge.dir(final(rundir),nice)
-	  if(rundir!=final(rundir))purge.dir(rundir) #deliberately not "nice"
-	  dir.create(rundir, showWarnings = FALSE)
 	  dname <- getdname(ctlfile)
 	  #The next error trap is redundant: prevents identical trap in getCovs()
 	  if(!file.exists(resolve(dname,rundir))){
@@ -141,6 +149,7 @@ function (
 		file.copy(from=dir(rundir,full.names=TRUE),to=final(rundir),overwrite=TRUE)
 		purge.dir(rundir)
 		rundir <- final(rundir)
+		catfile <- final(catfile)
 	  }
 	
 	  #Diagnostics
@@ -149,11 +158,11 @@ function (
 	    tryCatch(
     		setCwres(
     			cwres=getCwres(
-    				directory=final(rundir)
+    				directory=rundir
     			),
     			file=tabfile
     		),
-    		error=function(e)cat(e$message,file=file.path(rundir,glue(run,'.cat')),append=TRUE,sep='\n')
+    		error=function(e)cat(e$message,file=catfile,append=TRUE,sep='\n')
     	    )
 	  if(diag)tryCatch(
 		PLOTR(
@@ -175,7 +184,7 @@ function (
 			perm.cond=perm.cond,
 			...
 		),
-    		error=function(e)cat(e$message,file=file.path(rundir,glue(run,'.cat')),append=TRUE,sep='\n')
+    		error=function(e)cat(e$message,file=catfile,append=TRUE,sep='\n')
 	  )
 	  if (!is.null(epilog))if(is.function(epilog))tryCatch(
 		  epilog(
@@ -197,7 +206,7 @@ function (
 			...,
 			script=script
 		),
-    		error=function(e)cat(e$message,file=file.path(rundir,glue(run,'.cat')),append=TRUE,sep='\n')
+    		error=function(e)cat(e$message,file=catfile,append=TRUE,sep='\n')
 	  )
 	  message("Run ", run, " complete.")
   }

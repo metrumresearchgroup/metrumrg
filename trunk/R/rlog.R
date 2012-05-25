@@ -150,7 +150,7 @@ progress <- function(run, project=getwd(),...){
 	table <- table(state)
 	table <- table[states]
 	names(table) <- states
-	is.na(table) <- 0
+	table[is.na(table)] <- 0
 	table
 }
 	

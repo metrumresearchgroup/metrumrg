@@ -76,9 +76,9 @@ as.unilog.pxml <- function(x,run,tool='nm7',...){
 	uni
 }
 .minstat <- function(x){
-		tree <- xmlParse(readLines(x),asText=TRUE)
+		tree <- xmlParse(readLines(x),asText=TRUE,error=NULL)
 		dpath <- glue('//nm:termination_status/text()')
-		result <- xpathSApply(tree,dpath)
+		result <- xpathSApply(tree,dpath,fun=xmlValue)
 		free(tree)
 		result
 }
@@ -108,9 +108,12 @@ as.unilog.run <- function(
 	out <- rbind(pars,other)
 	if(tool=='nm7'){
 		xml <- sub('ext$','xml',extfile)
-		try(min <- .minstat(xml))
-		try(out[with(out,paramter=='min' & moment=='status'),'value'] <- min)
-	
+		min <- tryCatch(
+			.minstat(xml),
+			error=function(e)'error'
+		)
+		locator <- with(out,parameter=='min' & moment == 'status')
+		if(sum(locator)==1) out$value[locator] <- min
 	}
 	out
 }
