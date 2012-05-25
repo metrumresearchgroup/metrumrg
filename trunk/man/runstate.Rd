@@ -73,7 +73,7 @@ follow(
  }
 \value{
 	\itemize{
-		\item \code{runstate}, scalar character: one of \sQuote{queued}, \sQuote{compiled}, \sQuote{running}, 
+	\item \code{runstate}: scalar character; one of \sQuote{queued}, \sQuote{compiled}, \sQuote{running}, 
 	\sQuote{done}, or \sQuote{indeterminate}. 
 	\item \code{progress}: length 5 integer vector with these names.  
 	\item \code{follow}: invisible NULL.

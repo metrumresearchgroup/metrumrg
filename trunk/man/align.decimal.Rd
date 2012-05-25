@@ -1,7 +1,7 @@
 \name{align.decimal}
 \alias{align.decimal}
 \alias{padded}
-\title{Format Numeric Vectors Specially.}
+\title{Format Numeric Vectors Specially}
 \description{Format a numeric vector so that decimal mark
 is a constant distance from the end or beginning of each element.}
 \usage{
