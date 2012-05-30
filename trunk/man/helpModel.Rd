@@ -17,6 +17,7 @@ I want to ....
 \item \link[=compute.cwres]{compute conditional weighted residuals in NONMEM 6, etc.}
 \item \link[=helpVisualize]{visualize model results}
 \item \link[=superset]{integrate model output with input}
+\item \link[=tweak]{adjust control stream initial estimates}
 \item \link[=dataSynthesis]{integrate model input with output}
 }
 }

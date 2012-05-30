@@ -7,13 +7,11 @@
 \link[=metrumrg]{metrumrg}
 
 \itemize{
-\item \link{$.init} select init element
-\item \link{$<-.init} assign init element
-\item \link{[.initList} subset initList
 \item \link{[.comment} subset a comment
 \item \link{[.conditioned} subset a conditioned object
 \item \link{[.digest} subset a digest object
 \item \link{[.flag} subset a flag
+\item \link{[.initList} subset initList
 \item \link{[.keyed} subset a keyed data frame
 \item \link{[.nmctl} subset a control stream object
 \item \link{[.temporal} subset a temporal object
@@ -25,6 +23,8 @@
 \item \link{\%contains\%} test whether x contains y
 \item \link{\%nested.in\%} test whether a is nested in b
 \item \link{\%nests\%} test whether a nests b
+\item \link{$.init} select init element
+\item \link{$<-.init} assign init element
 \item \link{accept} document the acceptance of an R installation
 \item \link{acceptance} display the acceptance documentation for an R installation
 \item \link{acr} calculate accumulation ratio
@@ -59,6 +59,14 @@
 \item \link{as.data.frame.block} convert a block of lines to data frame
 \item \link{as.data.frame.comment} convert comment to data frame
 \item \link{as.data.frame.flag} convert flag to data frame
+\item \link{as.day.day} coerce day to day
+\item \link{as.day.hour} coerce hour to day
+\item \link{as.day.month} coerce month to day
+\item \link{as.day.nominal} coerce nominal to day             
+\item \link{as.day.numeric} coerce numeric to day
+\item \link{as.day.week} coerce week to day
+\item \link{as.day.year} coerce year to day
+\item \link{as.day} coerce to day
 \item \link{as.digest.data.frame} convert data.frame to digest
 \item \link{as.digest.digest} convert digest to digest
 \item \link{as.digest.keyed} convert keyed to digest
@@ -76,14 +84,21 @@
 \item \link{as.halfmatrix.default} convert a vector to halfmatrix
 \item \link{as.halfmatrix.halfmatrix} preserve halfmatrix
 \item \link{as.halfmatrix} generic
-\item \link{as.init} convert to init
+\item \link{as.hour.day} coerce day to hour
+\item \link{as.hour.hour} coerce hour to hour
+\item \link{as.hour.minute} coerce minute to hour
+\item \link{as.hour.nominal} coerce nominal to hour
+\item \link{as.hour.numeric} coerce numeric to hour
+\item \link{as.hour.second} coerce second to hour
+\item \link{as.hour} coerce to hour
 \item \link{as.init.init} convert init to init
 \item \link{as.init.numeric} convert numeric to init
-\item \link{as.initList} convert to initList (generic)
+\item \link{as.init} convert to init
 \item \link{as.initList.character} convert character to initList
 \item \link{as.initList.initList} convert initList to initList
 \item \link{as.initList.list} convert list (of init) to initList
 \item \link{as.initList.numeric} convert numeric to initList
+\item \link{as.initList} convert to initList (generic)
 \item \link{as.isolated.digest} convert digest to isolated
 \item \link{as.isolated.isolated} convert isolated to isolated
 \item \link{as.isolated.keyed} convert keyed to isolated
@@ -108,6 +123,17 @@
 \item \link{as.mDateTime.POSIXct} convert POSIXct to mDateTime
 \item \link{as.mDateTime.POSIXlt} convert POSIXlt to mDateTime
 \item \link{as.mDateTime} convert to mDateTime
+\item \link{as.minute.hour} coerce hour to minute
+\item \link{as.minute.minute} coerce minute to minute
+\item \link{as.minute.nominal} coerce nominal to minute
+\item \link{as.minute.numeric} coerce numeric to minute
+\item \link{as.minute.second} coerce second to minute
+\item \link{as.minute} coerce to minute
+\item \link{as.month.day} coerce day to month
+\item \link{as.month.month} coerce month to month
+\item \link{as.month.nominal} coerce nominal to month
+\item \link{as.month.numeric} coerce numeric to month
+\item \link{as.month} coerce to month
 \item \link{as.moot} convert to moot
 \item \link{as.motif.digest} create motif for digest
 \item \link{as.motif.keyed} create motif for keyed
@@ -135,15 +161,31 @@
 \item \link{as.roles} create default roles for parts of objects
 \item \link{as.runlog.file} convert file to runlog
 \item \link{as.runlog.unilog} convert unilog to runlog
+\item \link{as.second.day} coerce day to second
+\item \link{as.second.hour} coerce hour to second
+\item \link{as.second.minute} coerce minute to second
+\item \link{as.second.nominal} coerce nominal to second
+\item \link{as.second.numeric} coerce numeric to second
+\item \link{as.second.second} coerce second to second
+\item \link{as.second} coerce to second (time unit)
 \item \link{as.tabular} convert to a latex tabular environment
 \item \link{as.unilog.lst} convert nonmem output (.lst) to unilog
 \item \link{as.unilog.pxml} convert nonmem output (.ext) to unilog
 \item \link{as.unilog.run} convert run to unilog
 \item \link{as.unilog.runlog} convert runlog to unilog
+\item \link{as.week.day} coerce day to week
+\item \link{as.week.nominal} coerce nominal to week
+\item \link{as.week.numeric} coerce numeric to week
+\item \link{as.week.week} coerce week to week
+\item \link{as.week} coerce to week
 \item \link{as.xml.character} convert character to XML
 \item \link{as.xml.data.frame} convert data.frame to XML
 \item \link{as.xml.default} convert arbitrary object to XML
 \item \link{as.xml} convert object to XML
+\item \link{as.year.day} coerce day to year
+\item \link{as.year.numeric} coerce numeric to year
+\item \link{as.year.year} coerce year to year
+\item \link{as.year} coerce to year
 \item \link{at} test whether elements occur where some condition is \code{TRUE}
 \item \link{attribute} encode an attribute for an XML open tag
 \item \link{auc} calculate area under the curve
@@ -219,12 +261,12 @@
 \item \link{filename} generate standard file name (internal)
 \item \link{findNonmemCommand} find available NONMEM executables
 \item \link{first} repeat, for each element, the first element where a condition is \code{TRUE} (usually, within levels of an index)
-\item \link{fixed} find out if something is fixed (generic)
 \item \link{fixed.init} find out if an init is fixed
 \item \link{fixed.initList} find out if elements of an initList are fixed
-\item \link{fixed<-} set the value of 'fixed'
+\item \link{fixed} find out if something is fixed (generic)
 \item \link{fixed<-.init} set the value of 'fixed' for an init
 \item \link{fixed<-.initList} set the values of 'fixed' for elements of an initList 
+\item \link{fixed<-} set the value of 'fixed'
 \item \link{fixedwidth.data.frame} convert a data.frame to fixed-width format
 \item \link{fixedwidth} convert to fixed-width format
 \item \link{fixFile} rewrite run name in control stream file specifications
@@ -240,6 +282,7 @@
 \item \link{format.mDateTime} format mDateTime
 \item \link{format.mTime} format mTime
 \item \link{format.nmctl} format nmctl
+\item \link{format.nominal} format nominal
 \item \link{ftable2data.frame} convert ftable to data.frame as displayed
 \item \link{getCovs} return non-commented non-duplicated rows of a NONMEM data set (internal)
 \item \link{getCwres} return the conditional weighted residuals pertinent to a given run (internal, expects cwtab1.deriv)
@@ -349,8 +392,8 @@
 \item \link{ord.halfmatrix} compute the order of a half matrix
 \item \link{ord.matrix} compute the order of a symmetric matrix
 \item \link{ord} generic
-\item \link{padded} pad a numeric with leading zeros
 \item \link{packageCheck} load a package and run package-level examples
+\item \link{padded} pad a numeric with leading zeros
 \item \link{panel.bar} for each level, plot vertical (or horizontal) bars corresponding to x (y).
 \item \link{panel.covplot} plot distributions with respect to reference values; i.e. combine panel.cuts, panel.densitystrip, and panel.ref
 \item \link{panel.cuts} for each level, plot percent observations in each vertical category defined by cuts
@@ -377,7 +420,6 @@
 \item \link{predoseDv.nm} DV is defined before the first record within SUBJ where EVID is 1
 \item \link{predoseDv} generic
 \item \link{prev} calculate the previous element for each element of x
-\item \link{progress} summarize progress of NONMEM runs
 \item \link{print.comment} print comment
 \item \link{print.flag} print flag
 \item \link{print.halfmatrix} print halfmatrix
@@ -386,11 +428,13 @@
 \item \link{print.keyed.summary} print keyed summary
 \item \link{print.nm.summary} print nm summary
 \item \link{print.nmctl} print nmctl
+\item \link{print.nominal} print nominal
 \item \link{print.temporal} print temporal
+\item \link{progress} summarize progress of NONMEM runs
 \item \link{purge.dir} purge a directory (internal)
 \item \link{purge.files} purge files (internal)
-\item \link{qsub} prepare commandlines for qsub
 \item \link{qstat} invoke SGE qstat
+\item \link{qsub} prepare commandlines for qsub
 \item \link{raised.keyed} produce sequential left join of two keyed data frames
 \item \link{read.cwres.data} compute conditional weighted residuals (internal)
 \item \link{read.nm} read a csv file and try to transform to nm
@@ -467,10 +511,10 @@
 \item \link{tos} extract thetas, omegas, and sigmas from wikimath
 \item \link{totitle} convert mixed case to title case, not strictly by default
 \item \link{transform.keyed} transform a keyed data frame, preserving class
-\item \link{tweak} randomly adjust a value
 \item \link{tweak.init} randomly adjust an initial parameter value 
 \item \link{tweak.initList} randomly adjust a list of initial parameter values
 \item \link{tweak.nmctl} randomly adjust the initial fixed effect parameters in a control stream
+\item \link{tweak} randomly adjust a value
 \item \link{uniKey.keyed} create a single character vector from all the key columns
 \item \link{uniKey} generic
 \item \link{unilog} create a zero-row unilog
@@ -500,6 +544,7 @@
 \item \link{zeroAmt} generic
 \item \link{zeroDv.nm} DV is zero where EVID is zero
 \item \link{zeroDv} generic
+
 %\item \link{rinvgamma} generate inverse gamma distribution given n, df, and sigma estimate
 } 
 }

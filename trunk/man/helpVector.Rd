@@ -17,5 +17,6 @@ I want to ....
 \item \link[=titleCase]{coerce text to title case}
 \item \link[=addl]{calculate the NONMEM ADDL data item from explicit dose records}
 \item \link[=as.best]{coerce a vector to either numeric or character}
+\item \link[=as.second]{interconvert time units}
 }
 }
