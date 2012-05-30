@@ -77,7 +77,7 @@ This is experimental, and may change in future versions.
 }
 \value{
 an S3 "num" object with class \code{c(n, 'nominal','numeric')}, where `n' is
-"second", "minute", "hour", "day", "week", "month", "year", as implied.
+"second", "minute", "hour", "day", "week", "month", or "year", as implied.
 }
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
