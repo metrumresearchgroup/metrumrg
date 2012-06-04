@@ -134,7 +134,7 @@ PLOTR(
   but you could change it to \file{project/*/DiagnosticPlotReview.pdf}.
      
 }
-\value{Used for side effects.}
+\value{data.frame (the plotting data set), returned invisibly}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{

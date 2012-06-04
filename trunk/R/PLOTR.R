@@ -119,7 +119,8 @@
 	    ...,
 	    script=script
 	)
-    )	    
+    )
+    invisible(data)
 }
 
 #filters elipses for functions that do not accept them
