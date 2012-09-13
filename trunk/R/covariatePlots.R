@@ -170,7 +170,7 @@ function (
     	    	data=data,
     	    	cont.cov=cont.cov,
     	    	cat.cov=cat.cov,
-    	    	variant=variant[-length(variant)]),
+    	    	variant=variant[-length(variant)],
     	    	...
     	    )
     	    variant <- variant[length(variant)]
