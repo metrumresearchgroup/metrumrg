@@ -118,7 +118,7 @@ aggregate.keyed <- function(
 	KEY <- data.frame(lapply(x[,key(x),drop=FALSE],function(x)as.numeric(factor(x))))
 	for(col in names(decreasing))if(decreasing[[col]])KEY[[col]] <- KEY[[col]]*-1
 	#for(k in rev(key(x)))x <- x[order(x[[k]],decreasing=decreasing[k]),]
-	x[do.call(order,KEY),]
+	x[do.call(order,KEY),,drop=FALSE]
 }
 
 `[.keyed` <- function(x,...){

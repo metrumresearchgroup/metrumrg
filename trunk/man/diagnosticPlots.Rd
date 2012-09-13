@@ -29,15 +29,17 @@ cwresPlots(
 	data,
 	cont.cov=NULL, 
 	cat.cov=NULL,
+	variant=NULL,
 	...
 )
 }
 \arguments{
-	\item{data}{a data.frame, typically created by \code{dataSynthesis}}
+  \item{data}{a data.frame, typically created by \code{dataSynthesis}}
   \item{dvname}{name of the dependent variable to use as a label for the diagnostic plots}
   \item{group}{optionally, a column name in \code{data} used to condition the output of \code{diagnosticPlots}}
   \item{model}{If supplied, this text argument will be prepended to the figure titles.}
   \item{include.all}{When \code{group} is specified, should plots be generated as well, for all data collectively?}
+  \item{variant}{residual variant; see details}
   \item{cont.cov}{as defined for \code{PLOTR}}
   \item{cat.cov}{as defined for \code{PLOTR}}
   \item{par.list}{as defined for \code{PLOTR}}
@@ -47,6 +49,11 @@ cwresPlots(
 \details{
 	\code{PLOTR} passes the result of \code{dataSynthesis} to these functions and prints the
 	resulting lists (of trellis objects) on the open device. 
+	
+	\code{variant} is a vector including one or more of the following: 
+	'RES','NRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','ERES','EWRES', or 'ECWRES'.
+	\code{cwresPlots} originally handled just 'CWRES', but now handles any supplied variant in 
+	\code{names(data)}.
 }
 \value{
 a list of trellis objects

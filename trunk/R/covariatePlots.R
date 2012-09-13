@@ -156,41 +156,56 @@ function (
 	data,
 	cont.cov=NULL, 
 	cat.cov=NULL,
+	variant=NULL,
 	...
 ) 
 {
+    res <- c('RES','NRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','ERES','EWRES','ECWRES')
+    if(is.null(variant)) variant <- res
+    variant <- variant %in% names(data)
     plots <- list()
+    if(!length(variant))return(plots)
+    if(length(variant)>1){
+    	    plots <- cwresPlots(
+    	    	data=data,
+    	    	cont.cov=cont.cov,
+    	    	cat.cov=cat.cov,
+    	    	variant=variant[-length(variant)]),
+    	    	...
+    	    )
+    	    variant <- variant[length(variant)]
+    }
     if(length(cont.cov)) cont.cov <- intersect(cont.cov,names(data))
     if(length(cat.cov)) cat.cov <- intersect(cat.cov,names(data))
-    #CWRES
-    #CWRES vs. Categoricals
-    if("CWRES" %in% names(data) && length(cat.cov)){
-    	res <- melt(data,id.var="CWRES",measure.var=cat.cov)
-    	plots$cwresCat <- bwplot(
-    		CWRES ~ factor(value) | variable,
+    names(data)[names(data)==variant] <- '.res'
+    #variant vs. Categoricals
+    if(length(cat.cov)){
+    	res <- melt(data,id.var=variant,measure.var=cat.cov)
+    	plots[[glue(variant,'Cat')]] <- bwplot(
+    		.res ~ factor(value) | variable,
     		res,
     		as.table=TRUE,
     		layout=c(2,2),
-    		main="CWRES vs. Categorical Covariates",
+    		main=paste(variant,"vs. Categorical Covariates"),
     		xlab="categorical Covariate",
-    		ylab="conditional weighted residuals",
+    		ylab=variant,
     		scales=list(relation="free"),
     		prepanel=function(x,y,...)prepanel.default.bwplot(factor(x),y,...),
     		panel=function(x,y,...)panel.bwplot(factor(x),y,...),
 		...
     	)
     }
-    #CWRES vs. Continuous
-    if("CWRES" %in% names(data) && length(cont.cov)){
+    #variant vs. Continuous
+    if(length(cont.cov)){
     	res <- melt(data,id.var="CWRES",measure.var=cont.cov)
     	plots$cwresCont <- xyplot(
-    		CWRES ~ value | variable,
+    		.res ~ value | variable,
     		res,
     		as.table=TRUE,
     		layout=c(2,2),
     		main="CWRES vs. Continuous Covariates",
     		xlab="continuous covariate",
-    		ylab="conditional weighted residuals",
+    		ylab=variant,
     		scales=list(relation="free"),
     		panel=function(x,y,...){
     			panel.xyplot(x,y,...)
