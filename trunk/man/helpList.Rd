@@ -21,6 +21,8 @@
 \item \link{[[.temporal} select element from a temporal object
 \item \link{[<-.temporal} assign to a temporal object
 \item \link{\%contains\%} test whether x contains y
+\item \link{\%crossed.on\%} test whether a is crossed on b
+\item \link{\%crosses\%} test whether a crosses b
 \item \link{\%nested.in\%} test whether a is nested in b
 \item \link{\%nests\%} test whether a nests b
 \item \link{$.init} select init element
@@ -226,6 +228,7 @@
 \item \link{constant.default} test whether values of x are contant within an index
 \item \link{constant} generic
 \item \link{contains} test a character vector for occurences of a pattern
+\item \link{convertLines} convert line endings
 \item \link{covariatePlots} create diagnostic plots for covariates
 \item \link{crcl} calculate creatinine clearance
 \item \link{crosses} test whether a crosses b
@@ -294,6 +297,7 @@
 \item \link{half.matrix} vectorize the lower triangular portion of a symmetric matrix
 \item \link{half} generic
 \item \link{hash} prepend a character to each line of output
+\item \link{head.digest} show head of each table in a digest
 \item \link{hidden.data.frame} show commented rows of a data frame
 \item \link{hidden} generic
 \item \link{hide.data.frame} comment out the specified rows of a data frame, appending a flag that suggests the reason
@@ -311,6 +315,7 @@
 \item \link{inner} generic
 \item \link{is.alpha} test whether text is letters-only
 \item \link{is.cwres.readable.file} compute conditional weighted residuals (internal)
+\item \link{is.defined} test whether elements are defined
 \item \link{is.diagonal} test whether parameter label represents matrix diagonal element
 \item \link{is.fixed} detect thetas in parameter labels
 \item \link{is.iiv} detect omegas in parameter labels
@@ -416,6 +421,7 @@
 \item \link{PLOTR} create diagnostic plots for NONMEM runs
 \item \link{plus.keyed} produce and outer join of keyed data frames
 \item \link{plus.rigged} merge an nm object with a rigged data frame
+\item \link{pool} test for unique and shared elments among two vectors
 \item \link{posmat} coerce a matrix to be positive definite
 \item \link{predoseDv.nm} DV is defined before the first record within SUBJ where EVID is 1
 \item \link{predoseDv} generic
@@ -433,6 +439,7 @@
 \item \link{progress} summarize progress of NONMEM runs
 \item \link{purge.dir} purge a directory (internal)
 \item \link{purge.files} purge files (internal)
+\item \link{purgeRunDir} delete certain files from run directories
 \item \link{qstat} invoke SGE qstat
 \item \link{qsub} prepare commandlines for qsub
 \item \link{raised.keyed} produce sequential left join of two keyed data frames

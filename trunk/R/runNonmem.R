@@ -3,8 +3,8 @@ function (
 	run,
 	command,
 	project,
-	boot,
-	urgent,
+	wait,
+	#urgent,
 	checkrunno,
 	diag,
 	fdata,
@@ -27,18 +27,13 @@ function (
 	execute,
 	split,
 	plotfile=plotfilename(run,project,grp),
-	runext = if(boot) '.boot' else if(grid) '.lock' else '',
-	rundir = filename(project,run,runext),
+	#runext = if(boot) '.boot' else if(grid) '.lock' else '',
+	rundir = filename(project,run),
 	outfile = filename(rundir,run,'.lst'),
 	streams = project,
 	ctlfile = filename(streams,run,'.ctl'),
-	remove = c(
-		"^F[ISRCMP]","^OU","^nonmem", "^nul$",
-		"WK","LNK$","fort","^nm","lnk$","set$",
-		"^gar","^temp","^tr","^new",
-		if(fdata)c('^FD','^PR')
-	),
-	sync=if(boot)'n'else'y',
+	purge = TRUE,
+	sync=if(wait)'y'else'n',
 	interface='nm.pl',
 	...,
 	perm.cond=NULL
@@ -59,6 +54,7 @@ function (
   ctlfile <- star(ctlfile,run)
   outfile <- star(outfile,run)
   catfile <- file.path(rundir,glue(run,'.cat'))
+  pmnfile <- sub('ctl$','pmn',ctlfile) # to support copy of pmn file where present
   
   #Immediately we need to get the run directory and cat file open, or return an error.
   if(command!='')if(compile){
@@ -118,6 +114,7 @@ function (
 	  	  return(msg)
 	  }
 	  file.copy(ctlfile, file.path(rundir,basename(ctlfile)), overwrite = TRUE)
+	  if(file.exists(pmnfile))file.copy(pmnfile,file.path(rundir(basename(pmnfile)),overwrite = TRUE)
   }
   #Run NONMEM.
   if(command=='')res <- ''
@@ -125,8 +122,8 @@ function (
     	command=command,
     	run=run,
     	rdir=rundir,
-    	boot=boot,
-    	urgent=urgent,
+    	wait=wait,
+    	#urgent=urgent,
     	checksum=checksum,
     	grid=grid,
     	udef=udef,
@@ -143,7 +140,7 @@ function (
   #Clean up.
   if(execute){
 	  if(sync=='n')return(res) #because we may have reached here before run is complete.
-	  lapply(remove,purge.files,dir=rundir)
+	  if(purge)purgeRunDirdir(dirs=rundir,debug=!fdata,...)
 	  if(rundir!=final(rundir)){
 		dir.create(final(rundir), showWarnings = FALSE)
 		file.copy(from=dir(rundir,full.names=TRUE),to=final(rundir),overwrite=TRUE)

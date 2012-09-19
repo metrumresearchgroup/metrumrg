@@ -195,7 +195,7 @@ merge.nm <- function(x,y,...)as.nm(merge(data.frame(x),y,...))
 	if(any(!exclusive))stop(paste('exactly one of HOUR or DATETIME must be specified, e.g. SUBJ',subj[!exclusive][[1]]))
 
 	#If DATETIME is present, definition (or not) should be constant within subject (for active records).
-	if(!constant(datetime,within=subj))stop(paste('Both HOUR and DATETIME defined for SUBJ',subj[crosses(datetime,subj)][[1]]))
+	if(!constant(datetime,within=subj))stop(paste('Both HOUR and DATETIME defined for SUBJ',subj[crosses(subj,datetime)][[1]]))
 	#Coerce even in commented records
 	#HOUR is received as-is, taken to represent relative accumulation of hours from arbitrary origin.
 	x$TIME <- rep(NA,nrow(x))  #syntax supports zero-row data.frame

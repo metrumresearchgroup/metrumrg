@@ -1,11 +1,14 @@
 reapply <- 
-function (x, INDEX, FUN, ...) 
+function (x, INDEX, FUN, where, ...) 
 {
+	if(missing(where))where <- rep(TRUE,length(x))
+	where <- rep(where,length.out=length(x))
+	x[!where] <- NA
 	if(!is.list(INDEX)) INDEX <- list(INDEX)
 	INDEX <- lapply(INDEX,function(x)as.integer(factor(x)))
 	INDEX <- as.integer(do.call(interaction,c(INDEX,drop=TRUE)))
 	form <- tapply(x, INDEX)
-	calc <- tapply(x, INDEX, FUN, ...,simplify=FALSE)
+	calc <- tapply(x, INDEX, FUN, ..., simplify=FALSE)
 	need <- table(form)
 	calc <- lapply(
 		seq_along(calc),

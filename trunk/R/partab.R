@@ -2,10 +2,10 @@ partab <-
 function(
     run, 
     project = getwd(), 
-    boot = FALSE, 
+    #boot = FALSE, 
     tool = "nm7", 
     file = filename(rundir,run,'.ctl'), 
-    rundir = filename(project, run, if (boot) ".boot" else ""),
+    rundir = filename(project, run),
     nmlog = file.path(rundir, "NonmemRunLog.csv"), 
     nmout = filename(rundir, run, ".lst"), 
     x=params(within=within,by=by,type=type,...),
@@ -18,7 +18,10 @@ function(
     ...
 ){
 	stopifnot(length(run)==1)
-	log <- rlog(run=run,boot=boot,append=FALSE,tool=tool,file=NULL,rundir=rundir,nmlog=nmlog,nmout=nmout,pattern=NULL,...)
+	log <- rlog(
+		run=run,
+		#boot=boot,
+		append=FALSE,tool=tool,file=NULL,rundir=rundir,nmlog=nmlog,nmout=nmout,pattern=NULL,...)
 	log <- data.frame(cast(log,...~moment))
 	log[] <- lapply(log,as.character)
 	names(log)[names(log)=='parameter'] <- by
@@ -55,10 +58,10 @@ function(
 wikitab <- function (
   run, 
   project = getwd(), 
-  boot = FALSE, 
+  #boot = FALSE, 
   tool = "nm7", 
   file = filename(rundir, run, ".ctl"), 
-  rundir = filename(project, run, if (boot) ".boot" else ""), 
+  rundir = filename(project, run), 
   nmlog = file.path(rundir, "NonmemRunLog.csv"), 
   nmout = filename(rundir, run, ".lst"), 
   x = params(within = within, by = by, type = type, ...), 
@@ -71,7 +74,10 @@ wikitab <- function (
 ) 
 {
     stopifnot(length(run) == 1)
-    log <- rlog(run = run, boot = boot, append = FALSE, tool = tool, 
+    log <- rlog(
+    	run = run, 
+    	#boot = boot, 
+    	append = FALSE, tool = tool, 
         file = NULL, rundir = rundir, nmlog = nmlog, nmout = nmout, 
         pattern = NULL, ...)
     log <- data.frame(cast(log, ... ~ moment))

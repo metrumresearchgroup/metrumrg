@@ -11,8 +11,8 @@ runNonmem(
 	run,
 	command,
 	project,
-	boot,
-	urgent,
+	wait,
+	#urgent,
 	checkrunno,
 	diag,
 	fdata,
@@ -35,18 +35,12 @@ runNonmem(
 	execute,
 	split,
 	plotfile=plotfilename(run,project,grp),
-	runext = if(boot) '.boot' else if(grid) '.lock' else '',
-	rundir = filename(project,run,runext),
+	rundir = filename(project,run),
 	outfile = filename(rundir,run,'.lst'),
 	streams = project,
 	ctlfile = filename(streams,run,'.ctl'),
-	remove = c(
-		"^F[ISRCMP]","^OU","^nonmem", "^nul$",
-		"WK","LNK$","fort","^nm","lnk$","set$",
-		"^gar","^temp","^tr","^new",
-		if(fdata)c('^FD','^PR')
-	),
-	sync=if(boot)'n'else'y',
+	purge=TRUE,
+	sync=if(wait)'y'else'n',
 	interface='nm.pl',
 	...,
 	perm.cond=NULL
@@ -56,8 +50,8 @@ runNonmem(
   \item{run}{see NONR}
   \item{command}{see NONR}
   \item{project}{see NONR}
-  \item{boot}{see NONR}
-  \item{urgent}{see NONR}
+  \item{wait}{see NONR}
+  %\item{urgent}{see NONR}
   \item{checkrunno}{see NONR}
   \item{diag}{see NONR}
   \item{fdata}{see NONR}
@@ -80,12 +74,12 @@ runNonmem(
   \item{execute}{see NONR}
   \item{split}{see NONR}
   \item{plotfile}{see PLOTR}
-  \item{runext}{an extension for the run directory}
+  %\item{runext}{an extension for the run directory}
   \item{rundir}{the directory in which run will occur}
   \item{outfile}{see \code{dataSynthesis}}
   \item{streams}{where to find control streams}
   \item{ctlfile}{the original control stream}
-  \item{remove}{regular expressions for files to purge}
+  \item{purge}{whether to remove files as defined in purgeRunDir}
   \item{sync}{whether the R process should wait for the run to complete}
   \item{interface}{the name of a function to prepare NONMEM command lines}
   \item{\dots}{extra arguments for other functions}
@@ -99,6 +93,7 @@ runNonmem(
 		\item \code{\link{NONR}}
 		\item \code{\link{dataSynthesis}}
 		\item \code{\link{runCommand}}
+		\item \code{\link{purgeRunDir}}
 	}
 }
 \keyword{manip}

@@ -18,5 +18,7 @@ I want to ....
 \item \link[=addl]{calculate the NONMEM ADDL data item from explicit dose records}
 \item \link[=as.best]{coerce a vector to either numeric or character}
 \item \link[=as.second]{interconvert time units}
+\item \link[=is.defined]{test whether elements are defined}
+\item \link[=pool]{test for unique and shared elements among two vectors}
 }
 }

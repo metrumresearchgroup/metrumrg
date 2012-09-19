@@ -133,4 +133,4 @@ as.digest.data.frame <- function(
   class(lysis) <- 'digest'
   lysis
 }
-
+head.digest <- function(x,...)lapply(x,head)

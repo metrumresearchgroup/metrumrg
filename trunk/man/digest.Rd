@@ -26,6 +26,7 @@
 \alias{as.motif.nm}
 \alias{digest}
 \alias{format.legacy}
+\alias{head.digest}
 \alias{index}
 \alias{index.conditioned}
 \alias{index.digest}
@@ -69,6 +70,7 @@ them flexibly.
 \method{as.motif}{nm}(x, ...)
 \method{as.roles}{digest}(x, ...)
 \method{as.roles}{keyed}(x, motif = as.motif(x), ...)
+\method{head}{digest}(x, ...)
 \method{index}{conditioned}(x, roles = as.roles(x), ...)
 \method{index}{digest}(x, motif = as.motif(x), roles = as.roles(x, motif = motif), ...)
 \method{index}{isolated}(x, roles = as.roles(x), ...)
@@ -131,7 +133,7 @@ contain only single levels of key columns not mentioned in \code{roles}.
 returning a list (class \code{isolated}) of data frames each having exactly one
 non-key column.  Default methods are defined for making index plots and scatterplot
 matrices of objects of class digest, conditioned, isolated, and keyed.  The \code{plot}
-methods currently plot both.
+methods currently plot both. \code{head.digest} shows the head of each sub-result.
 
 For purposes of plotting and conditioning, it is necessary to specify the roles
 of the columns.  A \code{roles} object is a named vector with elements x, y, and z.
@@ -185,6 +187,8 @@ their \code{as.} counterparts.
 }
 \examples{
 digest(Theoph,c('Subject','Time'))
+head(digest(Theoph,c('Subject','Time')))
+
 }
 \keyword{manip}
 

@@ -1,5 +1,6 @@
 \name{rlog}
 \alias{rlog}
+\alias{purgeRunDir}
 \title{Generate a Combined Run Log from Multiple NONMEM Runs}
 \description{
   Generates a combined run log across specified runs.  Appends/overwrites 
@@ -9,34 +10,46 @@
 rlog(
 	run, 
 	project = getwd(), 
-	boot = FALSE, 
 	append = TRUE,
 	tool = 'nm7',
 	file = filename(project,'CombRunLog.csv'),
-	rundir = filename(project, run, if(boot) '.boot' else ''),
+	rundir = filename(project, run),
 	nmlog = file.path(rundir,'NonmemRunLog.csv'),
 	nmout = filename(rundir,run,'.lst'),
-        pattern = c(
+        purge=TRUE,
+ 	...
+)
+purgeRunDir <- function(
+	dirs,
+	debug=FALSE,
+	standard=c(
         	'^F[ISRCMP]','^OU','^nonmem','^nul$', 
         	'WK', 'LNK$', 'fort', '^nm', 'lnk$', 
-        	'set$','^gar', '^temp', '^tr', 
-        	'^new', '^FD','^Run\\\\d+\\\\.o\\\\d+$','^prsizes'
+        	'set$','^gar', '^temp', '^tr','^new', 
+        	if(!debug)c('^FD','^PR'),
+        	'^Run\\d+\\.o\\d+$','^prsizes','log$',
         ),
- 	...
+        extra=character(0),
+        pattern=c(standard,extra),
+        ...
 )
 }
 \arguments{
   \item{run}{vector of run names (numbers)}
   \item{project}{path to the directory containing run subdirectories}
-  \item{boot}{Were these runs in \file{.boot} directories?}
   \item{append}{\code{TRUE}: append file; \code{FALSE}: overwrite file}
   \item{tool}{\sQuote{nm6} or \sQuote{nm7}: controls methodology. Defaults to 'nm7' as of version 5.18.}
   \item{file}{The run-generic output file to write. See details.}
   \item{rundir}{path to run subdirectory}
   \item{nmlog}{The run-specific input file to read (nm6 only). See details.}
   \item{nmout}{The run-specific NONMEM output file to read (nm7 only). See details.}
-  \item{pattern}{search patterns for files to delete (regular expressions)}
-  \item{\dots}{passed to other functions, such as \code{runstate}}
+  \item{purge}{whether to remove files as defined in purgeRunDir}
+  \item{dirs}{character vector: run directories to purge}
+  \item{debug}{if TRUE, do not delete FDATA and PREDERR by default}
+  \item{standard}{default files to purge}
+  \item{extra}{other files to purge}
+  \item{pattern}{files to purge: trumps standard and extra if specified}
+  \item{\dots}{passed to other functions, such as \code{runstate} and \code{purgeRunDir}}
 }
 
 \details{

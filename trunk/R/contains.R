@@ -13,4 +13,6 @@ aug <- function(x,...){
 	for(name in nms)x[[name]] <- extras[[name]]
 	x
 }
+is.defined <- function(x)!is.na(x)
+pool <- function(x,y)list(x=setdiff(x,y),y=setdiff(y,x),both=intersect(x,y))
 

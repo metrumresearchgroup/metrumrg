@@ -18,6 +18,8 @@ I want to ....
 \item \link[=electronicAppendix]{create an FDA-style electronic appendix from a Subversioned directory}
 \item \link[=variants]{locate path-variant versions of a file}
 \item \link[=sortedInstall]{install local source packages in dependency order}
+\item \link[=convertLines]{convert line endings to local format}
+\item \link[=purgeRunDir]{delete certain files from run directories}
  }
 }
 

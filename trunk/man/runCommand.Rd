@@ -4,7 +4,7 @@
 \title{Issue the System Call That Invokes NONMEM}
 \description{
 	If \code{udef} is \code{FALSE}, \code{command} is passed to \code{nm.pl} with supporting arguments.  If \code{grid}
-	is \code{TRUE}, the result is passed to \code{qsub} with supporting arguments.  If \code{boot}
+	is \code{TRUE}, the result is passed to \code{qsub} with supporting arguments.  If \code{background}
 	is \code{TRUE}, \sQuote{&} is appended to the result.  Each element of the result is executed
   in succession using a system call customized by platform.
 }
@@ -14,8 +14,8 @@ runCommand(
 	...,
 	run,
 	rdir,
-	boot,
-	urgent,
+	wait,
+	#urgent,
 	checksum,
 	grid,
 	udef = FALSE,
@@ -25,7 +25,7 @@ runCommand(
 	intern = invisible,
 	minimized = invisible,
 	invisible = FALSE,
-	split = grid,
+	split = FALSE,
 	N = glue('Run', run, if (split) c('c', 'e') else NULL),
 	o = rdir,
 	e = rdir,
@@ -33,16 +33,8 @@ runCommand(
 	hold_jid = if (split) c(NA, glue('Run', run, 'c')) else NA,
 	V = '',
 	j = 'y',
-	q=if(split)
-	    c(
-	        'compile.q',
-	        if(urgent)'all.q' else 'bootstrap.q'
-	    )
-	else 
-	    if(!execute)
-	        'compile.q'
-            else if(urgent)'all.q' else 'bootstrap.q',
-	sync = if (boot) 'n' else 'y',
+	q=if(split) c('compile.q','all.q') else if(!execute)'compile.q' else 'all.q',
+	sync = if (wait) 'y' else 'n',
 	shell = 'n',
 	b = 'y',
 	cwd = '',
@@ -53,11 +45,11 @@ runCommand(
 )
 }
 \arguments{
-	\item{command}{a command to pass to \code{system}}
+  \item{command}{a command to pass to \code{system}}
   \item{run}{run name}
   \item{rdir}{run directory}
-  \item{boot}{see \code{NONR}}
-  \item{urgent}{see \code{NONR}}
+  \item{wait}{see \code{NONR}}
+  %\item{urgent}{see \code{NONR}}
   \item{checksum}{see \code{NONR}}
   \item{grid}{see \code{NONR}}
   \item{udef}{see \code{NONR}}
@@ -67,7 +59,7 @@ runCommand(
   \item{intern}{see \code{NONR}, passed to \code{system}}
   \item{minimized}{see \code{NONR}, passed to \code{system}}
   \item{invisible}{see \code{runNonmem}}
-  \item{split}{whether compile and execute should be run separately}
+  \item{split}{whether compile and execute should be run separately; defaults to FALSE as of v. 5.22}
   \item{N}{passed to \code{qsub}}
   \item{o}{passed to \code{qsub}}
   \item{e}{passed to \code{qsub}}
@@ -76,9 +68,9 @@ runCommand(
   \item{V}{passed to \code{qsub}}
   \item{j}{passed to \code{qsub}}
   \item{q}{passed to \code{qsub}}
-  \item{sync}{passed to \code{qsub}.  Bootstrap runs usually occur in large quantities,
-  whereas SGE has an internal limitation on number of synchronized processes.  Therefore,
-  no attempt is currently made to synchronize bootstrap runs.}
+  \item{sync}{passed to \code{qsub}.  Bootstrap and simulation runs may occur in large quantities,
+   whereas SGE has an internal limitation on number of synchronized processes.  If \code{wait} is \code{FALSE},
+  no attempt is made to synchronize the runs.}
   \item{shell}{passed to \code{qsub}}
   \item{b}{passed to \code{qsub}}
   \item{cwd}{passed to \code{qsub}}
@@ -101,8 +93,7 @@ on the compile run, and the execute run waits for compile to finish.
 length one for a normal run, and of length two if \code{split} is \code{TRUE} (the default when
 \code{grid} is \code{TRUE}).  By default, all standalone compile-only runs are diverted to 
 \sQuote{compile.q}, as well as all compile halves of split runs.  By default, all execute-only
-runs as well as the execute halves of split runs are diverted to \sQuote{all.q} if urgent,
-and \sQuote{bootstrap.q} otherwise.
+runs as well as the execute halves of split runs are diverted to \sQuote{all.q}.
 }
 \value{character vector showing the result(s) of the system call(s)}
 \references{\url{http://metrumrg.googlecode.com}}

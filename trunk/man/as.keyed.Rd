@@ -92,7 +92,7 @@ Most functions and methods documented here return objects with class
 
 \code{key<-} and methods for \code{summary} and \code{print} are used for side effects.
 
-\code{unikey.keyed} returns a character vector as long as \code{nrow(x)}.
+\code{uniKey.keyed} returns a character vector as long as \code{nrow(x)}.
 
 \code{naKeys} and \code{dupKeys} return logical vectors as long as \code{nrow(x)}.
 

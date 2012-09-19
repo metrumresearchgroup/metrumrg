@@ -12,12 +12,12 @@
 nm.pl(
 	command,
 	ctlfile,
-	outfile=NULL,
-	perl='perl',
-	checksum=TRUE,
-	compile=TRUE, 
-	execute=TRUE,
-	split=FALSE,
+	outfile = NULL,
+	perl = 'perl',
+	checksum = TRUE,
+	compile = TRUE, 
+	execute = TRUE,
+	split = FALSE,
 	...
 )
 autolog.pl(

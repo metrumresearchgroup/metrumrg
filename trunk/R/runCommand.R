@@ -4,8 +4,8 @@
   	...,
 	run,
 	rdir,
-	boot,
-	urgent,
+	wait,
+	#urgent,
 	checksum,
 	grid,
 	udef=FALSE,
@@ -15,7 +15,7 @@
 	intern=invisible,
 	minimized=invisible,
 	invisible=FALSE,
-	split=grid,
+	split=FALSE,
 	N=glue('Run',run,if(split)c('c','e') else NULL),
 	o=rdir,
 	e=rdir,
@@ -23,16 +23,8 @@
 	hold_jid=if(split)c(NA,glue('Run',run,'c'))else NA,
 	V='',
 	j='y',
-	q=if(split)
-	    c(
-	        'compile.q',
-	        if(urgent)'all.q' else 'bootstrap.q'
-	    )
-	else 
-	    if(!execute)
-	        'compile.q'
-            else if(urgent)'all.q' else 'bootstrap.q',
-	sync=if(boot)'n'else'y',
+	q=if(split) c('compile.q','all.q') else if(!execute)'compile.q' else 'all.q',
+	sync=if(wait)'y'else'n',
 	shell='n',
 	b='y',
 	cwd='',
@@ -49,8 +41,8 @@
   	command=command,
   	run=run,
   	rdir=rdir,
-  	boot=boot,
-  	urgent=urgent,
+  	wait=wait,
+  	#urgent=urgent,
   	checksum=checksum,
   	grid=grid,
   	ctlfile=ctlfile,
