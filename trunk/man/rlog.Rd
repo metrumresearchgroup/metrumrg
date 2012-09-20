@@ -26,8 +26,8 @@ purgeRunDir <- function(
         	'^F[ISRCMP]','^OU','^nonmem','^nul$', 
         	'WK', 'LNK$', 'fort', '^nm', 'lnk$', 
         	'set$','^gar', '^temp', '^tr','^new', 
-        	if(!debug)c('^FD','^PR'),
-        	'^Run\\d+\\.o\\d+$','^prsizes','log$',
+        	'^Run\\\\d+\\\\.o\\\\d+$','^prsizes','log$',
+        	if(!debug)c('^FD','^PR')
         ),
         extra=character(0),
         pattern=c(standard,extra),

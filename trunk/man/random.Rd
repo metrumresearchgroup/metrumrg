@@ -10,6 +10,8 @@
 }
 \arguments{
   \item{x}{An object, e.g. data.frame}
+  \item{n}{number of rows to show}
+  \item{\dots}{extra arguments, ignored}
 }
 \details{
 	The functions \code{head} and \code{tail} show the first or last parts
