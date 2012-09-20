@@ -136,7 +136,7 @@ ltable.data.frame <- function(
     glue(
       '\\\\{\\tiny ',
       file.label,
-      if(basefile)basenmame(file) else file,
+      if(basefile)basename(file) else file,
       '}'
     )
   )
