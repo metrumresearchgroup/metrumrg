@@ -19,7 +19,20 @@ rlog(
         purge=TRUE,
  	...
 )
-purgeRunDir(dirs, debug = FALSE, standard = c("^F[ISRCMP]", "^OU", "^nonmem", "^nul$", "WK", "LNK$", "fort", "^nm", "lnk$", "set$", "^gar", "^temp", "^tr", "^new", "^Run\\\\d+\\\\.o\\\\d+$", "^prsizes", "log$", if (!debug) c("^FD", "^PR")), extra = character(0), pattern = c(standard, extra), ...)
+purgeRunDir(
+	dirs, 
+	debug = FALSE, 
+	standard = c(
+		"^F[ISRCMP]", "^OU", "^nonmem", "^nul$", 
+		"WK", "LNK$", "fort", "^nm", "lnk$", 
+		"set$", "^gar", "^temp", "^tr", "^new", 
+		"^Run\\\\d+\\\\.o\\\\d+$", "^prsizes", "log$", 
+		if (!debug) c("^FD", "^PR")
+	), 
+	extra = character(0), 
+	pattern = c(standard, extra), 
+	...
+)
 }
 \arguments{
   \item{run}{vector of run names (numbers)}
