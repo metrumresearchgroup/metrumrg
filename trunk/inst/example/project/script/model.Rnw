@@ -226,7 +226,8 @@ print(
 @
 
 For detail, we show one endpoint, tossing the outer 5 percent of values, and 
-indicating quartiles.
+indicating quartiles. Technically, though, one may want to calculate quartiles
+befor trimming the data.
 <<qqdetail,fig=TRUE>>=
 med <- metr[metr$metric=='med',]
 med$metric <- NULL
@@ -345,13 +346,15 @@ invisible(
 #Parentheses force display of invisible NONR result.
 (NONR72(
      run=1,
-     boot=TRUE,
+     wait=FALSE,
+     grid=TRUE,
      project='../nonmem/1005boot',
      streams='../nonmem/1005bootctl'
 ))
 NONR72(
      run=RUN,
-     boot=TRUE,
+     wait=FALSE,
+     grid=TRUE,
      project='../nonmem/1005boot',
      streams='../nonmem/1005bootctl'
 )
@@ -363,7 +366,6 @@ Sys.sleep(5)
 boot <- rlog(
 	run=RUN,
 	project='../nonmem/1005boot',
-	boot=TRUE,
 	append=FALSE,
 	tool='nm7',
   file=NULL

@@ -91,7 +91,7 @@ Finally, we run NONMEM simulations using NONR.
 <<nonr,eval=FALSE>>=
 NONR72(
 	run=1:10,
-	command="/common/NONMEM/nm7_osxi/test/nm7_osxi.pl",
+	command="/opt/NONMEM/nm72/nmqual/autolog.pl",
 	project="../nonmem/sim",
 	diag=FALSE,
 	checkrunno=FALSE,

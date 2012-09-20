@@ -47,7 +47,7 @@ function (
   # and will do no partial matching.  
   
   #Define some functions.
-  final <- function(x)sub('\\.lock','',x)
+  #final <- function(x)sub('\\.lock','',x)
  
   #Groom arguments.
   rundir <- star(rundir,run)
@@ -58,8 +58,9 @@ function (
   
   #Immediately we need to get the run directory and cat file open, or return an error.
   if(command!='')if(compile){
-  	  purge.dir(final(rundir),nice)
-	  if(rundir!=final(rundir))purge.dir(rundir) #deliberately not "nice"
+  	  #purge.dir(final(rundir),nice)
+  	  purge.dir(rundir,nice)
+	  #if(rundir!=final(rundir))purge.dir(rundir) #deliberately not "nice"
 	  if(!file.exists(dirname(rundir)))stop('cannot find ',dirname(rundir))
 	  if(!file.exists(rundir))if(!dir.create(rundir))stop('cannot create ',rundir)
   	  cat(date(),file=catfile,sep='\n') #append is FALSE
@@ -72,7 +73,7 @@ function (
   	  return(msg)
   }
   control <- read.nmctl(ctlfile)
-  #outputdomain <- names(control) =='table' | contains('est',names(control))£
+  #outputdomain <- names(control) =='table' | contains('est',names(control))
   outputdomain <- names(control) %contains% 'tab|est'
   control[outputdomain] <- lapply(control[outputdomain],explicitPath)
   if (checkrunno) {
@@ -85,9 +86,9 @@ function (
   parfile <- ''
   msffile <- ''
   control <- as.character(control[outputdomain])
-  tryCatch(tabfile <- tabfile(control,dir=final(rundir),...),error=function(e)cat('cannot locate *.tab in control stream for run ',file=catfile,append=TRUE,sep='\n'))
-  tryCatch(parfile <- parfile(control,dir=final(rundir),...),error=function(e)cat('cannot locate *par.tab in control stream for run ',file=catfile,append=TRUE,sep='\n'))
-  tryCatch(msffile <- msffile(control,dir=final(rundir),...),error=function(e)cat('cannot locate *.msf in control stream for run ',file=catfile,append=TRUE,sep='\n'))
+  tryCatch(tabfile <- tabfile(control,dir=rundir,...),error=function(e)cat('cannot locate *.tab in control stream for run ',file=catfile,append=TRUE,sep='\n'))
+  tryCatch(parfile <- parfile(control,dir=rundir,...),error=function(e)cat('cannot locate *par.tab in control stream for run ',file=catfile,append=TRUE,sep='\n'))
+  tryCatch(msffile <- msffile(control,dir=rundir,...),error=function(e)cat('cannot locate *.msf in control stream for run ',file=catfile,append=TRUE,sep='\n'))
   #tabfile <- try(tabfile(control,dir=final(rundir),...))
   #parfile <- try(parfile(control,dir=final(rundir),...))
   #msffile <- try(msffile(control,dir=final(rundir),...))
@@ -114,7 +115,7 @@ function (
 	  	  return(msg)
 	  }
 	  file.copy(ctlfile, file.path(rundir,basename(ctlfile)), overwrite = TRUE)
-	  if(file.exists(pmnfile))file.copy(pmnfile,file.path(rundir(basename(pmnfile)),overwrite = TRUE)
+	  if(file.exists(pmnfile))file.copy(pmnfile,file.path(rundir(basename(pmnfile)),overwrite = TRUE))
   }
   #Run NONMEM.
   if(command=='')res <- ''
@@ -140,14 +141,14 @@ function (
   #Clean up.
   if(execute){
 	  if(sync=='n')return(res) #because we may have reached here before run is complete.
-	  if(purge)purgeRunDirdir(dirs=rundir,debug=!fdata,...)
-	  if(rundir!=final(rundir)){
-		dir.create(final(rundir), showWarnings = FALSE)
-		file.copy(from=dir(rundir,full.names=TRUE),to=final(rundir),overwrite=TRUE)
-		purge.dir(rundir)
-		rundir <- final(rundir)
-		catfile <- final(catfile)
-	  }
+	  if(purge)purgeRunDir(dirs=rundir,debug=!fdata,...)
+	  #if(rundir!=final(rundir)){
+		#dir.create(final(rundir), showWarnings = FALSE)
+		#file.copy(from=dir(rundir,full.names=TRUE),to=final(rundir),overwrite=TRUE)
+		#purge.dir(rundir)
+		#rundir <- final(rundir)
+		#catfile <- final(catfile)
+	  #}
 	
 	  #Diagnostics
 	  if(!udef)
@@ -175,8 +176,8 @@ function (
 			eta.list=eta.list,
 			missing=missing,
 			ctlfile=ctlfile,
-			outfile=final(outfile),
-			rundir=final(rundir),
+			outfile=outfile,
+			rundir=rundir,
 			plotfile=plotfile,
 			perm.cond=perm.cond,
 			...
@@ -197,8 +198,8 @@ function (
 			eta.list=eta.list,
 			missing=missing,
 			ctlfile=ctlfile,
-			outfile=final(outfile),
-			rundir=final(rundir),
+			outfile=outfile,
+			rundir=rundir,
 			perm.cond=perm.cond,
 			...,
 			script=script

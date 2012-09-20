@@ -13,7 +13,8 @@
 	label = NULL, 
 	options = "!htpb", 
 	environments = "center", 
-	file = NULL, 
+	source = NULL,
+	file = NULL,
 	...
 )
 }
@@ -25,6 +26,7 @@
   \item{label}{optional label}
   \item{options}{options for latex table environment}
   \item{environments}{extra environments to nest between \sQuote{table} and \sQuote{tabular}.}
+  \item{source}{optional source attribution}
   \item{file}{optional file name}
   \item{\dots}{passed to \code{tabular}}
 }
@@ -32,6 +34,11 @@
 specified environments, then wraps result in a latex table
 environment.  Result is returned visibly or printed to file
 and returned invisibly.
+
+If \code{source} is defined, it will be printed in a tiny font immediately
+under the table (bound to the tabular element).  If file is specified as well,
+it will be printed (tiny) under source.  To print the file but not source, use
+\code{source=''}.
 
 \code{ltable} is generic.  You can write methods for other classes. 
 \code{as.ltable} is an alias for \code{ltable}.

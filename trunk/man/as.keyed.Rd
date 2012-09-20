@@ -80,8 +80,8 @@ row, as \code{duplicated} can: it identifies the duplicates as well as those row
 which they are duplicates. It is recommended to test for \code{NA}s before testing 
 for duplicates.
 
-\code{order} treats \code{decreasing} as an all-or-nothing argument, whereas \code{sort.keyed} 
-allows independent specification for each column.
+%\code{order} treats \code{decreasing} as an all-or-nothing argument, whereas \code{sort.keyed} 
+%allows independent specification for each column.
 
 Methods for \code{merge} and \code{transform} are key-friendly. The method for \code{summary}
 is key-centric.  \code{uniKey} creates a single character vector from all the key columns.
