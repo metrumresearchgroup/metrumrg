@@ -543,6 +543,7 @@
 \item \link{wrap} wrap text in a latex environment
 \item \link{write.nm} write an nm object to file
 \item \link{write.nmctl} write an nmctl object to file
+\item \link{xpath} extract value of an xpath exrpession from an xml file
 \item \link{xtfrm.comment} produce a numeric vector that sorts in the same order as comment
 \item \link{xtfrm.flag} produce a numeric vector that sorts in the same order as flag
 \item \link{xtfrm.temporal} produce a numeric vector that sorts in the same order as temporal

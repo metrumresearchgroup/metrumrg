@@ -3,8 +3,8 @@
 
 #LaTeX Commands
 #LaTeX commands are case sensitive, and take one of the following two formats:
-#  ???	They start with a backslash \ and then have a name consisting of letters only. Command names are terminated by a space, a number or any #other "non-letter".
-#	???	They consist of a backslash \ and exactly one non-letter.
+# - They start with a backslash \ and then have a name consisting of letters only. Command names are terminated by a space, a number or any #other "non-letter".
+# - They consist of a backslash \ and exactly one non-letter.
 #Some commands need an argument, which has to be given between curly braces { } after the command name. Some commands support optional #parameters, which are added after the command name in square brackets [ ]. The general syntax is:
 #\commandname[option1,option2,...]{argument1}{argument2}...
 
@@ -124,11 +124,22 @@ ltable.data.frame <- function(
   environments='center',
   source=NULL,
   file=NULL,
+  source.label='source: ',
+  file.label='file: ',
+  basefile=FALSE,
   ...
 ){
   x <- tabular(x,...)
-  if(!is.null(source)) x <- c(x,glue('\\\\{\\tiny source: ',source,'}'))
-  if(!is.null(file))if(!is.null(source)) x <- c(x,glue('\\\\{\\tiny file: ',file,'}'))
+  if(!is.null(source))if(!is.null(source.label)) x <- c(x,glue('\\\\{\\tiny ',source.label,source,'}'))
+  if(!is.null(file))if(!is.null(file.label)) x <- c(
+    x,
+    glue(
+      '\\\\{\\tiny ',
+      file.label,
+      if(basefile)basenmame(file) else file,
+      '}'
+    )
+  )
   for (env in environments) x <- wrap(x,env)
   if (!is.null(label))label <- command('label',args=label)
   if(!is.null(caption)){

@@ -15,6 +15,9 @@
 	environments = "center", 
 	source = NULL,
 	file = NULL,
+	source.label='source: ',
+	file.label='file: ',
+	basefile=FALSE,
 	...
 )
 }
@@ -28,17 +31,22 @@
   \item{environments}{extra environments to nest between \sQuote{table} and \sQuote{tabular}.}
   \item{source}{optional source attribution}
   \item{file}{optional file name}
+  \item{source.label}{optional text to preceed source if specified}
+  \item{file.label}{optional text to preceed file if specified}
+  \item{basefile}{if TRUE, strip path from file for display purposes}
   \item{\dots}{passed to \code{tabular}}
 }
 \details{Converts data.frame to tabular, then wraps it in
 specified environments, then wraps result in a latex table
-environment.  Result is returned visibly or printed to file
-and returned invisibly.
+environment.  Result is returned visibly, or if \code{file} is specified
+it is printed to file and returned invisibly.
 
-If \code{source} is defined, it will be printed in a tiny font immediately
-under the table (bound to the tabular element).  If file is specified as well,
-it will be printed (tiny) under source.  To print the file but not source, use
-\code{source=''}.
+If \code{source} and \code{source.label} defined, they will be printed in a tiny font immediately
+under the table (bound to the tabular element).  If \code{file} and \code{file.label} are defined as well,
+they will be printed (tiny) under source.  Set \code{source.label} to NULL to 
+suppress embedding of \code{source}; set to '' to suppress source label. Set \code{file.label} to NULL to 
+suppress embedding of \code{file}; set to '' to suppress file label. Note that
+\code{file} controls file destination, whether or not represented in the result.
 
 \code{ltable} is generic.  You can write methods for other classes. 
 \code{as.ltable} is an alias for \code{ltable}.

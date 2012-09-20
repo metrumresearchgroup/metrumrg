@@ -58,12 +58,12 @@ crosses(c(2,3,3,NA,5,5),c(1,1,1,NA,NA,4)) #FALSE FALSE FALSE FALSE FALSE TRUE
 constant(Theoph$Wt,within=Theoph$Subject)#TRUE
 trt <- c('a','a','a','b')
 rep <- c(1,1,2,3)
-trt %crosses% rep # true
-rep %nests% trt # false
-trt %nests% rep # true
-rep %nested.in trt # true
-rep %crosses% trt # false
-trt %crossed.on% rep #false
+trt \%crosses\% rep # true
+rep \%nests\% trt # false
+trt \%nests\% rep # true
+rep \%nested.in\% trt # true
+rep \%crosses\% trt # false
+trt \%crossed.on\% rep #false
 constant(trt,within=rep) # true
 
 }

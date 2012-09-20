@@ -75,13 +75,13 @@ as.unilog.pxml <- function(x,run,tool='nm7',...){
 	row.names(uni) <- NULL
 	uni
 }
-.minstat <- function(x){
-		tree <- xmlParse(readLines(x),asText=TRUE,error=NULL)
-		dpath <- glue('//nm:termination_status/text()')
-		result <- xpathSApply(tree,dpath,fun=xmlValue)
+xpath <- function(x,file){
+		tree <- xmlParse(readLines(file),asText=TRUE,error=NULL)
+		result <- xpathSApply(tree,x,fun=xmlValue)
 		free(tree)
 		result
 }
+.minstat <- function(x)xpath(x='//nm:termination_status/text()',file=x)
 as.unilog.run <- function(
 	run,
 	logfile='NonmemRunLog.csv',

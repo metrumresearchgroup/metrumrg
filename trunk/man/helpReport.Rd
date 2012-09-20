@@ -24,5 +24,6 @@ I want to ....
 \item \link[=ltable.data.frame]{convert a data.frame for printing with latex}
 \item \link[=as.pdf.data.frame]{render a data.frame to pdf format}
 \item \link[=viewtex]{render file-based tex fragments as pdf for informal viewing}
+\item \link[=xpath]{extract value of an xpath expression from an xml file}
 }
 }
