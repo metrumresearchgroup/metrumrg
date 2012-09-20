@@ -2,6 +2,8 @@
 function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...) 
 {
   plots <-list()
+  value <- NULL # prevent warning from R CMD check
+  variable <- NULL # prevent warning from R CMD check
   if(is.null(group))data$grpnames <- 'all'
   if(is.null(group))group <- 'grpnames'
   if(length(unique(data[[group]])) > 1 & include.all) plots <- diagnosticPlots(
