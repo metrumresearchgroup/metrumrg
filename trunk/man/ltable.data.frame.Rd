@@ -44,8 +44,8 @@ it is printed to file and returned invisibly.
 If \code{source} and \code{source.label} defined, they will be printed in a tiny font immediately
 under the table (bound to the tabular element).  If \code{file} and \code{file.label} are defined as well,
 they will be printed (tiny) under source.  Set \code{source.label} to NULL to 
-suppress embedding of \code{source}; set to '' to suppress source label. Set \code{file.label} to NULL to 
-suppress embedding of \code{file}; set to '' to suppress file label. Note that
+suppress embedding of \code{source}; set to empty string to suppress source label. Set \code{file.label} to NULL to 
+suppress embedding of \code{file}; set to empty string to suppress file label. Note that
 \code{file} controls file destination, whether or not represented in the result.
 
 \code{ltable} is generic.  You can write methods for other classes. 

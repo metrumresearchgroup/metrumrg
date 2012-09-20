@@ -16,7 +16,7 @@ xpath(x,file)
 \details{
 	This relies on the XML package.  Somewhat experimental.
 }
-\value{same as \code{xpathSapply}}
+\value{same as \code{xpathSApply}}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
