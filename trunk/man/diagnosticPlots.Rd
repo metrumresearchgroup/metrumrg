@@ -51,8 +51,8 @@ cwresPlots(
 	resulting lists (of trellis objects) on the open device. 
 	
 	\code{variant} is a vector including one or more of the following: 
-	'RES','NRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','ERES','EWRES', or 'ECWRES'.
-	\code{cwresPlots} originally handled just 'CWRES', but now handles any supplied variant in 
+	RES, NRES, NWRES, CRES, CWRES, RESI, WRESI, CRESI, CWRESI, ERES, EWRES, or ECWRES.
+	\code{cwresPlots} originally handled just CWRES, but now handles any supplied variant in 
 	\code{names(data)}.
 }
 \value{

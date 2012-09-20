@@ -114,7 +114,7 @@ PLOTR(
 }
 \details{
   PLOTR creates a plotting dataset using \code{dataSynthesis}. It passes this dataset
-  to each of \code{diagnosticPlots}, \code{covariatePlots(}, and \code{cwresPlots}.  It then 
+  to each of \code{diagnosticPlots}, \code{covariatePlots}, and \code{cwresPlots}.  It then 
   calls the function named by the \code{epilog} argument, if any.  The example \code{epilog} 
   (\file{example/epilog.R}) calls \code{dataSynthesis} itself, and does additional plotting.
   
@@ -123,7 +123,7 @@ PLOTR(
   and even some that don't.  All the lattice plotting functions accept extra 
   arguments, so you may be able to modify the diagnostic plots judiciously
   (with the caviat that the same arguments will be passed to \code{diagnosticPlots}, 
-  \code{covariatePlots(}, and \code{cwresPlots}). \code{pdf} technically does not accept extra 
+  \code{covariatePlots}, and \code{cwresPlots}. \code{pdf} technically does not accept extra 
   arguments, but any specified argument that it does accept will be passed.  
 
   File names deserve special consideration.  \code{plotfile} gives
