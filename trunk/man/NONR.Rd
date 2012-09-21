@@ -128,7 +128,7 @@ NONR72(
   Coerced to \code{FALSE} on Windows.  Concurrency is implemented using the package \pkg{fork}.
   
   As of version 5.22, this argument defaults to \code{TRUE} only for regular
-  runs on the grid. Unsynchronized (\code{wait}) is \code{FALSE} runs on the grid return control to the console 
+  runs on the grid. Unsynchronized (\code{wait} is \code{FALSE}) runs on the grid return control to the console 
   almost immediately (\code{sync='n'}) so there is little advantage for each
   run to have its own process.
  }

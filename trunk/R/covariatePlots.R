@@ -162,7 +162,7 @@ function (
 {
     res <- c('RES','NRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','ERES','EWRES','ECWRES')
     if(is.null(variant)) variant <- res
-    variant <- variant %in% names(data)
+    variant <- intersect(variant, names(data))
     plots <- list()
     if(!length(variant))return(plots)
     if(length(variant)>1){
