@@ -189,7 +189,7 @@ function (
     names(data)[names(data)==variant] <- '.res' # canonical name for easy melt formulas
     #variant vs. Categoricals
     if(length(cat.cov)){
-    	res <- melt(data,id.var=.res,measure.var=cat.cov)
+    	res <- melt(data,id.var='.res',measure.var=cat.cov)
     	plots[[glue(variant,'Cat')]] <- bwplot(
     		.res ~ factor(value) | variable,
     		res,
@@ -206,7 +206,7 @@ function (
     }
     #variant vs. Continuous
     if(length(cont.cov)){
-    	res <- melt(data,id.var=.res,measure.var=cont.cov)
+    	res <- melt(data,id.var='.res',measure.var=cont.cov)
     	plots[[glue(variant,'Cont')]] <- xyplot(
     		.res ~ value | variable,
     		res,
