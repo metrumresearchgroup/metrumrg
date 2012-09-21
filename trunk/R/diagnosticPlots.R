@@ -87,7 +87,7 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
   )
   #QQ-Norm
   if(length(res))for (group in unique(res$grpnames)) plots[[paste('resQ',group)]] <- qqmath(
-  	value | variable, 
+  	~ value | variable, 
   	res[res$grpnames==group,],
   	as.table=TRUE,
   	layout=c(2,2),
