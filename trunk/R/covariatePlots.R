@@ -165,22 +165,31 @@ function (
     variant <- intersect(variant, names(data))
     plots <- list()
     if(!length(variant))return(plots)
-    if(length(variant)>1){
-    	    plots <- cwresPlots(
-    	    	data=data,
-    	    	cont.cov=cont.cov,
-    	    	cat.cov=cat.cov,
-    	    	variant=variant[-length(variant)],
-    	    	...
-    	    )
-    	    variant <- variant[length(variant)]
-    }
+    if(length(variant)>1)return( # recursive reduction to a single variant
+    	c(
+    		cwresPlots(
+    	    		data=data,
+    	    		cont.cov=cont.cov,
+    	    		cat.cov=cat.cov,
+    	    		variant=variant[-length(variant)],
+    	    		...
+    	    	),
+    	    	cwresPlots(
+    	    		data=data,
+    	    		cont.cov=cont.cov,
+    	    		cat.cov=cat.cov,
+    	    		variant=variant[length(variant)],
+    	    		...
+    	    	)
+    	)
+    )
+    #If we got here, we have only one variant.
     if(length(cont.cov)) cont.cov <- intersect(cont.cov,names(data))
     if(length(cat.cov)) cat.cov <- intersect(cat.cov,names(data))
-    names(data)[names(data)==variant] <- '.res'
+    names(data)[names(data)==variant] <- '.res' # canonical name for easy melt formulas
     #variant vs. Categoricals
     if(length(cat.cov)){
-    	res <- melt(data,id.var=variant,measure.var=cat.cov)
+    	res <- melt(data,id.var=.res,measure.var=cat.cov)
     	plots[[glue(variant,'Cat')]] <- bwplot(
     		.res ~ factor(value) | variable,
     		res,
@@ -197,13 +206,13 @@ function (
     }
     #variant vs. Continuous
     if(length(cont.cov)){
-    	res <- melt(data,id.var="CWRES",measure.var=cont.cov)
-    	plots$cwresCont <- xyplot(
+    	res <- melt(data,id.var=.res,measure.var=cont.cov)
+    	plots[[glue(variant,'Cont')]] <- xyplot(
     		.res ~ value | variable,
     		res,
     		as.table=TRUE,
     		layout=c(2,2),
-    		main="CWRES vs. Continuous Covariates",
+    		main=paste(variant,"vs. Continuous Covariates"),
     		xlab="continuous covariate",
     		ylab=variant,
     		scales=list(relation="free"),
