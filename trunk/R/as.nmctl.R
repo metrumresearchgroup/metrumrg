@@ -73,11 +73,5 @@ function(x, file='data',ncolumns=1,append=FALSE, sep=" ",...){
     val
 }
 
-`[[.nmctl` <- function (x, ..., drop = TRUE) 
-{
-    cl <- oldClass(x)
-    class(x) <- NULL
-    val <- NextMethod("[[")
-    class(val) <- cl
-    val
-}
+`[[.nmctl` <- function (x, ..., drop = TRUE) nextMethod("[[")
+
