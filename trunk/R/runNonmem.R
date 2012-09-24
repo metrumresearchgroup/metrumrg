@@ -117,7 +117,7 @@ function (
 	  }
 	  file.copy(ctlfile, file.path(rundir,basename(ctlfile)), overwrite = TRUE)
 	  if(file.exists(pmnfile))file.copy(pmnfile,file.path(rundir(basename(pmnfile)),overwrite = TRUE))
-	  else(if(file.exists(pltfile)))file.copy(pltfile,file.path(rundir(basename(pmnfile)),overwrite=TRUE))
+	  else if(file.exists(pltfile))file.copy(pltfile,file.path(rundir(basename(pmnfile)),overwrite=TRUE))
   }
   #Run NONMEM.
   if(command=='')res <- ''
