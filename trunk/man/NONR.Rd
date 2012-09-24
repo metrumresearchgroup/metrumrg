@@ -112,7 +112,8 @@ NONR72(
   \code{grid} is \code{TRUE}, the job will run asynchronously and no
   cleanup or plotting will be attempted.  Default \code{TRUE}, gives 
   synchronous runs on the grid, but these are usually limited in number.  
-  New in version 5.22 (replaces \code{boot}).
+  New in version 5.22 (replaces \code{boot}).  \code{wait} also controls the defaults
+  for \code{diag} and \code{sync}): see \link{runNonmem}.
  } 
   
   \item{grid}{

@@ -142,7 +142,9 @@ function (
   )
   #Clean up.
   if(execute){
-	  if(sync=='n')return(res) #because we may have reached here before run is complete.
+  	  #if (and only if?) this is an unsynchronized run on the grid, 
+  	  #we may have reached here before the run is complete.  So we return without post-processing (diagnostics and cleanup).
+	  if(sync=='n' & grid)return(res)
 	  if(purge)purgeRunDir(dirs=rundir,debug=!fdata,...)
 	  #if(rundir!=final(rundir)){
 		#dir.create(final(rundir), showWarnings = FALSE)
