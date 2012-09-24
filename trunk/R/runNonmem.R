@@ -55,6 +55,7 @@ function (
   outfile <- star(outfile,run)
   catfile <- file.path(rundir,glue(run,'.cat'))
   pmnfile <- sub('ctl$','pmn',ctlfile) # to support copy of pmn file where present
+  pltfile <- filepath(streams,'template','.pmn')
   
   #Immediately we need to get the run directory and cat file open, or return an error.
   if(command!='')if(compile){
@@ -116,6 +117,7 @@ function (
 	  }
 	  file.copy(ctlfile, file.path(rundir,basename(ctlfile)), overwrite = TRUE)
 	  if(file.exists(pmnfile))file.copy(pmnfile,file.path(rundir(basename(pmnfile)),overwrite = TRUE))
+	  else(if(file.exists(pltfile)))file.copy(pltfile,file.path(rundir(basename(pmnfile)),overwrite=TRUE))
   }
   #Run NONMEM.
   if(command=='')res <- ''
