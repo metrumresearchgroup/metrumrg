@@ -55,7 +55,7 @@ function (
   outfile <- star(outfile,run)
   catfile <- file.path(rundir,glue(run,'.cat'))
   pmnfile <- sub('ctl$','pmn',ctlfile) # to support copy of pmn file where present
-  pltfile <- filepath(streams,'template','.pmn')
+  pltfile <- file.path(streams,'template','.pmn')
   
   #Immediately we need to get the run directory and cat file open, or return an error.
   if(command!='')if(compile){
