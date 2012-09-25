@@ -177,6 +177,7 @@ purgeRunDir <- function(
 	purgeDir <- function(dir,exprs)purgeMany(exprs,dir)
 	purgeAll <- function(dirs,exprs)lapply(dirs,purgeDir,exprs=exprs)
 	purgeAll(dirs=dirs,exprs=pattern)
+	invisible(NULL)
 }
 		
 

@@ -224,7 +224,8 @@ NONR72(
   \item{q}{choice of queue, passed to \code{qsub}}
   \item{\dots}{additional arguments passed to functions that accept them. For example,
   you can pass \code{onefile=FALSE} to \code{pdf}, called by \code{PLOTR}.  You can also pass
-  additional lattice arguments to modify the diagnostic plots.  
+  additional lattice arguments to modify the diagnostic plots.  You can gain finer control
+  of run behavior by modifying arguments to \code{\link{runNonmem}}, e.g. \code{purge=FALSE}.
   
   Flags recognized
   by Sun Grid Engine's \code{qsub} are accepted by a like-named wrapper (this effect replaces
@@ -244,8 +245,14 @@ run in \code{project}. It looks for \code{<run>.ctl} in \code{project},
 cleans it up as necessary, and writes it to the subdirectory, in which context
 NONMEM is invoked (using \code{runCommand}).  The output of NONMEM will be 
 \file{<run>.lst} in the subdirectory.  Files matching patterns in \code{purgeRunDir:standard} will
-be removed. Attempts 
-will be made to run \code{PLOTR} and \code{epilog}.  Then a \sQuote{complete} message is printed.
+be removed. Attempts will be made to run \code{PLOTR} and \code{epilog}.  
+Then a \sQuote{complete} message is printed.
+
+As of version 5.22, parallelization is directly supported.
+\code{<run>.pmn} is copied to the subdirectory, if present in the
+same directory as \code{<run>.ctl}. If not, \code{template.pmn} is copied to the subdirectory 
+(if present in the same directory as \code{<run>.ctl}) and is renamed \code{<run>.ctl}.
+Use an NMQual-mediated NONMEM installation that expects this convention.
 
 File names and locations can be manipulated somewhat, i.e., by over-riding
 \code{runNonmem}'s defaults for \code{rundir}, \code{outfile}, \code{streams}, 
