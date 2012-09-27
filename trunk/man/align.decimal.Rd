@@ -33,6 +33,7 @@ leading zeros to ensure width \code{width}.
 }
 \examples{
 align.decimal(c(.12, 1.2, 12.0))
+padded(c(1,10,100,1000),5)
 }
 \keyword{manip}
 

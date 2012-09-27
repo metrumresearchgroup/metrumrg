@@ -14,11 +14,13 @@
 crosses(a,b)
 a \%nests\% b
 a \%nested.in\% b
+a \%crosses\% b
+a \%crossed.on\% b
 \method{constant}{default}(x,within,...)
 }
 \arguments{
   \item{a}{a list of equal length factors, or one factor}
-  \item{b}{a list of factors, or one factor, same length as \code{a}}
+  \item{b}{a list of equal length factors, or one factor, same length as \code{a}}
   \item{x}{an object like \code{a}, or a data.frame}
   \item{within}{An object like \code{b}}
   \item{\dots}{extra arguments passed to other methods}

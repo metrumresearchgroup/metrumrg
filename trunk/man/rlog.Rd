@@ -61,7 +61,7 @@ purgeRunDir(
   
 	To suppress log creation on disk, supply a zero length argument for \code{file}.
 	
-	If \code{test} is present, rlog assumes the run is in progress and does not attempt file deletion.
+	%If \code{test} is present, rlog assumes the run is in progress and does not attempt file deletion.
 }
 \value{
   Combined runlog is returned invisibly in the unilog format.  Side effect: if

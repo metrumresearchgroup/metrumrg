@@ -24,5 +24,8 @@ xpath(x,file)
 		\item \code{\link{xpathSApply}}
 	}
 }
+\examples{
+	xpath('//nm:theta/nm:val',system.file('example/project/nonmem/1001/1001.xml',package='metrumrg'))
+}
 \keyword{manip}
 

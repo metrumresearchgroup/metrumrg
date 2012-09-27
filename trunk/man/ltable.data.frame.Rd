@@ -41,7 +41,7 @@ specified environments, then wraps result in a latex table
 environment.  Result is returned visibly, or if \code{file} is specified
 it is printed to file and returned invisibly.
 
-If \code{source} and \code{source.label} defined, they will be printed in a tiny font immediately
+If \code{source} and \code{source.label} are defined, they will be printed in a tiny font immediately
 under the table (bound to the tabular element).  If \code{file} and \code{file.label} are defined as well,
 they will be printed (tiny) under source.  Set \code{source.label} to NULL to 
 suppress embedding of \code{source}; set to empty string to suppress source label. Set \code{file.label} to NULL to 

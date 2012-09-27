@@ -47,7 +47,7 @@ naKeys(x, ...)
   \item{key}{a character vector of column names in \code{x} that should uniquely distinguish each row}
   \item{value}{a key (character vector of column names)}
   \item{y}{the right argument in the merge}
-  \item{decreasing}{(coercible to) logical; length 1 or length \code{key(x)}}
+  \item{decreasing}{(coercible to) logical; length 1}
   \item{object}{a keyed data.frame}
   \item{_data}{a keyed data.frame}
 }
