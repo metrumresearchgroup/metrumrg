@@ -9,6 +9,7 @@
 \SweaveOpts{eps=false} 
 \SweaveOpts{keep.source=true}
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \section*{Wikimath}
 <<handlers,echo=false,results=hide>>=
 library(metrumrg)
