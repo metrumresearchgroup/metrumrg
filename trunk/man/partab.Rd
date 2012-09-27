@@ -18,7 +18,7 @@ partab(
 	as = c(NA, "estimate", "unit", "prse"), 
 	type = "parameter", 
 	append = NULL, 
-	pattern = NULL, 
+	purge = FALSE, 
 	...
 )
 wikitab(
@@ -34,7 +34,7 @@ wikitab(
 	by = "model",
 	type = "wiki", 
 	append = NULL, 
-	pattern = NULL, 
+	purge = FALSE, 
  	...
 )
 }
@@ -53,7 +53,7 @@ wikitab(
   value of the element (if any) is returned.}
   \item{type}{the element type to seek in \sQuote{within}}
   \item{append}{ignored; NULL is passed to \code{rlog}}
-  \item{pattern}{ignored; NULL is passed to \code{rlog}}
+  \item{purge}{ignored; FALSE is passed to \code{rlog}}
   \item{\dots}{passed to \code{lookup} and \code{rlog}}
 }
 \details{The idea here is to associate pre-specified model-specific identifiers with model output.

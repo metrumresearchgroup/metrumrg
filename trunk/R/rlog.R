@@ -39,7 +39,7 @@
   if(purge)purgeRunDir(dirs=rundir[state=='done'],...)
   unilist <- lapply(
   	seq(length.out=length(run)),
-  	function(index,run,nmlog,nmout,tool){
+  	function(index,run,nmlog,nmout,tool,...){
   		res <- tryCatch(
   			as.unilog.run(
   				run=run[[index]],

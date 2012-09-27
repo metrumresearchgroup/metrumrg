@@ -48,7 +48,7 @@ purgeRunDir(
   \item{debug}{if TRUE, do not delete FDATA and PREDERR by default}
   \item{standard}{default files to purge}
   \item{extra}{other files to purge}
-  \item{pattern}{files to purge: trumps standard and extra if specified}
+  \item{pattern}{files to purge: trumps \code{standard} and \code{extra} if specified}
   \item{\dots}{passed to other functions, such as \code{runstate} and \code{purgeRunDir}}
 }
 
@@ -56,8 +56,8 @@ purgeRunDir(
 	\code{rundir}, \code{nmlog}, and \code{nmout} can be vector; or scalar, in which case they may 
 	contain \sQuote{*}, to be replaced with run names on a per-run basis. 
   
-	To suppress file deletion, supply a zero-length argument such as \code{NULL} for 
-	\code{pattern}.
+	To suppress file deletion, supply \code{FALSE} for 
+	\code{purge}.
   
 	To suppress log creation on disk, supply a zero length argument for \code{file}.
 	

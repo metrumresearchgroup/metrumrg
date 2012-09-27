@@ -14,14 +14,14 @@ function(
     as=c(NA,'estimate','unit','prse'),
     type='parameter',    
     append = NULL, 
-    pattern = NULL, 
+    purge = FALSE, 
     ...
 ){
 	stopifnot(length(run)==1)
 	log <- rlog(
 		run=run,
 		#boot=boot,
-		append=FALSE,tool=tool,file=NULL,rundir=rundir,nmlog=nmlog,nmout=nmout,pattern=NULL,...)
+		append=FALSE,tool=tool,file=NULL,rundir=rundir,nmlog=nmlog,nmout=nmout,purge=FALSE,...)
 	log <- data.frame(cast(log,...~moment))
 	log[] <- lapply(log,as.character)
 	names(log)[names(log)=='parameter'] <- by
@@ -69,7 +69,7 @@ wikitab <- function (
   by = "model",
   type = "wiki", 
   append = NULL, 
-  pattern = NULL, 
+  purge = FALSE, 
   ...
 ) 
 {
@@ -79,7 +79,7 @@ wikitab <- function (
     	#boot = boot, 
     	append = FALSE, tool = tool, 
         file = NULL, rundir = rundir, nmlog = nmlog, nmout = nmout, 
-        pattern = NULL, ...)
+        purge = FALSE, ...)
     log <- data.frame(cast(log, ... ~ moment))
     log[] <- lapply(log, as.character)
     #names(log)[names(log) == "parameter"] <- by
