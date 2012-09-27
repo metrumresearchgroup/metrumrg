@@ -34,7 +34,6 @@ NONR72(
      project='../nonmem',                 # must specify, unless ctl in getwd()
      grid=TRUE,                          # set to FALSE for better error messaging (but slower)
      nice=TRUE,                           # don't delete subversioned directories
-     concurrent=FALSE,
      checkrunno=FALSE,                    # TRUE auto-replaces conflicting run numbers
      cont.cov=cont.cov,                   # see help for following
      cat.cov=cat.cov,
