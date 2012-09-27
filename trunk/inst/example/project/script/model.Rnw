@@ -71,6 +71,7 @@ res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','ERES','EWR
 ctl[[12]] <- c(ctl[[12]],preds, res)
 @
 <<>>=
+write.nmctl(ctl,file='../nonmem/ctl/1006.ctl')
 NONR72(
      run=1006,
      project='../nonmem',
