@@ -18,7 +18,7 @@
 	superset = FALSE,
 	...
 ){
-    if(superset) data <- .dataSuperset(
+  if(superset) data <- .dataSuperset(
     	run=run,
     	project=project,
     	logtrans=logtrans,
