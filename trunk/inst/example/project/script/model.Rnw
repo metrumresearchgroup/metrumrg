@@ -66,7 +66,7 @@ ctl$prob <- '1006 like 1005 with tweaked initial estimates'
 We request some variants of PRED and CWRES. 
 <<cwres>>=
 ctl[[12]]
-preds <- c('NPRED','CPRED','CPREDI','EPRED','IPRED')
+preds <- c('NPRED','CPRED','CPREDI','EPRED')
 res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','ERES','EWRES','ECWRES')
 ctl[[12]] <- c(ctl[[12]],preds, res)
 @
