@@ -3,6 +3,7 @@
 \SweaveOpts{keep.source=true}
 \SweaveOpts{eps=false} 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \vspace*{2cm}
 \begin{center}
 \vspace{1.5cm}

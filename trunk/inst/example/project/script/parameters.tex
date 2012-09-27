@@ -296,16 +296,16 @@ The estimates of matrix off-diagonals are covariances, and are more useful if tr
 We wish to include 95 percentiles in our table as confidence intervals.
 \begin{Schunk}
 \begin{Sinput}
-> boot <- read.csv('../nonmem/1005.bootlog.csv',as.is=TRUE)
+> boot <- read.csv('../nonmem/1005bootlog.csv',as.is=TRUE)
 > head(boot)
 \end{Sinput}
 \begin{Soutput}
   X tool run parameter   moment            value
-1 1  nm7   1       ofv  minimum 2353.21240698929
-2 2  nm7   1    THETA1 estimate          8.64914
+1 1  nm7   1       ofv  minimum 2459.17577365853
+2 2  nm7   1    THETA1 estimate          9.90635
 3 3  nm7   1    THETA1     prse             <NA>
 4 4  nm7   1    THETA1       se             <NA>
-5 5  nm7   1    THETA2 estimate          21.5594
+5 5  nm7   1    THETA2 estimate          21.8851
 6 6  nm7   1    THETA2     prse             <NA>
 \end{Soutput}
 \begin{Sinput}
@@ -315,12 +315,12 @@ We wish to include 95 percentiles in our table as confidence intervals.
 \end{Sinput}
 \begin{Soutput}
    X tool run parameter  estimate
-1  2  nm7   1    THETA1   8.64914
-2  5  nm7   1    THETA2   21.5594
-3  8  nm7   1    THETA3 0.0766718
-4 11  nm7   1    THETA4   4.05759
-5 14  nm7   1    THETA5   106.257
-6 17  nm7   1    THETA6   1.07562
+1  2  nm7   1    THETA1   9.90635
+2  5  nm7   1    THETA2   21.8851
+3  8  nm7   1    THETA3 0.0708169
+4 11  nm7   1    THETA4   3.36905
+5 14  nm7   1    THETA5   94.6453
+6 17  nm7   1    THETA6  0.972457
 \end{Soutput}
 \begin{Sinput}
 > boot <- boot[,c('run','parameter','estimate')]
@@ -346,59 +346,59 @@ We wish to include 95 percentiles in our table as confidence intervals.
 > head(boot)
 \end{Sinput}
 \begin{Soutput}
-  run parameter    estimate     lo     hi
-1   1    THETA1   8.6491400   6.19     11
-2   1    THETA2  21.5594000   19.1   26.4
-3   1    THETA3   0.0766718 0.0607 0.0801
-4   1    THETA4   4.0575900   2.82   5.06
-5   1    THETA5 106.2570000   87.9    930
-6   1    THETA6   1.0756200   0.86   1.29
+  run parameter   estimate     lo     hi
+1   1    THETA1  9.9063500   7.31   11.1
+2   1    THETA2 21.8851000   19.2   27.9
+3   1    THETA3  0.0708169 0.0625 0.0838
+4   1    THETA4  3.3690500   2.78   4.91
+5   1    THETA5 94.6453000   85.6    559
+6   1    THETA6  0.9724570  0.847   1.25
 \end{Soutput}
 \begin{Sinput}
 > boot <- unique(boot[,c('parameter','lo','hi')])
 > boot
 \end{Sinput}
 \begin{Soutput}
-   parameter      lo       hi
-1     THETA1    6.19       11
-2     THETA2    19.1     26.4
-3     THETA3  0.0607   0.0801
-4     THETA4    2.82     5.06
-5     THETA5    87.9      930
-6     THETA6    0.86     1.29
-7     THETA7   0.571     1.87
-8   OMEGA1.1   0.132    0.431
-9   OMEGA2.1  0.0663    0.222
-10  OMEGA2.2  0.0511    0.162
-11  OMEGA3.1  -0.046   0.0242
-12  OMEGA3.2 -0.0565 -0.00863
-13  OMEGA3.3  0.0231   0.0738
-14  SIGMA1.1  0.0403   0.0592
-15  SIGMA2.1       0        0
-16  SIGMA2.2  0.0645    0.304
+   parameter      lo      hi
+1     THETA1    7.31    11.1
+2     THETA2    19.2    27.9
+3     THETA3  0.0625  0.0838
+4     THETA4    2.78    4.91
+5     THETA5    85.6     559
+6     THETA6   0.847    1.25
+7     THETA7    0.61    1.91
+8   OMEGA1.1   0.128   0.321
+9   OMEGA2.1  0.0606   0.183
+10  OMEGA2.2   0.047   0.158
+11  OMEGA3.1 -0.0448  0.0261
+12  OMEGA3.2 -0.0577 -0.0049
+13  OMEGA3.3  0.0236  0.0811
+14  SIGMA1.1  0.0399  0.0587
+15  SIGMA2.1       0       0
+16  SIGMA2.2  0.0836   0.329
 \end{Soutput}
 \begin{Sinput}
 > boot$ci <- with(boot, parens(glue(lo,',',hi)))
 > boot
 \end{Sinput}
 \begin{Soutput}
-   parameter      lo       hi                 ci
-1     THETA1    6.19       11          (6.19,11)
-2     THETA2    19.1     26.4        (19.1,26.4)
-3     THETA3  0.0607   0.0801    (0.0607,0.0801)
-4     THETA4    2.82     5.06        (2.82,5.06)
-5     THETA5    87.9      930         (87.9,930)
-6     THETA6    0.86     1.29        (0.86,1.29)
-7     THETA7   0.571     1.87       (0.571,1.87)
-8   OMEGA1.1   0.132    0.431      (0.132,0.431)
-9   OMEGA2.1  0.0663    0.222     (0.0663,0.222)
-10  OMEGA2.2  0.0511    0.162     (0.0511,0.162)
-11  OMEGA3.1  -0.046   0.0242    (-0.046,0.0242)
-12  OMEGA3.2 -0.0565 -0.00863 (-0.0565,-0.00863)
-13  OMEGA3.3  0.0231   0.0738    (0.0231,0.0738)
-14  SIGMA1.1  0.0403   0.0592    (0.0403,0.0592)
-15  SIGMA2.1       0        0              (0,0)
-16  SIGMA2.2  0.0645    0.304     (0.0645,0.304)
+   parameter      lo      hi                ci
+1     THETA1    7.31    11.1       (7.31,11.1)
+2     THETA2    19.2    27.9       (19.2,27.9)
+3     THETA3  0.0625  0.0838   (0.0625,0.0838)
+4     THETA4    2.78    4.91       (2.78,4.91)
+5     THETA5    85.6     559        (85.6,559)
+6     THETA6   0.847    1.25      (0.847,1.25)
+7     THETA7    0.61    1.91       (0.61,1.91)
+8   OMEGA1.1   0.128   0.321     (0.128,0.321)
+9   OMEGA2.1  0.0606   0.183    (0.0606,0.183)
+10  OMEGA2.2   0.047   0.158     (0.047,0.158)
+11  OMEGA3.1 -0.0448  0.0261  (-0.0448,0.0261)
+12  OMEGA3.2 -0.0577 -0.0049 (-0.0577,-0.0049)
+13  OMEGA3.3  0.0236  0.0811   (0.0236,0.0811)
+14  SIGMA1.1  0.0399  0.0587   (0.0399,0.0587)
+15  SIGMA2.1       0       0             (0,0)
+16  SIGMA2.2  0.0836   0.329    (0.0836,0.329)
 \end{Soutput}
 \begin{Sinput}
 > tab <- stableMerge(tab,boot[,c('parameter','ci')])
@@ -437,22 +437,22 @@ We wish to include 95 percentiles in our table as confidence intervals.
 13                                          IIV_K_a  ~ Omega_3.3   0.0466 34.7
 14                                          err_prop ~ Sigma_1.1   0.0492 10.9
 15                                           err_add ~ Sigma_2.2   0.2020 33.5
-   units      name        cv        sd        cor                 ci
-1    L/h      CL/F        NA        NA         NA          (6.19,11)
-2      L     V_c/F        NA        NA         NA        (19.1,26.4)
-3  h^-1        K_a        NA        NA         NA    (0.0607,0.0801)
-4    L/h       Q/F        NA        NA         NA        (2.82,5.06)
-5      L     V_p/F        NA        NA         NA         (87.9,930)
-6        MALE_CL/F        NA        NA         NA        (0.86,1.29)
-7          WT_CL/F        NA        NA         NA       (0.571,1.87)
-8         IIV_CL/F 0.4884902        NA         NA      (0.132,0.431)
-9         cov_CL,V        NA        NA  0.8492811     (0.0663,0.222)
-10       IIV_V_c/F 0.3148161        NA         NA     (0.0511,0.162)
-11       cov_CL,Ka        NA        NA -0.1163229    (-0.046,0.0242)
-12        cov_V,Ka        NA        NA -0.5607054 (-0.0565,-0.00863)
-13         IIV_K_a 0.2184098        NA         NA    (0.0231,0.0738)
-14        err_prop 0.2218107        NA         NA    (0.0403,0.0592)
-15         err_add        NA 0.4494441         NA     (0.0645,0.304)
+   units      name        cv        sd        cor                ci
+1    L/h      CL/F        NA        NA         NA       (7.31,11.1)
+2      L     V_c/F        NA        NA         NA       (19.2,27.9)
+3  h^-1        K_a        NA        NA         NA   (0.0625,0.0838)
+4    L/h       Q/F        NA        NA         NA       (2.78,4.91)
+5      L     V_p/F        NA        NA         NA        (85.6,559)
+6        MALE_CL/F        NA        NA         NA      (0.847,1.25)
+7          WT_CL/F        NA        NA         NA       (0.61,1.91)
+8         IIV_CL/F 0.4884902        NA         NA     (0.128,0.321)
+9         cov_CL,V        NA        NA  0.8492811    (0.0606,0.183)
+10       IIV_V_c/F 0.3148161        NA         NA     (0.047,0.158)
+11       cov_CL,Ka        NA        NA -0.1163229  (-0.0448,0.0261)
+12        cov_V,Ka        NA        NA -0.5607054 (-0.0577,-0.0049)
+13         IIV_K_a 0.2184098        NA         NA   (0.0236,0.0811)
+14        err_prop 0.2218107        NA         NA   (0.0399,0.0587)
+15         err_add        NA 0.4494441         NA    (0.0836,0.329)
 \end{Soutput}
 \end{Schunk}
 \section{aesthetics}
@@ -497,21 +497,21 @@ Note that no parameter defines more than one of CV, SD,and COR.  We could collap
   \begin{tabular}{llllll}
     \hline \hline
    description & model & estimate & prse & ci & variability \\ \hline
-   apparent oral clearance                       & $\mathrm{CL/F  \sim \theta_{1}\cdot  \theta_{6}^{MALE}\cdot (WT/70)^{\theta_{7}}\cdot e^{\eta_{1}}}$ & 9.51 $ L/h $     & 9.84 & (6.19,11)          &  \\
-   central volume of distribution                & $\mathrm{V_{c}/F  \sim \theta_{2}\cdot (WT/70)^{1}\cdot e^{\eta_{2}}}$                                  & 22.8 $ L $       & 9.56 & (19.1,26.4)        &  \\
-   absorption rate constant                      & $\mathrm{K_{a} \sim \theta_{3}\cdot e^{\eta_{3}}}$                                                       & 0.0714 $ h^-1  $ & 7.35 & (0.0607,0.0801)    &  \\
-   intercompartmental clearance                  & $\mathrm{Q/F  \sim \theta_{4}}$                                                                            & 3.47 $ L/h $     & 15.4 & (2.82,5.06)        &  \\
-   peripheral volume of distribution             & $\mathrm{V_{p}/F  \sim \theta_{5}}$                                                                        & 113 $ L $        & 21   & (87.9,930)         &  \\
-   male effect on clearance                      & $\mathrm{MALE_{CL/F}\sim \theta_{6}}$                                                                      & 1.02 $  $        & 11.2 & (0.86,1.29)        &  \\
-   weight effect on clearance                    & $\mathrm{WT_{CL/F}\sim \theta_{7}}$                                                                        & 1.19 $  $        & 28.4 & (0.571,1.87)       &  \\
-   interindividual variability of clearance      & $\mathrm{IIV_{CL/F}\sim \Omega_{1.1}}$                                                                     & 0.214 $  $       & 22.8 & (0.132,0.431)      & \%CV = 48.8  \\
-   interindividual clearance-volume covariance   & $\mathrm{cov_{CL,V}\sim \Omega_{2.1}}$                                                                     & 0.121 $  $       & 26.4 & (0.0663,0.222)     & CORR = 0.849  \\
-   interindividual variability of central volume & $\mathrm{IIV_{V_{c}/F}\sim \Omega_{2.2}}$                                                                  & 0.0945 $  $      & 33.2 & (0.0511,0.162)     & \%CV = 31.5  \\
-   interindividual clearance-Ka covariance       & $\mathrm{cov_{CL,Ka} \sim \Omega_{3.1}}$                                                                   & -0.0116 $  $     & 173  & (-0.046,0.0242)    & CORR = -0.116 \\
-   interindividual volume-Ka covariance          & $\mathrm{cov_{V,Ka} \sim \Omega_{3.2}}$                                                                    & -0.0372 $  $     & 36.1 & (-0.0565,-0.00863) & CORR = -0.561 \\
-   interindividual variability of Ka             & $\mathrm{IIV_{K_{a}}\sim \Omega_{3.3}}$                                                                    & 0.0466 $  $      & 34.7 & (0.0231,0.0738)    & \%CV = 21.8  \\
-   proportional error                            & $\mathrm{err_{prop}\sim \Sigma_{1.1}}$                                                                     & 0.0492 $  $      & 10.9 & (0.0403,0.0592)    & \%CV = 22.2  \\
-   additive error                                & $\mathrm{err_{add}\sim \Sigma_{2.2}}$                                                                      & 0.202 $  $       & 33.5 & (0.0645,0.304)     & SD = 0.449    \\ \hline
+   apparent oral clearance                       & $\mathrm{CL/F  \sim \theta_{1}\cdot  \theta_{6}^{MALE}\cdot (WT/70)^{\theta_{7}}\cdot e^{\eta_{1}}}$ & 9.51 $ L/h $     & 9.84 & (7.31,11.1)       &  \\
+   central volume of distribution                & $\mathrm{V_{c}/F  \sim \theta_{2}\cdot (WT/70)^{1}\cdot e^{\eta_{2}}}$                                  & 22.8 $ L $       & 9.56 & (19.2,27.9)       &  \\
+   absorption rate constant                      & $\mathrm{K_{a} \sim \theta_{3}\cdot e^{\eta_{3}}}$                                                       & 0.0714 $ h^-1  $ & 7.35 & (0.0625,0.0838)   &  \\
+   intercompartmental clearance                  & $\mathrm{Q/F  \sim \theta_{4}}$                                                                            & 3.47 $ L/h $     & 15.4 & (2.78,4.91)       &  \\
+   peripheral volume of distribution             & $\mathrm{V_{p}/F  \sim \theta_{5}}$                                                                        & 113 $ L $        & 21   & (85.6,559)        &  \\
+   male effect on clearance                      & $\mathrm{MALE_{CL/F}\sim \theta_{6}}$                                                                      & 1.02 $  $        & 11.2 & (0.847,1.25)      &  \\
+   weight effect on clearance                    & $\mathrm{WT_{CL/F}\sim \theta_{7}}$                                                                        & 1.19 $  $        & 28.4 & (0.61,1.91)       &  \\
+   interindividual variability of clearance      & $\mathrm{IIV_{CL/F}\sim \Omega_{1.1}}$                                                                     & 0.214 $  $       & 22.8 & (0.128,0.321)     & \%CV = 48.8  \\
+   interindividual clearance-volume covariance   & $\mathrm{cov_{CL,V}\sim \Omega_{2.1}}$                                                                     & 0.121 $  $       & 26.4 & (0.0606,0.183)    & CORR = 0.849  \\
+   interindividual variability of central volume & $\mathrm{IIV_{V_{c}/F}\sim \Omega_{2.2}}$                                                                  & 0.0945 $  $      & 33.2 & (0.047,0.158)     & \%CV = 31.5  \\
+   interindividual clearance-Ka covariance       & $\mathrm{cov_{CL,Ka} \sim \Omega_{3.1}}$                                                                   & -0.0116 $  $     & 173  & (-0.0448,0.0261)  & CORR = -0.116 \\
+   interindividual volume-Ka covariance          & $\mathrm{cov_{V,Ka} \sim \Omega_{3.2}}$                                                                    & -0.0372 $  $     & 36.1 & (-0.0577,-0.0049) & CORR = -0.561 \\
+   interindividual variability of Ka             & $\mathrm{IIV_{K_{a}}\sim \Omega_{3.3}}$                                                                    & 0.0466 $  $      & 34.7 & (0.0236,0.0811)   & \%CV = 21.8  \\
+   proportional error                            & $\mathrm{err_{prop}\sim \Sigma_{1.1}}$                                                                     & 0.0492 $  $      & 10.9 & (0.0399,0.0587)   & \%CV = 22.2  \\
+   additive error                                & $\mathrm{err_{add}\sim \Sigma_{2.2}}$                                                                      & 0.202 $  $       & 33.5 & (0.0836,0.329)    & SD = 0.449    \\ \hline
   \end{tabular}
  \end{center}
 \end{table}\section{simple parameter table}

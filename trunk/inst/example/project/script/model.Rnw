@@ -32,9 +32,10 @@ NONR72(
      run=1001:1005,                       # 5 models, ctl pre-written
      #command=command,                    # this version will search for NONMEM
      project='../nonmem',                 # must specify, unless ctl in getwd()
-     grid=TRUE,                           # set to FALSE for better error messaging (but slower)
+     grid=TRUE,                          # set to FALSE for better error messaging (but slower)
      nice=TRUE,                           # don't delete subversioned directories
-     checkrunno=FALSE,                    # TRUE auto-replaces conflicting run numbers 
+     concurrent=FALSE,
+     checkrunno=FALSE,                    # TRUE auto-replaces conflicting run numbers
      cont.cov=cont.cov,                   # see help for following
      cat.cov=cat.cov,
      par.list=par.list,
@@ -62,15 +63,26 @@ ctl$theta <- tweak(ctl$theta)
 writeLines(format(ctl$theta))
 ctl$prob
 ctl$prob <- '1006 like 1005 with tweaked initial estimates'
-write.nmctl(ctl,'../nonmem/ctl/1006.ctl')
+@
+We request some variants of PRED and CWRES. 
+<<cwres>>=
+ctl[[12]]
+preds <- c('NPRED','CPRED','CPREDI','EPRED','IPRED')
+res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','ERES','EWRES','ECWRES')
+ctl[[12]] <- c(ctl[[12]],preds, res)
+@
+<<>>=
 NONR72(
      run=1006,
      project='../nonmem',
      grid=TRUE,
      nice=TRUE,
+     mode='para',                         # For illustrative purposes, we parallelize this run.
+     pe='orte 16',                        # orte is the parallelization environment; we use 16 cores.
      checkrunno=TRUE,                     # default
-     diag=FALSE,
-     streams='../nonmem/ctl'
+     diag=TRUE,                           # default
+     streams='../nonmem/ctl',             # software will look for 1006.pmn or template.pmn
+     plotfile='../nonmem/*/*.pdf'
 )
 Sys.sleep(5)
 qstat()

@@ -78,7 +78,7 @@ tab[,c('parameter','name','estimate','cv','sd','cor')]
 \section{confidence interval}
 We wish to include 95 percentiles in our table as confidence intervals.
 <<confidence>>=
-boot <- read.csv('../nonmem/1005.bootlog.csv',as.is=TRUE)
+boot <- read.csv('../nonmem/1005bootlog.csv',as.is=TRUE)
 head(boot)
 boot <- boot[boot$moment=='estimate',]
 boot <- data.frame(cast(boot,...~moment))
