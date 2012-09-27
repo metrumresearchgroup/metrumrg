@@ -215,7 +215,7 @@
       </job>
       <job>
        <do>date</do>
-       <so>Thu Sep 27 02:36:32 UTC 2012</so>
+       <so>Thu Sep 27 20:37:28 UTC 2012</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
@@ -231,7 +231,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/321.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/646.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
      </logged>
     </log>
@@ -339,14 +339,14 @@
                -5.6188E-01 -6.6003E-01 -1.0279E+00 -2.5496E-01  4.5109E-01
     GRADIENT:   1.9034E-03 -6.6887E-04 -1.9213E-03  2.9445E-04 -1.9874E-05  5.6197E-04  1.6722E-04 -2.3364E-03  2.9847E-04  1.5967E-03
                 6.7025E-04 -9.7229E-04  2.4235E-04  2.4730E-03  6.1584E-04
-    Elapsed estimation time in seconds:     7.95
-    Elapsed covariance time in seconds:    11.23</so>
+    Elapsed estimation time in seconds:     7.91
+    Elapsed covariance time in seconds:    11.24</so>
   </job>
   <job>
    <do in="../nonmem/1005">if [ -e 1005.xml ];then cat 1005.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2012-09-27T02:36:41.762</nm:start_datetime>
+     <nm:start_datetime>2012-09-27T20:37:37.520</nm:start_datetime>
      <nm:control_stream>
      $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
      $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
@@ -608,10 +608,10 @@
           <nm:col nm:cname="EPS2">7.05017316539999</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>7.95</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>7.91</nm:estimation_elapsed_time>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>11.23</nm:covariance_elapsed_time>
+        <nm:covariance_elapsed_time>11.24</nm:covariance_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2405.91625845151</nm:final_objective_function>
         <nm:theta>
@@ -1254,7 +1254,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2012-09-27T02:37:01.273</nm:stop_datetime>
+     <nm:stop_datetime>2012-09-27T20:37:57.002</nm:stop_datetime>
     </nm:output>
    </so>
   </job>

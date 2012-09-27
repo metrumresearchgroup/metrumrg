@@ -215,11 +215,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Thu Sep 27 02:34:24 UTC 2012</so>
+       <so>Thu Sep 27 20:37:28 UTC 2012</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node005,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node009,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -231,7 +231,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/318.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/647.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
      </logged>
     </log>
@@ -622,13 +622,13 @@
                -1.2629E-01  4.6311E-01
     GRADIENT:  -2.5373E-02 -1.0966E-01  4.0266E-01 -1.0329E-07 -2.1167E-01  5.4721E-03  1.0048E-02  5.3042E-03 -3.5548E-03  0.0000E+00
                 5.3474E-02  2.9194E-03
-    Elapsed estimation time in seconds:    27.53</so>
+    Elapsed estimation time in seconds:    22.95</so>
   </job>
   <job>
    <do in="../nonmem/1002">if [ -e 1002.xml ];then cat 1002.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2012-09-27T02:34:34.330</nm:start_datetime>
+     <nm:start_datetime>2012-09-27T20:37:38.665</nm:start_datetime>
      <nm:control_stream>
      $PROB 1002 phase1 2 CMT
      $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -861,7 +861,7 @@
           <nm:col nm:cname="EPS2">9.17026780257756</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>27.53</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>22.95</nm:estimation_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2525.96526753388</nm:final_objective_function>
         <nm:theta>
@@ -946,7 +946,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2012-09-27T02:35:02.179</nm:stop_datetime>
+     <nm:stop_datetime>2012-09-27T20:38:01.943</nm:stop_datetime>
     </nm:output>
    </so>
   </job>

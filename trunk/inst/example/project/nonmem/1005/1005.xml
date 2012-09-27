@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2012-09-27T02:36:41.762</nm:start_datetime>
+<nm:start_datetime>2012-09-27T20:37:37.520</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
 $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
@@ -272,11 +272,11 @@ Days until program expires : 292
 <nm:col nm:cname='EPS2'>7.05017316539999</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>7.95</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>7.91</nm:estimation_elapsed_time>
 <nm:covariance_information><![CDATA[
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='0' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>11.23</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>11.24</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2405.91625845151</nm:final_objective_function>
 <nm:theta>
@@ -919,5 +919,5 @@ Days until program expires : 292
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2012-09-27T02:37:01.273</nm:stop_datetime>
+<nm:stop_datetime>2012-09-27T20:37:57.002</nm:stop_datetime>
 </nm:output>

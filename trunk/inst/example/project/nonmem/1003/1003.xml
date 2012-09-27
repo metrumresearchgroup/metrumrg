@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2012-09-27T02:35:21.222</nm:start_datetime>
+<nm:start_datetime>2012-09-27T20:37:38.746</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -236,7 +236,7 @@ Days until program expires : 292
 <nm:col nm:cname='EPS1'>9.25782959172016</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>28.31</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>22.63</nm:estimation_elapsed_time>
 <nm:covariance_information><![CDATA[
 0R MATRIX ALGORITHMICALLY NON-POSITIVE-SEMIDEFINITE
  BUT NONSINGULAR
@@ -244,7 +244,7 @@ Days until program expires : 292
 0COVARIANCE STEP ABORTED
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='1' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>5.58</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>4.35</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2569.89393760215</nm:final_objective_function>
 <nm:theta>
@@ -295,5 +295,5 @@ Days until program expires : 292
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2012-09-27T02:35:55.408</nm:stop_datetime>
+<nm:stop_datetime>2012-09-27T20:38:06.007</nm:stop_datetime>
 </nm:output>

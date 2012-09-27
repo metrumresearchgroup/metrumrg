@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2012-09-27T02:37:32.744</nm:start_datetime>
+<nm:start_datetime>2012-09-27T20:38:31.270</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1006 like 1005 with tweaked initial estimates
 $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
@@ -51,8 +51,22 @@ $SIGMA 0.1 0.1
 
 $ESTIMATION MAXEVAL=9999 PRINT=5 NOABORT METHOD=1 INTER MSFO=./1006.msf
 $COV PRINT=E
-$TABLE NOPRINT FILE=./1006.tab ONEHEADER ID AMT TIME EVID PRED IPRE
-PRED NPRED CPRED CPREDI EPRED RES NRES NWRES CRES CWRES RESI WRESI CRESI CWRESI ERES EWRES ECWRES
+$TABLE NOPRINT FILE=./1006.tab ONEHEADER ID AMT TIME EVID PRED IPRE CWRES
+NPRED
+CPRED
+CPREDI
+EPRED
+RES
+NRES
+NWRES
+CRES
+RESI
+WRESI
+CRESI
+CWRESI
+ERES
+EWRES
+ECWRES
 $TABLE NOPRINT FILE=./1006par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 
 ;<wiki model='CL/F (L/h) ~ theta_1 *  theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1'>apparent oral clearance</wiki>
@@ -167,7 +181,7 @@ Days until program expires : 292
  HEADER:                YES
  FILE TO BE FORWARDED:   NO
 0USER-CHOSEN ITEMS:
- ID AMT TIME EVID IPRE NPRED CPRED CPREDI EPRED NRES NWRES CRES CWRES RESI WRESI CRESI CWRESI ERES EWRES ECWRES
+ ID AMT TIME EVID IPRE CWRES NPRED CPRED CPREDI EPRED NRES NWRES CRES RESI WRESI CRESI CWRESI ERES EWRES ECWRES
 0-- TABLE   2 --
  PRINTED:                NO
  HEADER:                YES
@@ -243,9 +257,9 @@ Days until program expires : 292
 ]]></nm:termination_information>
 <nm:etabar>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>-6.822309282271344E-004</nm:col>
-<nm:col nm:cname='ETA2'>-5.805755882858657E-004</nm:col>
-<nm:col nm:cname='ETA3'>1.020968533642219E-003</nm:col>
+<nm:col nm:cname='ETA1'>-6.822309282271830E-004</nm:col>
+<nm:col nm:cname='ETA2'>-5.805755882858588E-004</nm:col>
+<nm:col nm:cname='ETA3'>1.020968533642204E-003</nm:col>
 </nm:row>
 </nm:etabar>
 <nm:etabarse>
@@ -257,7 +271,7 @@ Days until program expires : 292
 </nm:etabarse>
 <nm:etabarpval>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>0.992366873568211</nm:col>
+<nm:col nm:cname='ETA1'>0.992366873568210</nm:col>
 <nm:col nm:cname='ETA2'>0.990137086384667</nm:col>
 <nm:col nm:cname='ETA3'>0.974264795362391</nm:col>
 </nm:row>
@@ -271,16 +285,16 @@ Days until program expires : 292
 </nm:etashrink>
 <nm:epsshrink>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='EPS1'>7.05001644874488</nm:col>
-<nm:col nm:cname='EPS2'>7.05001644874488</nm:col>
+<nm:col nm:cname='EPS1'>7.05001644874487</nm:col>
+<nm:col nm:cname='EPS2'>7.05001644874487</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>23.44</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>11.37</nm:estimation_elapsed_time>
 <nm:parallel_cov nm:parafile='1006.pmn' nm:protocol='MPI' nm:nodes='16'/>
 <nm:covariance_information><![CDATA[
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='0' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>12.86</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>11.09</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2405.91625869758</nm:final_objective_function>
 <nm:theta>
@@ -923,5 +937,5 @@ Days until program expires : 292
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2012-09-27T02:38:10.212</nm:stop_datetime>
+<nm:stop_datetime>2012-09-27T20:38:54.803</nm:stop_datetime>
 </nm:output>
