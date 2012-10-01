@@ -25,7 +25,7 @@ xpath(x,file)
 	}
 }
 \examples{
-	xpath('//nm:theta/nm:val',system.file('example/project/nonmem/1001/1001.xml',package='metrumrg'))
+	xpath('//nm:theta/nm:val',system.file('example/project/nonmem/1005/1005.xml',package='metrumrg'))
 }
 \keyword{manip}
 
