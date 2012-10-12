@@ -66,7 +66,7 @@ ignored(
 	Normally, \code{superset} tries to bind output columns directly to input.
 	Alternatively, if \code{key} is provided,
 	it is used as an object model to allow an inferential left join of output
-	onto intput; this approach is riskier, but can back fill NA cells with 
+	onto input; this approach is riskier, but can back fill NA cells with 
 	values that are otherwise constant within left-subsets of the key.
 	
 	During integration, naming convention of
@@ -97,6 +97,12 @@ ignored(
 	three are tightly coordinated and may be inferred from each other.  
 
 }
+\note{
+	In the control stream, avoid use of FIRSTONLY, as this alters the number
+	of rows.  Tables created using FIRSTONLY can be summarized by \code{superset}
+	if \code{key} is provided.  Note that when \code{key} is provided, innocuous
+	warnings result (e.g. 'nothing to merge') if items are tabled that are 
+	already present in the original data set.
 \value{
 	\itemize{
 	\item \code{superset}: data.frame where row count is a multiple of (usually equal to) input row count 

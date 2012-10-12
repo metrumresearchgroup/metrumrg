@@ -5,10 +5,11 @@
 \description{Install packages from a local directory in proper dependency order.
 Only intended for packages of type 'source', i.e. "*.tar.gz".}
 \usage{
-sortedInstall(pkgDir = getwd(), addLib = TRUE, tmpName = "tmpdir")
+sortedInstall(pkgDir = getwd(), libDir=NULL, addLib = TRUE, tmpName = "tmpdir")
 }
 \arguments{
   \item{pkgDir}{directory where packages (\code{.tar.gz} extension) are located}
+  \item{libDir}{directory where packages are to be installed (if \code{NULL} defaults to \code{pkgDir})}
   \item{addLib}{logical: add \code{pkgDir} to \code{.libPaths}?}
   \item{tmpName}{temporary file created in \code{pkgDir}}
 }

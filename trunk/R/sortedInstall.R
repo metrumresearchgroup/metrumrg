@@ -1,4 +1,5 @@
-sortedInstall <- function(pkgDir=getwd(), 
+sortedInstall <- function(pkgDir=getwd(),
+                          libDir=NULL,
                           addLib=TRUE, 
                           tmpName='tmpdir')
 {
@@ -38,6 +39,7 @@ sortedInstall <- function(pkgDir=getwd(),
       n <- c(n,select.list(v))
     }
   }
-  install.packages(pkgs=n, lib=pkgDir, repos = NULL, type = 'source')
-  if(addLib==TRUE) .libPaths(pkgDir)
+  if(is.null(libDir)) libDir <- pkgDir
+  install.packages(pkgs=n, lib=libDir, repos = NULL, type = 'source')
+  if(addLib==TRUE) .libPaths(libDir)
 }
