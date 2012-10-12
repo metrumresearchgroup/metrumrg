@@ -308,7 +308,7 @@ superset <- function(
 .ignorecanonical <- function(x,...){ # convert x (scalar character) to canonical form
   x  <- sub('^\\(','',x)
   x <- sub('\\)$','',x)
-  3x <- strsplit(x,',',fixed=TRUE)[[1]] #prior to 5.24, did not strip bounding whitespace
+  #x <- strsplit(x,',',fixed=TRUE)[[1]] #prior to 5.24, did not strip bounding whitespace
   x <- strsplit(x,'[\n\t ]*,[\n\t ]*')[[1]] #only need the first, since x was scalar
   #now x is a chararcter vector of conditions (possibly scalar)
   #We now have character tests, or comparisons in the form 
