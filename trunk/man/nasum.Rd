@@ -1,7 +1,6 @@
 \name{nasum}
 \alias{nasum}
 \title{Count Number of \code{NA} Values in List Items}
-}
 \description{\code{nasum} Count the number of \code{NA} values in each element of a list-like object.
 }
 \usage{
