@@ -1,5 +1,3 @@
-## -----------------------------------------------------------------
-## read in files from directories into a list
 bundleRead <- function(dir, ext, func, ...)
 {
   func <- ifelse(is.list(func),func,list(func))

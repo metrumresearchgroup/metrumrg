@@ -33,7 +33,7 @@ sortedInstall(pkgDir = getwd(), libDir=NULL, addLib = TRUE, tmpName = "tmpdir")
 	The function will destroy \code{tmpName}, so if \code{tmpdir} exists 
 	in \code{pkgDir} it should probably be renamed.
 }
-\value{Invisible \code{NULL}.}
+\value{invisible \code{NULL}}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Natalie Hsiang}
 \seealso{	\itemize{

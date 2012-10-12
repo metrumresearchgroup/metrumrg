@@ -209,6 +209,7 @@
 \item \link{bracket} create an XML tag
 \item \link{breaks} calculate breaks between grouped elements
 \item \link{bsa} calculate body surface area
+\item \link{bundleRead} read filtered directory contents into a list
 \item \link{c.comment} combine comment
 \item \link{c.flag} combine flag
 \item \link{c.temporal} combine temporal
@@ -374,6 +375,7 @@
 \item \link{naKeys.nm} default behavior, after stripping comments
 \item \link{naKeys} generic
 \item \link{name<-} change identified object names
+\item \link{nasum} diagnose missingness
 \item \link{nest} nest an XML fragment in a parent element
 \item \link{nix} identify Unix-like platforms (internal)
 \item \link{nm.pl} prepare command lines for nm.pl

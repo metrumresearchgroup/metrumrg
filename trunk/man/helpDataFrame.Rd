@@ -14,5 +14,6 @@ I want to ....
 \item \link[=aug]{add named elements to a data.frame or list}
 \item \link[=static]{find the static portion of a data frame}
 \item \link[=digest]{diagnose and visualize static data relationships}
+\item \link[=nasum]{diagnose missingness}
 }
 }
