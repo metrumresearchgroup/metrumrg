@@ -103,6 +103,7 @@ ignored(
 	if \code{key} is provided.  Note that when \code{key} is provided, innocuous
 	warnings result (e.g. 'nothing to merge') if items are tabled that are 
 	already present in the original data set.
+}
 \value{
 	\itemize{
 	\item \code{superset}: data.frame where row count is a multiple of (usually equal to) input row count 
