@@ -1,7 +1,7 @@
 \name{svnIsText}
 \alias{svnIsText}
 \title{Check Whether Subversioned Files are Text.}
-\description{Check wether Subversion considers a file to be text.}
+\description{Check whether Subversion considers a file to be text.}
 \usage{svnIsText(x, ...)
 }
 \arguments{

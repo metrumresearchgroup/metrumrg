@@ -7,7 +7,7 @@
   evaluation plots following a successful NONMEM run. It is called by
   \code{NONR} if diagnostic plots are requested or can be called independently
   following a NONMEM run. Plots use the \code{pdf} device.  Specific control stream
-  syntax is required: see Note under \code{link{NONR}} .
+  syntax is required: see Note under \code{\link{NONR}} .
 }
 \usage{
 PLOTR(

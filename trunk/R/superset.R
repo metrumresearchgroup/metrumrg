@@ -255,6 +255,7 @@ superset <- function(
 .nminput.nmctl <- function(x,...){#extract input labels from control stream, with values like output tables but order like input table
   if(! 'input' %in% names(x))stop('no input record found in ',x,call.=FALSE)
   x <- x$input
+  x <- sub(';.*','',x)
   x <- paste(x,collapse=' ')
   x <- gsub(',',' ',x)
   x <- gsub(' +',' ',x)

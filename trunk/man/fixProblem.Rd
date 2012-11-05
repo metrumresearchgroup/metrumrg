@@ -42,7 +42,7 @@ msffile(ctlfile,dir,msfreg='^(?!\\\\$MSFI).*\\\\.msf',...)
   \item{\dots}{ignored}
 }
 \details{
-\code{fixProblem} tries to substitute the run name in the NONMEM \$PROBLEM statement
+\code{fixProblem} tries to substitute the run name in the NONMEM $PROBLEM statement
 with the current run name.  It looks for any number of leading spaces, and then RUN or RUN\# 
 (optional).  The next space delimited word is replaced.
 

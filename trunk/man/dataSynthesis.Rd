@@ -53,13 +53,13 @@
   \item{cont.cov}{vector of
   continuous covariate names. Names must match those used as column
   headers in \code{datfile}.  Values are retrieved from \code{datfile}
-  so they do not need to be part of the NONMEM \$TABLE step. Default
+  so they do not need to be part of the NONMEM $TABLE step. Default
   value is \code{NULL}.  Example: \code{cont.cov=c('AGE','WT','CLCR')}}
 
   \item{cat.cov}{vector of categorical covariate names. Names must match
   those used as column headers in \code{datfile}.  Values are retrieved
   from \code{datfile} so they do not need to be part of the NONMEM
-  \$TABLE step. Default value is \code{NULL}.  Example:
+  $TABLE step. Default value is \code{NULL}.  Example:
   \code{cat.cov=c('SEX','FOOD')}} 
 
   \item{par.list}{vector of NONMEM model

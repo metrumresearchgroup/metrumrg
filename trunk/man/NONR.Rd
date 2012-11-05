@@ -21,7 +21,6 @@ NONR(
 	wait = TRUE,
 	grid = FALSE, 
 	concurrent = grid & wait,
-	#urgent = !boot,
 	udef= FALSE, 
 	invisible=udef,
 	compile = TRUE,
@@ -52,7 +51,6 @@ NONR72(
 	wait = TRUE,
 	grid = FALSE, 
 	concurrent = grid & wait,
-	#urgent = !boot,
 	udef= FALSE, 
 	invisible=udef,
 	compile = TRUE,
@@ -175,9 +173,9 @@ NONR72(
   \code{../3.TAB}, path separator  must be that recognized by \code{dirname} and \code{basename}.
   Only one usage per line of text will be fixed.
   
-  \sQuote{Standard} uses currently include:  the first word after \$PROB(LEM) (not 
+  \sQuote{Standard} uses currently include:  the first word after $PROB(LEM) (not 
   counting RUN or RUN\#); \file{*.tab} (case insensitive); \file{*par.tab} (case insensitive);
-  \file{*.msf} (case insensitive) except on a line that starts with \$MSFI.  
+  \file{*.msf} (case insensitive) except on a line that starts with $MSFI.  
  }  
   
   \item{checksum}{If \code{TRUE} (default), checksums are requested from \code{nm.pl} when 
@@ -266,25 +264,25 @@ File names and locations can be manipulated somewhat, i.e., by over-riding
   The list of syntax requirements are as follows.
   \itemize{
  
-  \item \$PROB should be followed by \sQuote{RUN\#} then a number representing 
-  the control stream number. No commas should be used in the \$PROB statement.
+  \item $PROB should be followed by \sQuote{RUN\#} then a number representing 
+  the control stream number. No commas should be used in the $PROB statement.
   \sQuote{PROBLEM} is an alternative for \sQuote{PROB}.  The run number is the first space-delimited
   alphanumeric sequence after PROB(LEM), ignoring RUN(\#).  No ampersands are allowed in the problem statement.
 
   \item The datafile name and relative path needs to be on the first line of the
-  \$DATA record immediately following \sQuote{\$DATA}.
+  $DATA record immediately following \sQuote{$DATA}.
   
   \item A relative datafile path must be specified relative to \code{runNonmem:rundir}, typically a subdirectory
   of \code{project}.  For example, \file{3.ctl} will actually run as \file{path/project/3/3.ctl}; if
   its datafile is \file{path/data/DATA3}, then 3.ctl should specify 
-  \dQuote{\$DATA ../../data/DATA3}.
+  \dQuote{$DATA ../../data/DATA3}.
   
   \item The NONMEM datafile must contain a \sQuote{C} column
   containing only C's or periods(\sQuote{.}).  Typically this is the first column.
   
-  \item The \file{*.TAB} file in the \dQuote{\$TABLE}
+  \item The \file{*.TAB} file in the \dQuote{$TABLE}
   step must contain an EVID column for plotting purposes. In the case
-  of \dQuote{\$PRED} models, this can be a dummy column in the data file.
+  of \dQuote{$PRED} models, this can be a dummy column in the data file.
   
   \item The NONMEM data file must contain a column with a header of \sQuote{ID} for
   plotting purposes.
@@ -305,7 +303,7 @@ File names and locations can be manipulated somewhat, i.e., by over-riding
  instructions on generating the files required for CWRES plots.  \code{PLOTR}
  expects etas and model parameters to be output in the \file{*par.TAB} file and
  variables for diagnostic plots to be output in the \file{*.TAB} file, where
- \sQuote{*} represents the control stream number.  Additional \$TABLE records
+ \sQuote{*} represents the control stream number.  Additional $TABLE records
  can be present in the control stream but these are not used/needed by
  \code{PLOTR}.  Mechanisms and expectations are somewhat different for NONMEM7.
 }

@@ -95,7 +95,7 @@ compute.cwres(run.number,
 \section{Setting up the NONMEM model file}{In order for this function to 
   calculate the CWRES, NONMEM must be run while requesting certain
   tables and files to be created.  How these
-  files are created differs depending on if you are using \$PRED or ADVAN 
+  files are created differs depending on if you are using $PRED or ADVAN 
   as well as the version of NONMEM you are using.  These procedures are
   known to work for NONMEM VI but may be different for NONMEM V.  We
   have attempted to indicate where NONMEM V may be different, but this
@@ -104,9 +104,9 @@ compute.cwres(run.number,
   There are five main insertions needed in your NONMEM control file:
  
  \enumerate{
-   \item{1. \$ABB COMRES=X.}{
+   \item{1. $ABB COMRES=X.}{
 
-     Insert this line directly after your \$DATA line.
+     Insert this line directly after your $DATA line.
      The value of X is the number of ETA() terms plus the number of EPS()
      terms in your model.  For example for a model with three ETA() terms
      and two EPS() terms the code would look like this:
@@ -126,7 +126,7 @@ compute.cwres(run.number,
 	 
 	 If you are using ADVAN routines in your
 	 model, then Verbatim code should be inserted directly after
-	 the \$ERROR section of your model file.  The length of the code
+	 the $ERROR section of your model file.  The length of the code
 	 depends again on the number of ETA() terms and EPS() terms in your
 	 model.  For each ETA(y) in your model there is a corresponding
 	 term G(y,1) that you must assign to a COM() variable.  For each EPS(y) in
@@ -148,9 +148,9 @@ compute.cwres(run.number,
         
        \item{B. Using PRED.}{
 
-	 If you are using \$PRED, the verbatim
+	 If you are using $PRED, the verbatim
 	 code should be  inserted directly
-	 after the \$PRED section of your model file.  For each ETA(y) in
+	 after the $PRED section of your model file.  For each ETA(y) in
 	 your model there is a corresponding 
 	 term G(y,1) that you must assign to a COM() variable.  For each EPS(y) in
 	 your model, there is a corresponding H(y,1) term that you must
@@ -179,13 +179,13 @@ compute.cwres(run.number,
 
 	 If you are using ADVAN
 	 routines in your
-	 model, then an \$INFN section should be placed directly after the
-	 \$PK section using the following code.  In this example we are
+	 model, then an $INFN section should be placed directly after the
+	 $PK section using the following code.  In this example we are
 	 assuming that the model file is named something like
 	 '1.ctl'.  NOTE: Files 51, 53, 55
 	 and 57 are not used in the CWRES calculation and can be removed
 	 from the NONMEM model file if problems arise due to failure of the
-	 \$COV step in a NONMEM run.
+	 $COV step in a NONMEM run.
 	 \preformatted{
 	   $INFN
 	   IF (ICALL.EQ.3) THEN
@@ -210,10 +210,10 @@ compute.cwres(run.number,
 	 If you are using ADVAN
 	 routines in your
 	 model, then you need to use an  INFN subroutine.
-	 If we call the INFN subroutine 'myinfn.for' then the \$SUBS
+	 If we call the INFN subroutine 'myinfn.for' then the $SUBS
 	 line of your model file should include the INFN option.  That
 	 is, if we are using ADVAN2 and TRANS2 in our model file then
-	 the \$SUBS line would look like:
+	 the $SUBS line would look like:
 	 
 	 \preformatted{
 	   $SUB ADVAN2 TRANS2 INFN=myinfn.for
@@ -230,7 +230,7 @@ compute.cwres(run.number,
 	   THETAF(40),OMEGAF(30,30),SIGMAF(30,30)}.  NOTE: Files 51, 53, 55
 	 and 57 are not used in the CWRES calculation and can be removed
 	 from the subroutine if problems arise due to failure of the
-	 \$COV step in a NONMEM run.
+	 $COV step in a NONMEM run.
 	 
 	 \preformatted{
       SUBROUTINE INFN(ICALL,THETA,DATREC,INDXS,NEWIND)
@@ -286,15 +286,15 @@ C     open files here, if necessary
       
       } % item
        
-       \item{C. Using \$PRED with NONMEM VIb.}{
+       \item{C. Using $PRED with NONMEM VIb.}{
 
-	 If you are using \$PRED,
+	 If you are using $PRED,
 	 then an the following code should be placed at the end of the
-	 \$PRED section of the model file (together with the verbatim
+	 $PRED section of the model file (together with the verbatim
 	 code).  NOTE: Files 51, 53, 55
 	 and 57 are not used in the CWRES calculation and can be removed
 	 from the NONMEM model file if problems arise due to failure of the
-	 \$COV step in a NONMEM run.
+	 $COV step in a NONMEM run.
 	 
 	 \preformatted{
 	   IF (ICALL.EQ.3) THEN
@@ -314,11 +314,11 @@ C     open files here, if necessary
 	 
       } % item
       
-       \item{D. Using \$PRED with NONMEM V.}{
+       \item{D. Using $PRED with NONMEM V.}{
 
-	 If you are using \$PRED with
+	 If you are using $PRED with
 	 NONMEM V,
-	 then you need to add verbatim code immediately after the \$PRED
+	 then you need to add verbatim code immediately after the $PRED
 	 command.  In this example we assume 4 thetas, 3 etas and 1
 	 epsilon.   If your model has different numbers of
 	 thetas, etas and epsilons then the values of 
@@ -328,7 +328,7 @@ C     open files here, if necessary
 	 code should be one line with the '...' removed from each line.   NOTE: Files 51, 53, 55
 	 and 57 are not used in the CWRES calculation and can be removed
 	 from the NONMEM model file if problems arise due to failure of the
-	 \$COV step in a NONMEM run.
+	 $COV step in a NONMEM run.
 	 
 	 \preformatted{
 	   $PRED
@@ -347,7 +347,7 @@ C     open files here, if necessary
 	} % preformatted
       
 	 After this verbatim code you add all of the abbreviated code
-	 needed for the \$PRED routine in your model file.  After the
+	 needed for the $PRED routine in your model file.  After the
 	 abbreviated code more verbatim code is needed.  This verbatim
 	 code should be added before the verbatim code discussed above
 	 under point 2. 
@@ -409,7 +409,7 @@ C     open files here, if necessary
      
   } % item (cwtab)
     
-   \item{5. \$ESTIMATION.}{
+   \item{5. $ESTIMATION.}{
 
      To compute the CWRES, the NONMEM model file must use (at least) the
      FO method with the \code{POSTHOC} step.  If the FO method is used
