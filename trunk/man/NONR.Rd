@@ -349,7 +349,7 @@ NONR72(
 	command=path,
 	project='../nonmem',
 	wait=FALSE,                 
-	grid=FALSE,		   #default
+	grid=FALSE,                #default
 	diag=FALSE                 #default
 )
 
