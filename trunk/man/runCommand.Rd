@@ -15,7 +15,6 @@ runCommand(
 	run,
 	rdir,
 	wait,
-	#urgent,
 	checksum,
 	grid,
 	udef = FALSE,

@@ -53,7 +53,7 @@ PLOTR(
   is supplied if \code{onefile=FALSE}.  You can specify an arbitrary name, coordinating
   with the value of \code{onefile}. Any asterisk will be replaced with the run name.}
 
-  \item{logtrans}{Whether to transform the NONMEM output variables \code{DV,
+  \item{logtrans}{Whether to transform the NONMEM output variables \code{DV, NPRED, CPRED, CPREDI, EPRED
   PRED, and IPRED}. Default: \code{FALSE}.}
 
   \item{dvname}{name of the dependent variable to use as a label for the diagnostic plots; default: \code{DV}}

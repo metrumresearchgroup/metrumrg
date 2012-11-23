@@ -12,7 +12,6 @@ runNonmem(
 	command,
 	project,
 	wait,
-	#urgent,
 	checkrunno,
 	diag,
 	fdata,
