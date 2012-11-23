@@ -31,6 +31,11 @@
 	
 	The default method simply calls \code{merge} and is present for methodological reasons.
 }
+\note{
+	In most cases, \code{merge} is eventually called.  Since \code{merge} is generic, 
+	what happens next depends on the class of the arguments. For example, a merge method
+	has been defined for class \code{nm}, which may give unexpected results.
+}
 \value{
 	object like the elements of \code{x}, or given by \code{import}
 }

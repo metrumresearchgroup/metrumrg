@@ -7,7 +7,7 @@
 	defaults and searches for exact paths.
 }
 \usage{
-findNonmemCommand(under='/opt/NONMEM',executable='autolog.pl',...)
+findNonmemCommand(under=c('/opt/NONMEM','/opt/nonmem'),executable='autolog.pl',...)
 }
 \arguments{
   \item{under}{a directory for NONMEM installations}

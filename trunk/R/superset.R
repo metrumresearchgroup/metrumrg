@@ -1,6 +1,6 @@
 .restore <- function(x,dropped,...){ # add records wherever dropped is TRUE
   stopifnot(is.data.frame(x),is.logical(dropped))
-  if(any(is.na(dropped)))stop['dropped must not contain NA']
+  if(any(is.na(dropped)))stop('dropped must not contain NA')
   #if(sum(!dropped)!=nrow(x))warning('row count does not match sum of non-dropped')
   if(nrow(x)%%sum(!dropped)!=0)warning('row count not a multiple of non-dropped')
   scale <- nrow(x)%/%sum(!dropped)
@@ -57,7 +57,10 @@
     lst <- lst[-1]
     if(is.character(exclusive)) y <- y[,names(y)[!names(y) %in% exclusive],drop=FALSE]
     if(nrow(x)==0) x <- data.frame(row.names=1:nrow(y))
-    if(nrow(y) %% nrow(x) != 0){
+    if(
+    	(nrow(y) %% nrow(x) != 0) ||
+	(nrow(y) == 0)
+    ){
       message('ignoring table ',i,': expected ', nrow(x),' rows but found ',nrow(y))
       y <- data.frame(row.names=1:nrow(x))
     }else{
@@ -255,6 +258,7 @@ superset <- function(
 .nminput.nmctl <- function(x,...){#extract input labels from control stream, with values like output tables but order like input table
   if(! 'input' %in% names(x))stop('no input record found in ',x,call.=FALSE)
   x <- x$input
+  x <- sub('^\\s+','',x)
   x <- sub(';.*','',x)
   x <- paste(x,collapse=' ')
   x <- gsub(',',' ',x)
