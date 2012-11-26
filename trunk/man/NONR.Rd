@@ -247,8 +247,8 @@ be removed. Attempts will be made to run \code{PLOTR} and \code{epilog}.
 Then a \sQuote{complete} message is printed.
 
 As of version 5.22, parallelization is directly supported.
-\code{<run>.pmn} is copied to the subdirectory, if present in the
-same directory as \code{<run>.ctl}. If not, \code{template.pmn} is copied to the subdirectory 
+\code{<run>.pnm} is copied to the subdirectory, if present in the
+same directory as \code{<run>.ctl}. If not, \code{template.pnm} is copied to the subdirectory 
 (if present in the same directory as \code{<run>.ctl}) and is renamed \code{<run>.ctl}.
 Use an NMQual-mediated NONMEM installation that expects this convention.
 
