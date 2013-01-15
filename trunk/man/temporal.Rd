@@ -77,7 +77,7 @@ as.mDateTime(x, ...)
   \item{format}{character, as per \code{\link{strftime}}}
   \item{mark}{boolean: mark times with dangling seconds using \sQuote{+}}
   \item{incomparables}{passed to \code{unique}}
-  \item{na.RM}{passed to \code{Summary}}
+  \item{na.rm}{passed to \code{Summary}}
  }
 \details{
   Creating a temporal object with these methods ultimately calls one of the 
