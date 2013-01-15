@@ -3,7 +3,7 @@ isSubversionedFile <- function(file){
 		is.character(file),
 		length(file)==1
 	)
-	info <- system(paste('svn info',safeQuote(file)),intern=TRUE,ignore.stderr=TRUE)
+	info <- suppressWarnings(system(paste('svn info',safeQuote(file)),intern=TRUE,ignore.stderr=TRUE))
 	as.logical(length(info))
 }
 isSubversioned <- function(x,...)sapply(x,isSubversionedFile)

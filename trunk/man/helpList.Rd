@@ -20,6 +20,14 @@
 \item \link{[[.nmctl} select element from a control stream object
 \item \link{[[.temporal} select element from a temporal object
 \item \link{[<-.temporal} assign to a temporal object
+\item \link{\%+\%} generic set union binary operator
+\item \link{\%&\%} generic set intersection binary operator
+\item \link{\%-\%} generic set difference binary operator
+\item \link{\%u\%} generic set union binary operator
+\item \link{\%n\%} generic set intersection binary operator
+\item \link{\%+\%.default} vector set union
+\item \link{\%&\%.default} vector set intersection
+\item \link{\%-\%.default} vector set difference
 \item \link{\%contains\%} test whether x contains y
 \item \link{\%crossed.on\%} test whether a is crossed on b
 \item \link{\%crosses\%} test whether a crosses b
@@ -176,6 +184,7 @@
 \item \link{as.unilog.run} convert run to unilog
 \item \link{as.unilog.runlog} convert runlog to unilog
 \item \link{as.week.day} coerce day to week
+\item \link{as.vector.keyed} coerce keyed to vector
 \item \link{as.week.nominal} coerce nominal to week
 \item \link{as.week.numeric} coerce numeric to week
 \item \link{as.week.week} coerce week to week
@@ -246,6 +255,7 @@
 \item \link{diagnosticPlots} create standard diagnostic plots
 \item \link{digest} alias for as.digest
 \item \link{distance} calculate element positions relative to the \eqn{n^{th}}{n^th} \code{TRUE} element positions (usually, within levels of an index)
+\item \link{divide.keyed} for keyed data frames, rows in x that have matching keys in y
 \item \link{dupKeys.default} give a logical index to duplicated rows of a keyed data frame, AND the rows of which they are duplicates
 \item \link{dupKeys.nm} default behavior, after stripping comments
 \item \link{dupKeys} generic
@@ -376,6 +386,7 @@
 \item \link{naKeys} generic
 \item \link{name<-} change identified object names
 \item \link{nasum} diagnose missingness
+\item \link{ncomma} report names as comma-delimited
 \item \link{nest} nest an XML fragment in a parent element
 \item \link{nix} identify Unix-like platforms (internal)
 \item \link{nm.pl} prepare command lines for nm.pl
@@ -388,6 +399,7 @@
 \item \link{noPk.nm} rows where EVID is never 0 within SUBJ
 \item \link{noPk} generic
 \item \link{nospace} drop spaces from text
+\item \link{not.keyed} keyed data frame rows that have problematic keys (NA, dups)
 \item \link{noUnits} drop units from wikimath
 \item \link{nth} repeat, for each element, the \eqn{n^{th}}{n^th} element where a condition is \code{TRUE}  (usually, within levels of an index)
 \item \link{nxt} calculate the next element for each element of x
@@ -492,6 +504,7 @@
 \item \link{static.keyed} return the static portion of a keyed data frame
 \item \link{static} generic
 \item \link{strain} reduce x to those elements that occur in options (internal)
+\item \link{Summary.temporal} group generic summary for objects of class 'temporal'
 \item \link{summary.hidden.data.frame} summarize hidden rows of a data frame
 \item \link{summary.keyed} summarize a keyed data frame
 \item \link{summary.nm} summarize an nm object
@@ -513,6 +526,7 @@
 \item \link{tagvalue} convert a list to a string of delimited tag-value pairs
 \item \link{tex2pdf} convert tex files to pdf
 \item \link{text2decimal} convert mixed text to decimal
+\item \link{times.keyed} column stable left join for keyed data frames
 \item \link{titleCase} convert mixed case to title case, strictly by default
 \item \link{Tmax} calculate the time associated with the maximum concentration for each subject
 \item \link{tmax} calculate the time of the maximum concentration

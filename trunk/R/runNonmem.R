@@ -251,10 +251,24 @@ function (
         #risk <- setdiff(risk,except)
         dir <- dirname(x)
 	base <- basename(x)
-	base <- sub('^[^.(par)]+',run,base)
-	x[risk] <- file.path(dir[risk],base[risk])
+	#very hard to detect (par).*, because of greedy matching
+	#try searching from the end
+	backwards <- function(x){
+		x <- strsplit(x,NULL)
+		x <- lapply(x,rev)
+		x <- lapply(x,paste,collapse='')
+		x <- unlist(x)
+		x
+	}
+	#base <- sub("^[^.(par)]+", run, base)
+	base <- backwards(base)
+	base <- sub('(^[^.]+\\.(rap)?).*','\\1',base)
+	base <- backwards(base)
+	base <- glue(run,base)
+	x[risk] <- file.path(dir[risk], base[risk])
 	x
   }
+  
   explicitPath <- function(x){
 	risk <- grep('\\.TAB\\b|\\.MSF\\b',x,ignore.case=TRUE)
     	except <- grep('/',x)

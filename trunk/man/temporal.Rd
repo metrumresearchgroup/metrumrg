@@ -25,6 +25,7 @@
 \alias{as.mDateTime.chron}
 \alias{as.mTime.times}
 \alias{unique.temporal}
+\alias{Summary.temporal}
 
 \title{Temporal Classes with Selective Defaults}
 \description{
@@ -63,6 +64,7 @@ as.mDateTime(x, ...)
 \method{format}{mDate}(x, format = '\%Y-\%m-\%d', mark=TRUE,...)
 \method{format}{mDateTime}(x, format = '\%Y-\%m-\%d \%H:\%M', mark=TRUE,...)
 \method{unique}{temporal}(x, incomparables=FALSE,...)
+\method{Summary}{temporal}(..., na.rm)
 \method{xtfrm}{temporal}(x,...)
 }
 
@@ -300,7 +302,7 @@ as.mDate('1970-01-01') > as.mDate('2008-01-01')
 as.mDateTime('1970-01-01 08:00') > as.mDate('1970-01-01')
 # TRUE
 
-#statistics
+#summary
 max(as.mDate(c('1970-01-01','1980-01-01','1975-01-01')))
 # 315532800
 

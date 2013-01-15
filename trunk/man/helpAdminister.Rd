@@ -21,6 +21,7 @@ I want to ....
 \item \link[=convertLines]{convert line endings to local format}
 \item \link[=purgeRunDir]{delete certain files from run directories}
 \item \link[=bundleRead]{read data files from a directory into a list}
+\item \link[=ncomma]{read data files from a directory into a list}
  }
 }
 

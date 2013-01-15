@@ -9,6 +9,7 @@ Ops.keyed <- function(e1,e2){
 	methods  <- c('plus','minus','and','left', 'times','divide','raised','mod','div','not')
 	generics <- c('+',   '-',    '&',   '|',   '*',    '/',     '^',     '%%', '%/%','!' )
 	method   <- methods[match(.Generic,generics)]
+	if(method=='not')UseMethod(method,e1)
 	UseMethod(method,e2)
 }
 
@@ -52,20 +53,56 @@ Ops.keyed <- function(e1,e2){
 	key <- intersect(names(x),names(y))
 	bad <- uniKey(x,key) %in% uniKey(y,key)
 	message('dropping ',sum(bad),' of ',xr,' rows matching on ',paste(key,collapse=', '))	
-	x[!bad,]
+	x[!bad,,drop=FALSE]
 }
 
-`raised.keyed` <- function (x, y){
-    key <- key(y)
-    message("serial left join of ", nrow(x), " rows and ", nrow(y), " rows on ", paste(key, collapse = ", "))
-    series <- lapply(seq_along(key),function(n)key[seq_len(n)])
-    candidates <- lapply(series,function(x)static(y,on=x))
-    while(length(candidates)){
-      try(x <- stableMerge(x,candidates[[1]]),silent=TRUE)
-      candidates <- candidates[-1]
-    }
-    x
+`raised.keyed` <- function (x, y) {
+  key <- key(y)
+  message("serial left join of ", nrow(x), " rows and ", nrow(y), " rows on ", paste(key, collapse = ", "))
+  known <- names(x)[!names(x) %in% key]
+  series <- lapply(seq_along(key), function(n) key[seq_len(n)])
+  for(i in seq_along(series)){
+    key <- series[[i]]
+    # This is by definition a fishing expedition, so don't look in y cols already defined in x
+    y <- y[,setdiff(names(y),known),drop=FALSE]
+    z <- static(y,on=key)
+    new <- setdiff(names(z),key)
+    known <- union(known,new)
+    try(x <- stableMerge(x, z), silent = TRUE)
+  }
+  x
 }
 
+`times.keyed` <- function (x, y) {
+  xr <- nrow(x)
+  yr <- nrow(y)
+  key <- intersect(names(x), names(y))
+  message("column-stable outer join of ", xr, " rows and ", yr, " rows on ", 
+          paste(key, collapse = ", "))
+  merge(x, y, all = TRUE)[names(x)]
+}
+
+`divide.keyed` <- function (x, y){
+  xr <- nrow(x)
+  yr <- nrow(y)
+  key <- intersect(names(x), names(y))
+  good <- uniKey(x, key) %in% uniKey(y, key)
+  message("keeping ", sum(good), " of ", xr, " rows matching on ", 
+          paste(key, collapse = ", "))
+  x[good, ,drop=FALSE]
+}
+
+`not.keyed` <- function(x)x[dupKeys(x) | naKeys(x),,drop=FALSE] # need modified Ops.keyed
+
+`as.vector.keyed` <- function(x,mode='any')names(x)
+
+`%+%` <- function(x,y)UseMethod('%+%')
+`%&%` <- function(x,y)UseMethod('%&%')
+`%u%` <- function(x,y)UseMethod('%+%')
+`%n%` <- function(x,y)UseMethod('%&%')
+`%-%` <- function(x,y)UseMethod('%-%')
+`%+%.default` <- function(x,y)union(x,y)
+`%&%.default` <- function(x,y)intersect(x,y)
+`%-%.default` <- function(x,y)setdiff(x,y)
 
 

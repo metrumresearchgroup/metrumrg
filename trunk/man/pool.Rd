@@ -22,6 +22,7 @@ list with elements x, y, and both
 	\itemize{
 		\item \code{\link{setdiff}}
 		\item \code{\link{intersect}}
+		\item \code{\link{\%u\%}}
 	}
 }
 \examples{

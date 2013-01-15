@@ -106,3 +106,18 @@ as.mTime.times <- function(x,...)as.mTime(as.numeric(x)*86400)
 as.mDate.dates <- function(x,...)as.mDate(as.numeric(x)*86400)
 as.mDateTime.chron <- function(x,...)as.mDateTime(as.numeric(x)*86400)
 unique.temporal <- function(x, incomparables=FALSE,...)unique.numeric_version(x,incomparables,...)
+Summary.temporal <- function (..., na.rm) 
+{
+    ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
+    if (!ok) 
+        stop(.Generic, " not defined for temporal objects")
+    val <- NextMethod(.Generic)
+    class(val) <- oldClass(list(...)[[1L]])
+    val
+}
+#as.vector.temporal <- function (x, mode = "any"){
+#    if (mode == "any") x
+#    else as.vector(unclass(x), mode)
+#}
+#aperm.temporal <- aperm.table
+

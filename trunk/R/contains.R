@@ -15,4 +15,4 @@ aug <- function(x,...){
 }
 is.defined <- function(x)!is.na(x)
 pool <- function(x,y)list(x=setdiff(x,y),y=setdiff(y,x),both=intersect(x,y))
-
+ncomma <- function(x,...)paste(names(x,...),collapse=', ')
