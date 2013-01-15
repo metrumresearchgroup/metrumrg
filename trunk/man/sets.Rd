@@ -13,9 +13,7 @@
 \description{These functions test set relations using binary operators.  See details.}
 \usage{
 \method{\%+\%}{default}(x, y)
-\method{\%u\%}{default}(x, y)
 \method{\%&\%}{default}(x, y)
-\method{\%n\%}{default}(x, y)
 \method{\%-\%}{default}(x, y)
 \method{as.vector}{keyed}(x,mode='any')
 }

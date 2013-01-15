@@ -106,7 +106,7 @@ as.mTime.times <- function(x,...)as.mTime(as.numeric(x)*86400)
 as.mDate.dates <- function(x,...)as.mDate(as.numeric(x)*86400)
 as.mDateTime.chron <- function(x,...)as.mDateTime(as.numeric(x)*86400)
 unique.temporal <- function(x, incomparables=FALSE,...)unique.numeric_version(x,incomparables,...)
-Summary.temporal <- function (..., na.rm) 
+Summary.temporal <- function (..., na.rm=FALSE) 
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) 

@@ -64,7 +64,7 @@ as.mDateTime(x, ...)
 \method{format}{mDate}(x, format = '\%Y-\%m-\%d', mark=TRUE,...)
 \method{format}{mDateTime}(x, format = '\%Y-\%m-\%d \%H:\%M', mark=TRUE,...)
 \method{unique}{temporal}(x, incomparables=FALSE,...)
-\method{Summary}{temporal}(..., na.rm)
+\method{Summary}{temporal}(..., na.rm=FALSE)
 \method{xtfrm}{temporal}(x,...)
 }
 
@@ -77,6 +77,7 @@ as.mDateTime(x, ...)
   \item{format}{character, as per \code{\link{strftime}}}
   \item{mark}{boolean: mark times with dangling seconds using \sQuote{+}}
   \item{incomparables}{passed to \code{unique}}
+  \item{na.RM}{passed to \code{Summary}}
  }
 \details{
   Creating a temporal object with these methods ultimately calls one of the 
