@@ -16,24 +16,27 @@ Ops.keyed <- function(e1,e2){
 `plus.keyed` <- function(x,y){
 	xr <- nrow(x)
 	yr <- nrow(y)
-	key <- intersect(names(x),names(y))
-	message('outer join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '))
-	merge(x,y,all=TRUE)
+	stopifnot(all(key(y) %in% names(y)))
+	key <- intersect(names(x),key(y))
+	message('full join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '))
+	merge(x,y,all=TRUE,by=key)
 }
 
 `and.keyed` <- function(x,y){
 	xr <- nrow(x)
 	yr <- nrow(y)
-	key <- intersect(names(x),names(y))
+	stopifnot(all(key(y) %in% names(y)))
+	key <- intersect(names(x),key(y))
 	matching <- sum(uniKey(x,key) %in% uniKey(y,key))
 	message('inner join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '),' with ',matching,' matches')
-	merge(x,y)
+	merge(x,y,by=key)
 }
 
 `left.keyed` <- function(x,y){
 	xr <- nrow(x)
 	yr <- nrow(y)
-	key <- intersect(names(x),names(y))
+	stopifnot(all(key(y) %in% names(y)))
+	key <- intersect(names(x),key(y))
 	message('left join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '))	
 	left <- unique(uniKey(x,key))
 	right <- unique(uniKey(y,key))
@@ -44,7 +47,7 @@ Ops.keyed <- function(e1,e2){
 	right <- uniKey(y,key)
 	dups <- duplicated(right)
 	if(any(dups))warning(sum(dups),' duplicated keys, e.g.: ',right[dups][1])
-	merge(x,y,all.x=TRUE)
+	merge(x,y,all.x=TRUE,by=key)
 }
 
 `minus.keyed` <- function(x,y){
@@ -54,6 +57,16 @@ Ops.keyed <- function(e1,e2){
 	bad <- uniKey(x,key) %in% uniKey(y,key)
 	message('dropping ',sum(bad),' of ',xr,' rows matching on ',paste(key,collapse=', '))	
 	x[!bad,,drop=FALSE]
+}
+
+`divide.keyed` <- function (x, y){
+  xr <- nrow(x)
+  yr <- nrow(y)
+  key <- intersect(names(x), names(y))
+  good <- uniKey(x, key) %in% uniKey(y, key)
+  message("keeping ", sum(good), " of ", xr, " rows matching on ", 
+          paste(key, collapse = ", "))
+  x[good, ,drop=FALSE]
 }
 
 `raised.keyed` <- function (x, y) {
@@ -74,25 +87,18 @@ Ops.keyed <- function(e1,e2){
 }
 
 `times.keyed` <- function (x, y) {
+  stopifnot(all(key(y) %in% names(y)))
+  key <- intersect(names(x), key(y))
+  existing <- uniKey(y, key) %in% uniKey(x, key)
+  y <- unique(y[!existing,,drop=FALSE])
   xr <- nrow(x)
   yr <- nrow(y)
-  key <- intersect(names(x), names(y))
-  message("column-stable outer join of ", xr, " rows and ", yr, " rows on ", 
+  message("column-stable full join of ", xr, " existing rows and ", yr, " novel rows on ", 
           paste(key, collapse = ", "))
-  merge(x, y, all = TRUE)[names(x)]
+  merge(x, y, all = TRUE,by=key)[,names(x),drop=FALSE]
 }
 
-`divide.keyed` <- function (x, y){
-  xr <- nrow(x)
-  yr <- nrow(y)
-  key <- intersect(names(x), names(y))
-  good <- uniKey(x, key) %in% uniKey(y, key)
-  message("keeping ", sum(good), " of ", xr, " rows matching on ", 
-          paste(key, collapse = ", "))
-  x[good, ,drop=FALSE]
-}
-
-`not.keyed` <- function(x)x[dupKeys(x) | naKeys(x),,drop=FALSE] # need modified Ops.keyed
+`not.keyed` <- function(x)x[dupKeys(x) | naKeys(x),,drop=FALSE]
 
 `as.vector.keyed` <- function(x,mode='any')names(x)
 

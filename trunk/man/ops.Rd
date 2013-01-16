@@ -29,10 +29,12 @@ The syntax can be extended to subclasses of
 \usage{
 \method{Ops}{keyed}(e1, e2)
 plus.keyed(x, y)
+times.keyed(x, y)
 and.keyed(x, y)
 minus.keyed(x, y)
+divide.keyed(x, y)
 left.keyed(x, y)
-raised.keyed(x,y)
+raised.keyed(x, y)
 }
 \arguments{
   \item{e1}{left argument to Ops}
@@ -71,11 +73,11 @@ gives a left join (\code{merge}, \code{all.x=TRUE}). Mnemonically, it suggests c
 with formulas): use of rows on the right is conditional on existence of matches on the left.
 Right joins are currently not implemented, but most can be expressed as left joins by 
 rearrangement. \code{!} invokes the proxy \code{not.keyed}, which is the best mnemonic: rows are returned
-that have problematic keys (NA or duplicates).
+that have problematic keys (NA or duplicates), i.e. ``not keyed'' correctly.
 
-Operator pair \code{+} and \code{-} has higher precedence than the pair \code{&} and \code{|}.
-Within pairs, operators have equal precedence and resolve left to right (see ?S3groupGeneric). 
-A common assembly sequence is one or more outer joins followed by one or more 
+Operators \code{+,*,/} and \code{-} have higher precedence than \code{&,|} and \code{!}.
+Within groups, operators have equal precedence and resolve left to right (see ?S3groupGeneric). 
+A common assembly sequence is one or more full joins followed by one or more 
 left joins. Correspondence to the existing order of operations minimizes the 
 need for parenthetical grouping of terms (which is available nonetheless).
 
