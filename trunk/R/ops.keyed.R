@@ -12,13 +12,29 @@ Ops.keyed <- function(e1,e2){
 	if(method=='not')UseMethod(method,e1)
 	UseMethod(method,e2)
 }
-
+.reportCols <- function(key){
+	lim <- 7
+	if(length(key) > lim) lim <- 5
+	if(length(key) == 0) return('no matching columns')
+	if(length(key) <= lim) return(paste(key,collapse=', ')
+	#length(key) is greater than lim
+	other <- length(key) - lim
+	key <- key[1:lim]
+	msg <- paste(key,collapse=', ')
+	msg2 <- paste('and',other,'others')
+	return(paste(msg,msg2))
+}
+	
 `plus.keyed` <- function(x,y){
 	xr <- nrow(x)
 	yr <- nrow(y)
 	key <- intersect(names(x),names(y))
-	message('full join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '))
+	matching <- sum(uniKey(x,key) %in% uniKey(y,key))
+	matchmsg <- ''
+	if (matching > 0) matchmsg <- paste(' with',matching,'matches')
+	message('full join of ',xr,' rows and ',yr,' rows on ', .reportCols(key), matchmsg)
 	merge(x,y,all=TRUE)
+
 }
 
 `and.keyed` <- function(x,y){
@@ -26,7 +42,7 @@ Ops.keyed <- function(e1,e2){
 	yr <- nrow(y)
 	key <- intersect(names(x),names(y))
 	matching <- sum(uniKey(x,key) %in% uniKey(y,key))
-	message('inner join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '),' with ',matching,' matches')
+	message('inner join of ',xr,' rows and ',yr,' rows on ', .reportCols(key),' with ',matching,' matches')
 	merge(x,y)
 }
 
@@ -34,7 +50,7 @@ Ops.keyed <- function(e1,e2){
 	xr <- nrow(x)
 	yr <- nrow(y)
 	key <- intersect(names(x),names(y))
-	message('left join of ',xr,' rows and ',yr,' rows on ',paste(key,collapse=', '))	
+	message('left join of ',xr,' rows and ',yr,' rows on ', .reportCols(key))	
 	left <- unique(uniKey(x,key))
 	right <- unique(uniKey(y,key))
 	unmatched <- setdiff(left,right)
@@ -52,7 +68,7 @@ Ops.keyed <- function(e1,e2){
 	yr <- nrow(y)
 	key <- intersect(names(x),names(y))
 	bad <- uniKey(x,key) %in% uniKey(y,key)
-	message('dropping ',sum(bad),' of ',xr,' rows matching on ',paste(key,collapse=', '))	
+	message('dropping ',sum(bad),' of ',xr,' rows matching on ', .reportCols(key))	
 	x[!bad,,drop=FALSE]
 }
 
@@ -61,14 +77,13 @@ Ops.keyed <- function(e1,e2){
   yr <- nrow(y)
   key <- intersect(names(x), names(y))
   good <- uniKey(x, key) %in% uniKey(y, key)
-  message("keeping ", sum(good), " of ", xr, " rows matching on ", 
-          paste(key, collapse = ", "))
+  message("keeping ", sum(good), " of ", xr, " rows matching on ", .reportCols(key))
   x[good, ,drop=FALSE]
 }
 
 `raised.keyed` <- function (x, y) {
   key <- key(y)
-  message("serial left join of ", nrow(x), " rows and ", nrow(y), " rows on ", paste(key, collapse = ", "))
+  message("serial left join of ", nrow(x), " rows and ", nrow(y), " rows on ", .reportCols(key))
   known <- names(x)[!names(x) %in% key]
   series <- lapply(seq_along(key), function(n) key[seq_len(n)])
   for(i in seq_along(series)){
@@ -89,8 +104,7 @@ Ops.keyed <- function(e1,e2){
   y <- unique(y[!existing,,drop=FALSE])
   xr <- nrow(x)
   yr <- nrow(y)
-  message("column-stable full join of ", xr, " existing rows and ", yr, " novel rows on ", 
-          paste(key, collapse = ", "))
+  message("column-stable full join of ", xr, " existing rows and ", yr, " novel rows on ", .reportCols(key))
   merge(x, y, all = TRUE)[,names(x),drop=FALSE]
 }
 
