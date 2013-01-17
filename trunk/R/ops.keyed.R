@@ -30,8 +30,7 @@ Ops.keyed <- function(e1,e2){
 	yr <- nrow(y)
 	key <- intersect(names(x),names(y))
 	matching <- sum(uniKey(x,key) %in% uniKey(y,key))
-	matchmsg <- ''
-	if (matching > 0) matchmsg <- paste(' with',matching,'matches')
+	matchmsg <- paste(' with',matching,'matches')
 	message('full join of ',xr,' rows and ',yr,' rows on ', .reportCols(key), matchmsg)
 	merge(x,y,all=TRUE)
 
