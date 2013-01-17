@@ -16,7 +16,7 @@ Ops.keyed <- function(e1,e2){
 	lim <- 7
 	if(length(key) > lim) lim <- 5
 	if(length(key) == 0) return('no matching columns')
-	if(length(key) <= lim) return(paste(key,collapse=', ')
+	if(length(key) <= lim) return(paste(key,collapse=', '))
 	#length(key) is greater than lim
 	other <- length(key) - lim
 	key <- key[1:lim]
