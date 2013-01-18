@@ -131,7 +131,8 @@ NONR72 <- function(
 	missing = -99, 
 	...,
 	interface='autolog.pl',
-	q='all.q'
+	q='all.q',
+	pe=NA,
 )NONR(
 	run=run,
 	command=command,
@@ -161,6 +162,7 @@ NONR72 <- function(
 	missing= missing,
 	...,
 	interface=interface,
-	q=q
+	q=q,
+	pe=pe
 )
 
