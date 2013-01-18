@@ -10,11 +10,15 @@ shuffle(x, who, after = NA)
 }
 \arguments{
   \item{x}{data.frame}
-  \item{who}{a character vector of column names to move}
-  \item{after}{character:  the column after which to put \code{who}}
+  \item{who}{a character vector of column names to move, or a logical vector of length names(x), or a vector of indices}
+  \item{after}{the column after which to put \code{who}: may be character, integer, NA, or NULL}
 }
 \details{
 	If \code{after} is \code{NA}, the named columns are moved to the front (before the first column).
+	If \code{after} has length zero, or is a number less than zero or an integer greater than the number of remaining
+	columns, or is NULL, \code{who} is moved to the end. If an integer less than or equal to the number
+	of remaining columns, \code{who} is placed after the corresponding column.
+	
 }
 \value{
 data.frame: a variant of x
