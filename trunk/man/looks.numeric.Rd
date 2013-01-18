@@ -16,7 +16,7 @@ looks.numeric(x)
 }
 \details{The function tests whether all elements in \code{x} follow this pattern
 (after stripping spaces): optional + or - , followed by optional string of digits,
-optional decimal character (\code{getOption('OutDec')}, and optional string of digits.
+optional decimal character (\code{getOption('OutDec')}), and optional string of digits.
 Note that values in scientific notation do not fit this pattern.}
 \value{logical}
 \references{\url{http://metrumrg.googlecode.com}}

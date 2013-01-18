@@ -221,7 +221,7 @@ NONR72(
   \item{missing}{passed to \code{PLOTR}}
   \item{interface}{the name of a function to prepare NONMEM command lines}
   \item{q}{choice of queue, passed to \code{qsub}}
-  \item{pe}{choice of parallelization environment, passed to \code{qsub}; implementation-specifig: see your system administrator}
+  \item{pe}{choice of parallelization environment, passed to \code{qsub}; implementation-specific: see your system administrator}
   \item{\dots}{additional arguments passed to functions that accept them. For example,
   you can pass \code{onefile=FALSE} to \code{pdf}, called by \code{PLOTR}.  You can also pass
   additional lattice arguments to modify the diagnostic plots.  You can gain finer control
