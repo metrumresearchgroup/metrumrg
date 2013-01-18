@@ -74,7 +74,7 @@ NONR72(
 	...,
 	interface='autolog.pl',
 	q='all.q',
-	pe=NA,
+	pe=NA
 )
 }
 

@@ -132,7 +132,7 @@ NONR72 <- function(
 	...,
 	interface='autolog.pl',
 	q='all.q',
-	pe=NA,
+	pe=NA
 )NONR(
 	run=run,
 	command=command,
