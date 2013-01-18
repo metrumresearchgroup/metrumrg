@@ -1,10 +1,13 @@
 \name{looks.numeric}
 \alias{looks.numeric}
 \title{Test Whether a Vector Looks Like a Numeric When Printed}
-\description{Some vectors are stored in R as numerics even though their display
-properties include characters.  \code{looks.numeric}
-is analogous to \code{is.numeric}, but tests not for storage type, but rather for 
-display type.
+
+\description{
+	Some vectors are stored in R as numerics even though their display
+	properties include characters.  \code{looks.numeric}
+	is analogous to \code{is.numeric}, but tests not for storage type, but rather for 
+	display type.
+}
 \usage{
 looks.numeric(x)
 }
