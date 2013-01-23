@@ -354,7 +354,7 @@
 \item \link{legacy<-} assign legacy for a conditioned object
 \item \link{lhs} extract left-hand side of wikimath
 \item \link{locf} impute NA using last observation carried forward
-\item \link{looks.numeric} test whether a vector looks numeric when printed
+%\item \link{looks.numeric} test whether a vector looks numeric when printed
 \item \link{lookup.one} translate among parameter attributes (scalar)
 \item \link{lookup} translate among parameter attributes (vector)
 \item \link{lower} calculate normal quantiles at lower probability of interval
