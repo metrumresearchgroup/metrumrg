@@ -305,7 +305,7 @@ as.mDateTime('1970-01-01 08:00') > as.mDate('1970-01-01')
 
 #summary
 max(as.mDate(c('1970-01-01','1980-01-01','1975-01-01')))
-# 315532800
+# 1980-01-01
 
 #operations
 as.mDateTime(0) + as.mTime(60)

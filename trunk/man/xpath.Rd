@@ -25,7 +25,11 @@ xpath(x,file)
 	}
 }
 \examples{
-	xpath('//nm:theta/nm:val',system.file('example/project/nonmem/1005/1005.xml',package='metrumrg'))
+	filename <- 'example/project/nonmem/1005/1005.xml'
+	xpath('//nm:theta/nm:val', system.file(filename,package='metrumrg'))
+	xpath('//nm:monitor/nm:obj', system.file(filename,package='metrumrg'))
+	xpath('//nm:covariance/nm:row', system.file(filename,package='metrumrg'))
+
 }
 \keyword{manip}
 

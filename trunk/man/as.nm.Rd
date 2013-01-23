@@ -131,11 +131,13 @@ meds <- as.keyed(
 )
 
 dose + samp
+dose * samp
 dose & samp
 samp - dose
+samp / dose
 dose | demo
 demo | dose
-demo^dose
+demo ^ dose
 
 nm()
 nm() + dose

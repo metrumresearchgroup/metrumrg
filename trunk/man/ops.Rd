@@ -76,7 +76,7 @@ rearrangement. \code{!} invokes the proxy \code{not.keyed}, which is the best mn
 that have problematic keys (NA or duplicates), i.e. ``not keyed'' correctly.
 
 Operators \code{+,*,/} and \code{-} have higher precedence than \code{&,|} and \code{!}.
-Within groups, operators have equal precedence and resolve left to right (see ?S3groupGeneric). 
+Within groups, operators have equal precedence and resolve left to right (see \code{?S3groupGeneric}). 
 A common assembly sequence is one or more full joins followed by one or more 
 left joins. Correspondence to the existing order of operations minimizes the 
 need for parenthetical grouping of terms (which is available nonetheless).
