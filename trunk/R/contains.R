@@ -23,3 +23,4 @@ ncomma <- function(x,...)paste(names(x,...),collapse=', ')
 #	pattern <- sub('\\.',getOption('OutDec'),pattern)
 #	all(grepl(pattern=pattern,x=x))
 #}
+#experimental; documentation commented in file ncomma.Rd
