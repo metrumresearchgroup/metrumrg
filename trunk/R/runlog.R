@@ -88,7 +88,12 @@ xpath <-  function (x, file){#per Klaas Prins 71 Jan 2013
     result
 }
 
-.minstat <- function(x)xpath(x='//nm:termination_status/text()',file=x)
+.minstat <- function(x){
+	res <- xpath(x='//nm:termination_status/text()',file=x)
+	if(is.null(res)) res <- NA
+	res
+}
+
 as.unilog.run <- function(
 	run,
 	logfile='NonmemRunLog.csv',

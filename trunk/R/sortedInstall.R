@@ -1,7 +1,8 @@
 sortedInstall <- function(pkgDir=getwd(),
                           libDir=NULL,
                           addLib=TRUE, 
-                          tmpName='tmpdir')
+                          tmpName='tmpdir',
+                          ...)
 {
   f <- list.files(pkgDir)
   f <- file.path(pkgDir, f[grepl('tar.gz',f)])
@@ -32,7 +33,7 @@ sortedInstall <- function(pkgDir=getwd(),
   il <- unique(c(dl,p))
   n <- NULL
   for(pkg in il){
-    v <- f[grep(pkg,f)]
+    v <- f[grep(paste(pkg,"_",sep=""),f)]
     if(length(v)==1) n <- c(n,v)
     if(length(v)>1) {
       print(paste("There is more than 1", pkg, "source. Please select one to install:"))
@@ -40,6 +41,6 @@ sortedInstall <- function(pkgDir=getwd(),
     }
   }
   if(is.null(libDir)) libDir <- pkgDir
-  install.packages(pkgs=n, lib=libDir, repos = NULL, type = 'source')
+  install.packages(pkgs=n, lib=libDir, repos = NULL, type = 'source', ...)
   if(addLib==TRUE) .libPaths(libDir)
 }
