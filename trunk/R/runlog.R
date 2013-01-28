@@ -75,24 +75,20 @@ as.unilog.pxml <- function(x,run,tool='nm7',...){
 	row.names(uni) <- NULL
 	uni
 }
-#xpath <- function(x,file){
-#		tree <- xmlParse(readLines(file),asText=TRUE,error=NULL)
-#		result <- xpathSApply(tree,x,fun=xmlValue)
-#		free(tree)
-#		result
+xpath <- function(x,file){
+		tree <- xmlParse(readLines(file),asText=TRUE,error=NULL)
+		result <- xpathSApply(tree,x,fun=xmlValue)
+		free(tree)
+		result
+}
+#xpath <-  function (x, file){#per Klaas Prins 71 Jan 2013
+#    tree <- xmlParse(readLines(file), asText = TRUE, error = NULL)
+#    result <- xpathSApply(tree, x, fun = function(y) as.vector(xmlSApply(y,xmlValue)))
+#    free(tree)
+#    result
 #}
-xpath <-  function (x, file){#per Klaas Prins 71 Jan 2013
-    tree <- xmlParse(readLines(file), asText = TRUE, error = NULL)
-    result <- xpathSApply(tree, x, fun = function(y) as.vector(xmlSApply(y,xmlValue)))
-    free(tree)
-    result
-}
 
-.minstat <- function(x){
-	res <- xpath(x='//nm:termination_status/text()',file=x)
-	if(is.null(res)) res <- NA
-	res
-}
+.minstat <- function(x)xpath(x='//nm:termination_status/text()',file=x)
 
 as.unilog.run <- function(
 	run,
