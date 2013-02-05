@@ -2,8 +2,8 @@ Package: metrumrg
 Type: Package
 Title: Pharmacometric tools for data preparation, modeling, simulation,
         and reporting
-Version: 5.30
-Date: 2012-01-28
+Version: 5.31
+Date: 2012-02-04
 Author: Tim Bergsma, Bill Knebel, Leonid Gibiansky, Natalie Hsiang
 Maintainer: Tim Bergsma <timb@metrumrg.com>
 Depends: reshape, methods, lattice, grid, XML, MASS

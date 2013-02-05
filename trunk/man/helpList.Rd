@@ -222,6 +222,7 @@
 \item \link{c.comment} combine comment
 \item \link{c.flag} combine flag
 \item \link{c.temporal} combine temporal
+\item \link{cast,keyed-method} cast a keyed data.frame, restoring key and output classes
 \item \link{cavg} calculate average concentration
 \item \link{check.subjects} check for missing data, numeric data, ranges, etc.
 \item \link{clear} drop regular patterns from a character vector
@@ -365,6 +366,7 @@
 \item \link{lyse} generic
 \item \link{map} map one set of values to another
 \item \link{maxChar} return the number of printed characters for the widest element of x
+\item \link{melt.keyed} melt keyed data frames, restoring key
 \item \link{merge.keyed} merge keyed data frames, preserving attributes
 \item \link{merge.nm} merge nm objects
 \item \link{metaMerge.character} recursively merge based on a vector of file names

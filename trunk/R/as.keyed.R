@@ -2,7 +2,7 @@
 
 `as.keyed.data.frame` <- function(
 	x,
-	key,
+	key=character(0),
 	...
 ){
 	key(x) <- key

@@ -1,5 +1,6 @@
 exportPattern("^[^\\.]")
 importFrom(stats,aggregate)
+importFrom(reshape,cast)
 S3method('[',comment)
 S3method('[',conditioned)
 S3method('[',digest)

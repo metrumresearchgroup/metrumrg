@@ -26,7 +26,7 @@ take advantage of this information.
 \usage{
 \method{[}{keyed}(x, ...)
 \method{aggregate}{keyed}(x, by=x[,setdiff(key(x),across),drop=FALSE], FUN, across=character(0), ...)
-\method{as.keyed}{data.frame}(x, key, ...)
+\method{as.keyed}{data.frame}(x, key=character(0), ...)
 dupKeys(x, ...)
 key(x, ...)
 key(x) <- value
@@ -102,6 +102,8 @@ Most functions and methods documented here return objects with class
 \seealso{
 	\itemize{
 		\item \code{\link{Ops.keyed}}
+    \item \code{\link{melt.keyed}}
+    \item \code{\link{cast,keyed-method}}
 	}
 }
 \examples{
