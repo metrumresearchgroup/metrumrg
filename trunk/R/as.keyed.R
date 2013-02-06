@@ -64,7 +64,7 @@
 
 `uniKey.keyed` <- function(x,key=NULL,...){
 	if(is.null(key))key <- key(x)
-	test <- sapply(x[key,drop=FALSE],function(col)any(unique(col) %contains% ' '))
+	test <- sapply(x[,key,drop=FALSE],function(col)any(unique(col) %contains% ' '))
 	if(any(test))warning('key contains space')
 	do.call(paste,x[,key,drop=FALSE])
 }
