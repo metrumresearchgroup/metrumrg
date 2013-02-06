@@ -130,15 +130,6 @@ meds <- as.keyed(
 	key=c('SUBJ','HOUR')
 )
 
-dose + samp
-dose * samp
-dose & samp
-samp - dose
-samp / dose
-dose | demo
-demo | dose
-demo ^ dose
-
 nm()
 nm() + dose
 as.nm(dose)
@@ -154,26 +145,7 @@ nm() + dose + samp + long - as.moot()
 nm() + dose + samp + as.rigged(n=10) 
 data <- nm() + transform(dose,EVID=1) + transform(samp,EVID=0) | demo
 summary(data,by=c('EVID','SEQ'))
-
-# another look at raised.keyed
-a <- data.frame(
-  subj=c(1,1,1,2,2,2,3,3,3),
-  time=c(0,1,2,0,1,2,0,1,2),
-  conc=c(1,2,3,1,2,3,1,2,3)
-)
-a <- as.keyed(a,c('subj','time'))
-
-b <-data.frame(
-  subj=c(1,1,2,2,3,3),
-  time=c(0,2,0,2,0,2),
-  conc=c(1,3,1,3,1,3),
-  crcl=c(5,5,6,6,7,7),
-  pred=c(2,4,2,4,2,4)
-)
-b <- as.keyed(b,c('subj','time'))
-a|b
-a^b # note imputation of apparently-constant crcl
-
+\dontrun{index(data)}
 }
 \keyword{manip}
 

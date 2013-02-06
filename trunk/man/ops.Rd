@@ -95,5 +95,63 @@ examples.  See examples for \code{as.nm}.
 		\item \code{\link{static.keyed}}
 	}
 }
+\examples{
+dose <- data.frame( 
+	SUBJ = rep(letters[1:3], each = 2), 
+	HOUR = rep(c(0,20),3), 
+	AMT = rep(c(40,60,80), each = 2) 
+) 
+dose <- as.keyed(dose,key=c('SUBJ','HOUR'))
+samp <- data.frame( 
+	SUBJ = rep(letters[1:3], each = 4), 
+	HOUR = rep(c(0,10,20,30),3), 
+	DV = signif(rnorm(12),2) + 2 
+) 
+samp <- as.keyed(samp,key=c('SUBJ','HOUR'))
+demo <- data.frame( 
+	SUBJ = letters[2:5], 
+	RACE = c('asian','white','black','other'), 
+	SEX = c('female','male','female','male'), 
+	WT = c(75, 70, 73, 68) 
+)
+demo <- as.keyed(demo,key=c('SUBJ'))
+meds <- as.keyed(
+	data.frame(
+		SUBJ=c('a','c'),
+		HOUR=c(0,15),
+		STOP=c(10,25),
+		C3A4=as.flag(c(1,1))
+	),
+	key=c('SUBJ','HOUR')
+)
+
+dose + samp
+dose * samp
+dose & samp
+samp - dose
+samp / dose
+dose | demo
+demo | dose
+demo ^ dose
+
+a <- data.frame(
+  subj=c(1,1,1,2,2,2,3,3,3),
+  time=c(0,1,2,0,1,2,0,1,2),
+  conc=c(1,2,3,1,2,3,1,2,3)
+)
+a <- as.keyed(a,c('subj','time'))
+
+b <-data.frame(
+  subj=c(1,1,2,2,3,3),
+  time=c(0,2,0,2,0,2),
+  conc=c(1,3,1,3,1,3),
+  crcl=c(5,5,6,6,7,7),
+  pred=c(2,4,2,4,2,4)
+)
+b <- as.keyed(b,c('subj','time'))
+a|b
+a^b # note imputation of apparently-constant crcl
+	
+}
 \keyword{manip}
 

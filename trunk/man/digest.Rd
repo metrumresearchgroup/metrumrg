@@ -188,6 +188,7 @@ their \code{as.} counterparts.
 \examples{
 digest(Theoph,c('Subject','Time'))
 head(digest(Theoph,c('Subject','Time')))
+\dontrun{index(as.keyed(Theoph,'Subject'))}
 
 }
 \keyword{manip}

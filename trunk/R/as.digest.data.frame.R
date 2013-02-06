@@ -31,7 +31,7 @@ as.digest.data.frame <- function(
   stc <- lysis$static
   dyn <- lysis$dynamic
   stc <- as.keyed(stc,key[mask])
-  dyn <- as.keyed(dyn,NA)
+  dyn <- as.keyed(dyn,key %n% names(dyn))
   if(descendable(mask)){
     if(!all(key[descend(mask)] %in% names(dyn))){
         if(debug)cat('restoring keys\n')

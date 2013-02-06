@@ -85,6 +85,8 @@ for duplicates.
 
 Methods for \code{merge} and \code{transform} are key-friendly. The method for \code{summary}
 is key-centric.  \code{uniKey} creates a single character vector from all the key columns.
+It uses a space character as the separator, and gives a warning if any of the arguments
+contain spaces (a condition that could lead to logical errors).
 }
 \value{
 Most functions and methods documented here return objects with class 
