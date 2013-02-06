@@ -55,14 +55,14 @@ We do some science on the result first, and then some aesthetics for printing in
 2                          V_c /F (L) ~ theta_2 * (WT/70)^1 * e^eta_2       14
 3                                     K_a (h^-1 ) ~ theta_3 * e^eta_3        6
 4                                                 Q/F (L/h) ~ theta_4       15
-5                                                V_p /F (L) ~ theta_5       13
+5                                                V_p /F (L) ~ theta_5       12
 6                                                 MALE_CL/F ~ theta_6       11
-7                                                   WT_CL/F ~ theta_7       12
+7                                                   WT_CL/F ~ theta_7       13
 8                                                IIV_CL/F ~ Omega_1.1       10
 9                                                cov_CL,V ~ Omega_2.1        8
 10                                             IIV_V_c /F ~ Omega_2.2        7
-11                                             cov_CL,Ka  ~ Omega_3.1        1
-12                                              cov_V,Ka  ~ Omega_3.2        2
+11                                             cov_CL,Ka  ~ Omega_3.1        2
+12                                              cov_V,Ka  ~ Omega_3.2        3
 13                                               IIV_K_a  ~ Omega_3.3        4
 14                                               err_prop ~ Sigma_1.1        5
 15                                                err_add ~ Sigma_2.2        9
@@ -150,14 +150,14 @@ We can use functions of `parameter' to sort out the various error components, as
 2     THETA2     V_c/F       14         NA
 3     THETA3       K_a        6         NA
 4     THETA4       Q/F       15         NA
-5     THETA5     V_p/F       13         NA
+5     THETA5     V_p/F       12         NA
 6     THETA6 MALE_CL/F       11         NA
-7     THETA7   WT_CL/F       12         NA
+7     THETA7   WT_CL/F       13         NA
 8   OMEGA1.1  IIV_CL/F       10 148.409790
 9   OMEGA2.1  cov_CL,V        8         NA
 10  OMEGA2.2 IIV_V_c/F        7  33.100350
-11  OMEGA3.1 cov_CL,Ka        1         NA
-12  OMEGA3.2  cov_V,Ka        2         NA
+11  OMEGA3.1 cov_CL,Ka        2         NA
+12  OMEGA3.2  cov_V,Ka        3         NA
 13  OMEGA3.3   IIV_K_a        4   7.321076
 14  SIGMA1.1  err_prop        5         NA
 15  SIGMA2.2   err_add        9         NA
@@ -190,14 +190,14 @@ We can use functions of `parameter' to sort out the various error components, as
 2     THETA2     V_c/F       14         NA
 3     THETA3       K_a        6         NA
 4     THETA4       Q/F       15         NA
-5     THETA5     V_p/F       13         NA
+5     THETA5     V_p/F       12         NA
 6     THETA6 MALE_CL/F       11         NA
-7     THETA7   WT_CL/F       12         NA
+7     THETA7   WT_CL/F       13         NA
 8   OMEGA1.1  IIV_CL/F       10 148.409790
 9   OMEGA2.1  cov_CL,V        8         NA
 10  OMEGA2.2 IIV_V_c/F        7  33.100350
-11  OMEGA3.1 cov_CL,Ka        1         NA
-12  OMEGA3.2  cov_V,Ka        2         NA
+11  OMEGA3.1 cov_CL,Ka        2         NA
+12  OMEGA3.2  cov_V,Ka        3         NA
 13  OMEGA3.3   IIV_K_a        4   7.321076
 14  SIGMA1.1  err_prop        5   2.236068
 15  SIGMA2.2   err_add        9         NA
@@ -222,14 +222,14 @@ We can use functions of `parameter' to sort out the various error components, as
 2     THETA2     V_c/F       14         NA NA
 3     THETA3       K_a        6         NA NA
 4     THETA4       Q/F       15         NA NA
-5     THETA5     V_p/F       13         NA NA
+5     THETA5     V_p/F       12         NA NA
 6     THETA6 MALE_CL/F       11         NA NA
-7     THETA7   WT_CL/F       12         NA NA
+7     THETA7   WT_CL/F       13         NA NA
 8   OMEGA1.1  IIV_CL/F       10 148.409790 NA
 9   OMEGA2.1  cov_CL,V        8         NA NA
 10  OMEGA2.2 IIV_V_c/F        7  33.100350 NA
-11  OMEGA3.1 cov_CL,Ka        1         NA NA
-12  OMEGA3.2  cov_V,Ka        2         NA NA
+11  OMEGA3.1 cov_CL,Ka        2         NA NA
+12  OMEGA3.2  cov_V,Ka        3         NA NA
 13  OMEGA3.3   IIV_K_a        4   7.321076 NA
 14  SIGMA1.1  err_prop        5   2.236068 NA
 15  SIGMA2.2   err_add        9         NA  3
@@ -279,14 +279,14 @@ The estimates of matrix off-diagonals are covariances, and are more useful if tr
 2     THETA2     V_c/F       14         NA NA         NA
 3     THETA3       K_a        6         NA NA         NA
 4     THETA4       Q/F       15         NA NA         NA
-5     THETA5     V_p/F       13         NA NA         NA
+5     THETA5     V_p/F       12         NA NA         NA
 6     THETA6 MALE_CL/F       11         NA NA         NA
-7     THETA7   WT_CL/F       12         NA NA         NA
+7     THETA7   WT_CL/F       13         NA NA         NA
 8   OMEGA1.1  IIV_CL/F       10 148.409790 NA         NA
 9   OMEGA2.1  cov_CL,V        8         NA NA  0.8492811
 10  OMEGA2.2 IIV_V_c/F        7  33.100350 NA         NA
-11  OMEGA3.1 cov_CL,Ka        1         NA NA -0.1163229
-12  OMEGA3.2  cov_V,Ka        2         NA NA -0.5607054
+11  OMEGA3.1 cov_CL,Ka        2         NA NA -0.1163229
+12  OMEGA3.2  cov_V,Ka        3         NA NA -0.5607054
 13  OMEGA3.3   IIV_K_a        4   7.321076 NA         NA
 14  SIGMA1.1  err_prop        5   2.236068 NA         NA
 15  SIGMA2.2   err_add        9         NA  3         NA
@@ -426,14 +426,14 @@ We wish to include 95 percentiles in our table as confidence intervals.
 2                        V_c /F  ~ theta_2 * (WT/70)^1 * e^eta_2       14   14
 3                                       K_a  ~ theta_3 * e^eta_3        6   13
 4                                                 Q/F  ~ theta_4       15    3
-5                                              V_p /F  ~ theta_5       13    5
+5                                              V_p /F  ~ theta_5       12    5
 6                                            MALE_CL/F ~ theta_6       11    2
-7                                              WT_CL/F ~ theta_7       12    8
+7                                              WT_CL/F ~ theta_7       13    8
 8                                           IIV_CL/F ~ Omega_1.1       10    6
 9                                           cov_CL,V ~ Omega_2.1        8    7
 10                                        IIV_V_c /F ~ Omega_2.2        7    9
-11                                        cov_CL,Ka  ~ Omega_3.1        1    4
-12                                         cov_V,Ka  ~ Omega_3.2        2   12
+11                                        cov_CL,Ka  ~ Omega_3.1        2    4
+12                                         cov_V,Ka  ~ Omega_3.2        3   12
 13                                          IIV_K_a  ~ Omega_3.3        4   11
 14                                          err_prop ~ Sigma_1.1        5    1
 15                                           err_add ~ Sigma_2.2        9   10
@@ -473,7 +473,7 @@ Note that no parameter defines more than one of CV, SD,and COR.  We could collap
 > m <- as.matrix(tab[,c('cv','sd','cor')])
 > tab$variability <- suppressWarnings(apply(m,1,max,na.rm=TRUE))
 > tab$variability[is.infinite(tab$variability)] <- NA
-> i <- !is.na(m)
+> i <- is.defined(m)
 > i[!i] <- NA
 > tab$statistic <- apply(i,1,function(x){
 +   p <- colnames(i)[x]
@@ -501,14 +501,14 @@ Note that no parameter defines more than one of CV, SD,and COR.  We could collap
    central volume of distribution                & $\mathrm{V_{c}/F  \sim \theta_{2}\cdot (WT/70)^{1}\cdot e^{\eta_{2}}}$                                  & 14 $ L $    & 14 & (19.2,27.9)       &  \\
    absorption rate constant                      & $\mathrm{K_{a} \sim \theta_{3}\cdot e^{\eta_{3}}}$                                                       & 6 $ h^-1  $ & 13 & (0.0625,0.0838)   &  \\
    intercompartmental clearance                  & $\mathrm{Q/F  \sim \theta_{4}}$                                                                            & 15 $ L/h $  & 3  & (2.78,4.91)       &  \\
-   peripheral volume of distribution             & $\mathrm{V_{p}/F  \sim \theta_{5}}$                                                                        & 13 $ L $    & 5  & (85.6,559)        &  \\
+   peripheral volume of distribution             & $\mathrm{V_{p}/F  \sim \theta_{5}}$                                                                        & 12 $ L $    & 5  & (85.6,559)        &  \\
    male effect on clearance                      & $\mathrm{MALE_{CL/F}\sim \theta_{6}}$                                                                      & 11 $  $     & 2  & (0.847,1.25)      &  \\
-   weight effect on clearance                    & $\mathrm{WT_{CL/F}\sim \theta_{7}}$                                                                        & 12 $  $     & 8  & (0.61,1.91)       &  \\
+   weight effect on clearance                    & $\mathrm{WT_{CL/F}\sim \theta_{7}}$                                                                        & 13 $  $     & 8  & (0.61,1.91)       &  \\
    interindividual variability of clearance      & $\mathrm{IIV_{CL/F}\sim \Omega_{1.1}}$                                                                     & 10 $  $     & 6  & (0.128,0.321)     & \%CV = 14800 \\
    interindividual clearance-volume covariance   & $\mathrm{cov_{CL,V}\sim \Omega_{2.1}}$                                                                     & 8 $  $      & 7  & (0.0606,0.183)    & CORR = 0.849  \\
    interindividual variability of central volume & $\mathrm{IIV_{V_{c}/F}\sim \Omega_{2.2}}$                                                                  & 7 $  $      & 9  & (0.047,0.158)     & \%CV = 3310  \\
-   interindividual clearance-Ka covariance       & $\mathrm{cov_{CL,Ka} \sim \Omega_{3.1}}$                                                                   & 1 $  $      & 4  & (-0.0448,0.0261)  & CORR = -0.116 \\
-   interindividual volume-Ka covariance          & $\mathrm{cov_{V,Ka} \sim \Omega_{3.2}}$                                                                    & 2 $  $      & 12 & (-0.0577,-0.0049) & CORR = -0.561 \\
+   interindividual clearance-Ka covariance       & $\mathrm{cov_{CL,Ka} \sim \Omega_{3.1}}$                                                                   & 2 $  $      & 4  & (-0.0448,0.0261)  & CORR = -0.116 \\
+   interindividual volume-Ka covariance          & $\mathrm{cov_{V,Ka} \sim \Omega_{3.2}}$                                                                    & 3 $  $      & 12 & (-0.0577,-0.0049) & CORR = -0.561 \\
    interindividual variability of Ka             & $\mathrm{IIV_{K_{a}}\sim \Omega_{3.3}}$                                                                    & 4 $  $      & 11 & (0.0236,0.0811)   & \%CV = 732   \\
    proportional error                            & $\mathrm{err_{prop}\sim \Sigma_{1.1}}$                                                                     & 5 $  $      & 1  & (0.0399,0.0587)   & \%CV = 224   \\
    additive error                                & $\mathrm{err_{add}\sim \Sigma_{2.2}}$                                                                      & 9 $  $      & 10 & (0.0836,0.329)    & SD = 3        \\ \hline
@@ -637,7 +637,4 @@ We can make a quick parameter table that does not use wikitab markup. Table \ref
    $\mathrm{\Sigma_{2.2}}$ & \verb#0.2020# & \verb#33.50# \\ \hline
   \end{tabular}
  \end{center}
-\end{table}
-
-
-\end{document}
+\end{table}\end{document}

@@ -113,7 +113,7 @@ Note that no parameter defines more than one of CV, SD,and COR.  We could collap
 m <- as.matrix(tab[,c('cv','sd','cor')])
 tab$variability <- suppressWarnings(apply(m,1,max,na.rm=TRUE))
 tab$variability[is.infinite(tab$variability)] <- NA
-i <- !is.na(m)
+i <- is.defined(m)
 i[!i] <- NA
 tab$statistic <- apply(i,1,function(x){
   p <- colnames(i)[x]
@@ -167,7 +167,4 @@ writeLines(
   )
 )
 @
-
-
-
 \end{document}
