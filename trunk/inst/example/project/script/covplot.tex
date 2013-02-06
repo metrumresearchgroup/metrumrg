@@ -22,7 +22,7 @@ This script picks up after model.Rnw to process bootstrap results and make covar
 > getwd()
 \end{Sinput}
 \begin{Soutput}
-[1] "/data/metrumrg/inst/example/project/script"
+[1] "/Users/timb/project/metrumrg/inst/example/project/script"
 \end{Soutput}
 \begin{Sinput}
 > require(metrumrg)
@@ -400,22 +400,22 @@ stream.
 13                                               IIV_K_a  ~ Omega_3.3  nm7 1005
 14                                               err_prop ~ Sigma_1.1  nm7 1005
 15                                                err_add ~ Sigma_2.2  nm7 1005
-     estimate prse         se
-1     9.50754 9.84   0.935942
-2     22.7907 9.56    2.17864
-3   0.0714314 7.35 0.00525212
-4     3.47438 15.4   0.535659
-5     113.269   21     23.793
-6     1.02439 11.2   0.114304
-7     1.19226 28.4   0.338587
-8    0.213813 22.8  0.0488382
-9    0.120739 26.4  0.0319111
-10  0.0945275 33.2  0.0313504
-11 -0.0116063  173  0.0200793
-12 -0.0371985 36.1   0.013426
-13  0.0465611 34.7  0.0161799
-14  0.0491683 10.9 0.00538067
-15   0.201814 33.5  0.0676412
+   estimate prse se
+1        16   15 13
+2        14   14 15
+3         6   13  1
+4        15    3 12
+5        13    5 16
+6        11    2 10
+7        12    8 11
+8        10    6  8
+9         8    7  7
+10        7    9  6
+11        1    4  5
+12        2   12  3
+13        4   11  4
+14        5    1  2
+15        9   10  9
 \end{Soutput}
 \begin{Sinput}
 > wiki$name <- wiki2label(wiki$model)
@@ -578,7 +578,7 @@ effectively reproducing the submodel from the control stream.
 > cl
 \end{Sinput}
 \begin{Soutput}
-[1] 9.50754
+[1] 16
 \end{Soutput}
 \begin{Sinput}
 > head(frozen)
@@ -598,12 +598,12 @@ effectively reproducing the submodel from the control stream.
 \end{Sinput}
 \begin{Soutput}
   run      CL/F MALE_CL/F  WT_CL/F WT_CL/F:65 WT_CL/F:75 WT_CL/F:85
-1   1 1.0419467  0.972457 1.469340  0.8968292   1.106690   1.330136
-2   2 0.9498335  1.038960 0.999503  0.9286056   1.071392   1.214169
-3   3 0.9814747  0.846679 1.909750  0.8680311   1.140834   1.448878
-4   4 0.9735705  0.941014 1.697690  0.8817803   1.124264   1.390435
-5   5 1.0802900  1.252500 1.159260  0.9176764   1.083266   1.252420
-6   6 0.9907610  0.967219 1.484300  0.8958355   1.107833   1.334005
+1   1 0.6191469  0.972457 1.469340  0.8968292   1.106690   1.330136
+2   2 0.5644113  1.038960 0.999503  0.9286056   1.071392   1.214169
+3   3 0.5832131  0.846679 1.909750  0.8680311   1.140834   1.448878
+4   4 0.5785162  0.941014 1.697690  0.8817803   1.124264   1.390435
+5   5 0.6419312  1.252500 1.159260  0.9176764   1.083266   1.252420
+6   6 0.5887313  0.967219 1.484300  0.8958355   1.107833   1.334005
 \end{Soutput}
 \begin{Sinput}
 > frozen$`WT_CL/F` <- NULL
@@ -612,12 +612,12 @@ effectively reproducing the submodel from the control stream.
 \end{Sinput}
 \begin{Soutput}
   run variable     value
-1   1     CL/F 1.0419467
-2   2     CL/F 0.9498335
-3   3     CL/F 0.9814747
-4   4     CL/F 0.9735705
-5   5     CL/F 1.0802900
-6   6     CL/F 0.9907610
+1   1     CL/F 0.6191469
+2   2     CL/F 0.5644113
+3   3     CL/F 0.5832131
+4   4     CL/F 0.5785162
+5   5     CL/F 0.6419312
+6   6     CL/F 0.5887313
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Plot.}
