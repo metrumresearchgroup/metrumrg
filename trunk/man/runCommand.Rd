@@ -28,7 +28,7 @@ runCommand(
 	N = glue('Run', run, if (split) c('c', 'e') else NULL),
 	o = rdir,
 	e = rdir,
-	L=if(split & interface=='nm.pl')c(compileflag(compiler(config(dirname(command)))),NA)else NA,
+	L=if(split & is.character(interface) & interface=='nm.pl')c(compileflag(compiler(config(dirname(command)))),NA)else NA,
 	hold_jid = if (split) c(NA, glue('Run', run, 'c')) else NA,
 	V = '',
 	j = 'y',

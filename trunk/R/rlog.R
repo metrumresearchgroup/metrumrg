@@ -45,7 +45,8 @@
   				run=run[[index]],
   				logfile=nmlog[[index]],
   				outfile=nmout[[index]],
-  				tool=tool
+  				tool=tool,
+  				...
   			),
   			error=function(e)data.frame(
   				stringsAsFactors=FALSE,
