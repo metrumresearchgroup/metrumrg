@@ -13,6 +13,7 @@
 \alias{naKeys.default}
 \alias{print.keyed.summary}
 \alias{sort.keyed}
+\alias{unsorted}
 \alias{unsorted.keyed}
 \alias{summary.keyed}
 \alias{transform.keyed}
