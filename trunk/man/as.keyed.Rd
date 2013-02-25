@@ -13,6 +13,7 @@
 \alias{naKeys.default}
 \alias{print.keyed.summary}
 \alias{sort.keyed}
+\alias{unsorted.keyed}
 \alias{summary.keyed}
 \alias{transform.keyed}
 \alias{uniKey.keyed}
@@ -32,6 +33,7 @@ key(x, ...)
 key(x) <- value
 \method{merge}{keyed}(x, y, ...)
 naKeys(x, ...)
+unsorted(x, ...)
 \method{print}{keyed.summary}(x, ...)
 \method{sort}{keyed}(x, decreasing = FALSE, ...)
 \method{summary}{keyed}(object, ...)
@@ -80,6 +82,8 @@ row, as \code{duplicated} can: it identifies the duplicates as well as those row
 which they are duplicates. It is recommended to test for \code{NA}s before testing 
 for duplicates.
 
+The \code{keyed} method for \code{unsorted} detects rows that would move on sort.
+
 %\code{order} treats \code{decreasing} as an all-or-nothing argument, whereas \code{sort.keyed} 
 %allows independent specification for each column.
 
@@ -96,7 +100,7 @@ Most functions and methods documented here return objects with class
 
 \code{uniKey.keyed} returns a character vector as long as \code{nrow(x)}.
 
-\code{naKeys} and \code{dupKeys} return logical vectors as long as \code{nrow(x)}.
+\code{naKeys}, \code{dupKeys}, and \code{unsorted} return logical vectors as long as \code{nrow(x)}.
 
 }
 \references{\url{http://metrumrg.googlecode.com}}

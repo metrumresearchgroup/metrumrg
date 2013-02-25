@@ -26,6 +26,6 @@ function(x,prefix='#',na.strings=c('.','NA',''),...){
   x[!is.na(y)] <- glue(prefix,x[!is.na(y)])
   return(x)
 }
-as.best.comment <- function(x,...)as.numeric(as.logical(x))
-as.best.temporal <- function(x,...)as.numeric(x)
+#as.best.comment <- function(x,...)as.character(x)
+#as.best.temporal <- function(x,...)as.character(x)
 

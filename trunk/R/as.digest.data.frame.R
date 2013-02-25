@@ -31,7 +31,8 @@ as.digest.data.frame <- function(
   stc <- lysis$static
   dyn <- lysis$dynamic
   stc <- as.keyed(stc,key[mask])
-  dyn <- as.keyed(dyn,key %n% names(dyn))
+  dyn <- as.keyed(dyn,NA)
+  #dyn <- as.keyed(dyn,key %n% names(dyn))
   if(descendable(mask)){
     if(!all(key[descend(mask)] %in% names(dyn))){
         if(debug)cat('restoring keys\n')
@@ -129,7 +130,8 @@ as.digest.data.frame <- function(
   }
   #stc and dyn are lists, whether or not populated
   lysis <- c(stc,dyn)
-  names(lysis) <- sapply(lapply(lysis,function(f)key(f)),paste,collapse=';')
+  names(lysis) <- sapply(lapply(lysis,function(f)key(f)),paste,collapse='.')
+  if('NA' %in% names(lysis))lysis[['NA']] <- structure(lysis[['NA']],key=key) # restore full key for diagnostics
   class(lysis) <- 'digest'
   lysis
 }

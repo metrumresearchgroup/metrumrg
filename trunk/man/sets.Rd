@@ -23,10 +23,10 @@
   \item{mode}{currently ignored}
  }
 \details{
-	The \code{+} and \code{u} variants give set union, with obvious mnemonic significance.
-	\code{&} gives set intersection; mnemonically, elements present in x \emph{and} y.
-	\code{n} looks like an inverted \code{u} in many fonts, and so also gives set intersection
-	in something more like classical notation.  The \code{-} variant is suggestive of set difference
+	The \code{\%+\%} and its alias \code{\%u\%} give set union, with obvious mnemonic significance.
+	\code{\%&\%} gives set intersection; mnemonically, elements present in x \emph{and} y.
+	\code{n} looks like an inverted \code{u} in many fonts, so \code{\%n\%} gives set intersection
+	in something more like classical notation.  \code{\%-\%} is suggestive of set difference
 	both in arithmetic and classical notation.
 	
 	These functions call \code{union}, \code{intersect}, and \code{setdiff}, which 
@@ -46,9 +46,9 @@ vector
 	}
 }
 \examples{
-c('a','b','c') %u% c('c','d','e')
-c('a','b','c') %n% c('c','d','e')
-c('a','b','c') %-% c('c','d','e')
+c('a','b','c') \%u\% c('c','d','e')
+c('a','b','c') \%n\% c('c','d','e')
+c('a','b','c') \%-\% c('c','d','e')
 as.vector(as.keyed(Theoph,c('Subject', 'Time')))
 }
 \keyword{manip}

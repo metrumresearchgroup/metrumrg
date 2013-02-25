@@ -549,6 +549,8 @@
 \item \link{unique.temporal} find unique elements of a temporal vector
 \item \link{unitDensity} calculate univariate density with maximum equal to 1
 \item \link{unitHist} calculate univariate histogram architecture with maximum height equal to 1
+\item \link{unsorted} generic
+\item \link{unsorted.keyed} detect rows that would move on sort
 \item \link{upper} calculate normal quantiles at upper probability of interval
 \item \link{variants} locate variants of a file in distinctive subdirectories
 \item \link{viewtex} view (as pdfs) files that contain fragmentary tex code (e.g. tables)

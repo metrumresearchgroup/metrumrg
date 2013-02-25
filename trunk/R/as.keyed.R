@@ -40,6 +40,8 @@
 	if(nrow(x)==1)dim(y) <- c(1,length(y))
 	as.logical(apply(y,1,sum))
 }
+unsorted <- function(x,...)UseMethod('unsorted')
+unsorted.keyed <- function(x, decreasing=FALSE, ...)rownames(x) != rownames(sort(x,decreasing=decreasing,...))
 
 `print.keyed.summary` <- function(x,...){
 	writeLines(paste(x$key,collapse='~'))

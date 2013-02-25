@@ -2,8 +2,8 @@
 \alias{as.best.default}
 \alias{as.best.data.frame}
 \alias{as.best}
-\alias{as.best.comment}
-\alias{as.best.temporal}
+%\alias{as.best.comment}
+%\alias{as.best.temporal}
 \title{Coerce data unambiguously to numeric or character}
 \description{
 	In some sense, numeric and character are the most general
@@ -12,8 +12,8 @@
 }
 \usage{
 	\method{as.best}{default}(x,prefix='#',na.strings=c('.','NA',''),...)
-	\method{as.best}{comment}(x, ...)
-	\method{as.best}{temporal}(x, ...)
+%	\method{as.best}{comment}(x, ...)
+%	\method{as.best}{temporal}(x, ...)
 	\method{as.best}{data.frame}(x,...)
 	
 }
@@ -33,13 +33,13 @@ or trailing white space can be confused with alignment adjustments. The string v
 \code{as.best.default} coerces its argument to character, strips leading and 
 trailing white space, and coerces \code{na.strings} to NA. A numeric vector is returned 
 if all non-missing values can be coerced to numeric.  A character vector is returned
-if no non-missing values can be coerced to numeric.  If a prefix is supplied (the default)
+if any non-missing values cannot be coerced to numeric.  If a prefix is supplied (the default)
 numbers in a mixed vector are prefixed thus; if \code{prefix} is length zero, mixed
 character-numeric gives an error.
 
 The method for \code{data.frame} coerces each column in turn, returning either
-the updated data frame or an error indicating the first problematic column. Methods
-are supplied for \code{temporal} and \code{comment}.
+the updated data frame or an error indicating the first problematic column. 
+%Methods are supplied for \code{temporal} and \code{comment}.
 }
 \value{an object like x}
 \references{\url{http://metrumrg.googlecode.com}}
