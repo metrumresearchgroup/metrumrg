@@ -21,6 +21,7 @@ a \%crossed.on\% b
 \arguments{
   \item{a}{a list of equal length factors, or one factor}
   \item{b}{a list of equal length factors, or one factor, same length as \code{a}}
+  \item{all}{whether to include first instances: see details}
   \item{x}{an object like \code{a}, or a data.frame}
   \item{within}{An object like \code{b}}
   \item{\dots}{extra arguments passed to other methods}
@@ -38,7 +39,8 @@ a \%crossed.on\% b
   
   \code{crosses()} is the basis for all other functions, and is useful for determining
  positions at which crossing occurs (or nesting fails). For each level of a, it returns
- FALSE for the first unique value of b, and TRUE for any others.
+ FALSE for the first unique value of b, and TRUE for any others. If all is TRUE,
+ however, it returns TRUE for the first unique value of b when there are others. 
 }
 
 \value{
