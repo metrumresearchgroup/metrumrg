@@ -6,7 +6,7 @@
 	)
 )!=
 duplicated(
-	fromLast=fromLast
+	fromLast=fromLast,
 	as.data.frame(a)
 )
 
