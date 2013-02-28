@@ -38,6 +38,6 @@ contains(
     'fibrogen'
   )
 )
-letters %contains% 'a'
+letters \%contains\% 'a'
 }
 \keyword{manip}

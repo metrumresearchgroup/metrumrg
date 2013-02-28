@@ -1,4 +1,5 @@
 \name{as.second}
+\alias{nominal}
 \alias{as.second}
 \alias{as.minute}
 \alias{as.hour}

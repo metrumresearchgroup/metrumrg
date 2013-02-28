@@ -2,7 +2,6 @@ partab <-
 function(
     run, 
     project = getwd(), 
-    #boot = FALSE, 
     tool = "nm7", 
     file = filename(rundir,run,'.ctl'), 
     rundir = filename(project, run),
@@ -42,6 +41,7 @@ function(
 			...
 		)
 	)
+	names(par)[names(par)=='NA'] <- NA
 	par <- par[sapply(par,function(x)!all(is.na(x)))]
 	par[[by]]<- x
 	log <- log[log[[by]] %in% x,]
