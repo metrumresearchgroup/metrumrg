@@ -63,6 +63,7 @@ Break a data frame into components static on variants of a proposed key.
   \item{x}{object of dispatch}
   \item{key}{a vector of column names in \code{x} representing a proposed object hierarchy}
   \item{strict}{passed to \code{lyse}}
+  \item{\dots}{passed to or from other functions}
 }
 \details{
 Well-constructed data tables typically admit a set of columns (a key), the interaction of which uniquely

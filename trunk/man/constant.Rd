@@ -11,7 +11,7 @@
   Various Tests for Nested Factors.
 }
 \usage{
-crosses(a,b)
+crosses(a, b, all = FALSE)
 a \%nests\% b
 a \%nested.in\% b
 a \%crosses\% b

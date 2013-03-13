@@ -15,7 +15,7 @@
 \alias{as.isolated.digest}
 \alias{as.isolated.isolated}
 \alias{as.isolated.keyed}
-\alias{as.keyed.nm}
+%\alias{as.keyed.nm}
 \alias{as.roles}
 \alias{as.roles.digest}
 \alias{as.roles.keyed}

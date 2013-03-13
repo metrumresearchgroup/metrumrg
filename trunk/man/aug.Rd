@@ -3,7 +3,7 @@
 \title{Augment a List-like Object}
 \description{Add named elements to an object.}
  \usage{
-aug(x, ...)
+aug(`_data`, ...)
 }
 \arguments{
   \item{_data}{a list-like object}
