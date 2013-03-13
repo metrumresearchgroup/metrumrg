@@ -26,6 +26,9 @@
 \alias{as.mTime.times}
 \alias{unique.temporal}
 \alias{Summary.temporal}
+\alias{mDateTime}
+\alias{mDate}
+\alias{mTime}
 
 \title{Temporal Classes with Selective Defaults}
 \description{

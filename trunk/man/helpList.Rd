@@ -453,6 +453,7 @@
 \item \link{print.nmctl} print nmctl
 \item \link{print.nominal} print nominal
 \item \link{print.temporal} print temporal
+\item \link{print.uniKey} print uniKey
 \item \link{progress} summarize progress of NONMEM runs
 \item \link{purge.dir} purge a directory (internal)
 \item \link{purge.files} purge files (internal)

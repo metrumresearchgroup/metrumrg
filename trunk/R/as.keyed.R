@@ -47,8 +47,8 @@ unsorted.keyed <- function(x, decreasing=FALSE, ...)rownames(x) != rownames(sort
 	writeLines(paste(x$key,collapse='~'))
 	writeLines(paste(x$naKeys,'NA keys'))
 	writeLines(paste(x$dupKeys,'duplicate keys'))
-	if(!x$sorted)writeLines('unsorted')
-	if(length(setdiff(names(x),c('key','naKeys','dupKeys','sorted'))))writeLines('other attributes present')
+	if(x$unsorted)writeLines(paste('unsorted',x$unsorted,sep=': '))
+	if(length(setdiff(names(x),c('key','naKeys','dupKeys','unsorted'))))writeLines('other attributes present')
 }
 	
 `summary.keyed` <- function(object,...){
@@ -57,7 +57,7 @@ unsorted.keyed <- function(x, decreasing=FALSE, ...)rownames(x) != rownames(sort
 	z$key <- key(x)
 	z$naKeys <- sum(naKeys(x))
 	z$dupKeys <- sum(dupKeys(x))
-	z$sorted <- identical(x,sort(x))
+	z$unsorted <- sum(unsorted(x))
 	class(z) <- 'keyed.summary'
 	z	
 }
@@ -66,10 +66,24 @@ unsorted.keyed <- function(x, decreasing=FALSE, ...)rownames(x) != rownames(sort
 
 `uniKey.keyed` <- function(x,key=NULL,...){
 	if(is.null(key))key <- key(x)
-	test <- unique(do.call(glue,x[,key,drop=FALSE]))
-	if(any(test %contains% ' '))warning('key contains space')
-	do.call(paste,x[,key,drop=FALSE])
+	key <- x[,key,drop=FALSE]
+	res <- do.call(paste,c(key,list(sep='\r')))
+	class(res) <- c('uniKey',class(res))
+	res
 }
+print.uniKey <- function(x, ...)print(gsub('\r',' ',x))
+	
+#unit test
+
+#x <- data.frame(
+#  x=c('a ','a'),
+#  y=c('b',' b')
+#)
+#x
+#x <- as.keyed(x, c('x','y'))
+#uniKey(x)
+#factor(uniKey(x))
+#uniKey(x,sep='.')
 
 aggregate.keyed <- function(
 	x,

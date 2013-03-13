@@ -13,7 +13,11 @@
   toss[names(x) %in% on] <- TRUE 
   kept <- x[,keep,drop=FALSE]
   kept <- unique(kept)
+  kept <- as.keyed(kept, key=on)
+  #class(kept) <- c('static',class(kept))
   tossed <- x[,toss,drop=FALSE]
+  tossed <- as.keyed(tossed, key = on)
+  #class(tossed) <- c('dynamic',class(tossed))
   return(list(static=kept,dynamic=tossed))
 }
 `lyse.keyed` <- function(x,on=key(x),...)lyse.data.frame(x,on=on,...)

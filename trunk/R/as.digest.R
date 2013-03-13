@@ -10,7 +10,7 @@ as.digest.keyed <- function(
   strict=TRUE,
   ...
 )as.digest.data.frame(x,key=key,strict=strict,...)
-as.digest.nm <- function(x,key=match.fun('key')(x),...)as.digest(as.keyed(x,key=key,...))
+as.digest.nm <- function(x,key=match.fun('key')(x),...)as.digest(as.keyed(x,key=key,...),...)
 `[.digest`<-function (x, ...) 
 {
     y <- NextMethod()

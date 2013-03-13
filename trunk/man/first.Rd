@@ -36,7 +36,7 @@ after(   where,within,n=1,...)
   limiting candidate elements by \code{where}, and optionally breaking the evaluation across subsets
   as specified by \code{within}.  \code{n} can be 0, returning all \code{NA}, or negative,
   which counts instances  from the end of the vector or subsets.  If \code{n} is NA, all elements are 
-  returned.
+  returned. NA is returned at positions for which the condition \code{where} is not met \code{n} times.
   
   All of \code{x}, \code{where}, and \code{within} are optional. The \sQuote{scale} of the function
   is set to the longest of the three (member-wise for \code{within} if it is a list).  

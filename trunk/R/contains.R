@@ -7,11 +7,11 @@ function(pattern,text,...){
 `text2decimal` <-
 function (x) as.numeric(sub("^[^0-9.+-]*([0-9.eE+-]+).*$", "\\1", as.character(x)))
 
-aug <- function(x,...){
-	extras <- list(...)
+aug <- function(`_data`,...){
+	extras <-  eval(substitute(list(...)), `_data`, parent.frame())
 	nms <- names(extras)
-	for(name in nms)x[[name]] <- extras[[name]]
-	x
+	for(name in nms)`_data`[[name]] <- extras[[name]]
+	`_data`
 }
 is.defined <- function(x)!is.na(x)
 pool <- function(x,y)list(x=setdiff(x,y),y=setdiff(y,x),both=intersect(x,y))
