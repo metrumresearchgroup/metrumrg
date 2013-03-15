@@ -76,7 +76,7 @@ Conversions use 60 seconds per minute, 60 minutes per hour, 24 hours per day,
 relationships are specified.  Note that 12 nominal months does not make a full year.
 This is experimental, and may change in future versions.
 
-The duration classes are also subclasses \code{timeline}, which exists to support addition and subtraction of durations and timepoints.  
+The duration classes are also subclasses of \code{timeline}, which exists to support addition and subtraction of durations and timepoints.  
 See examples here, and at \code{\link{timeline}}. During addition, the result will have
 the class of the first argument, unless the second is a timepoint.  When adding two durations, a message
 is issued if the classes differ.  During subtraction, the class of the first argument is retained, without 
