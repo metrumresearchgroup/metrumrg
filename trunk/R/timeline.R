@@ -14,7 +14,7 @@
 	
 `-.timeline` <- function(e1,e2){
   if(missing(e2)) if(any(c('mDateTime','mDate') %in% class(e1)))warning('negative mDate and mDateTime may not be meaningful')
-  return(0 - e1)	  
+  if(missing(e2))return(e1 * (-1))	  
   if(inherits(e2,'timepoint'))stop('subtracting a timepoint is undefined')
   as <- class(e1)[[1]]
   coerce <- match.fun(glue('as.',as))
