@@ -1,5 +1,5 @@
 \name{as.second}
-\alias{nominal}
+\alias{duration}
 \alias{as.second}
 \alias{as.minute}
 \alias{as.hour}
@@ -14,8 +14,8 @@
 \alias{as.week.numeric}
 \alias{as.month.numeric}
 \alias{as.year.numeric}
-\alias{format.nominal}
-\alias{print.nominal}
+\alias{format.duration}
+\alias{print.duration}
 \alias{as.second.minute}
 \alias{as.minute.second}
 \alias{as.minute.hour}
@@ -37,14 +37,14 @@
 \alias{as.year.year}
 \alias{as.second.hour}
 \alias{as.second.day}
-\alias{as.second.nominal}
-\alias{as.minute.nominal}
+\alias{as.second.duration}
+\alias{as.minute.duration}
 \alias{as.hour.second}
-\alias{as.hour.nominal}
-\alias{as.day.nominal}                                     
-\alias{as.week.nominal}
-\alias{as.month.nominal}
-\alias{as.year.nominal}
+\alias{as.hour.duration}
+\alias{as.day.duration}                                     
+\alias{as.week.duration}
+\alias{as.month.duration}
+\alias{as.year.duration}
 \title{Interconvert Nominal Time Units}
 \description{Perform standard conversions among various common time units.}
  \usage{
@@ -63,7 +63,7 @@ as.year(x, ...)
 \details{
 The functions listed above are generic.  Methods exist, either explictly or implicitly,
 for objects classified to represent second, minute, hour, day, week, month, and year.
-All these objects are subclasses of "nominal"; \code{as.<n>.nominal} serves wherever
+All these objects are subclasses of "duration"; \code{as.<n>.duration} serves wherever
 explicit methods are omitted. For each generic, methods exist for class "numeric".  
 For each class, methods exist for the generics "format" and "print".
 
@@ -75,9 +75,15 @@ Conversions use 60 seconds per minute, 60 minutes per hour, 24 hours per day,
 7 days per week, 28 days per month, and 365.25 days per year.  Currently, no other
 relationships are specified.  Note that 12 nominal months does not make a full year.
 This is experimental, and may change in future versions.
+
+The duration classes are also subclasses \code{timeline}, which exists to support addition and subtraction of durations and timepoints.  
+See examples here, and at \code{\link{timeline}}. During addition, the result will have
+the class of the first argument, unless the second is a timepoint.  When adding two durations, a message
+is issued if the classes differ.  During subtraction, the class of the first argument is retained, without 
+message. Negative durations are allowed. 
 }
 \value{
-an S3 "num" object with class \code{c(n, 'nominal','numeric')}, where `n' is
+an S3 "num" object with class \code{c(n, 'duration','numeric')}, where `n' is
 "second", "minute", "hour", "day", "week", "month", or "year", as implied.
 }
 \references{\url{http://metrumrg.googlecode.com}}
@@ -85,11 +91,16 @@ an S3 "num" object with class \code{c(n, 'nominal','numeric')}, where `n' is
 \seealso{
 	\itemize{
 		\item \code{\link{as.mDateTime}}
+		\item \code{\link{timeline}}
 	}
 }
 \examples{
 as.year(as.month(12))
 as.year(as.day(365.25))
 as.second(as.year(1))
+as.month(2) + as.week(2)
+as.week(2) + as.month(1)
+as.month(2) - as.week(2)
+as.week(2) - as.month(1)
 }
 \keyword{manip}

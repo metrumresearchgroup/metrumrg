@@ -1,38 +1,38 @@
-\name{c.temporal}
-\alias{c.temporal}
-\alias{[.temporal}
-\alias{[<-.temporal}
-\alias{[[.temporal}
-\alias{as.character.temporal}
+\name{c.timepoint}
+\alias{c.timepoint}
+\alias{[.timepoint}
+\alias{[<-.timepoint}
+\alias{[[.timepoint}
+\alias{as.character.timepoint}
 \alias{as.chartime.numeric}
 \alias{as.chartime}
 \alias{as.numeric.chartime}
-\alias{print.temporal}
-\alias{seq.temporal}
-\alias{rep.temporal}
-\title{Support for temporal Classes}
+\alias{print.timepoint}
+\alias{seq.timepoint}
+\alias{rep.timepoint}
+\title{Support for timepoint Classes}
 \description{
-  These functions support classes temporal, mTime, mDate, and mDateTime
+  These functions support classes timepoint, mTime, mDate, and mDateTime
   (and related functions).  They are mostly S3 methods for base R generics.
 }
 \usage{
-\method{c}{temporal}(..., recursive = FALSE)
-\method{[}{temporal}(x, ..., drop = TRUE)
-\method{[}{temporal}(x, ...) <- value
-\method{[[}{temporal}(x, ..., drop = TRUE)
-\method{as.character}{temporal}(x, ...)
+\method{c}{timepoint}(..., recursive = FALSE)
+\method{[}{timepoint}(x, ..., drop = TRUE)
+\method{[}{timepoint}(x, ...) <- value
+\method{[[}{timepoint}(x, ..., drop = TRUE)
+\method{as.character}{timepoint}(x, ...)
 as.chartime(x, ...)
 \method{as.chartime}{numeric}(x, format, mark=TRUE,...)
 \method{as.numeric}{chartime}(x, format,...)
-\method{print}{temporal}(x, ...)
-\method{rep}{temporal}(x, ...)
-\method{seq}{temporal}(from, to, by, length.out, along.with, ...)
+\method{print}{timepoint}(x, ...)
+\method{rep}{timepoint}(x, ...)
+\method{seq}{timepoint}(from, to, by, length.out, along.with, ...)
 }
 
 \arguments{
   \item{\dots}{arguments to \code{c}, or passed to other functions}
   \item{recursive}{same meaning as for \code{c}}
-  \item{x}{object of class temporal}
+  \item{x}{object of class timepoint}
   \item{drop}{same meaning as for \sQuote{[} and \sQuote{[[}}
   \item{value}{value to be assigned, as for \sQuote{[<-}}
   \item{format}{input or output format describing character time (see \code{\link{strftime}})}
@@ -46,8 +46,8 @@ as.chartime(x, ...)
 \details{
   Normally you shouldn't need to worry about these functions.  \code{c} and the \sQuote{[} 
   variants exist just so that class information is not lost on invocation of the 
-  generic.  \code{as.character.temporal} and \code{print.temporal} just call \code{format}.
-  \code{chartime} variants are used internally by other functions.  \code{seq.temporal} 
+  generic.  \code{as.character.timepoint} and \code{print.timepoint} just call \code{format}.
+  \code{chartime} variants are used internally by other functions.  \code{seq.timepoint} 
   requires \code{from}. If an interval cannot be calculated from supplied arguments,
   \code{by} is set to 1 hour for \code{mTime} or 1 day for \code{mDate} or \code{mDateTime}.
 }
@@ -56,14 +56,14 @@ as.chartime(x, ...)
   \item{as.chartime}{generic: does not return}
   \item{as.chartime.numeric}{character (time)}
   \item{as.numeric.chartime}{numeric (seconds)}
-  \item{as.character.temporal}{character (time)}
+  \item{as.character.timepoint}{character (time)}
   \item{others}{object with same class as \code{x}}
 }
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{
-		\item \code{\link{temporal}} 
+		\item \code{\link{timepoint}} 
 		\item \code{\link{seq.default}}
 		\item \code{\link{strftime}}
 	}

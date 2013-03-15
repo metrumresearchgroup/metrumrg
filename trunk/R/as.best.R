@@ -27,5 +27,5 @@ function(x,prefix='#',na.strings=c('.','NA',''),...){
   return(x)
 }
 #as.best.comment <- function(x,...)as.character(x)
-#as.best.temporal <- function(x,...)as.character(x)
+#as.best.timepoint <- function(x,...)as.character(x)
 

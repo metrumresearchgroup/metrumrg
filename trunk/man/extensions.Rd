@@ -58,9 +58,9 @@ is ascending, descending, stationary (\code{start==stop}), or undefined
 preserves attributes.
 
 \code{moot.nm} will identify rows that make no difference to NONMEM. If an \code{EVID:2}
-row differs from the row just before it only with respect to temporal 
+row differs from the row just before it only with respect to timepoint 
 designations, the NONMEM result should not be affected. NONMEM should use 
-the changed values from the first row in which non-temporal items change to 
+the changed values from the first row in which non-timepoint items change to 
 estimate the midpoint of the prior interval. 
 
 \code{rig.nm} generates extra rows, spaced across each subject's timecourse, 

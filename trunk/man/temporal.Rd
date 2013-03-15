@@ -1,5 +1,5 @@
-\name{temporal}
-\alias{temporal}
+\name{timepoint}
+\alias{timepoint}
 \alias{as.mTime}
 \alias{as.mTime.character}
 \alias{as.mTime.numeric}
@@ -17,31 +17,34 @@
 \alias{format.mTime}
 \alias{format.mDate}
 \alias{format.mDateTime}
-\alias{xtfrm.temporal}
+\alias{xtfrm.timepoint}
 \alias{as.mDate.Date}
 \alias{as.mDate.dates}
 \alias{as.mDateTime.POSIXct}
 \alias{as.mDateTime.POSIXlt}
 \alias{as.mDateTime.chron}
 \alias{as.mTime.times}
-\alias{unique.temporal}
-\alias{Summary.temporal}
+\alias{unique.timepoint}
+\alias{Summary.timepoint}
 \alias{mDateTime}
 \alias{mDate}
 \alias{mTime}
+\alias{timeline}
+\alias{+.timeline}
+\alias{-.timeline}
 
 \title{Temporal Classes with Selective Defaults}
 \description{
-  \code{temporal} is an abstract superclass of \code{mTime}, \code{mDate},
-  and \code{mDateTime}.  These latter are convenience classes that store temporal
+  \code{timepoint} is an abstract superclass of \code{mTime}, \code{mDate},
+  and \code{mDateTime}.  These latter are convenience classes that store timepoint
   information as seconds since the start of 1970-01-01.  They rely on \code{POSIXlt} and
   \code{POSIXct}, giving full access to the format constructs of \code{\link{strftime}}.
   However, the concepts of \sQuote{origin} and \sQuote{timezone} are deconstructed (fixed to 
   1970-01-01 and GMT).  Default formats are suitably chosen for inputs 
   (\code{as.character} methods) and outputs (\code{format} methods) and may be overridden. 
-  By default, \code{format} will append a \sQuote{+} symbol to temporals with dangling seconds 
+  By default, \code{format} will append a \sQuote{+} symbol to timepoints with dangling seconds 
   (not multiples of 60): seconds are not displayed by default but still operate 
-  (perhaps dangerously) in comparisons.
+  (perhaps dangerously) in comparisons. 
 }
 \usage{
 as.mTime(x, ...)
@@ -66,14 +69,14 @@ as.mDateTime(x, ...)
 \method{format}{mTime}(x, format = '\%H:\%M', mark=TRUE,...)
 \method{format}{mDate}(x, format = '\%Y-\%m-\%d', mark=TRUE,...)
 \method{format}{mDateTime}(x, format = '\%Y-\%m-\%d \%H:\%M', mark=TRUE,...)
-\method{unique}{temporal}(x, incomparables=FALSE,...)
-\method{Summary}{temporal}(..., na.rm=FALSE)
-\method{xtfrm}{temporal}(x,...)
+\method{unique}{timepoint}(x, incomparables=FALSE,...)
+\method{Summary}{timepoint}(..., na.rm=FALSE)
+\method{xtfrm}{timepoint}(x,...)
 }
 
 \arguments{
   \item{x}{character time as per format, numeric seconds since 1970-01-01, 
-  	or temporal subclass}
+  	or timepoint subclass}
   \item{\dots}{other arguments, usually ignored}
   \item{y}{optional time for constructing mDateTime from mDate (defaults to 
   	midnight}
@@ -83,7 +86,7 @@ as.mDateTime(x, ...)
   \item{na.rm}{passed to \code{Summary}}
  }
 \details{
-  Creating a temporal object with these methods ultimately calls one of the 
+  Creating a timepoint object with these methods ultimately calls one of the 
   \code{.numeric} methods, each of which round their first argument to zero
   places.  This means that all comparisons are based on whole numbers, and 
   therefore not subject to rounding errors.  
@@ -93,27 +96,35 @@ as.mDateTime(x, ...)
   store numbers of seconds that correspond to midnight, so adding an mDate and 
   mTime gives a predictable result.  
   
-  The temporal classes are all subclasses of numeric, so numeric methods are
+  The timepoint classes are all subclasses of numeric, so numeric methods are
   available (but may not preserve class information; try \code{max} for example).
   
-  temporal classes support \code{NA}, \code{Inf}, \code{-Inf}, \code{as.data.frame}, \code{seq}, subset, element
+  The timepoint classes support \code{NA}, \code{Inf}, \code{-Inf}, \code{as.data.frame}, \code{seq}, subset, element
   selection, element assignment, and interconversion.
+  
+  
+  The timepoint classes are also subclasses \code{timeline}, which exists to support addition and subtraction of durations and timepoints.  See examples.
+  Exceptions: you cannot add two timepoints, nor can you subtract a timepoint.  During addition, the result will have
+  the class of the first argument, unless the second is a timepoint.  When adding two durations, a message
+  is issued if the classes differ.  During subtraction, the class of the first argument is retained, without 
+  message.
 }
 \value{
   \item{format}{character}
-  \item{as.mTime}{object with class \code{c('mTime','temporal','numeric')}}
-  \item{as.mDate}{object with class \code{c('mDate','temporal','numeric')}}
-  \item{as.mDateTime}{object with class \code{c('mDateTime','temporal','numeric')}}
+  \item{as.mTime}{object with class \code{c('mTime','timepoint','numeric')}}
+  \item{as.mDate}{object with class \code{c('mDate','timepoint','numeric')}}
+  \item{as.mDateTime}{object with class \code{c('mDateTime','timepoint','numeric')}}
 }
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{
-		\item \code{\link{c.temporal}}
+		\item \code{\link{duration}}
+		\item \code{\link{c.timepoint}}
 	}
 }
 \examples{
-#numeric to temporal
+#numeric to timepoint
 as.mTime(0)
 # 00:00
 as.mTime(1)
@@ -147,7 +158,7 @@ as.mDateTime(61)
 as.mDateTime(-1)
 # 1969-12-31 23:59+
 
-#character to temporal
+#character to timepoint
 as.mTime('00:00')
 # 00:00
 as.mTime('23:59')
@@ -169,7 +180,7 @@ as.mDateTime('01/02/1970 12:30',format='\%m/\%d/\%Y \%H:\%M')
 as.mDateTime('01/02/1970 12:30:15',format='\%m/\%d/\%Y \%H:\%M:\%S')
 # 1970-01-02 12:30+
 
-#temporal to numeric
+#timepoint to numeric
 as.numeric(as.mTime(0))
 # 0
 as.numeric(as.mTime(1))
@@ -223,7 +234,7 @@ as.numeric(as.mDateTime('01/02/1970 12:30',format='\%m/\%d/\%Y \%H:\%M'))
 as.numeric(as.mDateTime('01/02/1970 12:30:15',format='\%m/\%d/\%Y \%H:\%M:\%S'))
 # 131415
 
-#temporal to character
+#timepoint to character
 as.character(as.mTime(0))
 # '00:00'
 as.character(as.mDate(0))
@@ -313,8 +324,16 @@ max(as.mDate(c('1970-01-01','1980-01-01','1975-01-01')))
 #operations
 as.mDateTime(0) + as.mTime(60)
 # 1970-01-01 00:01
+as.mDateTime(0) + as.second(60)
+# 1970-01-01 00:01
+as.second(60) + as.mDateTime(0)
+# 1970-01-01 00:01
+as.mDateTime(0) - as.second(60)
+# 19669-12-31 23:59
 as.mTime(60) + as.mDateTime(0)
 # 00:01
+
+
 
 #unary operations
 -as.mTime(1)

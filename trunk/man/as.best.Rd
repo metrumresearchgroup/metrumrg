@@ -3,7 +3,7 @@
 \alias{as.best.data.frame}
 \alias{as.best}
 %\alias{as.best.comment}
-%\alias{as.best.temporal}
+%\alias{as.best.timepoint}
 \title{Coerce data unambiguously to numeric or character}
 \description{
 	In some sense, numeric and character are the most general
@@ -13,7 +13,7 @@
 \usage{
 	\method{as.best}{default}(x,prefix='#',na.strings=c('.','NA',''),...)
 %	\method{as.best}{comment}(x, ...)
-%	\method{as.best}{temporal}(x, ...)
+%	\method{as.best}{timepoint}(x, ...)
 	\method{as.best}{data.frame}(x,...)
 	
 }
@@ -39,7 +39,7 @@ character-numeric gives an error.
 
 The method for \code{data.frame} coerces each column in turn, returning either
 the updated data frame or an error indicating the first problematic column. 
-%Methods are supplied for \code{temporal} and \code{comment}.
+%Methods are supplied for \code{timepoint} and \code{comment}.
 }
 \value{an object like x}
 \references{\url{http://metrumrg.googlecode.com}}

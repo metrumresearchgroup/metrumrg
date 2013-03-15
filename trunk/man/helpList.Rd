@@ -14,12 +14,12 @@
 \item \link{[.initList} subset initList
 \item \link{[.keyed} subset a keyed data frame
 \item \link{[.nmctl} subset a control stream object
-\item \link{[.temporal} subset a temporal object
+\item \link{[.timepoint} subset a timepoint object
 \item \link{[[.comment} select element from a comment
 \item \link{[[.flag} select element from a flag
 \item \link{[[.nmctl} select element from a control stream object
-\item \link{[[.temporal} select element from a temporal object
-\item \link{[<-.temporal} assign to a temporal object
+\item \link{[[.timepoint} select element from a timepoint object
+\item \link{[<-.timepoint} assign to a timepoint object
 \item \link{\%+\%} generic set union binary operator
 \item \link{\%&\%} generic set intersection binary operator
 \item \link{\%-\%} generic set difference binary operator
@@ -35,6 +35,8 @@
 \item \link{\%nests\%} test whether a nests b
 \item \link{$.init} select init element
 \item \link{$<-.init} assign init element
+\item \link{+.timeline} add timepoints and durations
+\item \link{-.timeline} subtract timepoints and durations
 \item \link{accept} document the acceptance of an R installation
 \item \link{acceptance} display the acceptance documentation for an R installation
 \item \link{acr} calculate accumulation ratio
@@ -54,7 +56,7 @@
 \item \link{as.character.init} convert init to character
 \item \link{as.character.initList} convert initList to character
 \item \link{as.character.nmctl} convert nmctl to character
-\item \link{as.character.temporal} convert temporal to character
+\item \link{as.character.timepoint} convert timepoint to character
 \item \link{as.chartime.numeric} convert numeric to time
 \item \link{as.chartime} convert to time (generic, internal)
 \item \link{as.comment.comment} convert comment to comment
@@ -72,7 +74,7 @@
 \item \link{as.day.day} coerce day to day
 \item \link{as.day.hour} coerce hour to day
 \item \link{as.day.month} coerce month to day
-\item \link{as.day.nominal} coerce nominal to day             
+\item \link{as.day.duration} coerce duration to day             
 \item \link{as.day.numeric} coerce numeric to day
 \item \link{as.day.week} coerce week to day
 \item \link{as.day.year} coerce year to day
@@ -97,7 +99,7 @@
 \item \link{as.hour.day} coerce day to hour
 \item \link{as.hour.hour} coerce hour to hour
 \item \link{as.hour.minute} coerce minute to hour
-\item \link{as.hour.nominal} coerce nominal to hour
+\item \link{as.hour.duration} coerce duration to hour
 \item \link{as.hour.numeric} coerce numeric to hour
 \item \link{as.hour.second} coerce second to hour
 \item \link{as.hour} coerce to hour
@@ -135,13 +137,13 @@
 \item \link{as.mDateTime} convert to mDateTime
 \item \link{as.minute.hour} coerce hour to minute
 \item \link{as.minute.minute} coerce minute to minute
-\item \link{as.minute.nominal} coerce nominal to minute
+\item \link{as.minute.duration} coerce duration to minute
 \item \link{as.minute.numeric} coerce numeric to minute
 \item \link{as.minute.second} coerce second to minute
 \item \link{as.minute} coerce to minute
 \item \link{as.month.day} coerce day to month
 \item \link{as.month.month} coerce month to month
-\item \link{as.month.nominal} coerce nominal to month
+\item \link{as.month.duration} coerce duration to month
 \item \link{as.month.numeric} coerce numeric to month
 \item \link{as.month} coerce to month
 \item \link{as.moot} convert to moot
@@ -174,7 +176,7 @@
 \item \link{as.second.day} coerce day to second
 \item \link{as.second.hour} coerce hour to second
 \item \link{as.second.minute} coerce minute to second
-\item \link{as.second.nominal} coerce nominal to second
+\item \link{as.second.duration} coerce duration to second
 \item \link{as.second.numeric} coerce numeric to second
 \item \link{as.second.second} coerce second to second
 \item \link{as.second} coerce to second (time unit)
@@ -185,7 +187,7 @@
 \item \link{as.unilog.runlog} convert runlog to unilog
 \item \link{as.week.day} coerce day to week
 \item \link{as.vector.keyed} coerce keyed to vector
-\item \link{as.week.nominal} coerce nominal to week
+\item \link{as.week.duration} coerce duration to week
 \item \link{as.week.numeric} coerce numeric to week
 \item \link{as.week.week} coerce week to week
 \item \link{as.week} coerce to week
@@ -221,7 +223,7 @@
 \item \link{bundleRead} read filtered directory contents into a list
 \item \link{c.comment} combine comment
 \item \link{c.flag} combine flag
-\item \link{c.temporal} combine temporal
+\item \link{c.timepoint} combine timepoint
 \item \link{cast,keyed-method} cast a keyed data.frame, restoring key and output classes
 \item \link{cavg} calculate average concentration
 \item \link{check.subjects} check for missing data, numeric data, ranges, etc.
@@ -297,7 +299,7 @@
 \item \link{format.mDateTime} format mDateTime
 \item \link{format.mTime} format mTime
 \item \link{format.nmctl} format nmctl
-\item \link{format.nominal} format nominal
+\item \link{format.duration} format duration
 \item \link{ftable2data.frame} convert ftable to data.frame as displayed
 \item \link{getCovs} return non-commented non-duplicated rows of a NONMEM data set (internal)
 \item \link{getCwres} return the conditional weighted residuals pertinent to a given run (internal, expects cwtab1.deriv)
@@ -451,8 +453,8 @@
 \item \link{print.keyed.summary} print keyed summary
 \item \link{print.nm.summary} print nm summary
 \item \link{print.nmctl} print nmctl
-\item \link{print.nominal} print nominal
-\item \link{print.temporal} print temporal
+\item \link{print.duration} print duration
+\item \link{print.timepoint} print timepoint
 \item \link{print.uniKey} print uniKey
 \item \link{progress} summarize progress of NONMEM runs
 \item \link{purge.dir} purge a directory (internal)
@@ -467,7 +469,7 @@
 \item \link{reapply} apply a function across cells of an indexed vector, giving an identically-indexed result
 \item \link{rep.comment} repeat comment
 \item \link{rep.flag} repeat flag
-\item \link{rep.temporal} repeat temporal
+\item \link{rep.timepoint} repeat timepoint
 \item \link{resample.csv.filename} create replicate data sets by stratified sampling with replacement, after reading csv file
 \item \link{resample.data.frame} create replicate data sets by stratified sampling with replacement
 \item \link{resample.filename} create replicate data sets by stratified sampling with replacement, after reading file
@@ -489,7 +491,7 @@
 \item \link{safe.call} call a function, passing only those extra arguments that the function accepts
 \item \link{safeQuote} single-quote unquoted text that contains space
 \item \link{scavenge} find an expression in lines of text
-\item \link{seq.temporal} generate temporal sequence
+\item \link{seq.timepoint} generate timepoint sequence
 \item \link{setCwres} append conditional weighted residuals to an appropriate file
 \item \link{shuffle} move columns in a data frame
 \item \link{sigmacor} convert sigma covariance in NONMEM output to correlation matrix
@@ -508,7 +510,7 @@
 \item \link{static.keyed} return the static portion of a keyed data frame
 \item \link{static} generic
 \item \link{strain} reduce x to those elements that occur in options (internal)
-\item \link{Summary.temporal} group generic summary for objects of class 'temporal'
+\item \link{Summary.timepoint} group generic summary for objects of class 'timepoint'
 \item \link{summary.hidden.data.frame} summarize hidden rows of a data frame
 \item \link{summary.keyed} summarize a keyed data frame
 \item \link{summary.nm} summarize an nm object
@@ -547,7 +549,7 @@
 \item \link{unilog} create a zero-row unilog
 \item \link{unilogcor} convert omega or sigma covariance in NONMEM output to correlation matrix
 \item \link{unique.comment} find unique elements of a comment vector
-\item \link{unique.temporal} find unique elements of a temporal vector
+\item \link{unique.timepoint} find unique elements of a timepoint vector
 \item \link{unitDensity} calculate univariate density with maximum equal to 1
 \item \link{unitHist} calculate univariate histogram architecture with maximum height equal to 1
 \item \link{unsorted} generic
@@ -568,7 +570,7 @@
 \item \link{xpath} extract value of an xpath exrpession from an xml file
 \item \link{xtfrm.comment} produce a numeric vector that sorts in the same order as comment
 \item \link{xtfrm.flag} produce a numeric vector that sorts in the same order as flag
-\item \link{xtfrm.temporal} produce a numeric vector that sorts in the same order as temporal
+\item \link{xtfrm.timepoint} produce a numeric vector that sorts in the same order as timepoint
 \item \link{xyplotExt} plot the parameter search history for a NONMEM7 run
 \item \link{zeroAmt.nm} AMT is zero where EVID is 1
 \item \link{zeroAmt} generic

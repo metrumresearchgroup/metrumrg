@@ -103,7 +103,7 @@ contain only single levels of key columns not mentioned in \code{roles}.
 returning a list (class \code{isolated}) of data frames each having exactly one
 non-key column.  Default methods are defined for making index plots and scatterplot
 matrices of objects of class digest, conditioned, isolated, and keyed.  The \code{plot}
-methods currently plot both. \code{head.digest} shows the head of each sub-result.
+methods currently plot both.
 
 For purposes of plotting and conditioning, it is necessary to specify the roles
 of the columns.  A \code{roles} object is a named vector with elements x, y, and z.
