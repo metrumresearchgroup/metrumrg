@@ -5,7 +5,7 @@
   if(inherits(e2,'timepoint')) as <- class(e2)
   if(inherits(e1,'duration') & inherits(e2,'duration') & !identical(class(e1)[[1]],class(e2)[[1]]))message('coercing to class ',class(e1)[[1]])
   e1 <- as.numeric(as.second(e1))
-  e1 <- as.numeric(as.second(e2))
+  e2 <- as.numeric(as.second(e2))
   res <- as.second(e1 + e2)
   res <- coerce(res)
   res
