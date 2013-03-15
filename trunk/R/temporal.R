@@ -1,7 +1,7 @@
 as.numeric.chartime <- function(x,format,...)as.numeric(unclass(as.POSIXct(strptime(x,format),tz='GMT')))
 as.chartime <- function(x,...)UseMethod('as.chartime')
 as.chartime.numeric <- function(x,format,mark=TRUE,...){
-	y <- strftime(as.POSIXct(x,tz='GMT',origin='1970-01-01'),format=format,tz='GMT')
+	y <- strftime(as.POSIXct(as.numeric(x),tz='GMT',origin='1970-01-01'),format=format,tz='GMT')
 	y[is.infinite(x)] <- x[is.infinite(x)]
 	z <- rep('',length(y))
 	if(mark){
@@ -22,6 +22,7 @@ as.mTime.character <- function(x,format='%H:%M',...)as.mTime(as.numeric.chartime
 
 as.mDate <- function(x,...)UseMethod('as.mDate')
 as.mDate.numeric <- function(x,...){
+	x <- as.numeric(x)
 	x <- round(x)
 	f <- is.finite(x)
 	x[f] <- x[f] - x[f]%%(60*60*24)
