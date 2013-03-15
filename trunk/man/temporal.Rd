@@ -102,10 +102,10 @@ as.mDateTime(x, ...)
   
   
   The timepoint classes are also subclasses \code{timeline}, which exists to support addition and subtraction of durations and timepoints.  See examples.
-  Exceptions: you cannot add two timepoints, nor can you subtract a timepoint.  During addition, the result will have
-  the class of the first argument, unless the second is a timepoint.  When adding two durations, a message
-  is issued if the classes differ.  During subtraction, the class of the first argument is retained, without 
-  message.
+  Exceptions: you cannot add two timepoints, nor can you subtract a timepoint. When one argument is a timepoint,
+  the other is coerced using \code{as.second}, and the result is the timepoint class.
+  For two durations, the second value is coerced to the class of the first, with a message, if necessary.
+  Otherwise, if only one argument is a duration, the other is coerced to that class. 
 }
 \value{
   \item{format}{character}

@@ -76,14 +76,15 @@ Conversions use 60 seconds per minute, 60 minutes per hour, 24 hours per day,
 relationships are specified.  Note that 12 nominal months does not make a full year.
 This is experimental, and may change in future versions.
 
-The duration classes are also subclasses of \code{timeline}, which exists to support addition and subtraction of durations and timepoints.  
-See examples here, and at \code{\link{timeline}}. During addition, the result will have
-the class of the first argument, unless the second is a timepoint.  When adding two durations, a message
-is issued if the classes differ.  During subtraction, the class of the first argument is retained, without 
-message. Negative durations are allowed. 
+The duration classes are also subclasses of \code{timeline}, which exists to 
+support addition and subtraction of durations and timepoints.  
+See examples here, and at \code{\link{timeline}}. You cannot add two timepoints, nor can you subtract a timepoint. When one argument is a timepoint,
+  the other is coerced using \code{as.second}, and the result is the timepoint class.
+  For two durations, the second value is coerced to the class of the first, with a message, if necessary.
+  Otherwise, if only one argument is a duration, the other is coerced to that class. Negative durations are allowed. 
 }
 \value{
-an S3 "num" object with class \code{c(n, 'duration','numeric')}, where `n' is
+an S3 "num" object with class \code{c(n, 'duration','timeline','numeric')}, where `n' is
 "second", "minute", "hour", "day", "week", "month", or "year", as implied.
 }
 \references{\url{http://metrumrg.googlecode.com}}
