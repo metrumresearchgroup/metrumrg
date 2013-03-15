@@ -78,8 +78,7 @@ as.mDateTime(x, ...)
   \item{x}{character time as per format, numeric seconds since 1970-01-01, 
   	or timepoint subclass}
   \item{\dots}{other arguments, usually ignored}
-  \item{y}{optional time for constructing mDateTime from mDate (defaults to 
-  	midnight}
+  \item{y}{optional time for constructing mDateTime from mDate: anything coercible with \code{as.second()}}
   \item{format}{character, as per \code{\link{strftime}}}
   \item{mark}{boolean: mark times with dangling seconds using \sQuote{+}}
   \item{incomparables}{passed to \code{unique}}
@@ -275,6 +274,8 @@ as.mDateTime(as.mTime(6000000))
 # 1970-01-01 10:40
 as.mDateTime(as.mDate('2008-10-14'))
 # 2008-10-14 00:00
+as.mDateTime(as.mDate('2008-10-14'),y=as.mTime('00:30'))
+# 2008-10-14 00:30
 
 #intercoversion from other systems
 as.mDate(as.Date('1970-01-01'))
@@ -304,9 +305,9 @@ as.mDateTime(Inf)
 # Inf
 as.mTime(-Inf)
 # -Inf
-as.mDateTime(Inf) + as.mTime(Inf)
+as.mDateTime(Inf) + (Inf)
 # Inf
-as.mDateTime(Inf) + as.mTime(-Inf)
+as.mDateTime(Inf) + (-Inf)
 # <NA>
 
 #comparison
@@ -322,22 +323,18 @@ max(as.mDate(c('1970-01-01','1980-01-01','1975-01-01')))
 # 1980-01-01
 
 #operations
-as.mDateTime(0) + as.mTime(60)
-# 1970-01-01 00:01
 as.mDateTime(0) + as.second(60)
 # 1970-01-01 00:01
 as.second(60) + as.mDateTime(0)
 # 1970-01-01 00:01
 as.mDateTime(0) - as.second(60)
 # 19669-12-31 23:59
-as.mTime(60) + as.mDateTime(0)
-# 00:01
-
-
 
 #unary operations
 -as.mTime(1)
 # 23:59+
++as.mTime(1)
+# 00:00+
 
 #sorting
 sort(unique(as.mTime(c(180,120,60))))

@@ -36,7 +36,7 @@ as.mDateTime.numeric <- function(x,...){
 	structure(x, class = c('mDateTime','timepoint','timeline','numeric'))
 }
 as.mDateTime.character <- function(x,format='%Y-%m-%d %H:%M',...)as.mDateTime(as.numeric.chartime(x,format))
-as.mDateTime.mDate <- function(x,y=0,...)as.mDateTime(as.numeric(x)+as.numeric(y))
+as.mDateTime.mDate <- function(x,y=0,...)as.mDateTime(as.numeric(x)+as.numeric(as.second(y)))
 format.mTime <- function(x,format='%H:%M',mark=TRUE,...)as.chartime(x,format,mark)
 format.mDate <- function(x,format='%Y-%m-%d',mark=TRUE,...)as.chartime(x,format,mark)
 format.mDateTime <- function(x,format='%Y-%m-%d %H:%M',mark=TRUE,...)as.chartime(x,format,mark)
