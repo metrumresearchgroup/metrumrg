@@ -92,11 +92,10 @@ as.mDateTime(x, ...)
   
   Seconds that are not multiples of 60 can be stored in mTime and mDateTime 
   objects, but will not be displayed by default (see above).  mDate can only 
-  store numbers of seconds that correspond to midnight, so adding an mDate and 
-  mTime gives a predictable result.  
+  store numbers of seconds that correspond to midnight.  To add time, explicitly
+  create an mDateTime object using \code{as.mDateTime.mDate}.
   
-  The timepoint classes are all subclasses of numeric, so numeric methods are
-  available (but may not preserve class information; try \code{max} for example).
+  The timepoint classes are all subclasses of numeric, so numeric operations are generally available.
   
   The timepoint classes support \code{NA}, \code{Inf}, \code{-Inf}, \code{as.data.frame}, \code{seq}, subset, element
   selection, element assignment, and interconversion.
@@ -223,7 +222,7 @@ as.numeric(as.mTime('23:59:01'))
 as.numeric(as.mTime('23:59:01',format='\%H:\%M:\%S'))
 # 86341
 as.numeric(as.mTime('24:00'))
-# NA
+# 0
 as.numeric(as.mDate('1970-01-02'))
 # 86400
 as.numeric(as.mDate('01/02/1970',format='\%m/\%d/\%Y'))
@@ -328,7 +327,7 @@ as.mDateTime(0) + as.second(60)
 as.second(60) + as.mDateTime(0)
 # 1970-01-01 00:01
 as.mDateTime(0) - as.second(60)
-# 19669-12-31 23:59
+# 1969-12-31 23:59
 
 #unary operations
 -as.mTime(1)
