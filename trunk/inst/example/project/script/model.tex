@@ -57,20 +57,20 @@ Installing SIGCHLD signal handler...Done.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-            5             0             0             0             0 
+            3             0             0             2             0 
 \end{Soutput}
 \begin{Sinput}
 > follow(1001:1005,project='../nonmem')
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-            5             0             0             0             0 
+            3             0             0             2             0 
        queued      compiled       running          done indeterminate 
-            0             0             5             0             0 
+            0             3             2             0             0 
        queued      compiled       running          done indeterminate 
             0             0             3             2             0 
        queued      compiled       running          done indeterminate 
-            0             0             1             4             0 
+            0             0             2             3             0 
        queued      compiled       running          done indeterminate 
             0             0             0             5             0 
 \end{Soutput}
@@ -171,6 +171,8 @@ We request some variants of PRED and CWRES.
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
             0             1             0             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             1             0             0 
        queued      compiled       running          done indeterminate 
             0             0             1             0             0 
        queued      compiled       running          done indeterminate 
@@ -297,21 +299,21 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
 \begin{Sinput}
 > log <- data.frame(cast(log,run~parameter))
 > log <- shuffle(log,'prob','run')
-> log$ofv <- signif(as.numeric(as.character(log$ofv,6)))
+> log$ofv <- signif(digits=6,as.numeric(as.character(log$ofv)))
 \end{Sinput}
 \end{Schunk}
 \begin{table}[!htpb]
  \caption[Run Log]{Run Log \label{runlog}}
  \begin{center}
-  \begin{tabular}{rrrrr}
+  \begin{tabular}{rlllr}
     \hline \hline
    run & prob & cov & min & ofv \\ \hline
-   \verb#1001# & \verb#1# & \verb#1# & \verb#1# & \verb#4# \\
-   \verb#1002# & \verb#2# & \verb#2# & \verb#2# & \verb#3# \\
-   \verb#1003# & \verb#3# & \verb#2# & \verb#3# & \verb#6# \\
-   \verb#1004# & \verb#4# & \verb#1# & \verb#1# & \verb#5# \\
-   \verb#1005# & \verb#5# & \verb#1# & \verb#1# & \verb#2# \\
-   \verb#1006# & \verb#6# & \verb#1# & \verb#1# & \verb#1# \\ \hline
+   \verb#1001# & 1001 phase1 1CMT                                            & 0 & 0   & \verb#2526.40# \\
+   \verb#1002# & 1002 phase1 2 CMT                                           & 1 & 134 & \verb#2525.97# \\
+   \verb#1003# & 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err & 1 & 136 & \verb#2570.47# \\
+   \verb#1004# & 1004 phase1 2 CMT like 1003 but better bounds               & 0 & 0   & \verb#2570.45# \\
+   \verb#1005# & 1005 phase1 2 CMT like 1004 but diff. initial on V3         & 0 & 0   & \verb#2405.92# \\
+   \verb#1006# & 1006 like 1005 with tweaked initial estimates               & 0 & 0   & \verb#2405.92# \\ \hline
   \end{tabular}
  \end{center}
 \end{table}\section{Predictive Check}
@@ -444,7 +446,7 @@ This run makes the predictions (simulations).
        queued      compiled       running          done indeterminate 
             0             0             0             0             1 
        queued      compiled       running          done indeterminate 
-            0             1             0             0             0 
+            0             0             0             0             1 
        queued      compiled       running          done indeterminate 
             0             0             1             0             0 
        queued      compiled       running          done indeterminate 
@@ -931,23 +933,25 @@ We also show densityplots of predictions at those quartiles.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-          116            35            24           125             0 
+          140            41            35            84             0 
        queued      compiled       running          done indeterminate 
-           85            44            20           151             0 
+          125            27            30           117             1 
        queued      compiled       running          done indeterminate 
-           61            52            21           166             0 
+           89            48            16           147             0 
        queued      compiled       running          done indeterminate 
-           52            43            23           182             0 
+           65            53            22           157             3 
        queued      compiled       running          done indeterminate 
-           34            40            25           201             0 
+           60            40            29           171             0 
        queued      compiled       running          done indeterminate 
-           11            39            24           226             0 
+           37            36            30           197             0 
        queued      compiled       running          done indeterminate 
-            0            32            23           245             0 
+           15            43            20           222             0 
        queued      compiled       running          done indeterminate 
-            0             4            22           274             0 
+            1            38            21           240             0 
        queued      compiled       running          done indeterminate 
-            0             0             2           298             0 
+            0            17            24           259             0 
+       queued      compiled       running          done indeterminate 
+            0             0            11           289             0 
        queued      compiled       running          done indeterminate 
             0             0             0           300             0 
 \end{Soutput}

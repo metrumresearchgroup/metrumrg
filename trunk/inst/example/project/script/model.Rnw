@@ -105,7 +105,7 @@ log
 with(log, constant(moment,within=parameter))#i.e., moment is non-informative here.
 log <- data.frame(cast(log,run~parameter))
 log <- shuffle(log,'prob','run')
-log$ofv <- signif(as.numeric(as.character(log$ofv,6)))
+log$ofv <- signif(digits=6,as.numeric(as.character(log$ofv)))
 @
 <<runlog,results=tex,echo=FALSE>>=
 writeLines(
