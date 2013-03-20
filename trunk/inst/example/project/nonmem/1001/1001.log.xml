@@ -249,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Wed Mar 20 18:40:20 UTC 2013</so>
+       <so>Wed Mar 20 21:23:36 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node008,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node003,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -265,7 +265,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/309.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/39.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
       <job>
        <do>ifort --version</do>
@@ -379,7 +379,7 @@
    <do in="../nonmem/1001">if [ -e 1001.xml ];then cat 1001.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2013-03-20T18:40:28.561</nm:start_datetime>
+     <nm:start_datetime>2013-03-20T21:23:44.565</nm:start_datetime>
      <nm:control_stream>
      $PROB 1001 phase1 1CMT
      $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -1016,7 +1016,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2013-03-20T18:40:33.987</nm:stop_datetime>
+     <nm:stop_datetime>2013-03-20T21:23:49.967</nm:stop_datetime>
     </nm:output>
    </so>
   </job>

@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2013-03-20T18:40:28.609</nm:start_datetime>
+<nm:start_datetime>2013-03-20T21:23:44.856</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -238,7 +238,7 @@ Days until program expires : 114
 <nm:col nm:cname='EPS1'>9.48570935608809</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>20.14</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>20.19</nm:estimation_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2570.47417423427</nm:final_objective_function>
 <nm:theta>
@@ -289,5 +289,5 @@ Days until program expires : 114
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2013-03-20T18:40:49.071</nm:stop_datetime>
+<nm:stop_datetime>2013-03-20T21:24:05.354</nm:stop_datetime>
 </nm:output>

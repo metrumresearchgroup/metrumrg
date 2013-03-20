@@ -1,4 +1,4 @@
-Wed Mar 20 18:40:20 UTC 2013
+Wed Mar 20 21:23:36 UTC 2013
 $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
 $DATA ../../data/derived/phase1.csv IGNORE=C
@@ -267,7 +267,7 @@ Days until program expires : 114
  EPSshrink(%):   9.4857E+00
  
  #TERE:
- Elapsed estimation time in seconds:    20.14
+ Elapsed estimation time in seconds:    20.19
 1
  
  
@@ -374,4 +374,4 @@ Days until program expires : 114
  
 1THERE ARE ERROR MESSAGES IN FILE PRDERR                                                                  
 Stop Time:
-Wed Mar 20 18:40:49 UTC 2013
+Wed Mar 20 21:24:05 UTC 2013

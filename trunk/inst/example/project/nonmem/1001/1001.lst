@@ -1,4 +1,4 @@
-Wed Mar 20 18:40:20 UTC 2013
+Wed Mar 20 21:23:36 UTC 2013
 $PROB 1001 phase1 1CMT
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
 $DATA ../../data/derived/phase1.csv IGNORE=C
@@ -570,4 +570,4 @@ Days until program expires : 114
  
 1THERE ARE ERROR MESSAGES IN FILE PRDERR                                                                  
 Stop Time:
-Wed Mar 20 18:40:34 UTC 2013
+Wed Mar 20 21:23:50 UTC 2013
