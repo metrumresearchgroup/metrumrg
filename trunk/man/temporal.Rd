@@ -324,9 +324,17 @@ max(as.mDate(c('1970-01-01','1980-01-01','1975-01-01')))
 #operations
 as.mDateTime(0) + as.second(60)
 # 1970-01-01 00:01
+as.mDateTime(0) + 60
+# 1970-01-01 00:01
 as.second(60) + as.mDateTime(0)
 # 1970-01-01 00:01
+as.minute(1) + as.mDateTime(0)
+# 1970-01-01 00:01
+60 + as.mDateTime(0)
+# 1970-01-01 00:01
 as.mDateTime(0) - as.second(60)
+# 1969-12-31 23:59
+as.mDateTime(0) - 60
 # 1969-12-31 23:59
 
 #unary operations

@@ -15,10 +15,12 @@
 \item \link{[.keyed} subset a keyed data frame
 \item \link{[.nmctl} subset a control stream object
 \item \link{[.timepoint} subset a timepoint object
+\item \link{[.uniKey} subset a uniKey object
 \item \link{[[.comment} select element from a comment
 \item \link{[[.flag} select element from a flag
 \item \link{[[.nmctl} select element from a control stream object
 \item \link{[[.timepoint} select element from a timepoint object
+\item \link{[[.uniKey} select element from a uniKey object
 \item \link{[<-.timepoint} assign to a timepoint object
 \item \link{\%+\%} generic set union binary operator
 \item \link{\%&\%} generic set intersection binary operator
@@ -57,6 +59,7 @@
 \item \link{as.character.initList} convert initList to character
 \item \link{as.character.nmctl} convert nmctl to character
 \item \link{as.character.timepoint} convert timepoint to character
+\item \link{as.character.uniKey} convert uniKey to character
 \item \link{as.chartime.numeric} convert numeric to time
 \item \link{as.chartime} convert to time (generic, internal)
 \item \link{as.comment.comment} convert comment to comment
@@ -187,6 +190,7 @@
 \item \link{as.unilog.runlog} convert runlog to unilog
 \item \link{as.week.day} coerce day to week
 \item \link{as.vector.keyed} coerce keyed to vector
+\item \link{as.vector.uniKey} coerce uniKey to vector
 \item \link{as.week.duration} coerce duration to week
 \item \link{as.week.numeric} coerce numeric to week
 \item \link{as.week.week} coerce week to week
@@ -224,6 +228,7 @@
 \item \link{c.comment} combine comment
 \item \link{c.flag} combine flag
 \item \link{c.timepoint} combine timepoint
+\item \link{c.uniKey} combine uniKey
 \item \link{cast,keyed-method} cast a keyed data.frame, restoring key and output classes
 \item \link{cavg} calculate average concentration
 \item \link{check.subjects} check for missing data, numeric data, ranges, etc.
@@ -300,6 +305,7 @@
 \item \link{format.mTime} format mTime
 \item \link{format.nmctl} format nmctl
 \item \link{format.duration} format duration
+\item \link{format.uniKey} format uniKey
 \item \link{ftable2data.frame} convert ftable to data.frame as displayed
 \item \link{getCovs} return non-commented non-duplicated rows of a NONMEM data set (internal)
 \item \link{getCwres} return the conditional weighted residuals pertinent to a given run (internal, expects cwtab1.deriv)
@@ -470,6 +476,7 @@
 \item \link{rep.comment} repeat comment
 \item \link{rep.flag} repeat flag
 \item \link{rep.timepoint} repeat timepoint
+\item \link{rep.uniKey} repeat uniKey
 \item \link{resample.csv.filename} create replicate data sets by stratified sampling with replacement, after reading csv file
 \item \link{resample.data.frame} create replicate data sets by stratified sampling with replacement
 \item \link{resample.filename} create replicate data sets by stratified sampling with replacement, after reading file
@@ -550,6 +557,7 @@
 \item \link{unilogcor} convert omega or sigma covariance in NONMEM output to correlation matrix
 \item \link{unique.comment} find unique elements of a comment vector
 \item \link{unique.timepoint} find unique elements of a timepoint vector
+\item \link{unique.uniKey} find unique elements of a uniKey vector
 \item \link{unitDensity} calculate univariate density with maximum equal to 1
 \item \link{unitHist} calculate univariate histogram architecture with maximum height equal to 1
 \item \link{unsorted} generic
@@ -571,6 +579,7 @@
 \item \link{xtfrm.comment} produce a numeric vector that sorts in the same order as comment
 \item \link{xtfrm.flag} produce a numeric vector that sorts in the same order as flag
 \item \link{xtfrm.timepoint} produce a numeric vector that sorts in the same order as timepoint
+\item \link{xtfrm.uniKey} produce a character vector that sorts in the same order as uniKey
 \item \link{xyplotExt} plot the parameter search history for a NONMEM7 run
 \item \link{zeroAmt.nm} AMT is zero where EVID is 1
 \item \link{zeroAmt} generic

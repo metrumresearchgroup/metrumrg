@@ -71,8 +71,45 @@ unsorted.keyed <- function(x, decreasing=FALSE, ...)rownames(x) != rownames(sort
 	class(res) <- c('uniKey',class(res))
 	res
 }
-print.uniKey <- function(x, ...)print(gsub('\r',' ',x))
-	
+`c.uniKey` <- function(...,recursive=FALSE)structure(c(unlist(lapply(list(...), unclass))), class="uniKey")
+
+`[.uniKey` <- function (x, ..., drop = TRUE) 
+{
+    cl <- oldClass(x)
+    class(x) <- NULL
+    val <- NextMethod("[")
+    class(val) <- cl
+    val
+}
+
+`[[.uniKey` <- function (x, ..., drop = TRUE) 
+{
+    cl <- oldClass(x)
+    class(x) <- NULL
+    val <- NextMethod("[[")
+    class(val) <- cl
+    val
+}
+
+`rep.uniKey` <- function(x,...){
+	y <- NextMethod()
+	class(y) <- class(x)
+	y
+}
+`format.uniKey` <- function(x,...)as.character(x,...)
+as.character.uniKey <- function(x,...)unclass(gsub('\r',' ',x))
+
+`print.uniKey` <- function(x,...){
+	print(format(x),...,quote=FALSE)
+	invisible(x)
+}
+unique.uniKey <-
+function (x, incomparables = FALSE,...){
+    oldclass <- class(x)
+    structure(unique(unclass(x)), class = oldclass)
+}
+xtfrm.uniKey <- function(x)as.character(x)
+as.vector.uniKey <- function(x,...)x
 #unit test
 
 #x <- data.frame(

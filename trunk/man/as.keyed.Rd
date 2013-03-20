@@ -20,6 +20,16 @@
 \alias{uniKey.keyed}
 \alias{uniKey}
 \alias{print.uniKey}
+\alias{c.uniKey}
+\alias{as.vector.uniKey}
+\alias{[.uniKey}
+\alias{[[.uniKey}
+\alias{rep.uniKey}
+\alias{format.uniKey}
+\alias{print.uniKey}
+\alias{unique.uniKey}
+\alias{xtfrm.uniKey}
+\alias{as.character.uniKey}
 \title{Create and Manipulate Keyed Data Frames}
 \description{The class \dfn{keyed} is a subclass of data.frame with a \dfn{key} attribute.
 The key is a vector of column names which, taken together, should provide enough

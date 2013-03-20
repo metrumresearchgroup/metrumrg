@@ -103,5 +103,9 @@ as.month(2) + as.week(2)
 as.week(2) + as.month(1)
 as.month(2) - as.week(2)
 as.week(2) - as.month(1)
+as.week(2) + 1
+as.week(2) - 1
+2 + as.week(1)
+2 - as.week(1)
 }
 \keyword{manip}
