@@ -249,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Wed Mar 20 17:42:09 UTC 2013</so>
+       <so>Wed Mar 20 18:40:20 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node004,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node009,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -265,7 +265,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/2.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/311.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
       <job>
        <do>ifort --version</do>
@@ -1071,13 +1071,13 @@
     NPARAMETR:  1.1062E+01  1.3223E+01  4.3566E-02  7.1614E-01  2.7408E-04  2.5058E-01  2.0847E-01  6.5343E-02  7.5112E-02
     PARAMETER:  1.1062E-01  1.3223E-01  2.1783E-02  7.2225E-03  2.7408E-06  6.1199E-01  5.1996E-01 -6.0181E-02  9.5918E-03
     GRADIENT:   1.9730E-03  3.7680E-03 -2.8592E-02  3.0697E-04  0.0000E+00  3.6837E-05 -3.9704E-04 -2.3488E-03  1.6753E-03
-    Elapsed estimation time in seconds:    20.11</so>
+    Elapsed estimation time in seconds:    20.14</so>
   </job>
   <job>
    <do in="../nonmem/1003">if [ -e 1003.xml ];then cat 1003.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2013-03-20T17:42:30.983</nm:start_datetime>
+     <nm:start_datetime>2013-03-20T18:40:28.609</nm:start_datetime>
      <nm:control_stream>
      $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
      $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -1304,7 +1304,7 @@
           <nm:col nm:cname="EPS1">9.48570935608809</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>20.11</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>20.14</nm:estimation_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2570.47417423427</nm:final_objective_function>
         <nm:theta>
@@ -1355,7 +1355,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2013-03-20T17:42:51.738</nm:stop_datetime>
+     <nm:stop_datetime>2013-03-20T18:40:49.071</nm:stop_datetime>
     </nm:output>
    </so>
   </job>

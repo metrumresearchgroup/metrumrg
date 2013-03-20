@@ -249,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Wed Mar 20 17:42:10 UTC 2013</so>
+       <so>Wed Mar 20 18:40:20 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node006,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node008,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -265,7 +265,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/1.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/309.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
       <job>
        <do>ifort --version</do>
@@ -372,14 +372,14 @@
     NPARAMETR:  1.1717E+01  1.4566E+01  4.7859E-02  2.5902E-01  2.0702E-01  3.8792E-02  5.7307E-02  2.0580E-01
     PARAMETER:  1.1717E-01  1.4566E-01  2.3930E-02  6.2855E-01  5.1650E-01 -3.2080E-01 -1.2570E-01  4.6087E-01
     GRADIENT:   9.0425E-02 -1.6581E-01  9.1813E-01  1.4137E-03  9.2336E-03  5.5838E-03 -2.9926E-02  9.5887E-03
-    Elapsed estimation time in seconds:     2.38
+    Elapsed estimation time in seconds:     2.39
     Elapsed covariance time in seconds:     2.70</so>
   </job>
   <job>
    <do in="../nonmem/1001">if [ -e 1001.xml ];then cat 1001.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2013-03-20T17:42:37.679</nm:start_datetime>
+     <nm:start_datetime>2013-03-20T18:40:28.561</nm:start_datetime>
      <nm:control_stream>
      $PROB 1001 phase1 1CMT
      $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -583,7 +583,7 @@
           <nm:col nm:cname="EPS2">9.33583888446532</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>2.38</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>2.39</nm:estimation_elapsed_time>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
         <nm:covariance_elapsed_time>2.70</nm:covariance_elapsed_time>
@@ -1016,7 +1016,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2013-03-20T17:42:44.034</nm:stop_datetime>
+     <nm:stop_datetime>2013-03-20T18:40:33.987</nm:stop_datetime>
     </nm:output>
    </so>
   </job>
