@@ -69,7 +69,7 @@ For each class, methods exist for the generics "format" and "print".
 
 The strategy for time unit conversion is to classify a numeric vector according to some
 unit, and then coerce that object to some other class.  Thus, \code{as.day(7)} is
-not particularly interesting, but \code{as.week(as.day(7))} yeilds 1. 
+not particularly interesting, but \code{as.week(as.day(7))} yields 1. 
 
 Conversions use 60 seconds per minute, 60 minutes per hour, 24 hours per day,
 7 days per week, 28 days per month, and 365.25 days per year.  Currently, no other

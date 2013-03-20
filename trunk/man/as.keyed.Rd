@@ -103,7 +103,7 @@ Methods for \code{merge} and \code{transform} are key-friendly. The method for \
 is key-centric.  
 
 \code{uniKey} creates a character vector (class \code{uniKey}) by pasting the key columns with \code{\\r}. 
-(Keys containing \code{\\r} are unsupported.) The \code{print} method substitutes a space character for \code{\\r}.  
+(Keys containing \code{\\r} are unsupported.) The \code{as.character} method substitutes a space character for \code{\\r}.  
 }
 \value{
 Most functions and methods documented here return objects with class 
