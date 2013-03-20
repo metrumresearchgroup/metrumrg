@@ -4,8 +4,8 @@
    <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
    <alias id="folder">/mnt/nm72</alias>
    <alias id="target">/opt/NONMEM/nm72</alias>
-   <alias id="origin">/opt/nmqual</alias>
-   <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
+   <alias id="origin">/mnt/nmqual</alias>
+   <alias id="unlock">/mnt/nonmem.lic</alias>
    <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
    <!--The meta interface groups commands that collect metadata.-->
    <do on="meta">pwd</do>
@@ -14,33 +14,37 @@
    <do on="meta">echo $SHELL</do>
    <do on="meta">echo $USER</do>
    <do on="meta">echo $PATH</do>
+   <do on="meta">ifort --version</do>
+   <do on="meta">head -n 5 target/util/nmfe72</do>
    <!--The 'install' interface installs NONMEM.-->
-   <do on="install" as="xml">perl $0 $_0 meta</do>
+   <do on="install">date</do>
    <do on="install">rm -rf origin/temp</do>
-   <do on="install">mkdir origin/temp</do>
+   <do on="install">mkdir -p -p origin/temp</do>
    <do on="install">cp -r folder/* origin/temp</do>
    <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
    <!--alters compile options in setup72-->
    <do on="install">rm -rf target</do>
-   <do on="install">mkdir target</do>
+   <do on="install">mkdir -p -p target</do>
    <do on="install" in="origin/temp">pwd</do>
-   <do on="install" in="origin/temp">echo `ifort -V`</do>
+   <do on="install" in="origin/temp">ifort --version</do>
    <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-   <do on="install">rm -rf origin/temp</do>
-   <do on="install">mkdir target/nmqual</do>
-   <do on="install">mkdir target/nmqual/doc</do>
-   <do on="install">cp origin/autolog.pl target/nmqual</do>
-   <!--runtime copy, uses nmqual/log.xml-->
-   <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/con/default.xsl target/nmqual</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
+   <do on="install">mkdir -p -p target/nmqual</do>
+   <do on="install">mkdir -p -p target/nmqual/doc</do>
+   <do on="install">cp $0 target/nmqual</do>
+   <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+   <do on="install">cp -r origin/con target/nmqual</do>
+   <!--support for processing xml docs-->
+   <do on="install">cp -r origin/csv target/nmqual</do>
+   <!--support for processing csv docs-->
+   <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+   <!--reference modeling results-->
+   <do on="install">cp -r origin/psn target/nmqual</do>
+   <!--support for psn qualification-->
+   <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
    <!--keep for archival purposes-->
+   <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+   <!--keep for archival purposes-->
+   <do on="install">rm -rf origin/temp</do>
    <do on="install">cp -r origin/test target/nmqual</do>
    <!--supports control tests-->
    <do on="install">chmod 0777 target/license/nonmem.lic</do>
@@ -49,10 +53,11 @@
    <!--replace expired license-->
    <do on="install">cp mpicha target/mpi/mpi_lini</do>
    <!--replace default mpich archive-->
-   <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
+   <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
    <!--will need this soon-->
-   <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
+   <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
    <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+   <do on="install" as="xml">perl $0 $_0 meta</do>
    <to on="install">target/nmqual/log.xml</to>
    <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
    <!--Run directory and run name are required arguments.-->
@@ -61,15 +66,15 @@
    <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
    <do on="basic" as="xml">cat target/nmqual/log.xml</do>
    <to on="basic">$_1/$_2.log.xml</to>
-   <!--The 'run' interface also expects a leading compile/execute argument.-->
+   <!--The 'run' interface expects a leading compile/execute argument.-->
    <do on="run" as="xml">perl $0 $_0 meta</do>
    <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
    <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
    <do on="run" as="xml">cat target/nmqual/log.xml</do>
    <to on="run">$_2/$_3.log.xml</to>
-   <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
+   <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
    <do on="para" as="xml">perl $0 $_0 meta</do>
-   <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
+   <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
    <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
    <do on="para" as="xml">cat target/nmqual/log.xml</do>
    <to on="para">$_2/$_3.log.xml</to>
@@ -88,6 +93,7 @@
    <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
    <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
    <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+   <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
    <to on="qualify">$_1</to>
    <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
    <do on="regress" as="xml">perl $0 $_0 meta</do>
@@ -96,8 +102,19 @@
    <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
    <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
    <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-   <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+   <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+   <do on="regress" as="xml">cat target/nmqual/log.xml</do>
    <to on="regress">$_1</to>
+   <!--The 'psntest' interface runs PsN control tests.-->
+   <do on="psntest" as="xml">perl $0 $_0 meta</do>
+   <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+   <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+   <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+   <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+   <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+   <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+   <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+   <to on="psntest">$_1</to>
    <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
    <do on="accept">echo $_</do>
    <to on="accept">$0</to>
@@ -111,8 +128,8 @@
        <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
        <alias id="folder">/mnt/nm72</alias>
        <alias id="target">/opt/NONMEM/nm72</alias>
-       <alias id="origin">/opt/nmqual</alias>
-       <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
+       <alias id="origin">/mnt/nmqual</alias>
+       <alias id="unlock">/mnt/nonmem.lic</alias>
        <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
        <!--The meta interface groups commands that collect metadata.-->
        <do on="meta">pwd</do>
@@ -121,33 +138,37 @@
        <do on="meta">echo $SHELL</do>
        <do on="meta">echo $USER</do>
        <do on="meta">echo $PATH</do>
+       <do on="meta">ifort --version</do>
+       <do on="meta">head -n 5 target/util/nmfe72</do>
        <!--The 'install' interface installs NONMEM.-->
-       <do on="install" as="xml">perl $0 $_0 meta</do>
+       <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir origin/temp</do>
+       <do on="install">mkdir -p -p origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
        <!--alters compile options in setup72-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir target</do>
+       <do on="install">mkdir -p -p target</do>
        <do on="install" in="origin/temp">pwd</do>
-       <do on="install" in="origin/temp">echo `ifort -V`</do>
+       <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-       <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir target/nmqual</do>
-       <do on="install">mkdir target/nmqual/doc</do>
-       <do on="install">cp origin/autolog.pl target/nmqual</do>
-       <!--runtime copy, uses nmqual/log.xml-->
-       <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/default.xsl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual/doc</do>
+       <do on="install">cp $0 target/nmqual</do>
+       <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+       <do on="install">cp -r origin/con target/nmqual</do>
+       <!--support for processing xml docs-->
+       <do on="install">cp -r origin/csv target/nmqual</do>
+       <!--support for processing csv docs-->
+       <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+       <!--reference modeling results-->
+       <do on="install">cp -r origin/psn target/nmqual</do>
+       <!--support for psn qualification-->
+       <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
        <!--keep for archival purposes-->
+       <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+       <!--keep for archival purposes-->
+       <do on="install">rm -rf origin/temp</do>
        <do on="install">cp -r origin/test target/nmqual</do>
        <!--supports control tests-->
        <do on="install">chmod 0777 target/license/nonmem.lic</do>
@@ -156,10 +177,11 @@
        <!--replace expired license-->
        <do on="install">cp mpicha target/mpi/mpi_lini</do>
        <!--replace default mpich archive-->
-       <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
+       <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
        <!--will need this soon-->
-       <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
+       <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
        <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+       <do on="install" as="xml">perl $0 $_0 meta</do>
        <to on="install">target/nmqual/log.xml</to>
        <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
        <!--Run directory and run name are required arguments.-->
@@ -168,15 +190,15 @@
        <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="basic" as="xml">cat target/nmqual/log.xml</do>
        <to on="basic">$_1/$_2.log.xml</to>
-       <!--The 'run' interface also expects a leading compile/execute argument.-->
+       <!--The 'run' interface expects a leading compile/execute argument.-->
        <do on="run" as="xml">perl $0 $_0 meta</do>
        <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
        <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="run" as="xml">cat target/nmqual/log.xml</do>
        <to on="run">$_2/$_3.log.xml</to>
-       <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
+       <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
        <do on="para" as="xml">perl $0 $_0 meta</do>
-       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
+       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
        <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="para" as="xml">cat target/nmqual/log.xml</do>
        <to on="para">$_2/$_3.log.xml</to>
@@ -195,6 +217,7 @@
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+       <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
        <to on="qualify">$_1</to>
        <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
        <do on="regress" as="xml">perl $0 $_0 meta</do>
@@ -203,8 +226,19 @@
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+       <do on="regress" as="xml">cat target/nmqual/log.xml</do>
        <to on="regress">$_1</to>
+       <!--The 'psntest' interface runs PsN control tests.-->
+       <do on="psntest" as="xml">perl $0 $_0 meta</do>
+       <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+       <to on="psntest">$_1</to>
        <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
        <do on="accept">echo $_</do>
        <to on="accept">$0</to>
@@ -215,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Thu Sep 27 20:37:28 UTC 2012</so>
+       <so>Wed Mar 20 17:42:10 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node008,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node006,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -231,7 +265,21 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/643.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/1.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+      </job>
+      <job>
+       <do>ifort --version</do>
+       <so>ifort (IFORT) 12.0.4 20110427
+          Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
+          </so>
+      </job>
+      <job>
+       <do>head -n 5 /opt/NONMEM/nm72/util/nmfe72</do>
+       <so>#!/bin/bash
+          dir=/opt/NONMEM/nm72
+          f=ifort
+          o=' -fp-model strict -Gs -nologo -nbs -w '
+          opstat=' -static '</so>
       </job>
      </logged>
     </log>
@@ -251,15 +299,15 @@
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
    Expiration Date:    14 JUL 2013
-   Current Date:       27 SEP 2012
-   Days until program expires : 292
+   Current Date:       20 MAR 2013
+   Days until program expires : 114
     
     
     First Order Conditional Estimation with Interaction
     MONITORING OF SEARCH:
    
     
-   0ITERATION NO.:    0    OBJECTIVE VALUE:   3540.00860566871        NO. OF FUNC. EVALS.:   7
+   0ITERATION NO.:    0    OBJECTIVE VALUE:   3540.00860564547        NO. OF FUNC. EVALS.:   7
     CUMULATIVE NO. OF FUNC. EVALS.:        7
     NPARAMETR:  1.0000E+01  1.0000E+01  2.0000E-01  9.0000E-02  9.0000E-02  9.0000E-02  9.0000E-02  1.0000E-01
     PARAMETER:  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01
@@ -301,37 +349,37 @@
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS2 ROUTINE: CL IS NEGATIVE                                                                                             
     
-   0ITERATION NO.:    5    OBJECTIVE VALUE:   2557.59539686428        NO. OF FUNC. EVALS.:   8
+   0ITERATION NO.:    5    OBJECTIVE VALUE:   2557.59539683455        NO. OF FUNC. EVALS.:   8
     CUMULATIVE NO. OF FUNC. EVALS.:       56
     NPARAMETR:  1.1247E+01  1.4315E+01  4.4910E-02  1.2810E-01  9.7093E-02  8.4621E-02  5.3695E-02  1.0136E-01
     PARAMETER:  1.1247E-01  1.4315E-01  2.2455E-02  2.7650E-01  1.3793E-01  6.9184E-02 -1.5824E-01  1.0675E-01
     GRADIENT:  -2.3610E+01  1.1119E+02  3.6035E+02 -7.0771E+01 -3.8410E+01  2.3908E+01 -1.0031E+02 -2.8142E+01
     
-   0ITERATION NO.:   10    OBJECTIVE VALUE:   2527.47435483450        NO. OF FUNC. EVALS.:   8
+   0ITERATION NO.:   10    OBJECTIVE VALUE:   2527.47435456694        NO. OF FUNC. EVALS.:   8
     CUMULATIVE NO. OF FUNC. EVALS.:       97
     NPARAMETR:  1.1439E+01  1.4662E+01  4.6974E-02  2.9016E-01  2.0886E-01  4.5923E-02  5.7497E-02  2.3387E-01
     PARAMETER:  1.1439E-01  1.4662E-01  2.3487E-02  6.8531E-01  5.2092E-01 -2.3642E-01 -1.2404E-01  5.2481E-01
-    GRADIENT:  -2.4735E+00  3.2624E+01  2.8227E+02  8.1940E+00  7.1284E-01  5.5877E+00  1.0900E+01  7.2008E+00
+    GRADIENT:  -2.4734E+00  3.2624E+01  2.8227E+02  8.1940E+00  7.1284E-01  5.5877E+00  1.0900E+01  7.2008E+00
     
-   0ITERATION NO.:   15    OBJECTIVE VALUE:   2526.40222014687        NO. OF FUNC. EVALS.:  13
+   0ITERATION NO.:   15    OBJECTIVE VALUE:   2526.40222015748        NO. OF FUNC. EVALS.:  13
     CUMULATIVE NO. OF FUNC. EVALS.:      159
     NPARAMETR:  1.1666E+01  1.4566E+01  4.7882E-02  2.5925E-01  2.0757E-01  3.8984E-02  5.7244E-02  2.0659E-01
     PARAMETER:  1.1666E-01  1.4566E-01  2.3941E-02  6.2900E-01  5.1784E-01 -3.1832E-01 -1.2625E-01  4.6279E-01
-    GRADIENT:  -1.1116E+01 -5.4606E-01  3.1289E+01  6.4522E-02  1.4035E-01  1.8127E-01 -2.1428E-01  1.3160E-01
+    GRADIENT:  -1.1116E+01 -5.4605E-01  3.1290E+01  6.4522E-02  1.4035E-01  1.8127E-01 -2.1428E-01  1.3160E-01
     
-   0ITERATION NO.:   18    OBJECTIVE VALUE:   2526.39867230031        NO. OF FUNC. EVALS.:  10
+   0ITERATION NO.:   18    OBJECTIVE VALUE:   2526.39867230153        NO. OF FUNC. EVALS.:  10
     CUMULATIVE NO. OF FUNC. EVALS.:      195
     NPARAMETR:  1.1717E+01  1.4566E+01  4.7859E-02  2.5902E-01  2.0702E-01  3.8792E-02  5.7307E-02  2.0580E-01
     PARAMETER:  1.1717E-01  1.4566E-01  2.3930E-02  6.2855E-01  5.1650E-01 -3.2080E-01 -1.2570E-01  4.6087E-01
-    GRADIENT:   9.0402E-02 -1.6577E-01  9.1752E-01  1.4141E-03  9.2340E-03  5.5845E-03 -2.9927E-02  9.5891E-03
-    Elapsed estimation time in seconds:     2.43
-    Elapsed covariance time in seconds:     2.72</so>
+    GRADIENT:   9.0425E-02 -1.6581E-01  9.1813E-01  1.4137E-03  9.2336E-03  5.5838E-03 -2.9926E-02  9.5887E-03
+    Elapsed estimation time in seconds:     2.38
+    Elapsed covariance time in seconds:     2.70</so>
   </job>
   <job>
    <do in="../nonmem/1001">if [ -e 1001.xml ];then cat 1001.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2012-09-27T20:37:38.861</nm:start_datetime>
+     <nm:start_datetime>2013-03-20T17:42:37.679</nm:start_datetime>
      <nm:control_stream>
      $PROB 1001 phase1 1CMT
      $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -368,8 +416,8 @@
       <nm:license_information>
       License Registered to: Metrum Research Group
       Expiration Date:    14 JUL 2013
-      Current Date:       27 SEP 2012
-      Days until program expires : 292</nm:license_information>
+      Current Date:       20 MAR 2013
+      Days until program expires : 114</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -490,11 +538,11 @@
         <nm:estimation_method>focei</nm:estimation_method>
         <nm:estimation_title>First Order Conditional Estimation with Interaction</nm:estimation_title>
         <nm:monitor>
-         <nm:obj nm:iteration="0">3540.00860566871</nm:obj>
-         <nm:obj nm:iteration="5">2557.59539686428</nm:obj>
-         <nm:obj nm:iteration="10">2527.47435483450</nm:obj>
-         <nm:obj nm:iteration="15">2526.40222014687</nm:obj>
-         <nm:obj nm:iteration="18">2526.39867230031</nm:obj>
+         <nm:obj nm:iteration="0">3540.00860564547</nm:obj>
+         <nm:obj nm:iteration="5">2557.59539683455</nm:obj>
+         <nm:obj nm:iteration="10">2527.47435456694</nm:obj>
+         <nm:obj nm:iteration="15">2526.40222015748</nm:obj>
+         <nm:obj nm:iteration="18">2526.39867230153</nm:obj>
         </nm:monitor>
         <nm:termination_status>0</nm:termination_status>
         <nm:termination_information>
@@ -503,164 +551,164 @@
          NO. OF SIG. DIGITS IN FINAL EST.:  3.4</nm:termination_information>
         <nm:etabar>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">-2.984447589483101E-003</nm:col>
-          <nm:col nm:cname="ETA2">5.640252029059743E-003</nm:col>
-          <nm:col nm:cname="ETA3">2.550440661660863E-003</nm:col>
+          <nm:col nm:cname="ETA1">-2.984450864270134E-003</nm:col>
+          <nm:col nm:cname="ETA2">5.640256500341836E-003</nm:col>
+          <nm:col nm:cname="ETA3">2.550438715595778E-003</nm:col>
          </nm:row>
         </nm:etabar>
         <nm:etabarse>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">7.886269153637969E-002</nm:col>
-          <nm:col nm:cname="ETA2">6.367676861021024E-002</nm:col>
-          <nm:col nm:cname="ETA3">2.619277730082801E-002</nm:col>
+          <nm:col nm:cname="ETA1">7.886269156381850E-002</nm:col>
+          <nm:col nm:cname="ETA2">6.367676864210760E-002</nm:col>
+          <nm:col nm:cname="ETA3">2.619277709808505E-002</nm:col>
          </nm:row>
         </nm:etabarse>
         <nm:etabarpval>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">0.969812263937265</nm:col>
-          <nm:col nm:cname="ETA2">0.929418519532589</nm:col>
-          <nm:col nm:cname="ETA3">0.922430932189894</nm:col>
+          <nm:col nm:cname="ETA1">0.969812230839119</nm:col>
+          <nm:col nm:cname="ETA2">0.929418463761077</nm:col>
+          <nm:col nm:cname="ETA3">0.922430990591973</nm:col>
          </nm:row>
         </nm:etabarpval>
         <nm:etashrink>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">0.749473458176453</nm:col>
-          <nm:col nm:cname="ETA2">10.3599695851429</nm:col>
-          <nm:col nm:cname="ETA3">14.8194449761154</nm:col>
+          <nm:col nm:cname="ETA1">0.749473227959015</nm:col>
+          <nm:col nm:cname="ETA2">10.3599694578360</nm:col>
+          <nm:col nm:cname="ETA3">14.8194446970578</nm:col>
          </nm:row>
         </nm:etashrink>
         <nm:epsshrink>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="EPS1">9.33583884919795</nm:col>
-          <nm:col nm:cname="EPS2">9.33583884919795</nm:col>
+          <nm:col nm:cname="EPS1">9.33583888446532</nm:col>
+          <nm:col nm:cname="EPS2">9.33583888446532</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>2.43</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>2.38</nm:estimation_elapsed_time>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>2.72</nm:covariance_elapsed_time>
+        <nm:covariance_elapsed_time>2.70</nm:covariance_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
-        <nm:final_objective_function>2526.39867230031</nm:final_objective_function>
+        <nm:final_objective_function>2526.39867230153</nm:final_objective_function>
         <nm:theta>
-         <nm:val nm:name="1">11.7166879687970</nm:val>
-         <nm:val nm:name="2">14.5657119312076</nm:val>
-         <nm:val nm:name="3">4.785918978348028E-002</nm:val>
+         <nm:val nm:name="1">11.7166880153086</nm:val>
+         <nm:val nm:name="2">14.5657118508438</nm:val>
+         <nm:val nm:name="3">4.785918991998254E-002</nm:val>
         </nm:theta>
         <nm:omega>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">0.259019778185855</nm:col>
+          <nm:col nm:cname="1">0.259019777164474</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.207020530757649</nm:col>
+          <nm:col nm:cname="2">0.207020530377031</nm:col>
          </nm:row>
          <nm:row nm:rname="3">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="2">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="3">3.879158682837751E-002</nm:col>
+          <nm:col nm:cname="3">3.879158597368353E-002</nm:col>
          </nm:row>
         </nm:omega>
         <nm:sigma>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">5.730681973671195E-002</nm:col>
+          <nm:col nm:cname="1">5.730681980978591E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.205802052267791</nm:col>
+          <nm:col nm:cname="2">0.205802052714976</nm:col>
          </nm:row>
         </nm:sigma>
         <nm:omegac>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">0.508939857140169</nm:col>
+          <nm:col nm:cname="1">0.508939856136729</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.454995088718163</nm:col>
+          <nm:col nm:cname="2">0.454995088299897</nm:col>
          </nm:row>
          <nm:row nm:rname="3">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="2">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="3">0.196955799174275</nm:col>
+          <nm:col nm:cname="3">0.196955797004515</nm:col>
          </nm:row>
         </nm:omegac>
         <nm:sigmac>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">0.239388428577306</nm:col>
+          <nm:col nm:cname="1">0.239388428729932</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.453654110824305</nm:col>
+          <nm:col nm:cname="2">0.453654111317175</nm:col>
          </nm:row>
         </nm:sigmac>
         <nm:thetase>
-         <nm:val nm:name="1">1.01636483293764</nm:val>
-         <nm:val nm:name="2">1.26316433543534</nm:val>
-         <nm:val nm:name="3">1.957916203295206E-003</nm:val>
+         <nm:val nm:name="1">1.01627934574450</nm:val>
+         <nm:val nm:name="2">1.26321507624491</nm:val>
+         <nm:val nm:name="3">1.957805928025867E-003</nm:val>
         </nm:thetase>
         <nm:omegase>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">4.681581116699022E-002</nm:col>
+          <nm:col nm:cname="1">4.681196836420699E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">10000000000.0000</nm:col>
-          <nm:col nm:cname="2">4.009321851522372E-002</nm:col>
+          <nm:col nm:cname="2">4.008161003989039E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="3">
           <nm:col nm:cname="1">10000000000.0000</nm:col>
           <nm:col nm:cname="2">10000000000.0000</nm:col>
-          <nm:col nm:cname="3">1.475596157196916E-002</nm:col>
+          <nm:col nm:cname="3">1.477010546446614E-002</nm:col>
          </nm:row>
         </nm:omegase>
         <nm:sigmase>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">5.924162486077578E-003</nm:col>
+          <nm:col nm:cname="1">5.929277272963007E-003</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">10000000000.0000</nm:col>
-          <nm:col nm:cname="2">6.518709758547105E-002</nm:col>
+          <nm:col nm:cname="2">6.515726026082951E-002</nm:col>
          </nm:row>
         </nm:sigmase>
         <nm:omegacse>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">4.599346122158451E-002</nm:col>
+          <nm:col nm:cname="1">4.598968601078744E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">10000000000.0000</nm:col>
-          <nm:col nm:cname="2">4.405895745839424E-002</nm:col>
+          <nm:col nm:cname="2">4.404620079488826E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="3">
           <nm:col nm:cname="1">10000000000.0000</nm:col>
           <nm:col nm:cname="2">10000000000.0000</nm:col>
-          <nm:col nm:cname="3">3.746008402350320E-002</nm:col>
+          <nm:col nm:cname="3">3.749599069716031E-002</nm:col>
          </nm:row>
         </nm:omegacse>
         <nm:sigmacse>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">1.237353559920395E-002</nm:col>
+          <nm:col nm:cname="1">1.238421861996546E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">10000000000.0000</nm:col>
-          <nm:col nm:cname="2">7.184669556617029E-002</nm:col>
+          <nm:col nm:cname="2">7.181380994393148E-002</nm:col>
          </nm:row>
         </nm:sigmacse>
         <nm:covariance>
          <nm:row nm:rname="THETA1">
-          <nm:col nm:cname="THETA1">1.03299747363235</nm:col>
+          <nm:col nm:cname="THETA1">1.03282370858687</nm:col>
          </nm:row>
          <nm:row nm:rname="THETA2">
-          <nm:col nm:cname="THETA1">1.07326250431310</nm:col>
-          <nm:col nm:cname="THETA2">1.59558413831580</nm:col>
+          <nm:col nm:cname="THETA1">1.07336330102532</nm:col>
+          <nm:col nm:cname="THETA2">1.59571232885245</nm:col>
          </nm:row>
          <nm:row nm:rname="THETA3">
-          <nm:col nm:cname="THETA1">1.057904382914775E-003</nm:col>
-          <nm:col nm:cname="THETA2">8.451571197093718E-004</nm:col>
-          <nm:col nm:cname="THETA3">3.833435859125914E-006</nm:col>
+          <nm:col nm:cname="THETA1">1.057753866614978E-003</nm:col>
+          <nm:col nm:cname="THETA2">8.451957394693708E-004</nm:col>
+          <nm:col nm:cname="THETA3">3.833004051813228E-006</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(1,1)">
-          <nm:col nm:cname="THETA1">1.079779633777242E-002</nm:col>
-          <nm:col nm:cname="THETA2">6.254769139431733E-003</nm:col>
-          <nm:col nm:cname="THETA3">-3.471738116944969E-006</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">2.191720175223286E-003</nm:col>
+          <nm:col nm:cname="THETA1">1.079699707727895E-002</nm:col>
+          <nm:col nm:cname="THETA2">6.246933049484029E-003</nm:col>
+          <nm:col nm:cname="THETA3">-3.502089869040154E-006</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">2.191360382131516E-003</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(1,2)">
           <nm:col nm:cname="THETA1">0.000000000000000E+000</nm:col>
@@ -678,13 +726,13 @@
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(2,2)">
-          <nm:col nm:cname="THETA1">5.358846714154993E-003</nm:col>
-          <nm:col nm:cname="THETA2">8.921866773848128E-003</nm:col>
-          <nm:col nm:cname="THETA3">2.099360176990081E-006</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">9.519779973787576E-004</nm:col>
+          <nm:col nm:cname="THETA1">5.359405753736884E-003</nm:col>
+          <nm:col nm:cname="THETA2">8.912442043578231E-003</nm:col>
+          <nm:col nm:cname="THETA3">2.062453223076059E-006</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">9.513916646994725E-004</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">1.607466170909479E-003</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">1.606535463389842E-003</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(2,3)">
           <nm:col nm:cname="THETA1">0.000000000000000E+000</nm:col>
@@ -697,27 +745,27 @@
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(3,3)">
-          <nm:col nm:cname="THETA1">-5.399145368399477E-003</nm:col>
-          <nm:col nm:cname="THETA2">-4.782149792599142E-003</nm:col>
-          <nm:col nm:cname="THETA3">-6.919083966978541E-006</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">9.450850864975854E-006</nm:col>
+          <nm:col nm:cname="THETA1">-5.401271903313937E-003</nm:col>
+          <nm:col nm:cname="THETA2">-4.777087501861942E-003</nm:col>
+          <nm:col nm:cname="THETA3">-6.901790364121586E-006</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">9.661690197071428E-006</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">-1.332938142857163E-004</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">-1.330943735354826E-004</nm:col>
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(3,3)">2.177384019134305E-004</nm:col>
+          <nm:col nm:cname="OMEGA(3,3)">2.181560154314525E-004</nm:col>
          </nm:row>
          <nm:row nm:rname="SIGMA(1,1)">
-          <nm:col nm:cname="THETA1">3.740678222113367E-004</nm:col>
-          <nm:col nm:cname="THETA2">-7.645521070382447E-004</nm:col>
-          <nm:col nm:cname="THETA3">-1.630336966730332E-006</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">-3.808546322096956E-005</nm:col>
+          <nm:col nm:cname="THETA1">3.745415396222340E-004</nm:col>
+          <nm:col nm:cname="THETA2">-7.641037508946168E-004</nm:col>
+          <nm:col nm:cname="THETA3">-1.626929481345786E-006</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">-3.778758271801537E-005</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">-3.639686890905280E-005</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">-3.588171818151770E-005</nm:col>
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(3,3)">-2.095768203102488E-005</nm:col>
-          <nm:col nm:cname="SIGMA(1,1)">3.509570116144887E-005</nm:col>
+          <nm:col nm:cname="OMEGA(3,3)">-2.142701779725115E-005</nm:col>
+          <nm:col nm:cname="SIGMA(1,1)">3.515632897967563E-005</nm:col>
          </nm:row>
          <nm:row nm:rname="SIGMA(1,2)">
           <nm:col nm:cname="THETA1">0.000000000000000E+000</nm:col>
@@ -733,38 +781,38 @@
           <nm:col nm:cname="SIGMA(1,2)">0.000000000000000E+000</nm:col>
          </nm:row>
          <nm:row nm:rname="SIGMA(2,2)">
-          <nm:col nm:cname="THETA1">1.398864288304988E-002</nm:col>
-          <nm:col nm:cname="THETA2">1.018104179355199E-002</nm:col>
-          <nm:col nm:cname="THETA3">3.695792580718731E-005</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">4.390898998821939E-005</nm:col>
+          <nm:col nm:cname="THETA1">1.396297641825872E-002</nm:col>
+          <nm:col nm:cname="THETA2">1.018231194072594E-002</nm:col>
+          <nm:col nm:cname="THETA3">3.691923109333689E-005</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">4.006442613065375E-005</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">1.408959033022927E-004</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">1.367403408918108E-004</nm:col>
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(3,3)">-7.922095245865112E-005</nm:col>
-          <nm:col nm:cname="SIGMA(1,1)">-1.885662753927291E-004</nm:col>
+          <nm:col nm:cname="OMEGA(3,3)">-7.717860420509097E-005</nm:col>
+          <nm:col nm:cname="SIGMA(1,1)">-1.886038472393739E-004</nm:col>
           <nm:col nm:cname="SIGMA(1,2)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="SIGMA(2,2)">4.249357691617725E-003</nm:col>
+          <nm:col nm:cname="SIGMA(2,2)">4.245468564697472E-003</nm:col>
          </nm:row>
         </nm:covariance>
         <nm:correlation>
          <nm:row nm:rname="THETA1">
-          <nm:col nm:cname="THETA1">1.01636483293764</nm:col>
+          <nm:col nm:cname="THETA1">1.01627934574450</nm:col>
          </nm:row>
          <nm:row nm:rname="THETA2">
-          <nm:col nm:cname="THETA1">0.835981125461668</nm:col>
-          <nm:col nm:cname="THETA2">1.26316433543534</nm:col>
+          <nm:col nm:cname="THETA1">0.836096379460212</nm:col>
+          <nm:col nm:cname="THETA2">1.26321507624491</nm:col>
          </nm:row>
          <nm:row nm:rname="THETA3">
-          <nm:col nm:cname="THETA1">0.531621683258052</nm:col>
-          <nm:col nm:cname="THETA2">0.341730308521133</nm:col>
-          <nm:col nm:cname="THETA3">1.957916203295206E-003</nm:col>
+          <nm:col nm:cname="THETA1">0.531620700139987</nm:col>
+          <nm:col nm:cname="THETA2">0.341751445153451</nm:col>
+          <nm:col nm:cname="THETA3">1.957805928025867E-003</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(1,1)">
-          <nm:col nm:cname="THETA1">0.226930541469320</nm:col>
-          <nm:col nm:cname="THETA2">0.105769116543427</nm:col>
-          <nm:col nm:cname="THETA3">-3.787566829293854E-002</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">4.681581116699022E-002</nm:col>
+          <nm:col nm:cname="THETA1">0.226951460354350</nm:col>
+          <nm:col nm:cname="THETA2">0.105641035216064</nm:col>
+          <nm:col nm:cname="THETA3">-3.821208582669035E-002</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">4.681196836420699E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(1,2)">
           <nm:col nm:cname="THETA1">0.000000000000000E+000</nm:col>
@@ -782,13 +830,13 @@
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(2,2)">
-          <nm:col nm:cname="THETA1">0.131507579367113</nm:col>
-          <nm:col nm:cname="THETA2">0.176167161851254</nm:col>
-          <nm:col nm:cname="THETA3">2.674372717963218E-002</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">0.507181538962814</nm:col>
+          <nm:col nm:cname="THETA1">0.131570456168549</nm:col>
+          <nm:col nm:cname="THETA2">0.176024962329836</nm:col>
+          <nm:col nm:cname="THETA3">2.628265957192598E-002</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">0.507057581803763</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">4.009321851522372E-002</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">4.008161003989039E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(2,3)">
           <nm:col nm:cname="THETA1">0.000000000000000E+000</nm:col>
@@ -801,27 +849,27 @@
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(3,3)">
-          <nm:col nm:cname="THETA1">-0.360004455289924</nm:col>
-          <nm:col nm:cname="THETA2">-0.256564051331245</nm:col>
-          <nm:col nm:cname="THETA3">-0.239489779958645</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">1.368077945452222E-002</nm:col>
+          <nm:col nm:cname="THETA1">-0.359831637172330</nm:col>
+          <nm:col nm:cname="THETA2">-0.256036746380483</nm:col>
+          <nm:col nm:cname="THETA3">-0.238675877703543</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">1.397373839429757E-002</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">-0.225305378429395</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">-0.224817928383284</nm:col>
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(3,3)">1.475596157196916E-002</nm:col>
+          <nm:col nm:cname="OMEGA(3,3)">1.477010546446614E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="SIGMA(1,1)">
-          <nm:col nm:cname="THETA1">6.212605257180043E-002</nm:col>
-          <nm:col nm:cname="THETA2">-0.102169265833791</nm:col>
-          <nm:col nm:cname="THETA3">-0.140558241049023</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">-0.137321875965807</nm:col>
+          <nm:col nm:cname="THETA1">6.215629685479544E-002</nm:col>
+          <nm:col nm:cname="THETA2">-0.102017169904135</nm:col>
+          <nm:col nm:cname="THETA3">-0.140151364365775</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">-0.136141473914750</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">-0.153237882385514</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">-0.150982395828785</nm:col>
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(3,3)">-0.239744564560773</nm:col>
-          <nm:col nm:cname="SIGMA(1,1)">5.924162486077578E-003</nm:col>
+          <nm:col nm:cname="OMEGA(3,3)">-0.244667550526478</nm:col>
+          <nm:col nm:cname="SIGMA(1,1)">5.929277272963007E-003</nm:col>
          </nm:row>
          <nm:row nm:rname="SIGMA(1,2)">
           <nm:col nm:cname="THETA1">0.000000000000000E+000</nm:col>
@@ -837,38 +885,38 @@
           <nm:col nm:cname="SIGMA(1,2)">0.000000000000000E+000</nm:col>
          </nm:row>
          <nm:row nm:rname="SIGMA(2,2)">
-          <nm:col nm:cname="THETA1">0.211136981645239</nm:col>
-          <nm:col nm:cname="THETA2">0.123643337741139</nm:col>
-          <nm:col nm:cname="THETA3">0.289568851742091</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">1.438796093265824E-002</nm:col>
+          <nm:col nm:cname="THETA1">0.210863829977520</nm:col>
+          <nm:col nm:cname="THETA2">0.123710420397085</nm:col>
+          <nm:col nm:cname="THETA3">0.289414438426067</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">1.313527618587349E-002</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">5.390956158151937E-002</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">5.235867951183505E-002</nm:col>
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(3,3)">-8.235896859936330E-002</nm:col>
-          <nm:col nm:cname="SIGMA(1,1)">-0.488287286092230</nm:col>
+          <nm:col nm:cname="OMEGA(3,3)">-8.019559406465121E-002</nm:col>
+          <nm:col nm:cname="SIGMA(1,1)">-0.488186732979624</nm:col>
           <nm:col nm:cname="SIGMA(1,2)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="SIGMA(2,2)">6.518709758547105E-002</nm:col>
+          <nm:col nm:cname="SIGMA(2,2)">6.515726026082951E-002</nm:col>
          </nm:row>
         </nm:correlation>
         <nm:invcovariance>
          <nm:row nm:rname="THETA1">
-          <nm:col nm:cname="THETA1">7.26942336771420</nm:col>
+          <nm:col nm:cname="THETA1">7.26830451559727</nm:col>
          </nm:row>
          <nm:row nm:rname="THETA2">
-          <nm:col nm:cname="THETA1">-4.25441129185014</nm:col>
-          <nm:col nm:cname="THETA2">3.25134790700961</nm:col>
+          <nm:col nm:cname="THETA1">-4.25418134620061</nm:col>
+          <nm:col nm:cname="THETA2">3.25150826589449</nm:col>
          </nm:row>
          <nm:row nm:rname="THETA3">
-          <nm:col nm:cname="THETA1">-1013.37709825958</nm:col>
-          <nm:col nm:cname="THETA2">450.911710569916</nm:col>
-          <nm:col nm:cname="THETA3">471054.418856991</nm:col>
+          <nm:col nm:cname="THETA1">-1013.27139700369</nm:col>
+          <nm:col nm:cname="THETA2">450.916290920444</nm:col>
+          <nm:col nm:cname="THETA3">471046.608637660</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(1,1)">
-          <nm:col nm:cname="THETA1">-39.8775696776604</nm:col>
-          <nm:col nm:cname="THETA2">21.9517839647417</nm:col>
-          <nm:col nm:cname="THETA3">6195.29222564535</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">851.437124253483</nm:col>
+          <nm:col nm:cname="THETA1">-39.8742379484996</nm:col>
+          <nm:col nm:cname="THETA2">21.9528489555556</nm:col>
+          <nm:col nm:cname="THETA3">6194.89223923705</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">851.417062354022</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(1,2)">
           <nm:col nm:cname="THETA1">0.000000000000000E+000</nm:col>
@@ -886,13 +934,13 @@
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(2,2)">
-          <nm:col nm:cname="THETA1">21.3326993832588</nm:col>
-          <nm:col nm:cname="THETA2">-14.2880425871274</nm:col>
-          <nm:col nm:cname="THETA3">-1987.27944853561</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">-502.724444799522</nm:col>
+          <nm:col nm:cname="THETA1">21.3358182330316</nm:col>
+          <nm:col nm:cname="THETA2">-14.2915027281385</nm:col>
+          <nm:col nm:cname="THETA3">-1987.96354029342</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">-502.761488202537</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">1004.20310955181</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">1004.23657775487</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(2,3)">
           <nm:col nm:cname="THETA1">0.000000000000000E+000</nm:col>
@@ -905,27 +953,27 @@
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
          </nm:row>
          <nm:row nm:rname="OMEGA(3,3)">
-          <nm:col nm:cname="THETA1">31.6581700299537</nm:col>
-          <nm:col nm:cname="THETA2">-5.56173759753490</nm:col>
-          <nm:col nm:cname="THETA3">3472.90622963235</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">-428.565545657755</nm:col>
+          <nm:col nm:cname="THETA1">31.4574999277087</nm:col>
+          <nm:col nm:cname="THETA2">-5.42263363850295</nm:col>
+          <nm:col nm:cname="THETA3">3501.71055415493</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">-427.047177691928</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">802.539396020338</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">802.168615597149</nm:col>
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(3,3)">6425.19103782536</nm:col>
+          <nm:col nm:cname="OMEGA(3,3)">6429.68190890023</nm:col>
          </nm:row>
          <nm:row nm:rname="SIGMA(1,1)">
-          <nm:col nm:cname="THETA1">-320.853785333754</nm:col>
-          <nm:col nm:cname="THETA2">204.704931085334</nm:col>
-          <nm:col nm:cname="THETA3">52138.5826182561</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">1930.64424511587</nm:col>
+          <nm:col nm:cname="THETA1">-319.731081211502</nm:col>
+          <nm:col nm:cname="THETA2">204.262667398072</nm:col>
+          <nm:col nm:cname="THETA3">52030.3910211182</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">1922.79842365773</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">227.224778437022</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">228.303703040144</nm:col>
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(3,3)">4964.16932343216</nm:col>
-          <nm:col nm:cname="SIGMA(1,1)">59144.5426507767</nm:col>
+          <nm:col nm:cname="OMEGA(3,3)">5053.28939331990</nm:col>
+          <nm:col nm:cname="SIGMA(1,1)">59105.9837876359</nm:col>
          </nm:row>
          <nm:row nm:rname="SIGMA(1,2)">
           <nm:col nm:cname="THETA1">0.000000000000000E+000</nm:col>
@@ -941,34 +989,34 @@
           <nm:col nm:cname="SIGMA(1,2)">0.000000000000000E+000</nm:col>
          </nm:row>
          <nm:row nm:rname="SIGMA(2,2)">
-          <nm:col nm:cname="THETA1">-18.8667646967576</nm:col>
-          <nm:col nm:cname="THETA2">11.5207190320286</nm:col>
-          <nm:col nm:cname="THETA3">539.022845911827</nm:col>
-          <nm:col nm:cname="OMEGA(1,1)">110.351970619487</nm:col>
+          <nm:col nm:cname="THETA1">-18.8330582614747</nm:col>
+          <nm:col nm:cname="THETA2">11.5008718508621</nm:col>
+          <nm:col nm:cname="THETA3">535.456738451395</nm:col>
+          <nm:col nm:cname="OMEGA(1,1)">110.434487769955</nm:col>
           <nm:col nm:cname="OMEGA(1,2)">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="OMEGA(1,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(2,2)">-21.7660529171745</nm:col>
+          <nm:col nm:cname="OMEGA(2,2)">-21.4827861482999</nm:col>
           <nm:col nm:cname="OMEGA(2,3)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="OMEGA(3,3)">196.793524707102</nm:col>
-          <nm:col nm:cname="SIGMA(1,1)">2801.93177843403</nm:col>
+          <nm:col nm:cname="OMEGA(3,3)">198.663216961069</nm:col>
+          <nm:col nm:cname="SIGMA(1,1)">2801.33435362239</nm:col>
           <nm:col nm:cname="SIGMA(1,2)">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="SIGMA(2,2)">392.734097821852</nm:col>
+          <nm:col nm:cname="SIGMA(2,2)">392.955326964487</nm:col>
          </nm:row>
         </nm:invcovariance>
         <nm:eigenvalues>
-         <nm:val nm:name="1">7.186690935318239E-002</nm:val>
-         <nm:val nm:name="2">0.357206346858673</nm:val>
-         <nm:val nm:name="3">0.521922264644259</nm:val>
-         <nm:val nm:name="4">0.608694001814665</nm:val>
-         <nm:val nm:name="5">0.889728095268967</nm:val>
-         <nm:val nm:name="6">1.43558935548141</nm:val>
-         <nm:val nm:name="7">1.55658753242600</nm:val>
-         <nm:val nm:name="8">2.55840549415284</nm:val>
+         <nm:val nm:name="1">7.189494588557661E-002</nm:val>
+         <nm:val nm:name="2">0.356296041576291</nm:val>
+         <nm:val nm:name="3">0.521673775894204</nm:val>
+         <nm:val nm:name="4">0.608643546088360</nm:val>
+         <nm:val nm:name="5">0.889106408023038</nm:val>
+         <nm:val nm:name="6">1.43844423462661</nm:val>
+         <nm:val nm:name="7">1.55753103668561</nm:val>
+         <nm:val nm:name="8">2.55641001122031</nm:val>
         </nm:eigenvalues>
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2012-09-27T20:37:44.303</nm:stop_datetime>
+     <nm:stop_datetime>2013-03-20T17:42:44.034</nm:stop_datetime>
     </nm:output>
    </so>
   </job>
@@ -981,8 +1029,8 @@
        <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
        <alias id="folder">/mnt/nm72</alias>
        <alias id="target">/opt/NONMEM/nm72</alias>
-       <alias id="origin">/opt/nmqual</alias>
-       <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
+       <alias id="origin">/mnt/nmqual</alias>
+       <alias id="unlock">/mnt/nonmem.lic</alias>
        <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
        <!--The meta interface groups commands that collect metadata.-->
        <do on="meta">pwd</do>
@@ -991,33 +1039,37 @@
        <do on="meta">echo $SHELL</do>
        <do on="meta">echo $USER</do>
        <do on="meta">echo $PATH</do>
+       <do on="meta">ifort --version</do>
+       <do on="meta">head -n 5 target/util/nmfe72</do>
        <!--The 'install' interface installs NONMEM.-->
-       <do on="install" as="xml">perl $0 $_0 meta</do>
+       <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir origin/temp</do>
+       <do on="install">mkdir -p -p origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
        <!--alters compile options in setup72-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir target</do>
+       <do on="install">mkdir -p -p target</do>
        <do on="install" in="origin/temp">pwd</do>
-       <do on="install" in="origin/temp">echo `ifort -V`</do>
+       <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-       <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir target/nmqual</do>
-       <do on="install">mkdir target/nmqual/doc</do>
-       <do on="install">cp origin/autolog.pl target/nmqual</do>
-       <!--runtime copy, uses nmqual/log.xml-->
-       <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/default.xsl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual/doc</do>
+       <do on="install">cp $0 target/nmqual</do>
+       <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+       <do on="install">cp -r origin/con target/nmqual</do>
+       <!--support for processing xml docs-->
+       <do on="install">cp -r origin/csv target/nmqual</do>
+       <!--support for processing csv docs-->
+       <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+       <!--reference modeling results-->
+       <do on="install">cp -r origin/psn target/nmqual</do>
+       <!--support for psn qualification-->
+       <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
        <!--keep for archival purposes-->
+       <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+       <!--keep for archival purposes-->
+       <do on="install">rm -rf origin/temp</do>
        <do on="install">cp -r origin/test target/nmqual</do>
        <!--supports control tests-->
        <do on="install">chmod 0777 target/license/nonmem.lic</do>
@@ -1026,10 +1078,11 @@
        <!--replace expired license-->
        <do on="install">cp mpicha target/mpi/mpi_lini</do>
        <!--replace default mpich archive-->
-       <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
+       <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
        <!--will need this soon-->
-       <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
+       <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
        <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+       <do on="install" as="xml">perl $0 $_0 meta</do>
        <to on="install">target/nmqual/log.xml</to>
        <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
        <!--Run directory and run name are required arguments.-->
@@ -1038,15 +1091,15 @@
        <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="basic" as="xml">cat target/nmqual/log.xml</do>
        <to on="basic">$_1/$_2.log.xml</to>
-       <!--The 'run' interface also expects a leading compile/execute argument.-->
+       <!--The 'run' interface expects a leading compile/execute argument.-->
        <do on="run" as="xml">perl $0 $_0 meta</do>
        <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
        <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="run" as="xml">cat target/nmqual/log.xml</do>
        <to on="run">$_2/$_3.log.xml</to>
-       <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
+       <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
        <do on="para" as="xml">perl $0 $_0 meta</do>
-       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
+       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
        <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="para" as="xml">cat target/nmqual/log.xml</do>
        <to on="para">$_2/$_3.log.xml</to>
@@ -1065,6 +1118,7 @@
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+       <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
        <to on="qualify">$_1</to>
        <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
        <do on="regress" as="xml">perl $0 $_0 meta</do>
@@ -1073,161 +1127,41 @@
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+       <do on="regress" as="xml">cat target/nmqual/log.xml</do>
        <to on="regress">$_1</to>
+       <!--The 'psntest' interface runs PsN control tests.-->
+       <do on="psntest" as="xml">perl $0 $_0 meta</do>
+       <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+       <to on="psntest">$_1</to>
        <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
        <do on="accept">echo $_</do>
        <to on="accept">$0</to>
       </config>
       <job>
-       <do>perl autolog.pl nix/nm72.xml meta</do>
-       <so>
-        <log>
-         <logged on="meta">
-          <config>
-           <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
-           <alias id="folder">/mnt/nm72</alias>
-           <alias id="target">/opt/NONMEM/nm72</alias>
-           <alias id="origin">/opt/nmqual</alias>
-           <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
-           <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
-           <!--The meta interface groups commands that collect metadata.-->
-           <do on="meta">pwd</do>
-           <do on="meta">date</do>
-           <do on="meta">perl -e 'use POSIX; print join qq(,),uname'</do>
-           <do on="meta">echo $SHELL</do>
-           <do on="meta">echo $USER</do>
-           <do on="meta">echo $PATH</do>
-           <!--The 'install' interface installs NONMEM.-->
-           <do on="install" as="xml">perl $0 $_0 meta</do>
-           <do on="install">rm -rf origin/temp</do>
-           <do on="install">mkdir origin/temp</do>
-           <do on="install">cp -r folder/* origin/temp</do>
-           <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
-           <!--alters compile options in setup72-->
-           <do on="install">rm -rf target</do>
-           <do on="install">mkdir target</do>
-           <do on="install" in="origin/temp">pwd</do>
-           <do on="install" in="origin/temp">echo `ifort -V`</do>
-           <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-           <do on="install">rm -rf origin/temp</do>
-           <do on="install">mkdir target/nmqual</do>
-           <do on="install">mkdir target/nmqual/doc</do>
-           <do on="install">cp origin/autolog.pl target/nmqual</do>
-           <!--runtime copy, uses nmqual/log.xml-->
-           <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/con/default.xsl target/nmqual</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
-           <!--keep for archival purposes-->
-           <do on="install">cp -r origin/test target/nmqual</do>
-           <!--supports control tests-->
-           <do on="install">chmod 0777 target/license/nonmem.lic</do>
-           <!--enable overwriting-->
-           <do on="install">cp unlock target/license/nonmem.lic</do>
-           <!--replace expired license-->
-           <do on="install">cp mpicha target/mpi/mpi_lini</do>
-           <!--replace default mpich archive-->
-           <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
-           <!--will need this soon-->
-           <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
-           <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
-           <to on="install">target/nmqual/log.xml</to>
-           <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
-           <!--Run directory and run name are required arguments.-->
-           <do on="basic" as="xml">perl $0 $_0 meta</do>
-           <do on="basic" in="$_1">target/util/nmfe72 $_2.ctl $_2.lst</do>
-           <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
-           <do on="basic" as="xml">cat target/nmqual/log.xml</do>
-           <to on="basic">$_1/$_2.log.xml</to>
-           <!--The 'run' interface also expects a leading compile/execute argument.-->
-           <do on="run" as="xml">perl $0 $_0 meta</do>
-           <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
-           <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
-           <do on="run" as="xml">cat target/nmqual/log.xml</do>
-           <to on="run">$_2/$_3.log.xml</to>
-           <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
-           <do on="para" as="xml">perl $0 $_0 meta</do>
-           <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
-           <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
-           <do on="para" as="xml">cat target/nmqual/log.xml</do>
-           <to on="para">$_2/$_3.log.xml</to>
-           <!--The 'test' interface invokes nmfe directly, without the compile/execute argument.-->
-           <do on="test" in="target/nmqual/test">target/util/nmfe72 $_1.ctl $_1.lst</do>
-           <do on="test" in="target/nmqual/test" as="xml">cat $_1.xml</do>
-           <!--The 'qualify' interface runs a full suite of qualification tests.-->
-           <do on="qualify" as="xml">perl $0 $_0 meta</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
-           <to on="qualify">$_1</to>
-           <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
-           <do on="regress" as="xml">perl $0 $_0 meta</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
-           <to on="regress">$_1</to>
-           <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
-           <do on="accept">echo $_</do>
-           <to on="accept">$0</to>
-          </config>
-          <job>
-           <do>pwd</do>
-           <so>/opt/nmqual</so>
-          </job>
-          <job>
-           <do>date</do>
-           <so>Wed Sep 26 15:37:32 UTC 2012</so>
-          </job>
-          <job>
-           <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-           <so>Linux,master,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
-          </job>
-          <job>
-           <do>echo $SHELL</do>
-           <so>/bin/bash</so>
-          </job>
-          <job>
-           <do>echo $USER</do>
-           <so>root</so>
-          </job>
-          <job>
-           <do>echo $PATH</do>
-           <so>/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/mpirt/bin/intel64:/opt/sge6/bin/lx24-amd64</so>
-          </job>
-         </logged>
-        </log>
-       </so>
+       <do>date</do>
+       <so>Tue Mar 19 15:11:18 UTC 2013</so>
       </job>
       <job>
-       <do>rm -rf /opt/nmqual/temp</do>
+       <do>rm -rf /mnt/nmqual/temp</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/nmqual/temp</do>
+       <do>mkdir -p -p /mnt/nmqual/temp</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /mnt/nm72/* /opt/nmqual/temp</do>
+       <do>cp -r /mnt/nm72/* /mnt/nmqual/temp</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/nmqual">patch -p0 &lt; nix/setup72.diff</do>
+       <do in="/mnt/nmqual">patch -p0 &lt; nix/setup72.diff</do>
        <so>patching file temp/SETUP72</so>
       </job>
       <job>
@@ -1235,24 +1169,26 @@
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm72</do>
+       <do>mkdir -p -p /opt/NONMEM/nm72</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/nmqual/temp">pwd</do>
-       <so>/opt/nmqual/temp</so>
+       <do in="/mnt/nmqual/temp">pwd</do>
+       <so>/mnt/nmqual/temp</so>
       </job>
       <job>
-       <do in="/opt/nmqual/temp">echo `ifort -V`</do>
-       <so/>
+       <do in="/mnt/nmqual/temp">ifort --version</do>
+       <so>ifort (IFORT) 12.0.4 20110427
+          Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
+          </so>
       </job>
       <job>
-       <do in="/opt/nmqual/temp">/bin/bash SETUP72 /opt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
+       <do in="/mnt/nmqual/temp">/bin/bash SETUP72 /mnt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
        <so>NONMEM 7.2.0 INSTALLATION UTILITY - UNIX Bourne-Again SHell version
           For instructions, see readme_7.2.0.pdf or readme_7.2.0.txt on the CD
            
-          SETUP72 /opt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip
-          CD-ROM drive is /opt/nmqual/temp
+          SETUP72 /mnt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip
+          CD-ROM drive is /mnt/nmqual/temp
           NONMEM 7.2 directory is /opt/NONMEM/nm72
           Command for FORTRAN compiles is ifort
           Optimization for Fortran compiles is y
@@ -1269,8 +1205,8 @@
           % SETUP72 help
            
           directory /opt/NONMEM/nm72
-          Step 1a. Copy files from /opt/nmqual/temp to /opt/NONMEM/nm72
-          Step 1b. Copy files from /opt/nmqual/temp/NONMEM_7.2.0 to /opt/NONMEM/nm72
+          Step 1a. Copy files from /mnt/nmqual/temp to /opt/NONMEM/nm72
+          Step 1b. Copy files from /mnt/nmqual/temp/NONMEM_7.2.0 to /opt/NONMEM/nm72
            
           Installing NONMEM 7.2.0 (Enter Ctrl-C to interrupt) ...
           Step 2a. Make sub-directories of /opt/NONMEM/nm72
@@ -1358,7 +1294,7 @@
           Starting nonmem execution ...
           License Registered to: Temporary License File for Installation
           Expiration Date:    31 JUL 2011
-          Current Date:       26 SEP 2012
+          Current Date:       19 MAR 2013
            
             **** PROGRAM LICENSE HAS EXPIRED ****
             ****     PROGRAM TERMINATING     ****
@@ -1371,43 +1307,47 @@
           /opt/NONMEM/nm72/license/nonmem.lic</so>
       </job>
       <job>
-       <do>rm -rf /opt/nmqual/temp</do>
+       <do>mkdir -p -p /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm72/nmqual</do>
+       <do>mkdir -p -p /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm72/nmqual/doc</do>
+       <do>cp autolog.pl /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/autolog.pl /opt/NONMEM/nm72/nmqual</do>
+       <do>cp -r /mnt/nmqual/con /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/con/contrast.pl /opt/NONMEM/nm72/nmqual</do>
+       <do>cp -r /mnt/nmqual/csv /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/con/xpath.lst /opt/NONMEM/nm72/nmqual</do>
+       <do>cp /mnt/nmqual/doc/nix/* /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/con/default.xsl /opt/NONMEM/nm72/nmqual</do>
+       <do>cp -r /mnt/nmqual/psn /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/doc/nix/qualify.xml /opt/NONMEM/nm72/nmqual/doc</do>
+       <do>cp /mnt/nmqual/nix/setup72.diff /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/nix/setup72.diff /opt/NONMEM/nm72/nmqual</do>
+       <do>cp /mnt/nmqual/temp/SETUP72 /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /opt/nmqual/test /opt/NONMEM/nm72/nmqual</do>
+       <do>rm -rf /mnt/nmqual/temp</do>
+       <so/>
+      </job>
+      <job>
+       <do>cp -r /mnt/nmqual/test /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
@@ -1415,7 +1355,7 @@
        <so/>
       </job>
       <job>
-       <do>cp /opt/NONMEM/nonmem.lic /opt/NONMEM/nm72/license/nonmem.lic</do>
+       <do>cp /mnt/nonmem.lic /opt/NONMEM/nm72/license/nonmem.lic</do>
        <so/>
       </job>
       <job>
@@ -1423,13 +1363,179 @@
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/nix/nmfe72.diff /opt/NONMEM/nm72/nmqual</do>
+       <do>cp /mnt/nmqual/nix/nmfe72.diff /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/NONMEM/nm72">patch -p1 &lt; nmqual/nmfe72.diff</do>
+       <do in="/opt/NONMEM/nm72">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
        <so>patching file run/nmfe72
           patching file util/nmfe72</so>
+      </job>
+      <job>
+       <do>perl autolog.pl nix/nm72.xml meta</do>
+       <so>
+        <log>
+         <logged on="meta">
+          <config>
+           <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
+           <alias id="folder">/mnt/nm72</alias>
+           <alias id="target">/opt/NONMEM/nm72</alias>
+           <alias id="origin">/mnt/nmqual</alias>
+           <alias id="unlock">/mnt/nonmem.lic</alias>
+           <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
+           <!--The meta interface groups commands that collect metadata.-->
+           <do on="meta">pwd</do>
+           <do on="meta">date</do>
+           <do on="meta">perl -e 'use POSIX; print join qq(,),uname'</do>
+           <do on="meta">echo $SHELL</do>
+           <do on="meta">echo $USER</do>
+           <do on="meta">echo $PATH</do>
+           <do on="meta">ifort --version</do>
+           <do on="meta">head -n 5 target/util/nmfe72</do>
+           <!--The 'install' interface installs NONMEM.-->
+           <do on="install">date</do>
+           <do on="install">rm -rf origin/temp</do>
+           <do on="install">mkdir -p -p origin/temp</do>
+           <do on="install">cp -r folder/* origin/temp</do>
+           <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
+           <!--alters compile options in setup72-->
+           <do on="install">rm -rf target</do>
+           <do on="install">mkdir -p -p target</do>
+           <do on="install" in="origin/temp">pwd</do>
+           <do on="install" in="origin/temp">ifort --version</do>
+           <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
+           <do on="install">mkdir -p -p target/nmqual</do>
+           <do on="install">mkdir -p -p target/nmqual/doc</do>
+           <do on="install">cp $0 target/nmqual</do>
+           <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+           <do on="install">cp -r origin/con target/nmqual</do>
+           <!--support for processing xml docs-->
+           <do on="install">cp -r origin/csv target/nmqual</do>
+           <!--support for processing csv docs-->
+           <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+           <!--reference modeling results-->
+           <do on="install">cp -r origin/psn target/nmqual</do>
+           <!--support for psn qualification-->
+           <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
+           <!--keep for archival purposes-->
+           <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+           <!--keep for archival purposes-->
+           <do on="install">rm -rf origin/temp</do>
+           <do on="install">cp -r origin/test target/nmqual</do>
+           <!--supports control tests-->
+           <do on="install">chmod 0777 target/license/nonmem.lic</do>
+           <!--enable overwriting-->
+           <do on="install">cp unlock target/license/nonmem.lic</do>
+           <!--replace expired license-->
+           <do on="install">cp mpicha target/mpi/mpi_lini</do>
+           <!--replace default mpich archive-->
+           <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
+           <!--will need this soon-->
+           <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
+           <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+           <do on="install" as="xml">perl $0 $_0 meta</do>
+           <to on="install">target/nmqual/log.xml</to>
+           <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
+           <!--Run directory and run name are required arguments.-->
+           <do on="basic" as="xml">perl $0 $_0 meta</do>
+           <do on="basic" in="$_1">target/util/nmfe72 $_2.ctl $_2.lst</do>
+           <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
+           <do on="basic" as="xml">cat target/nmqual/log.xml</do>
+           <to on="basic">$_1/$_2.log.xml</to>
+           <!--The 'run' interface expects a leading compile/execute argument.-->
+           <do on="run" as="xml">perl $0 $_0 meta</do>
+           <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
+           <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
+           <do on="run" as="xml">cat target/nmqual/log.xml</do>
+           <to on="run">$_2/$_3.log.xml</to>
+           <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
+           <do on="para" as="xml">perl $0 $_0 meta</do>
+           <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
+           <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
+           <do on="para" as="xml">cat target/nmqual/log.xml</do>
+           <to on="para">$_2/$_3.log.xml</to>
+           <!--The 'test' interface invokes nmfe directly, without the compile/execute argument.-->
+           <do on="test" in="target/nmqual/test">target/util/nmfe72 $_1.ctl $_1.lst</do>
+           <do on="test" in="target/nmqual/test" as="xml">cat $_1.xml</do>
+           <!--The 'qualify' interface runs a full suite of qualification tests.-->
+           <do on="qualify" as="xml">perl $0 $_0 meta</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+           <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
+           <to on="qualify">$_1</to>
+           <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
+           <do on="regress" as="xml">perl $0 $_0 meta</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+           <do on="regress" as="xml">cat target/nmqual/log.xml</do>
+           <to on="regress">$_1</to>
+           <!--The 'psntest' interface runs PsN control tests.-->
+           <do on="psntest" as="xml">perl $0 $_0 meta</do>
+           <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+           <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+           <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+           <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+           <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+           <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+           <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+           <to on="psntest">$_1</to>
+           <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
+           <do on="accept">echo $_</do>
+           <to on="accept">$0</to>
+          </config>
+          <job>
+           <do>pwd</do>
+           <so>/mnt/nmqual</so>
+          </job>
+          <job>
+           <do>date</do>
+           <so>Tue Mar 19 15:15:49 UTC 2013</so>
+          </job>
+          <job>
+           <do>perl -e 'use POSIX; print join qq(,),uname'</do>
+           <so>Linux,master,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+          </job>
+          <job>
+           <do>echo $SHELL</do>
+           <so>/bin/bash</so>
+          </job>
+          <job>
+           <do>echo $USER</do>
+           <so>root</so>
+          </job>
+          <job>
+           <do>echo $PATH</do>
+           <so>/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64:/opt/chef/embedded/bin:/opt/chef/embedded/bin</so>
+          </job>
+          <job>
+           <do>ifort --version</do>
+           <so>ifort (IFORT) 12.0.4 20110427
+                     Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
+                     </so>
+          </job>
+          <job>
+           <do>head -n 5 /opt/NONMEM/nm72/util/nmfe72</do>
+           <so>#!/bin/bash
+                     dir=/opt/NONMEM/nm72
+                     f=ifort
+                     o=' -fp-model strict -Gs -nologo -nbs -w '
+                     opstat=' -static '</so>
+          </job>
+         </logged>
+        </log>
+       </so>
       </job>
      </logged>
     </log>

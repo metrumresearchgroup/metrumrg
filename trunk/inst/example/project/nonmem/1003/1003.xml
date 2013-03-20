@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2012-09-27T20:37:38.746</nm:start_datetime>
+<nm:start_datetime>2013-03-20T17:42:30.983</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -48,8 +48,8 @@ $TABLE NOPRINT FILE=./1003par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 <nm:license_information><![CDATA[
 License Registered to: Metrum Research Group
 Expiration Date:    14 JUL 2013
-Current Date:       27 SEP 2012
-Days until program expires : 292
+Current Date:       20 MAR 2013
+Days until program expires : 114
 ]]></nm:license_information>
 <nm:program_information><![CDATA[
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
@@ -175,125 +175,119 @@ Days until program expires : 292
 <nm:estimation_method>focei</nm:estimation_method>
 <nm:estimation_title>First Order Conditional Estimation with Interaction</nm:estimation_title>
 <nm:monitor>
-<nm:obj nm:iteration='0'>3634.96125166100</nm:obj>
-<nm:obj nm:iteration='5'>2663.50071940116</nm:obj>
-<nm:obj nm:iteration='10'>2601.66241489167</nm:obj>
-<nm:obj nm:iteration='15'>2592.41248506552</nm:obj>
-<nm:obj nm:iteration='20'>2571.67447730781</nm:obj>
-<nm:obj nm:iteration='25'>2570.47499232860</nm:obj>
-<nm:obj nm:iteration='30'>2570.47436975164</nm:obj>
-<nm:obj nm:iteration='35'>2570.47364567506</nm:obj>
-<nm:obj nm:iteration='40'>2570.47343509213</nm:obj>
-<nm:obj nm:iteration='45'>2570.47261155436</nm:obj>
-<nm:obj nm:iteration='50'>2570.28573870616</nm:obj>
-<nm:obj nm:iteration='55'>2570.13812041603</nm:obj>
-<nm:obj nm:iteration='60'>2569.98552312379</nm:obj>
-<nm:obj nm:iteration='65'>2569.91090470105</nm:obj>
-<nm:obj nm:iteration='70'>2569.89619443960</nm:obj>
-<nm:obj nm:iteration='75'>2569.89419780456</nm:obj>
-<nm:obj nm:iteration='80'>2569.89393796846</nm:obj>
-<nm:obj nm:iteration='82'>2569.89393760215</nm:obj>
+<nm:obj nm:iteration='0'>3634.96125160225</nm:obj>
+<nm:obj nm:iteration='5'>2663.50076159368</nm:obj>
+<nm:obj nm:iteration='10'>2601.66241641079</nm:obj>
+<nm:obj nm:iteration='15'>2592.41250336296</nm:obj>
+<nm:obj nm:iteration='20'>2571.76998283564</nm:obj>
+<nm:obj nm:iteration='25'>2570.47493062644</nm:obj>
+<nm:obj nm:iteration='30'>2570.47436012509</nm:obj>
+<nm:obj nm:iteration='35'>2570.47427539495</nm:obj>
+<nm:obj nm:iteration='40'>2570.47425264360</nm:obj>
+<nm:obj nm:iteration='45'>2570.47419936637</nm:obj>
+<nm:obj nm:iteration='50'>2570.47418061908</nm:obj>
+<nm:obj nm:iteration='55'>2570.47417423427</nm:obj>
+<nm:obj nm:iteration='57'>2570.47417423427</nm:obj>
 </nm:monitor>
-<nm:termination_status>0</nm:termination_status>
+<nm:termination_status>136</nm:termination_status>
 <nm:termination_information><![CDATA[
-0MINIMIZATION SUCCESSFUL
- HOWEVER, PROBLEMS OCCURRED WITH THE MINIMIZATION.
- REGARD THE RESULTS OF THE ESTIMATION STEP CAREFULLY, AND ACCEPT THEM ONLY
- AFTER CHECKING THAT THE COVARIANCE STEP PRODUCES REASONABLE OUTPUT.
- NO. OF FUNCTION EVALUATIONS USED:     1412
- NO. OF SIG. DIGITS IN FINAL EST.:  3.6
+0MINIMIZATION TERMINATED
+ DUE TO PROXIMITY OF LAST ITERATION EST. TO A VALUE
+ AT WHICH THE OBJ. FUNC. IS INFINITE (ERROR=136)
+0AT THE LAST COMPUTED INFINITE VALUE OF THE OBJ. FUNCT.:
+0PRED EXIT CODE = 1
+0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+ THETA=
+  1.11E+01   1.32E+01   4.36E-02   7.22E-01  -9.73E-03
+ OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+ ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE
+
+ NO. OF FUNCTION EVALUATIONS USED:     1063
+ NO. OF SIG. DIGITS UNREPORTABLE
 ]]></nm:termination_information>
 <nm:etabar>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>-2.361919762653861E-004</nm:col>
-<nm:col nm:cname='ETA2'>3.450117820444928E-002</nm:col>
-<nm:col nm:cname='ETA3'>9.089750144732730E-003</nm:col>
+<nm:col nm:cname='ETA1'>7.691155381433640E-005</nm:col>
+<nm:col nm:cname='ETA2'>1.210128847774157E-002</nm:col>
+<nm:col nm:cname='ETA3'>6.598085983090446E-003</nm:col>
 </nm:row>
 </nm:etabar>
 <nm:etabarse>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>7.806642574256756E-002</nm:col>
-<nm:col nm:cname='ETA2'>9.083412477484881E-002</nm:col>
-<nm:col nm:cname='ETA3'>3.747102571034837E-002</nm:col>
+<nm:col nm:cname='ETA1'>7.797140856214649E-002</nm:col>
+<nm:col nm:cname='ETA2'>6.468159886415943E-002</nm:col>
+<nm:col nm:cname='ETA3'>3.761743698234991E-002</nm:col>
 </nm:row>
 </nm:etabarse>
 <nm:etabarpval>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>0.997585966424719</nm:col>
-<nm:col nm:cname='ETA2'>0.704074554697133</nm:col>
-<nm:col nm:cname='ETA3'>0.808330277288898</nm:col>
+<nm:col nm:cname='ETA1'>0.999212954049659</nm:col>
+<nm:col nm:cname='ETA2'>0.851589992404807</nm:col>
+<nm:col nm:cname='ETA3'>0.860765604310752</nm:col>
 </nm:row>
 </nm:etabarpval>
 <nm:etashrink>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>0.209640395485394</nm:col>
-<nm:col nm:cname='ETA2'>10.7392074844358</nm:col>
-<nm:col nm:cname='ETA3'>5.83526048015187</nm:col>
+<nm:col nm:cname='ETA1'>0.233324295175109</nm:col>
+<nm:col nm:cname='ETA2'>9.25942849752228</nm:col>
+<nm:col nm:cname='ETA3'>5.73264099120013</nm:col>
 </nm:row>
 </nm:etashrink>
 <nm:epsshrink>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='EPS1'>9.25782959172016</nm:col>
+<nm:col nm:cname='EPS1'>9.48570935608809</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>22.63</nm:estimation_elapsed_time>
-<nm:covariance_information><![CDATA[
-0R MATRIX ALGORITHMICALLY NON-POSITIVE-SEMIDEFINITE
- BUT NONSINGULAR
-0R MATRIX IS OUTPUT
-0COVARIANCE STEP ABORTED
-]]></nm:covariance_information>
-<nm:covariance_status nm:error='1' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>4.35</nm:covariance_elapsed_time>
+<nm:estimation_elapsed_time>20.11</nm:estimation_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
-<nm:final_objective_function>2569.89393760215</nm:final_objective_function>
+<nm:final_objective_function>2570.47417423427</nm:final_objective_function>
 <nm:theta>
-<nm:val nm:name='1'>11.0661513347762</nm:val>
-<nm:val nm:name='2'>9.16227884596246</nm:val>
-<nm:val nm:name='3'>4.361776202862245E-002</nm:val>
-<nm:val nm:name='4'>7412809.74129497</nm:val>
-<nm:val nm:name='5'>3.66013097994866</nm:val>
+<nm:val nm:name='1'>11.0622558654388</nm:val>
+<nm:val nm:name='2'>13.2229273487500</nm:val>
+<nm:val nm:name='3'>4.356607668012754E-002</nm:val>
+<nm:val nm:name='4'>0.722245010547310</nm:val>
+<nm:val nm:name='5'>2.740787436029262E-004</nm:val>
 </nm:theta>
 <nm:omega>
 <nm:row nm:rname='1'>
-<nm:col nm:cname='1'>0.251076919607245</nm:col>
+<nm:col nm:cname='1'>0.250585035681000</nm:col>
 </nm:row>
 <nm:row nm:rname='2'>
 <nm:col nm:cname='1'>0.000000000000000E+000</nm:col>
-<nm:col nm:cname='2'>0.424846427403015</nm:col>
+<nm:col nm:cname='2'>0.208455735345025</nm:col>
 </nm:row>
 <nm:row nm:rname='3'>
 <nm:col nm:cname='1'>0.000000000000000E+000</nm:col>
 <nm:col nm:cname='2'>0.000000000000000E+000</nm:col>
-<nm:col nm:cname='3'>6.496357546985394E-002</nm:col>
+<nm:col nm:cname='3'>6.532976555900630E-002</nm:col>
 </nm:row>
 </nm:omega>
 <nm:sigma>
 <nm:row nm:rname='1'>
-<nm:col nm:cname='1'>7.492681773209298E-002</nm:col>
+<nm:col nm:cname='1'>7.511297187048153E-002</nm:col>
 </nm:row>
 </nm:sigma>
 <nm:omegac>
 <nm:row nm:rname='1'>
-<nm:col nm:cname='1'>0.501075762342627</nm:col>
+<nm:col nm:cname='1'>0.500584693814143</nm:col>
 </nm:row>
 <nm:row nm:rname='2'>
 <nm:col nm:cname='1'>0.000000000000000E+000</nm:col>
-<nm:col nm:cname='2'>0.651802445072903</nm:col>
+<nm:col nm:cname='2'>0.456569529584515</nm:col>
 </nm:row>
 <nm:row nm:rname='3'>
 <nm:col nm:cname='1'>0.000000000000000E+000</nm:col>
 <nm:col nm:cname='2'>0.000000000000000E+000</nm:col>
-<nm:col nm:cname='3'>0.254879531288517</nm:col>
+<nm:col nm:cname='3'>0.255596880964941</nm:col>
 </nm:row>
 </nm:omegac>
 <nm:sigmac>
 <nm:row nm:rname='1'>
-<nm:col nm:cname='1'>0.273727634213451</nm:col>
+<nm:col nm:cname='1'>0.274067458612805</nm:col>
 </nm:row>
 </nm:sigmac>
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2012-09-27T20:38:06.007</nm:stop_datetime>
+<nm:stop_datetime>2013-03-20T17:42:51.738</nm:stop_datetime>
 </nm:output>

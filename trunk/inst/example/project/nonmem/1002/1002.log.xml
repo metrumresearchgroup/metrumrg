@@ -4,8 +4,8 @@
    <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
    <alias id="folder">/mnt/nm72</alias>
    <alias id="target">/opt/NONMEM/nm72</alias>
-   <alias id="origin">/opt/nmqual</alias>
-   <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
+   <alias id="origin">/mnt/nmqual</alias>
+   <alias id="unlock">/mnt/nonmem.lic</alias>
    <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
    <!--The meta interface groups commands that collect metadata.-->
    <do on="meta">pwd</do>
@@ -14,33 +14,37 @@
    <do on="meta">echo $SHELL</do>
    <do on="meta">echo $USER</do>
    <do on="meta">echo $PATH</do>
+   <do on="meta">ifort --version</do>
+   <do on="meta">head -n 5 target/util/nmfe72</do>
    <!--The 'install' interface installs NONMEM.-->
-   <do on="install" as="xml">perl $0 $_0 meta</do>
+   <do on="install">date</do>
    <do on="install">rm -rf origin/temp</do>
-   <do on="install">mkdir origin/temp</do>
+   <do on="install">mkdir -p -p origin/temp</do>
    <do on="install">cp -r folder/* origin/temp</do>
    <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
    <!--alters compile options in setup72-->
    <do on="install">rm -rf target</do>
-   <do on="install">mkdir target</do>
+   <do on="install">mkdir -p -p target</do>
    <do on="install" in="origin/temp">pwd</do>
-   <do on="install" in="origin/temp">echo `ifort -V`</do>
+   <do on="install" in="origin/temp">ifort --version</do>
    <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-   <do on="install">rm -rf origin/temp</do>
-   <do on="install">mkdir target/nmqual</do>
-   <do on="install">mkdir target/nmqual/doc</do>
-   <do on="install">cp origin/autolog.pl target/nmqual</do>
-   <!--runtime copy, uses nmqual/log.xml-->
-   <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/con/default.xsl target/nmqual</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
+   <do on="install">mkdir -p -p target/nmqual</do>
+   <do on="install">mkdir -p -p target/nmqual/doc</do>
+   <do on="install">cp $0 target/nmqual</do>
+   <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+   <do on="install">cp -r origin/con target/nmqual</do>
+   <!--support for processing xml docs-->
+   <do on="install">cp -r origin/csv target/nmqual</do>
+   <!--support for processing csv docs-->
+   <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+   <!--reference modeling results-->
+   <do on="install">cp -r origin/psn target/nmqual</do>
+   <!--support for psn qualification-->
+   <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
    <!--keep for archival purposes-->
+   <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+   <!--keep for archival purposes-->
+   <do on="install">rm -rf origin/temp</do>
    <do on="install">cp -r origin/test target/nmqual</do>
    <!--supports control tests-->
    <do on="install">chmod 0777 target/license/nonmem.lic</do>
@@ -49,10 +53,11 @@
    <!--replace expired license-->
    <do on="install">cp mpicha target/mpi/mpi_lini</do>
    <!--replace default mpich archive-->
-   <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
+   <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
    <!--will need this soon-->
-   <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
+   <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
    <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+   <do on="install" as="xml">perl $0 $_0 meta</do>
    <to on="install">target/nmqual/log.xml</to>
    <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
    <!--Run directory and run name are required arguments.-->
@@ -61,15 +66,15 @@
    <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
    <do on="basic" as="xml">cat target/nmqual/log.xml</do>
    <to on="basic">$_1/$_2.log.xml</to>
-   <!--The 'run' interface also expects a leading compile/execute argument.-->
+   <!--The 'run' interface expects a leading compile/execute argument.-->
    <do on="run" as="xml">perl $0 $_0 meta</do>
    <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
    <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
    <do on="run" as="xml">cat target/nmqual/log.xml</do>
    <to on="run">$_2/$_3.log.xml</to>
-   <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
+   <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
    <do on="para" as="xml">perl $0 $_0 meta</do>
-   <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
+   <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
    <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
    <do on="para" as="xml">cat target/nmqual/log.xml</do>
    <to on="para">$_2/$_3.log.xml</to>
@@ -88,6 +93,7 @@
    <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
    <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
    <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+   <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
    <to on="qualify">$_1</to>
    <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
    <do on="regress" as="xml">perl $0 $_0 meta</do>
@@ -96,8 +102,19 @@
    <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
    <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
    <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-   <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+   <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+   <do on="regress" as="xml">cat target/nmqual/log.xml</do>
    <to on="regress">$_1</to>
+   <!--The 'psntest' interface runs PsN control tests.-->
+   <do on="psntest" as="xml">perl $0 $_0 meta</do>
+   <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+   <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+   <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+   <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+   <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+   <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+   <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+   <to on="psntest">$_1</to>
    <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
    <do on="accept">echo $_</do>
    <to on="accept">$0</to>
@@ -111,8 +128,8 @@
        <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
        <alias id="folder">/mnt/nm72</alias>
        <alias id="target">/opt/NONMEM/nm72</alias>
-       <alias id="origin">/opt/nmqual</alias>
-       <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
+       <alias id="origin">/mnt/nmqual</alias>
+       <alias id="unlock">/mnt/nonmem.lic</alias>
        <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
        <!--The meta interface groups commands that collect metadata.-->
        <do on="meta">pwd</do>
@@ -121,33 +138,37 @@
        <do on="meta">echo $SHELL</do>
        <do on="meta">echo $USER</do>
        <do on="meta">echo $PATH</do>
+       <do on="meta">ifort --version</do>
+       <do on="meta">head -n 5 target/util/nmfe72</do>
        <!--The 'install' interface installs NONMEM.-->
-       <do on="install" as="xml">perl $0 $_0 meta</do>
+       <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir origin/temp</do>
+       <do on="install">mkdir -p -p origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
        <!--alters compile options in setup72-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir target</do>
+       <do on="install">mkdir -p -p target</do>
        <do on="install" in="origin/temp">pwd</do>
-       <do on="install" in="origin/temp">echo `ifort -V`</do>
+       <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-       <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir target/nmqual</do>
-       <do on="install">mkdir target/nmqual/doc</do>
-       <do on="install">cp origin/autolog.pl target/nmqual</do>
-       <!--runtime copy, uses nmqual/log.xml-->
-       <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/default.xsl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual/doc</do>
+       <do on="install">cp $0 target/nmqual</do>
+       <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+       <do on="install">cp -r origin/con target/nmqual</do>
+       <!--support for processing xml docs-->
+       <do on="install">cp -r origin/csv target/nmqual</do>
+       <!--support for processing csv docs-->
+       <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+       <!--reference modeling results-->
+       <do on="install">cp -r origin/psn target/nmqual</do>
+       <!--support for psn qualification-->
+       <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
        <!--keep for archival purposes-->
+       <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+       <!--keep for archival purposes-->
+       <do on="install">rm -rf origin/temp</do>
        <do on="install">cp -r origin/test target/nmqual</do>
        <!--supports control tests-->
        <do on="install">chmod 0777 target/license/nonmem.lic</do>
@@ -156,10 +177,11 @@
        <!--replace expired license-->
        <do on="install">cp mpicha target/mpi/mpi_lini</do>
        <!--replace default mpich archive-->
-       <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
+       <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
        <!--will need this soon-->
-       <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
+       <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
        <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+       <do on="install" as="xml">perl $0 $_0 meta</do>
        <to on="install">target/nmqual/log.xml</to>
        <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
        <!--Run directory and run name are required arguments.-->
@@ -168,15 +190,15 @@
        <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="basic" as="xml">cat target/nmqual/log.xml</do>
        <to on="basic">$_1/$_2.log.xml</to>
-       <!--The 'run' interface also expects a leading compile/execute argument.-->
+       <!--The 'run' interface expects a leading compile/execute argument.-->
        <do on="run" as="xml">perl $0 $_0 meta</do>
        <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
        <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="run" as="xml">cat target/nmqual/log.xml</do>
        <to on="run">$_2/$_3.log.xml</to>
-       <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
+       <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
        <do on="para" as="xml">perl $0 $_0 meta</do>
-       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
+       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
        <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="para" as="xml">cat target/nmqual/log.xml</do>
        <to on="para">$_2/$_3.log.xml</to>
@@ -195,6 +217,7 @@
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+       <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
        <to on="qualify">$_1</to>
        <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
        <do on="regress" as="xml">perl $0 $_0 meta</do>
@@ -203,8 +226,19 @@
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+       <do on="regress" as="xml">cat target/nmqual/log.xml</do>
        <to on="regress">$_1</to>
+       <!--The 'psntest' interface runs PsN control tests.-->
+       <do on="psntest" as="xml">perl $0 $_0 meta</do>
+       <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+       <to on="psntest">$_1</to>
        <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
        <do on="accept">echo $_</do>
        <to on="accept">$0</to>
@@ -215,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Thu Sep 27 20:37:28 UTC 2012</so>
+       <so>Wed Mar 20 17:42:09 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node009,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node002,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -231,7 +265,21 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/647.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/3.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+      </job>
+      <job>
+       <do>ifort --version</do>
+       <so>ifort (IFORT) 12.0.4 20110427
+          Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
+          </so>
+      </job>
+      <job>
+       <do>head -n 5 /opt/NONMEM/nm72/util/nmfe72</do>
+       <so>#!/bin/bash
+          dir=/opt/NONMEM/nm72
+          f=ifort
+          o=' -fp-model strict -Gs -nologo -nbs -w '
+          opstat=' -static '</so>
       </job>
      </logged>
     </log>
@@ -251,15 +299,15 @@
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
    Expiration Date:    14 JUL 2013
-   Current Date:       27 SEP 2012
-   Days until program expires : 292
+   Current Date:       20 MAR 2013
+   Days until program expires : 114
     
     
     First Order Conditional Estimation with Interaction
     MONITORING OF SEARCH:
    
     
-   0ITERATION NO.:    0    OBJECTIVE VALUE:   3479.54698131581        NO. OF FUNC. EVALS.:   9
+   0ITERATION NO.:    0    OBJECTIVE VALUE:   3479.54698135495        NO. OF FUNC. EVALS.:   9
     CUMULATIVE NO. OF FUNC. EVALS.:        9
     NPARAMETR:  1.0000E+01  1.0000E+01  2.0000E-01  1.0000E+01  1.0000E+01  9.0000E-02  9.0000E-02  9.0000E-02  9.0000E-02  9.0000E-02
                 9.0000E-02  1.0000E-01
@@ -352,13 +400,13 @@
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:    5    OBJECTIVE VALUE:   2586.74956293437        NO. OF FUNC. EVALS.:  12
+   0ITERATION NO.:    5    OBJECTIVE VALUE:   2586.74956169767        NO. OF FUNC. EVALS.:  12
     CUMULATIVE NO. OF FUNC. EVALS.:       71
     NPARAMETR:  1.2282E+01  1.3228E+01  4.4006E-02  1.0053E+01  1.5335E-01  9.3040E-02  9.0513E-02  9.1049E-02  9.0030E-02  9.0285E-02
                 8.8357E-02  1.0043E-01
     PARAMETER:  1.2282E-01  1.3228E-01  2.2003E-02  1.0053E-01  1.5335E-03  1.1661E-01  1.0284E-01  1.0579E-01  1.0017E-01  1.0158E-01
                 9.0786E-02  1.0212E-01
-    GRADIENT:   3.8102E+02 -1.2435E+02 -3.9083E+00 -4.0110E-01  9.5576E+01 -1.1123E+02 -2.2101E+01  2.7285E+01  2.1876E-06 -2.9103E-03
+    GRADIENT:   3.8102E+02 -1.2435E+02 -3.9081E+00 -4.0110E-01  9.5576E+01 -1.1123E+02 -2.2101E+01  2.7285E+01  2.1937E-06 -2.9102E-03
                 1.6128E+02 -4.4466E+00
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
@@ -397,14 +445,14 @@
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   10    OBJECTIVE VALUE:   2551.58742599615        NO. OF FUNC. EVALS.:  10
+   0ITERATION NO.:   10    OBJECTIVE VALUE:   2551.58700131716        NO. OF FUNC. EVALS.:  10
     CUMULATIVE NO. OF FUNC. EVALS.:      131
-    NPARAMETR:  1.2655E+01  1.3224E+01  4.6019E-02  2.0286E+01  1.4487E+00  1.1911E-01  2.0173E-01  3.6929E-02  1.1332E-01  9.0877E-01
-                6.8696E-02  2.7357E-01
-    PARAMETER:  1.2655E-01  1.3224E-01  2.3010E-02  2.0286E-01  1.4487E-02  2.4012E-01  5.0357E-01 -3.4541E-01  2.1520E-01  1.2561E+00
-               -3.5063E-02  6.0320E-01
-    GRADIENT:   4.0564E+02  1.9140E+01 -1.3237E+03 -1.0385E+01  3.2070E+02 -8.1687E+01 -5.1035E+00 -2.4875E+00 -2.1763E-03 -4.5173E-01
-                9.2682E+01  2.1354E+01
+    NPARAMETR:  1.2655E+01  1.3224E+01  4.6020E-02  2.0287E+01  1.4487E+00  1.1911E-01  2.0174E-01  3.6926E-02  1.1332E-01  9.0887E-01
+                6.8695E-02  2.7358E-01
+    PARAMETER:  1.2655E-01  1.3224E-01  2.3010E-02  2.0287E-01  1.4487E-02  2.4012E-01  5.0358E-01 -3.4545E-01  2.1520E-01  1.2562E+00
+               -3.5067E-02  6.0321E-01
+    GRADIENT:   4.0563E+02  1.9145E+01 -1.3238E+03 -1.0385E+01  3.2070E+02 -8.1686E+01 -5.1028E+00 -2.4904E+00 -2.1762E-03 -4.5176E-01
+                9.2678E+01  2.1355E+01
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
@@ -414,221 +462,235 @@
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.17E+01   1.46E+01   4.63E-02   5.41E+00  -3.97E-01
+     1.17E+01   1.46E+01   4.63E-02   5.42E+00  -3.96E-01
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.18E+01   1.45E+01   4.66E-02   8.13E+00  -9.92E-02
+     1.18E+01   1.45E+01   4.66E-02   8.14E+00  -9.89E-02
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.18E+01   1.45E+01   4.66E-02   8.13E+00  -9.92E-02
+     1.18E+01   1.45E+01   4.66E-02   8.14E+00  -9.89E-02
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   15    OBJECTIVE VALUE:   2527.16057489531        NO. OF FUNC. EVALS.:  12
+   0ITERATION NO.:   15    OBJECTIVE VALUE:   2527.15917219419        NO. OF FUNC. EVALS.:  12
     CUMULATIVE NO. OF FUNC. EVALS.:      184
-    NPARAMETR:  1.1923E+01  1.4378E+01  4.6785E-02  9.4958E+00  4.9609E-02  2.2838E-01  2.0530E-01  4.2246E-02  1.3818E-01  1.0858E+00
-                5.7475E-02  1.9495E-01
-    PARAMETER:  1.1923E-01  1.4378E-01  2.3392E-02  9.4958E-02  4.9609E-04  5.6561E-01  5.1232E-01 -2.7815E-01  3.1438E-01  1.3451E+00
-               -1.2423E-01  4.3378E-01
-    GRADIENT:   1.1284E+02  8.7545E+00  2.4493E+02 -6.1678E-02  3.3224E+01 -9.8296E+00 -3.1601E-01  2.4301E+00 -1.5354E-08  1.6059E-03
-               -2.6790E+00 -1.1799E+00
+    NPARAMETR:  1.1923E+01  1.4378E+01  4.6786E-02  9.4961E+00  4.9466E-02  2.2841E-01  2.0526E-01  4.2250E-02  1.3810E-01  1.0856E+00
+                5.7473E-02  1.9498E-01
+    PARAMETER:  1.1923E-01  1.4378E-01  2.3393E-02  9.4961E-02  4.9466E-04  5.6567E-01  5.1223E-01 -2.7810E-01  3.1408E-01  1.3451E+00
+               -1.2425E-01  4.3387E-01
+    GRADIENT:   1.1284E+02  8.7371E+00  2.4668E+02 -6.1310E-02  3.3192E+01 -9.8199E+00 -3.2506E-01  2.4346E+00 -1.2495E-08  1.5967E-03
+               -2.6802E+00 -1.1752E+00
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.18E+01   1.44E+01   4.68E-02   8.54E+00  -1.43E-02
+     1.18E+01   1.44E+01   4.68E-02   8.55E+00  -1.39E-02
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.16E+01   1.44E+01   4.67E-02   7.90E+00  -9.61E-03
+     1.16E+01   1.44E+01   4.67E-02   7.92E+00  -9.45E-03
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.16E+01   1.44E+01   4.68E-02   7.98E+00  -1.09E-04
+     1.16E+01   1.44E+01   4.68E-02   7.99E+00  -1.24E-04
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.16E+01   1.44E+01   4.68E-02   7.98E+00  -1.09E-04
+     1.16E+01   1.44E+01   4.68E-02   7.99E+00  -1.24E-04
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.16E+01   1.44E+01   4.67E-02   7.94E+00  -9.86E-03
+     1.16E+01   1.44E+01   4.67E-02   7.95E+00  -9.79E-03
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   20    OBJECTIVE VALUE:   2526.81558863530        NO. OF FUNC. EVALS.:  18
+   0ITERATION NO.:   20    OBJECTIVE VALUE:   2526.81536086973        NO. OF FUNC. EVALS.:  18
     CUMULATIVE NO. OF FUNC. EVALS.:      250
-    NPARAMETR:  1.1626E+01  1.4381E+01  4.6736E-02  7.9442E+00  1.4301E-04  2.4795E-01  2.0467E-01  3.9992E-02  1.3728E-01  1.1267E+00
-                5.7598E-02  1.9660E-01
-    PARAMETER:  1.1626E-01  1.4381E-01  2.3368E-02  7.9442E-02  1.4301E-06  6.0671E-01  5.1079E-01 -3.0557E-01  3.1112E-01  1.3636E+00
-               -1.2316E-01  4.3799E-01
-    GRADIENT:  -1.0532E+01 -7.1228E+00 -1.3138E+03 -8.4810E-07  4.8085E-01 -3.0455E+00 -2.3855E-01  4.5386E-01 -2.3549E-12 -6.0334E-07
-               -1.0498E+00 -3.1193E-01
+    NPARAMETR:  1.1628E+01  1.4382E+01  4.6737E-02  7.9542E+00  2.1462E-04  2.4782E-01  2.0466E-01  4.0005E-02  1.3719E-01  1.1262E+00
+                5.7597E-02  1.9660E-01
+    PARAMETER:  1.1628E-01  1.4382E-01  2.3368E-02  7.9542E-02  2.1462E-06  6.0644E-01  5.1076E-01 -3.0540E-01  3.1080E-01  1.3634E+00
+               -1.2317E-01  4.3800E-01
+    GRADIENT:  -1.0028E+01 -7.1242E+00 -1.3119E+03 -1.8872E-06  1.2128E+00 -3.0868E+00 -2.4096E-01  4.6642E-01  8.1310E-12  1.9265E-06
+               -1.0649E+00 -3.1656E-01
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.17E+01   1.45E+01   4.76E-02   8.45E+00  -6.96E-03
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.17E+01   1.45E+01   4.78E-02   8.49E+00  -6.07E-03
+     1.16E+01   1.44E+01   4.68E-02   7.98E+00  -4.29E-04
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.17E+01   1.45E+01   4.77E-02   8.47E+00  -1.52E-03
+     1.16E+01   1.44E+01   4.68E-02   7.97E+00  -1.07E-04
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.17E+01   1.45E+01   4.77E-02   8.47E+00  -1.52E-03
+     1.16E+01   1.44E+01   4.68E-02   7.97E+00  -1.07E-04
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.17E+01   1.45E+01   4.77E-02   8.46E+00  -9.24E-03
+     1.16E+01   1.44E+01   4.68E-02   7.96E+00  -9.95E-03
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.17E+01   1.45E+01   4.77E-02   8.48E+00  -5.31E-04
+     1.18E+01   1.45E+01   4.76E-02   9.04E+00  -4.80E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.18E+01   1.45E+01   4.77E-02   8.93E+00  -1.04E-02
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.17E+01   1.45E+01   4.77E-02   8.48E+00  -5.31E-04
+     1.18E+01   1.45E+01   4.76E-02   8.98E+00  -2.60E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.17E+01   1.45E+01   4.77E-02   8.47E+00  -9.89E-03
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.17E+01   1.45E+01   4.77E-02   8.47E+00  -3.77E-04
+     1.18E+01   1.45E+01   4.76E-02   8.98E+00  -2.60E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.17E+01   1.45E+01   4.77E-02   8.47E+00  -9.89E-03
+     1.18E+01   1.45E+01   4.76E-02   9.01E+00  -8.70E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.18E+01   1.45E+01   4.76E-02   8.97E+00  -1.10E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.18E+01   1.45E+01   4.76E-02   8.97E+00  -1.10E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.18E+01   1.45E+01   4.76E-02   8.99E+00  -9.90E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.18E+01   1.45E+01   4.76E-02   8.98E+00  -2.00E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.18E+01   1.45E+01   4.76E-02   8.99E+00  -9.90E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   25    OBJECTIVE VALUE:   2526.40031195296        NO. OF FUNC. EVALS.:  18
-    CUMULATIVE NO. OF FUNC. EVALS.:      362
-    NPARAMETR:  1.1704E+01  1.4535E+01  4.7764E-02  8.5118E+00  2.0257E-02  2.5731E-01  2.0671E-01  3.8576E-02  1.4632E-01  1.1553E+00
-                5.7374E-02  2.0441E-01
-    PARAMETER:  1.1704E-01  1.4535E-01  2.3882E-02  8.5118E-02  2.0257E-04  6.2524E-01  5.1574E-01 -3.2359E-01  3.4298E-01  1.3762E+00
-               -1.2511E-01  4.5749E-01
-    GRADIENT:  -1.8633E+00  3.4919E-01 -1.0678E+02 -1.2311E-02 -3.3520E+00 -4.7061E-01 -1.9945E-01 -2.0310E-01  6.4259E-10  3.1765E-04
-                4.4850E-03 -1.0298E-01
+   0ITERATION NO.:   25    OBJECTIVE VALUE:   2526.40029051655        NO. OF FUNC. EVALS.:  38
+    CUMULATIVE NO. OF FUNC. EVALS.:      365             RESET HESSIAN, TYPE I
+    NPARAMETR:  1.1722E+01  1.4532E+01  4.7769E-02  8.9904E+00  1.8704E-02  2.5685E-01  2.0682E-01  3.8722E-02  1.4265E-01  1.1139E+00
+                5.7403E-02  2.0452E-01
+    PARAMETER:  1.1722E-01  1.4532E-01  2.3885E-02  8.9904E-02  1.8704E-04  6.2434E-01  5.1601E-01 -3.2170E-01  3.3029E-01  1.3579E+00
+               -1.2486E-01  4.5775E-01
+    GRADIENT:   5.5106E+01  9.2914E+00  1.3067E+03 -9.3910E-03  1.6161E+01 -6.0665E-01 -1.4519E-01 -5.7879E-02  6.0873E-10  2.6467E-04
+                4.6374E-01 -3.6012E-02
     
-   0ITERATION NO.:   30    OBJECTIVE VALUE:   2526.39391185386        NO. OF FUNC. EVALS.:  17
-    CUMULATIVE NO. OF FUNC. EVALS.:      448
-    NPARAMETR:  1.1723E+01  1.4502E+01  4.7876E-02  1.9074E+01  6.0465E-02  2.5881E-01  2.0918E-01  3.8720E-02  1.4618E-01  8.5991E-01
-                5.7268E-02  2.0631E-01
-    PARAMETER:  1.1723E-01  1.4502E-01  2.3938E-02  1.9074E-01  6.0465E-04  6.2815E-01  5.2169E-01 -3.2173E-01  3.4251E-01  1.2285E+00
-               -1.2604E-01  4.6210E-01
-    GRADIENT:   1.3057E+00 -3.0095E-01  1.7416E+01 -2.1783E-02 -7.2433E-01 -6.5203E-02  7.2730E-02 -5.7924E-02 -9.0167E-09  2.0154E-03
-               -2.7670E-01  5.2344E-02
+   0ITERATION NO.:   30    OBJECTIVE VALUE:   2526.39635136896        NO. OF FUNC. EVALS.:  17
+    CUMULATIVE NO. OF FUNC. EVALS.:      445
+    NPARAMETR:  1.1721E+01  1.4526E+01  4.7833E-02  9.0556E+00  3.3365E-02  2.5924E-01  2.0830E-01  3.8787E-02  1.4267E-01  1.1081E+00
+                5.7298E-02  2.0541E-01
+    PARAMETER:  1.1721E-01  1.4526E-01  2.3916E-02  9.0556E-02  3.3365E-04  6.2898E-01  5.1958E-01 -3.2086E-01  3.3036E-01  1.3553E+00
+               -1.2577E-01  4.5991E-01
+    GRADIENT:   1.1978E+00 -2.0280E-01 -3.1229E+01 -2.9636E-02  6.6420E-01  6.8986E-02  7.4159E-02  3.3455E-03  9.6552E-11  8.0500E-04
+               -2.6003E-01 -5.6676E-02
     
-   0ITERATION NO.:   35    OBJECTIVE VALUE:   2526.17651778622        NO. OF FUNC. EVALS.:  17
-    CUMULATIVE NO. OF FUNC. EVALS.:      541
-    NPARAMETR:  1.1697E+01  1.1000E+01  4.7798E-02  1.2496E+03  3.2631E+00  2.5962E-01  3.5079E-01  3.8211E-02  1.4597E-01  9.0000E-06
-                5.7237E-02  2.0528E-01
-    PARAMETER:  1.1697E-01  1.1000E-01  2.3899E-02  1.2496E+01  3.2631E-02  6.2970E-01  7.8019E-01 -3.2835E-01  3.4180E-01 -4.0553E+01
-               -1.2630E-01  4.5961E-01
-    GRADIENT:  -3.2810E+00  7.4337E+00 -1.0668E+02 -1.4697E-02  3.2259E+01  1.7586E-01 -1.6593E+00  1.7280E-02 -6.6599E-06  0.0000E+00
-               -1.1925E+00 -2.7082E-01
+   0ITERATION NO.:   35    OBJECTIVE VALUE:   2526.39491010429        NO. OF FUNC. EVALS.:  22
+    CUMULATIVE NO. OF FUNC. EVALS.:      536
+    NPARAMETR:  1.1722E+01  1.4530E+01  4.7860E-02  1.5225E+01  3.7343E-02  2.5952E-01  2.0815E-01  3.8892E-02  1.4268E-01  6.5265E-01
+                5.7353E-02  2.0534E-01
+    PARAMETER:  1.1722E-01  1.4530E-01  2.3930E-02  1.5225E-01  3.7343E-04  6.2952E-01  5.1922E-01 -3.1950E-01  3.3040E-01  1.0906E+00
+               -1.2529E-01  4.5974E-01
+    GRADIENT:   1.2228E+00  5.3993E-01  2.9457E+00 -1.3054E-02 -4.2301E+00  1.4605E-01  1.5658E-02  1.1727E-01 -1.0159E-09  6.1616E-04
+                3.3605E-01 -5.2514E-02
     
-   0ITERATION NO.:   40    OBJECTIVE VALUE:   2526.06724042328        NO. OF FUNC. EVALS.:  18
-    CUMULATIVE NO. OF FUNC. EVALS.:      631
-    NPARAMETR:  1.1704E+01  1.0965E+01  4.7817E-02  2.5310E+03  3.2324E+00  2.5953E-01  3.6492E-01  3.7965E-02  1.4638E-01  9.0000E-06
-                5.7343E-02  2.0380E-01
-    PARAMETER:  1.1704E-01  1.0965E-01  2.3908E-02  2.5310E+01  3.2324E-02  6.2952E-01  7.9994E-01 -3.3158E-01  3.4320E-01 -8.1222E+01
-               -1.2538E-01  4.5598E-01
-    GRADIENT:  -1.7472E+00 -1.0745E+00 -4.5681E+01 -3.5644E-03 -5.2960E+00  1.2290E-01  5.0409E-01 -9.2287E-02 -1.5610E-06  0.0000E+00
-                7.6969E-02 -4.5101E-01
+   0ITERATION NO.:   40    OBJECTIVE VALUE:   2526.10909836499        NO. OF FUNC. EVALS.:  17
+    CUMULATIVE NO. OF FUNC. EVALS.:      628
+    NPARAMETR:  1.1712E+01  1.0937E+01  4.7874E-02  1.7029E+03  3.2769E+00  2.5881E-01  3.6328E-01  3.8013E-02  1.4277E-01  9.0000E-06
+                5.7241E-02  2.0690E-01
+    PARAMETER:  1.1712E-01  1.0937E-01  2.3937E-02  1.7029E+01  3.2769E-02  6.2813E-01  7.9768E-01 -3.3094E-01  3.3070E-01 -7.1396E+01
+               -1.2627E-01  4.6352E-01
+    GRADIENT:  -8.0104E-01  1.9884E-01 -1.6981E+00 -8.0603E-03  5.7098E+00 -8.9945E-02 -1.2942E-01 -8.1146E-02 -3.2554E-06  0.0000E+00
+               -2.0868E-01  2.3521E-02
     
-   0ITERATION NO.:   45    OBJECTIVE VALUE:   2525.98032187233        NO. OF FUNC. EVALS.:  17
-    CUMULATIVE NO. OF FUNC. EVALS.:      716
-    NPARAMETR:  1.1717E+01  1.0560E+01  4.7889E-02  1.8649E+04  3.6084E+00  2.5917E-01  3.9118E-01  3.8028E-02  1.5147E-01  9.0000E-06
-                5.7235E-02  2.0693E-01
-    PARAMETER:  1.1717E-01  1.0560E-01  2.3944E-02  1.8649E+02  3.6084E-02  6.2884E-01  8.3468E-01 -3.3074E-01  3.6029E-01 -5.9289E+02
-               -1.2632E-01  4.6360E-01
-    GRADIENT:   1.1865E-01  2.0712E+00  1.6231E+01 -8.0206E-05  2.4718E+00  1.1651E-02  4.5661E-02  4.2285E-02 -7.8638E-07  0.0000E+00
-                5.2702E-02  7.5354E-03
+   0ITERATION NO.:   45    OBJECTIVE VALUE:   2526.01573056163        NO. OF FUNC. EVALS.:  17
+    CUMULATIVE NO. OF FUNC. EVALS.:      719
+    NPARAMETR:  1.1709E+01  1.0756E+01  4.7872E-02  5.3192E+03  3.4260E+00  2.5860E-01  3.7415E-01  3.7877E-02  1.4323E-01  9.0000E-06
+                5.7225E-02  2.0685E-01
+    PARAMETER:  1.1709E-01  1.0756E-01  2.3936E-02  5.3192E+01  3.4260E-02  6.2774E-01  8.1243E-01 -3.3274E-01  3.3231E-01 -2.2647E+02
+               -1.2641E-01  4.6340E-01
+    GRADIENT:  -1.3858E+00 -2.2292E-01  6.8803E-01 -8.9308E-04  2.6572E+00 -1.4510E-01 -2.6259E-01 -1.7567E-01 -2.3730E-07  0.0000E+00
+               -2.6813E-01  2.0990E-02
     
-   0ITERATION NO.:   50    OBJECTIVE VALUE:   2525.96701932499        NO. OF FUNC. EVALS.:  17
-    CUMULATIVE NO. OF FUNC. EVALS.:      801
-    NPARAMETR:  1.1715E+01  1.0528E+01  4.7870E-02  1.4146E+05  3.6212E+00  2.5909E-01  3.9188E-01  3.7970E-02  1.9828E-01  9.0000E-06
-                5.7237E-02  2.0679E-01
-    PARAMETER:  1.1715E-01  1.0528E-01  2.3935E-02  1.4146E+03  3.6212E-02  6.2869E-01  8.3557E-01 -3.3150E-01  4.9493E-01 -4.4904E+03
-               -1.2631E-01  4.6326E-01
-    GRADIENT:  -1.7464E-01  1.0175E-01 -1.4299E+00 -1.4040E-06  3.4005E-01 -5.0581E-03 -2.1462E-02 -1.3667E-02 -1.5212E-07  0.0000E+00
-                9.6481E-03  1.4556E-02
+   0ITERATION NO.:   50    OBJECTIVE VALUE:   2525.97261123933        NO. OF FUNC. EVALS.:  17
+    CUMULATIVE NO. OF FUNC. EVALS.:      804
+    NPARAMETR:  1.1715E+01  1.0565E+01  4.7870E-02  3.7829E+04  3.5801E+00  2.5902E-01  3.8769E-01  3.7966E-02  1.4750E-01  9.0000E-06
+                5.7251E-02  2.0650E-01
+    PARAMETER:  1.1715E-01  1.0565E-01  2.3935E-02  3.7829E+02  3.5801E-02  6.2855E-01  8.3020E-01 -3.3156E-01  3.4699E-01 -1.6205E+03
+               -1.2618E-01  4.6256E-01
+    GRADIENT:  -1.1876E-01 -1.5041E+00  4.3567E+00 -1.9217E-05 -6.9365E-01 -2.4556E-02 -1.2157E-01 -3.1074E-02  1.9543E-07  0.0000E+00
+                5.4240E-02 -2.4817E-02
     
-   0ITERATION NO.:   55    OBJECTIVE VALUE:   2525.96539467760        NO. OF FUNC. EVALS.:  17
-    CUMULATIVE NO. OF FUNC. EVALS.:      886
-    NPARAMETR:  1.1724E+01  1.0532E+01  4.7871E-02  9.3781E+05  3.6182E+00  2.5914E-01  3.9190E-01  3.7977E-02  1.1353E+00  9.0000E-06
-                5.7238E-02  2.0675E-01
-    PARAMETER:  1.1724E-01  1.0532E-01  2.3935E-02  9.3781E+03  3.6182E-02  6.2878E-01  8.3559E-01 -3.3142E-01  1.3674E+00 -2.9762E+04
-               -1.2630E-01  4.6317E-01
-    GRADIENT:  -3.2771E+00 -2.9188E-01  5.9068E+00 -3.1942E-08 -4.1007E-01  2.5376E-03  1.1347E-02 -7.3501E-03  7.5036E-07  0.0000E+00
-                6.9414E-02  7.6704E-03
+   0ITERATION NO.:   55    OBJECTIVE VALUE:   2525.96597334109        NO. OF FUNC. EVALS.:  17
+    CUMULATIVE NO. OF FUNC. EVALS.:      889
+    NPARAMETR:  1.1716E+01  1.0518E+01  4.7871E-02  2.9862E+05  3.6297E+00  2.5908E-01  3.9277E-01  3.7980E-02  1.8676E-01  9.0000E-06
+                5.7237E-02  2.0670E-01
+    PARAMETER:  1.1716E-01  1.0518E-01  2.3936E-02  2.9862E+03  3.6297E-02  6.2867E-01  8.3671E-01 -3.3138E-01  4.6501E-01 -1.2803E+04
+               -1.2630E-01  4.6304E-01
+    GRADIENT:   3.0630E-02  1.0626E-01  7.3521E-01 -3.1634E-07  1.7330E-01 -8.9913E-03  1.3890E-03 -3.2808E-04 -1.2177E-06  0.0000E+00
+                3.0814E-03 -8.1407E-03
     
-   0ITERATION NO.:   60    OBJECTIVE VALUE:   2525.96537290287        NO. OF FUNC. EVALS.:  18
-    CUMULATIVE NO. OF FUNC. EVALS.:      973
-    NPARAMETR:  1.1725E+01  1.0525E+01  4.7867E-02  1.1111E+06  3.6233E+00  2.5911E-01  3.9227E-01  3.7980E-02  1.6598E+00  9.0000E-06
-                5.7240E-02  2.0669E-01
-    PARAMETER:  1.1725E-01  1.0525E-01  2.3934E-02  1.1111E+04  3.6233E-02  6.2872E-01  8.3607E-01 -3.3137E-01  1.5573E+00 -3.5262E+04
-               -1.2628E-01  4.6304E-01
-    GRADIENT:  -4.6122E+00 -3.1917E-01  5.3753E+00 -2.2936E-08 -4.0543E-01 -1.6859E-03  3.8579E-03 -3.8297E-03  4.4509E-06  0.0000E+00
-                8.9254E-02 -2.9961E-03
+   0ITERATION NO.:   60    OBJECTIVE VALUE:   2525.96527727858        NO. OF FUNC. EVALS.:  17
+    CUMULATIVE NO. OF FUNC. EVALS.:      974
+    NPARAMETR:  1.1723E+01  1.0507E+01  4.7870E-02  1.4355E+06  3.6391E+00  2.5917E-01  3.9353E-01  3.7982E-02  5.2261E-01  9.0000E-06
+                5.7232E-02  2.0680E-01
+    PARAMETER:  1.1723E-01  1.0507E-01  2.3935E-02  1.4355E+04  3.6391E-02  6.2884E-01  8.3767E-01 -3.3134E-01  9.7951E-01 -6.1553E+04
+               -1.2635E-01  4.6329E-01
+    GRADIENT:  -3.6673E+00 -1.9081E-01  6.1040E+00 -1.3819E-08 -1.4331E-01  7.5074E-03 -3.3385E-03  4.9705E-04  2.2583E-06  0.0000E+00
+                4.2043E-02  9.5475E-03
     
-   0ITERATION NO.:   65    OBJECTIVE VALUE:   2525.96526985259        NO. OF FUNC. EVALS.:  36
-    CUMULATIVE NO. OF FUNC. EVALS.:     1107             RESET HESSIAN, TYPE I
-    NPARAMETR:  1.1716E+01  1.0523E+01  4.7868E-02  1.1501E+06  3.6248E+00  2.5913E-01  3.9231E-01  3.7990E-02  1.8239E+00  9.0000E-06
-                5.7237E-02  2.0669E-01
-    PARAMETER:  1.1716E-01  1.0523E-01  2.3934E-02  1.1501E+04  3.6248E-02  6.2875E-01  8.3613E-01 -3.3125E-01  1.6044E+00 -3.6762E+04
-               -1.2631E-01  4.6303E-01
-    GRADIENT:   4.6162E+01  6.7022E+00  1.4120E+03 -2.1045E-08  9.8407E+00  2.0505E-03 -4.2778E-03  5.6959E-03 -6.6196E-07  0.0000E+00
-                1.7693E-01  4.4967E-02
-    
-   0ITERATION NO.:   69    OBJECTIVE VALUE:   2525.96526753388        NO. OF FUNC. EVALS.:  28
-    CUMULATIVE NO. OF FUNC. EVALS.:     1202
-    NPARAMETR:  1.1716E+01  1.0523E+01  4.7868E-02  1.1513E+06  3.6247E+00  2.5912E-01  3.9229E-01  3.7990E-02  1.7929E+00  9.0000E-06
-                5.7236E-02  2.0672E-01
-    PARAMETER:  1.1716E-01  1.0523E-01  2.3934E-02  1.1512E+04  3.6243E-02  6.2876E-01  8.3615E-01 -3.3122E-01  1.5943E+00 -3.6762E+04
-               -1.2629E-01  4.6311E-01
-    GRADIENT:  -2.5373E-02 -1.0966E-01  4.0266E-01 -1.0329E-07 -2.1167E-01  5.4721E-03  1.0048E-02  5.3042E-03 -3.5548E-03  0.0000E+00
-                5.3474E-02  2.9194E-03
-    Elapsed estimation time in seconds:    22.95</so>
+   0ITERATION NO.:   65    OBJECTIVE VALUE:   2525.96522290374        NO. OF FUNC. EVALS.:  28
+    CUMULATIVE NO. OF FUNC. EVALS.:     1114
+    NPARAMETR:  1.1715E+01  1.0506E+01  4.7870E-02  1.4361E+06  3.6351E+00  2.5916E-01  3.9364E-01  3.7970E-02  5.2239E-01  9.0000E-06
+                5.7249E-02  2.0671E-01
+    PARAMETER:  1.1716E-01  1.0508E-01  2.3934E-02  1.4352E+04  3.6385E-02  6.2871E-01  8.3758E-01 -3.3151E-01  9.7965E-01 -6.1553E+04
+               -1.2633E-01  4.6314E-01
+    GRADIENT:   1.5954E-02  9.5683E-02 -3.6131E-01 -1.7546E-07  3.0192E-01 -4.8916E-03 -6.6618E-03 -6.4339E-04  5.6880E-04  0.0000E+00
+               -5.3134E-02  2.3495E-03
+    Elapsed estimation time in seconds:    20.53</so>
   </job>
   <job>
    <do in="../nonmem/1002">if [ -e 1002.xml ];then cat 1002.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2012-09-27T20:37:38.665</nm:start_datetime>
+     <nm:start_datetime>2013-03-20T17:42:29.151</nm:start_datetime>
      <nm:control_stream>
      $PROB 1002 phase1 2 CMT
      $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -669,8 +731,8 @@
       <nm:license_information>
       License Registered to: Metrum Research Group
       Expiration Date:    14 JUL 2013
-      Current Date:       27 SEP 2012
-      Days until program expires : 292</nm:license_information>
+      Current Date:       20 MAR 2013
+      Days until program expires : 114</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -796,99 +858,98 @@
         <nm:estimation_method>focei</nm:estimation_method>
         <nm:estimation_title>First Order Conditional Estimation with Interaction</nm:estimation_title>
         <nm:monitor>
-         <nm:obj nm:iteration="0">3479.54698131581</nm:obj>
-         <nm:obj nm:iteration="5">2586.74956293437</nm:obj>
-         <nm:obj nm:iteration="10">2551.58742599615</nm:obj>
-         <nm:obj nm:iteration="15">2527.16057489531</nm:obj>
-         <nm:obj nm:iteration="20">2526.81558863530</nm:obj>
-         <nm:obj nm:iteration="25">2526.40031195296</nm:obj>
-         <nm:obj nm:iteration="30">2526.39391185386</nm:obj>
-         <nm:obj nm:iteration="35">2526.17651778622</nm:obj>
-         <nm:obj nm:iteration="40">2526.06724042328</nm:obj>
-         <nm:obj nm:iteration="45">2525.98032187233</nm:obj>
-         <nm:obj nm:iteration="50">2525.96701932499</nm:obj>
-         <nm:obj nm:iteration="55">2525.96539467760</nm:obj>
-         <nm:obj nm:iteration="60">2525.96537290287</nm:obj>
-         <nm:obj nm:iteration="65">2525.96526985259</nm:obj>
-         <nm:obj nm:iteration="69">2525.96526753388</nm:obj>
+         <nm:obj nm:iteration="0">3479.54698135495</nm:obj>
+         <nm:obj nm:iteration="5">2586.74956169767</nm:obj>
+         <nm:obj nm:iteration="10">2551.58700131716</nm:obj>
+         <nm:obj nm:iteration="15">2527.15917219419</nm:obj>
+         <nm:obj nm:iteration="20">2526.81536086973</nm:obj>
+         <nm:obj nm:iteration="25">2526.40029051655</nm:obj>
+         <nm:obj nm:iteration="30">2526.39635136896</nm:obj>
+         <nm:obj nm:iteration="35">2526.39491010429</nm:obj>
+         <nm:obj nm:iteration="40">2526.10909836499</nm:obj>
+         <nm:obj nm:iteration="45">2526.01573056163</nm:obj>
+         <nm:obj nm:iteration="50">2525.97261123933</nm:obj>
+         <nm:obj nm:iteration="55">2525.96597334109</nm:obj>
+         <nm:obj nm:iteration="60">2525.96527727858</nm:obj>
+         <nm:obj nm:iteration="65">2525.96522290374</nm:obj>
         </nm:monitor>
         <nm:termination_status>134</nm:termination_status>
         <nm:termination_information>
         0MINIMIZATION TERMINATED
          DUE TO ROUNDING ERRORS (ERROR=134)
-         NO. OF FUNCTION EVALUATIONS USED:     1202
+         NO. OF FUNCTION EVALUATIONS USED:     1114
          NO. OF SIG. DIGITS UNREPORTABLE
         0PARAMETER ESTIMATE IS NEAR ITS BOUNDARY</nm:termination_information>
         <nm:etabar>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">-2.571862740686702E-003</nm:col>
-          <nm:col nm:cname="ETA2">2.312293712274331E-002</nm:col>
-          <nm:col nm:cname="ETA3">5.427489851504137E-003</nm:col>
-          <nm:col nm:cname="ETA4">3.864982303853354E-006</nm:col>
-          <nm:col nm:cname="ETA5">-2.348604321179024E-006</nm:col>
+          <nm:col nm:cname="ETA1">-2.573276300183475E-003</nm:col>
+          <nm:col nm:cname="ETA2">2.311500542891599E-002</nm:col>
+          <nm:col nm:cname="ETA3">5.449371544248485E-003</nm:col>
+          <nm:col nm:cname="ETA4">9.129415495916248E-007</nm:col>
+          <nm:col nm:cname="ETA5">-2.362483768757257E-006</nm:col>
          </nm:row>
         </nm:etabar>
         <nm:etabarse>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">7.887811192494838E-002</nm:col>
-          <nm:col nm:cname="ETA2">8.663465005367582E-002</nm:col>
-          <nm:col nm:cname="ETA3">2.589639615425890E-002</nm:col>
-          <nm:col nm:cname="ETA4">2.098202752913039E-006</nm:col>
-          <nm:col nm:cname="ETA5">9.436296270030724E-007</nm:col>
+          <nm:col nm:cname="ETA1">7.887819627322588E-002</nm:col>
+          <nm:col nm:cname="ETA2">8.675633368733013E-002</nm:col>
+          <nm:col nm:cname="ETA3">2.589170608601289E-002</nm:col>
+          <nm:col nm:cname="ETA4">4.963070841835389E-007</nm:col>
+          <nm:col nm:cname="ETA5">9.482779022551467E-007</nm:col>
          </nm:row>
         </nm:etabarse>
         <nm:etabarpval>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">0.973989044911774</nm:col>
-          <nm:col nm:cname="ETA2">0.789544946631833</nm:col>
-          <nm:col nm:cname="ETA3">0.833991835089406</nm:col>
-          <nm:col nm:cname="ETA4">6.546855734613803E-002</nm:col>
-          <nm:col nm:cname="ETA5">1.281375113464604E-002</nm:col>
+          <nm:col nm:cname="ETA1">0.973974781563524</nm:col>
+          <nm:col nm:cname="ETA2">0.789903602243841</nm:col>
+          <nm:col nm:cname="ETA3">0.833302604154138</nm:col>
+          <nm:col nm:cname="ETA4">6.584609723036301E-002</nm:col>
+          <nm:col nm:cname="ETA5">1.272621106465147E-002</nm:col>
          </nm:row>
         </nm:etabarpval>
         <nm:etashrink>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">0.751564707568846</nm:col>
-          <nm:col nm:cname="ETA2">11.4086609322609</nm:col>
-          <nm:col nm:cname="ETA3">14.9013798533489</nm:col>
-          <nm:col nm:cname="ETA4">99.9989947022859</nm:col>
-          <nm:col nm:cname="ETA5">99.7985311020998</nm:col>
+          <nm:col nm:cname="ETA1">0.746103980371956</nm:col>
+          <nm:col nm:cname="ETA2">11.4106043477941</nm:col>
+          <nm:col nm:cname="ETA3">14.8919043799638</nm:col>
+          <nm:col nm:cname="ETA4">99.9995603279498</nm:col>
+          <nm:col nm:cname="ETA5">99.7975386757649</nm:col>
          </nm:row>
         </nm:etashrink>
         <nm:epsshrink>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="EPS1">9.17026780257756</nm:col>
-          <nm:col nm:cname="EPS2">9.17026780257756</nm:col>
+          <nm:col nm:cname="EPS1">9.16580834518731</nm:col>
+          <nm:col nm:cname="EPS2">9.16580834518731</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>22.95</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>20.53</nm:estimation_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
-        <nm:final_objective_function>2525.96526753388</nm:final_objective_function>
+        <nm:final_objective_function>2525.96522290374</nm:final_objective_function>
         <nm:theta>
-         <nm:val nm:name="1">11.7157071793331</nm:val>
-         <nm:val nm:name="2">10.5225011682464</nm:val>
-         <nm:val nm:name="3">4.786845100938665E-002</nm:val>
-         <nm:val nm:name="4">1151219.21983753</nm:val>
-         <nm:val nm:name="5">3.62429795509123</nm:val>
+         <nm:val nm:name="1">11.7157184691200</nm:val>
+         <nm:val nm:name="2">10.5077276885356</nm:val>
+         <nm:val nm:name="3">4.786855451910203E-002</nm:val>
+         <nm:val nm:name="4">1435154.52131308</nm:val>
+         <nm:val nm:name="5">3.63846228649066</nm:val>
         </nm:theta>
         <nm:omega>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">0.259132002691656</nm:col>
+          <nm:col nm:cname="1">0.259104043895225</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.392334133882082</nm:col>
+          <nm:col nm:cname="2">0.393454284279046</nm:col>
          </nm:row>
          <nm:row nm:rname="3">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="2">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="3">3.799172382716860E-002</nm:col>
+          <nm:col nm:cname="3">3.796950774352104E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="4">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="2">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="3">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="4">1.78714952728768</nm:col>
+          <nm:col nm:cname="4">0.522755495502418</nm:col>
          </nm:row>
          <nm:row nm:rname="5">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
@@ -900,31 +961,31 @@
         </nm:omega>
         <nm:sigma>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">5.723899646417019E-002</nm:col>
+          <nm:col nm:cname="1">5.723435275632571E-002</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.206726612791842</nm:col>
+          <nm:col nm:cname="2">0.206738062777659</nm:col>
          </nm:row>
         </nm:sigma>
         <nm:omegac>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">0.509050098410418</nm:col>
+          <nm:col nm:cname="1">0.509022635935991</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.626365814745730</nm:col>
+          <nm:col nm:cname="2">0.627259343716015</nm:col>
          </nm:row>
          <nm:row nm:rname="3">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="2">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="3">0.194914657804816</nm:col>
+          <nm:col nm:cname="3">0.194857660212579</nm:col>
          </nm:row>
          <nm:row nm:rname="4">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="2">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="3">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="4">1.33684311992383</nm:col>
+          <nm:col nm:cname="4">0.723018323075161</nm:col>
          </nm:row>
          <nm:row nm:rname="5">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
@@ -936,17 +997,17 @@
         </nm:omegac>
         <nm:sigmac>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">0.239246727175462</nm:col>
+          <nm:col nm:cname="1">0.239237022127274</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.454671983733154</nm:col>
+          <nm:col nm:cname="2">0.454684575038190</nm:col>
          </nm:row>
         </nm:sigmac>
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2012-09-27T20:38:01.943</nm:stop_datetime>
+     <nm:stop_datetime>2013-03-20T17:42:50.954</nm:stop_datetime>
     </nm:output>
    </so>
   </job>
@@ -959,8 +1020,8 @@
        <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
        <alias id="folder">/mnt/nm72</alias>
        <alias id="target">/opt/NONMEM/nm72</alias>
-       <alias id="origin">/opt/nmqual</alias>
-       <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
+       <alias id="origin">/mnt/nmqual</alias>
+       <alias id="unlock">/mnt/nonmem.lic</alias>
        <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
        <!--The meta interface groups commands that collect metadata.-->
        <do on="meta">pwd</do>
@@ -969,33 +1030,37 @@
        <do on="meta">echo $SHELL</do>
        <do on="meta">echo $USER</do>
        <do on="meta">echo $PATH</do>
+       <do on="meta">ifort --version</do>
+       <do on="meta">head -n 5 target/util/nmfe72</do>
        <!--The 'install' interface installs NONMEM.-->
-       <do on="install" as="xml">perl $0 $_0 meta</do>
+       <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir origin/temp</do>
+       <do on="install">mkdir -p -p origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
        <!--alters compile options in setup72-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir target</do>
+       <do on="install">mkdir -p -p target</do>
        <do on="install" in="origin/temp">pwd</do>
-       <do on="install" in="origin/temp">echo `ifort -V`</do>
+       <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-       <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir target/nmqual</do>
-       <do on="install">mkdir target/nmqual/doc</do>
-       <do on="install">cp origin/autolog.pl target/nmqual</do>
-       <!--runtime copy, uses nmqual/log.xml-->
-       <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/default.xsl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual/doc</do>
+       <do on="install">cp $0 target/nmqual</do>
+       <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+       <do on="install">cp -r origin/con target/nmqual</do>
+       <!--support for processing xml docs-->
+       <do on="install">cp -r origin/csv target/nmqual</do>
+       <!--support for processing csv docs-->
+       <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+       <!--reference modeling results-->
+       <do on="install">cp -r origin/psn target/nmqual</do>
+       <!--support for psn qualification-->
+       <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
        <!--keep for archival purposes-->
+       <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+       <!--keep for archival purposes-->
+       <do on="install">rm -rf origin/temp</do>
        <do on="install">cp -r origin/test target/nmqual</do>
        <!--supports control tests-->
        <do on="install">chmod 0777 target/license/nonmem.lic</do>
@@ -1004,10 +1069,11 @@
        <!--replace expired license-->
        <do on="install">cp mpicha target/mpi/mpi_lini</do>
        <!--replace default mpich archive-->
-       <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
+       <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
        <!--will need this soon-->
-       <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
+       <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
        <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+       <do on="install" as="xml">perl $0 $_0 meta</do>
        <to on="install">target/nmqual/log.xml</to>
        <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
        <!--Run directory and run name are required arguments.-->
@@ -1016,15 +1082,15 @@
        <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="basic" as="xml">cat target/nmqual/log.xml</do>
        <to on="basic">$_1/$_2.log.xml</to>
-       <!--The 'run' interface also expects a leading compile/execute argument.-->
+       <!--The 'run' interface expects a leading compile/execute argument.-->
        <do on="run" as="xml">perl $0 $_0 meta</do>
        <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
        <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="run" as="xml">cat target/nmqual/log.xml</do>
        <to on="run">$_2/$_3.log.xml</to>
-       <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
+       <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
        <do on="para" as="xml">perl $0 $_0 meta</do>
-       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
+       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
        <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="para" as="xml">cat target/nmqual/log.xml</do>
        <to on="para">$_2/$_3.log.xml</to>
@@ -1043,6 +1109,7 @@
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+       <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
        <to on="qualify">$_1</to>
        <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
        <do on="regress" as="xml">perl $0 $_0 meta</do>
@@ -1051,161 +1118,41 @@
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+       <do on="regress" as="xml">cat target/nmqual/log.xml</do>
        <to on="regress">$_1</to>
+       <!--The 'psntest' interface runs PsN control tests.-->
+       <do on="psntest" as="xml">perl $0 $_0 meta</do>
+       <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+       <to on="psntest">$_1</to>
        <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
        <do on="accept">echo $_</do>
        <to on="accept">$0</to>
       </config>
       <job>
-       <do>perl autolog.pl nix/nm72.xml meta</do>
-       <so>
-        <log>
-         <logged on="meta">
-          <config>
-           <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
-           <alias id="folder">/mnt/nm72</alias>
-           <alias id="target">/opt/NONMEM/nm72</alias>
-           <alias id="origin">/opt/nmqual</alias>
-           <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
-           <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
-           <!--The meta interface groups commands that collect metadata.-->
-           <do on="meta">pwd</do>
-           <do on="meta">date</do>
-           <do on="meta">perl -e 'use POSIX; print join qq(,),uname'</do>
-           <do on="meta">echo $SHELL</do>
-           <do on="meta">echo $USER</do>
-           <do on="meta">echo $PATH</do>
-           <!--The 'install' interface installs NONMEM.-->
-           <do on="install" as="xml">perl $0 $_0 meta</do>
-           <do on="install">rm -rf origin/temp</do>
-           <do on="install">mkdir origin/temp</do>
-           <do on="install">cp -r folder/* origin/temp</do>
-           <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
-           <!--alters compile options in setup72-->
-           <do on="install">rm -rf target</do>
-           <do on="install">mkdir target</do>
-           <do on="install" in="origin/temp">pwd</do>
-           <do on="install" in="origin/temp">echo `ifort -V`</do>
-           <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-           <do on="install">rm -rf origin/temp</do>
-           <do on="install">mkdir target/nmqual</do>
-           <do on="install">mkdir target/nmqual/doc</do>
-           <do on="install">cp origin/autolog.pl target/nmqual</do>
-           <!--runtime copy, uses nmqual/log.xml-->
-           <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/con/default.xsl target/nmqual</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
-           <!--keep for archival purposes-->
-           <do on="install">cp -r origin/test target/nmqual</do>
-           <!--supports control tests-->
-           <do on="install">chmod 0777 target/license/nonmem.lic</do>
-           <!--enable overwriting-->
-           <do on="install">cp unlock target/license/nonmem.lic</do>
-           <!--replace expired license-->
-           <do on="install">cp mpicha target/mpi/mpi_lini</do>
-           <!--replace default mpich archive-->
-           <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
-           <!--will need this soon-->
-           <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
-           <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
-           <to on="install">target/nmqual/log.xml</to>
-           <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
-           <!--Run directory and run name are required arguments.-->
-           <do on="basic" as="xml">perl $0 $_0 meta</do>
-           <do on="basic" in="$_1">target/util/nmfe72 $_2.ctl $_2.lst</do>
-           <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
-           <do on="basic" as="xml">cat target/nmqual/log.xml</do>
-           <to on="basic">$_1/$_2.log.xml</to>
-           <!--The 'run' interface also expects a leading compile/execute argument.-->
-           <do on="run" as="xml">perl $0 $_0 meta</do>
-           <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
-           <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
-           <do on="run" as="xml">cat target/nmqual/log.xml</do>
-           <to on="run">$_2/$_3.log.xml</to>
-           <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
-           <do on="para" as="xml">perl $0 $_0 meta</do>
-           <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
-           <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
-           <do on="para" as="xml">cat target/nmqual/log.xml</do>
-           <to on="para">$_2/$_3.log.xml</to>
-           <!--The 'test' interface invokes nmfe directly, without the compile/execute argument.-->
-           <do on="test" in="target/nmqual/test">target/util/nmfe72 $_1.ctl $_1.lst</do>
-           <do on="test" in="target/nmqual/test" as="xml">cat $_1.xml</do>
-           <!--The 'qualify' interface runs a full suite of qualification tests.-->
-           <do on="qualify" as="xml">perl $0 $_0 meta</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
-           <to on="qualify">$_1</to>
-           <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
-           <do on="regress" as="xml">perl $0 $_0 meta</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
-           <to on="regress">$_1</to>
-           <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
-           <do on="accept">echo $_</do>
-           <to on="accept">$0</to>
-          </config>
-          <job>
-           <do>pwd</do>
-           <so>/opt/nmqual</so>
-          </job>
-          <job>
-           <do>date</do>
-           <so>Wed Sep 26 15:37:32 UTC 2012</so>
-          </job>
-          <job>
-           <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-           <so>Linux,master,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
-          </job>
-          <job>
-           <do>echo $SHELL</do>
-           <so>/bin/bash</so>
-          </job>
-          <job>
-           <do>echo $USER</do>
-           <so>root</so>
-          </job>
-          <job>
-           <do>echo $PATH</do>
-           <so>/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/mpirt/bin/intel64:/opt/sge6/bin/lx24-amd64</so>
-          </job>
-         </logged>
-        </log>
-       </so>
+       <do>date</do>
+       <so>Tue Mar 19 15:11:18 UTC 2013</so>
       </job>
       <job>
-       <do>rm -rf /opt/nmqual/temp</do>
+       <do>rm -rf /mnt/nmqual/temp</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/nmqual/temp</do>
+       <do>mkdir -p -p /mnt/nmqual/temp</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /mnt/nm72/* /opt/nmqual/temp</do>
+       <do>cp -r /mnt/nm72/* /mnt/nmqual/temp</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/nmqual">patch -p0 &lt; nix/setup72.diff</do>
+       <do in="/mnt/nmqual">patch -p0 &lt; nix/setup72.diff</do>
        <so>patching file temp/SETUP72</so>
       </job>
       <job>
@@ -1213,24 +1160,26 @@
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm72</do>
+       <do>mkdir -p -p /opt/NONMEM/nm72</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/nmqual/temp">pwd</do>
-       <so>/opt/nmqual/temp</so>
+       <do in="/mnt/nmqual/temp">pwd</do>
+       <so>/mnt/nmqual/temp</so>
       </job>
       <job>
-       <do in="/opt/nmqual/temp">echo `ifort -V`</do>
-       <so/>
+       <do in="/mnt/nmqual/temp">ifort --version</do>
+       <so>ifort (IFORT) 12.0.4 20110427
+          Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
+          </so>
       </job>
       <job>
-       <do in="/opt/nmqual/temp">/bin/bash SETUP72 /opt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
+       <do in="/mnt/nmqual/temp">/bin/bash SETUP72 /mnt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
        <so>NONMEM 7.2.0 INSTALLATION UTILITY - UNIX Bourne-Again SHell version
           For instructions, see readme_7.2.0.pdf or readme_7.2.0.txt on the CD
            
-          SETUP72 /opt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip
-          CD-ROM drive is /opt/nmqual/temp
+          SETUP72 /mnt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip
+          CD-ROM drive is /mnt/nmqual/temp
           NONMEM 7.2 directory is /opt/NONMEM/nm72
           Command for FORTRAN compiles is ifort
           Optimization for Fortran compiles is y
@@ -1247,8 +1196,8 @@
           % SETUP72 help
            
           directory /opt/NONMEM/nm72
-          Step 1a. Copy files from /opt/nmqual/temp to /opt/NONMEM/nm72
-          Step 1b. Copy files from /opt/nmqual/temp/NONMEM_7.2.0 to /opt/NONMEM/nm72
+          Step 1a. Copy files from /mnt/nmqual/temp to /opt/NONMEM/nm72
+          Step 1b. Copy files from /mnt/nmqual/temp/NONMEM_7.2.0 to /opt/NONMEM/nm72
            
           Installing NONMEM 7.2.0 (Enter Ctrl-C to interrupt) ...
           Step 2a. Make sub-directories of /opt/NONMEM/nm72
@@ -1336,7 +1285,7 @@
           Starting nonmem execution ...
           License Registered to: Temporary License File for Installation
           Expiration Date:    31 JUL 2011
-          Current Date:       26 SEP 2012
+          Current Date:       19 MAR 2013
            
             **** PROGRAM LICENSE HAS EXPIRED ****
             ****     PROGRAM TERMINATING     ****
@@ -1349,43 +1298,47 @@
           /opt/NONMEM/nm72/license/nonmem.lic</so>
       </job>
       <job>
-       <do>rm -rf /opt/nmqual/temp</do>
+       <do>mkdir -p -p /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm72/nmqual</do>
+       <do>mkdir -p -p /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm72/nmqual/doc</do>
+       <do>cp autolog.pl /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/autolog.pl /opt/NONMEM/nm72/nmqual</do>
+       <do>cp -r /mnt/nmqual/con /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/con/contrast.pl /opt/NONMEM/nm72/nmqual</do>
+       <do>cp -r /mnt/nmqual/csv /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/con/xpath.lst /opt/NONMEM/nm72/nmqual</do>
+       <do>cp /mnt/nmqual/doc/nix/* /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/con/default.xsl /opt/NONMEM/nm72/nmqual</do>
+       <do>cp -r /mnt/nmqual/psn /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/doc/nix/qualify.xml /opt/NONMEM/nm72/nmqual/doc</do>
+       <do>cp /mnt/nmqual/nix/setup72.diff /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/nix/setup72.diff /opt/NONMEM/nm72/nmqual</do>
+       <do>cp /mnt/nmqual/temp/SETUP72 /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /opt/nmqual/test /opt/NONMEM/nm72/nmqual</do>
+       <do>rm -rf /mnt/nmqual/temp</do>
+       <so/>
+      </job>
+      <job>
+       <do>cp -r /mnt/nmqual/test /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
@@ -1393,7 +1346,7 @@
        <so/>
       </job>
       <job>
-       <do>cp /opt/NONMEM/nonmem.lic /opt/NONMEM/nm72/license/nonmem.lic</do>
+       <do>cp /mnt/nonmem.lic /opt/NONMEM/nm72/license/nonmem.lic</do>
        <so/>
       </job>
       <job>
@@ -1401,13 +1354,179 @@
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/nix/nmfe72.diff /opt/NONMEM/nm72/nmqual</do>
+       <do>cp /mnt/nmqual/nix/nmfe72.diff /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/NONMEM/nm72">patch -p1 &lt; nmqual/nmfe72.diff</do>
+       <do in="/opt/NONMEM/nm72">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
        <so>patching file run/nmfe72
           patching file util/nmfe72</so>
+      </job>
+      <job>
+       <do>perl autolog.pl nix/nm72.xml meta</do>
+       <so>
+        <log>
+         <logged on="meta">
+          <config>
+           <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
+           <alias id="folder">/mnt/nm72</alias>
+           <alias id="target">/opt/NONMEM/nm72</alias>
+           <alias id="origin">/mnt/nmqual</alias>
+           <alias id="unlock">/mnt/nonmem.lic</alias>
+           <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
+           <!--The meta interface groups commands that collect metadata.-->
+           <do on="meta">pwd</do>
+           <do on="meta">date</do>
+           <do on="meta">perl -e 'use POSIX; print join qq(,),uname'</do>
+           <do on="meta">echo $SHELL</do>
+           <do on="meta">echo $USER</do>
+           <do on="meta">echo $PATH</do>
+           <do on="meta">ifort --version</do>
+           <do on="meta">head -n 5 target/util/nmfe72</do>
+           <!--The 'install' interface installs NONMEM.-->
+           <do on="install">date</do>
+           <do on="install">rm -rf origin/temp</do>
+           <do on="install">mkdir -p -p origin/temp</do>
+           <do on="install">cp -r folder/* origin/temp</do>
+           <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
+           <!--alters compile options in setup72-->
+           <do on="install">rm -rf target</do>
+           <do on="install">mkdir -p -p target</do>
+           <do on="install" in="origin/temp">pwd</do>
+           <do on="install" in="origin/temp">ifort --version</do>
+           <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
+           <do on="install">mkdir -p -p target/nmqual</do>
+           <do on="install">mkdir -p -p target/nmqual/doc</do>
+           <do on="install">cp $0 target/nmqual</do>
+           <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+           <do on="install">cp -r origin/con target/nmqual</do>
+           <!--support for processing xml docs-->
+           <do on="install">cp -r origin/csv target/nmqual</do>
+           <!--support for processing csv docs-->
+           <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+           <!--reference modeling results-->
+           <do on="install">cp -r origin/psn target/nmqual</do>
+           <!--support for psn qualification-->
+           <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
+           <!--keep for archival purposes-->
+           <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+           <!--keep for archival purposes-->
+           <do on="install">rm -rf origin/temp</do>
+           <do on="install">cp -r origin/test target/nmqual</do>
+           <!--supports control tests-->
+           <do on="install">chmod 0777 target/license/nonmem.lic</do>
+           <!--enable overwriting-->
+           <do on="install">cp unlock target/license/nonmem.lic</do>
+           <!--replace expired license-->
+           <do on="install">cp mpicha target/mpi/mpi_lini</do>
+           <!--replace default mpich archive-->
+           <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
+           <!--will need this soon-->
+           <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
+           <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+           <do on="install" as="xml">perl $0 $_0 meta</do>
+           <to on="install">target/nmqual/log.xml</to>
+           <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
+           <!--Run directory and run name are required arguments.-->
+           <do on="basic" as="xml">perl $0 $_0 meta</do>
+           <do on="basic" in="$_1">target/util/nmfe72 $_2.ctl $_2.lst</do>
+           <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
+           <do on="basic" as="xml">cat target/nmqual/log.xml</do>
+           <to on="basic">$_1/$_2.log.xml</to>
+           <!--The 'run' interface expects a leading compile/execute argument.-->
+           <do on="run" as="xml">perl $0 $_0 meta</do>
+           <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
+           <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
+           <do on="run" as="xml">cat target/nmqual/log.xml</do>
+           <to on="run">$_2/$_3.log.xml</to>
+           <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
+           <do on="para" as="xml">perl $0 $_0 meta</do>
+           <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
+           <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
+           <do on="para" as="xml">cat target/nmqual/log.xml</do>
+           <to on="para">$_2/$_3.log.xml</to>
+           <!--The 'test' interface invokes nmfe directly, without the compile/execute argument.-->
+           <do on="test" in="target/nmqual/test">target/util/nmfe72 $_1.ctl $_1.lst</do>
+           <do on="test" in="target/nmqual/test" as="xml">cat $_1.xml</do>
+           <!--The 'qualify' interface runs a full suite of qualification tests.-->
+           <do on="qualify" as="xml">perl $0 $_0 meta</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+           <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
+           <to on="qualify">$_1</to>
+           <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
+           <do on="regress" as="xml">perl $0 $_0 meta</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+           <do on="regress" as="xml">cat target/nmqual/log.xml</do>
+           <to on="regress">$_1</to>
+           <!--The 'psntest' interface runs PsN control tests.-->
+           <do on="psntest" as="xml">perl $0 $_0 meta</do>
+           <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+           <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+           <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+           <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+           <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+           <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+           <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+           <to on="psntest">$_1</to>
+           <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
+           <do on="accept">echo $_</do>
+           <to on="accept">$0</to>
+          </config>
+          <job>
+           <do>pwd</do>
+           <so>/mnt/nmqual</so>
+          </job>
+          <job>
+           <do>date</do>
+           <so>Tue Mar 19 15:15:49 UTC 2013</so>
+          </job>
+          <job>
+           <do>perl -e 'use POSIX; print join qq(,),uname'</do>
+           <so>Linux,master,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+          </job>
+          <job>
+           <do>echo $SHELL</do>
+           <so>/bin/bash</so>
+          </job>
+          <job>
+           <do>echo $USER</do>
+           <so>root</so>
+          </job>
+          <job>
+           <do>echo $PATH</do>
+           <so>/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64:/opt/chef/embedded/bin:/opt/chef/embedded/bin</so>
+          </job>
+          <job>
+           <do>ifort --version</do>
+           <so>ifort (IFORT) 12.0.4 20110427
+                     Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
+                     </so>
+          </job>
+          <job>
+           <do>head -n 5 /opt/NONMEM/nm72/util/nmfe72</do>
+           <so>#!/bin/bash
+                     dir=/opt/NONMEM/nm72
+                     f=ifort
+                     o=' -fp-model strict -Gs -nologo -nbs -w '
+                     opstat=' -static '</so>
+          </job>
+         </logged>
+        </log>
+       </so>
       </job>
      </logged>
     </log>

@@ -4,8 +4,8 @@
    <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
    <alias id="folder">/mnt/nm72</alias>
    <alias id="target">/opt/NONMEM/nm72</alias>
-   <alias id="origin">/opt/nmqual</alias>
-   <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
+   <alias id="origin">/mnt/nmqual</alias>
+   <alias id="unlock">/mnt/nonmem.lic</alias>
    <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
    <!--The meta interface groups commands that collect metadata.-->
    <do on="meta">pwd</do>
@@ -14,33 +14,37 @@
    <do on="meta">echo $SHELL</do>
    <do on="meta">echo $USER</do>
    <do on="meta">echo $PATH</do>
+   <do on="meta">ifort --version</do>
+   <do on="meta">head -n 5 target/util/nmfe72</do>
    <!--The 'install' interface installs NONMEM.-->
-   <do on="install" as="xml">perl $0 $_0 meta</do>
+   <do on="install">date</do>
    <do on="install">rm -rf origin/temp</do>
-   <do on="install">mkdir origin/temp</do>
+   <do on="install">mkdir -p -p origin/temp</do>
    <do on="install">cp -r folder/* origin/temp</do>
    <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
    <!--alters compile options in setup72-->
    <do on="install">rm -rf target</do>
-   <do on="install">mkdir target</do>
+   <do on="install">mkdir -p -p target</do>
    <do on="install" in="origin/temp">pwd</do>
-   <do on="install" in="origin/temp">echo `ifort -V`</do>
+   <do on="install" in="origin/temp">ifort --version</do>
    <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-   <do on="install">rm -rf origin/temp</do>
-   <do on="install">mkdir target/nmqual</do>
-   <do on="install">mkdir target/nmqual/doc</do>
-   <do on="install">cp origin/autolog.pl target/nmqual</do>
-   <!--runtime copy, uses nmqual/log.xml-->
-   <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/con/default.xsl target/nmqual</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-   <!--support for qualification-->
-   <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
+   <do on="install">mkdir -p -p target/nmqual</do>
+   <do on="install">mkdir -p -p target/nmqual/doc</do>
+   <do on="install">cp $0 target/nmqual</do>
+   <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+   <do on="install">cp -r origin/con target/nmqual</do>
+   <!--support for processing xml docs-->
+   <do on="install">cp -r origin/csv target/nmqual</do>
+   <!--support for processing csv docs-->
+   <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+   <!--reference modeling results-->
+   <do on="install">cp -r origin/psn target/nmqual</do>
+   <!--support for psn qualification-->
+   <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
    <!--keep for archival purposes-->
+   <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+   <!--keep for archival purposes-->
+   <do on="install">rm -rf origin/temp</do>
    <do on="install">cp -r origin/test target/nmqual</do>
    <!--supports control tests-->
    <do on="install">chmod 0777 target/license/nonmem.lic</do>
@@ -49,10 +53,11 @@
    <!--replace expired license-->
    <do on="install">cp mpicha target/mpi/mpi_lini</do>
    <!--replace default mpich archive-->
-   <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
+   <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
    <!--will need this soon-->
-   <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
+   <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
    <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+   <do on="install" as="xml">perl $0 $_0 meta</do>
    <to on="install">target/nmqual/log.xml</to>
    <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
    <!--Run directory and run name are required arguments.-->
@@ -61,15 +66,15 @@
    <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
    <do on="basic" as="xml">cat target/nmqual/log.xml</do>
    <to on="basic">$_1/$_2.log.xml</to>
-   <!--The 'run' interface also expects a leading compile/execute argument.-->
+   <!--The 'run' interface expects a leading compile/execute argument.-->
    <do on="run" as="xml">perl $0 $_0 meta</do>
    <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
    <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
    <do on="run" as="xml">cat target/nmqual/log.xml</do>
    <to on="run">$_2/$_3.log.xml</to>
-   <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
+   <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
    <do on="para" as="xml">perl $0 $_0 meta</do>
-   <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
+   <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
    <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
    <do on="para" as="xml">cat target/nmqual/log.xml</do>
    <to on="para">$_2/$_3.log.xml</to>
@@ -88,6 +93,7 @@
    <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
    <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
    <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+   <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
    <to on="qualify">$_1</to>
    <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
    <do on="regress" as="xml">perl $0 $_0 meta</do>
@@ -96,8 +102,19 @@
    <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
    <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
    <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-   <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+   <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+   <do on="regress" as="xml">cat target/nmqual/log.xml</do>
    <to on="regress">$_1</to>
+   <!--The 'psntest' interface runs PsN control tests.-->
+   <do on="psntest" as="xml">perl $0 $_0 meta</do>
+   <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+   <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+   <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+   <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+   <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+   <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+   <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+   <to on="psntest">$_1</to>
    <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
    <do on="accept">echo $_</do>
    <to on="accept">$0</to>
@@ -111,8 +128,8 @@
        <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
        <alias id="folder">/mnt/nm72</alias>
        <alias id="target">/opt/NONMEM/nm72</alias>
-       <alias id="origin">/opt/nmqual</alias>
-       <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
+       <alias id="origin">/mnt/nmqual</alias>
+       <alias id="unlock">/mnt/nonmem.lic</alias>
        <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
        <!--The meta interface groups commands that collect metadata.-->
        <do on="meta">pwd</do>
@@ -121,33 +138,37 @@
        <do on="meta">echo $SHELL</do>
        <do on="meta">echo $USER</do>
        <do on="meta">echo $PATH</do>
+       <do on="meta">ifort --version</do>
+       <do on="meta">head -n 5 target/util/nmfe72</do>
        <!--The 'install' interface installs NONMEM.-->
-       <do on="install" as="xml">perl $0 $_0 meta</do>
+       <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir origin/temp</do>
+       <do on="install">mkdir -p -p origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
        <!--alters compile options in setup72-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir target</do>
+       <do on="install">mkdir -p -p target</do>
        <do on="install" in="origin/temp">pwd</do>
-       <do on="install" in="origin/temp">echo `ifort -V`</do>
+       <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-       <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir target/nmqual</do>
-       <do on="install">mkdir target/nmqual/doc</do>
-       <do on="install">cp origin/autolog.pl target/nmqual</do>
-       <!--runtime copy, uses nmqual/log.xml-->
-       <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/default.xsl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual/doc</do>
+       <do on="install">cp $0 target/nmqual</do>
+       <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+       <do on="install">cp -r origin/con target/nmqual</do>
+       <!--support for processing xml docs-->
+       <do on="install">cp -r origin/csv target/nmqual</do>
+       <!--support for processing csv docs-->
+       <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+       <!--reference modeling results-->
+       <do on="install">cp -r origin/psn target/nmqual</do>
+       <!--support for psn qualification-->
+       <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
        <!--keep for archival purposes-->
+       <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+       <!--keep for archival purposes-->
+       <do on="install">rm -rf origin/temp</do>
        <do on="install">cp -r origin/test target/nmqual</do>
        <!--supports control tests-->
        <do on="install">chmod 0777 target/license/nonmem.lic</do>
@@ -156,10 +177,11 @@
        <!--replace expired license-->
        <do on="install">cp mpicha target/mpi/mpi_lini</do>
        <!--replace default mpich archive-->
-       <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
+       <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
        <!--will need this soon-->
-       <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
+       <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
        <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+       <do on="install" as="xml">perl $0 $_0 meta</do>
        <to on="install">target/nmqual/log.xml</to>
        <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
        <!--Run directory and run name are required arguments.-->
@@ -168,15 +190,15 @@
        <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="basic" as="xml">cat target/nmqual/log.xml</do>
        <to on="basic">$_1/$_2.log.xml</to>
-       <!--The 'run' interface also expects a leading compile/execute argument.-->
+       <!--The 'run' interface expects a leading compile/execute argument.-->
        <do on="run" as="xml">perl $0 $_0 meta</do>
        <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
        <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="run" as="xml">cat target/nmqual/log.xml</do>
        <to on="run">$_2/$_3.log.xml</to>
-       <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
+       <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
        <do on="para" as="xml">perl $0 $_0 meta</do>
-       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
+       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
        <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="para" as="xml">cat target/nmqual/log.xml</do>
        <to on="para">$_2/$_3.log.xml</to>
@@ -195,6 +217,7 @@
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+       <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
        <to on="qualify">$_1</to>
        <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
        <do on="regress" as="xml">perl $0 $_0 meta</do>
@@ -203,8 +226,19 @@
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+       <do on="regress" as="xml">cat target/nmqual/log.xml</do>
        <to on="regress">$_1</to>
+       <!--The 'psntest' interface runs PsN control tests.-->
+       <do on="psntest" as="xml">perl $0 $_0 meta</do>
+       <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+       <to on="psntest">$_1</to>
        <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
        <do on="accept">echo $_</do>
        <to on="accept">$0</to>
@@ -215,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Thu Sep 27 20:37:28 UTC 2012</so>
+       <so>Wed Mar 20 17:42:09 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node006,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node004,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -231,7 +265,21 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/644.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/2.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+      </job>
+      <job>
+       <do>ifort --version</do>
+       <so>ifort (IFORT) 12.0.4 20110427
+          Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
+          </so>
+      </job>
+      <job>
+       <do>head -n 5 /opt/NONMEM/nm72/util/nmfe72</do>
+       <so>#!/bin/bash
+          dir=/opt/NONMEM/nm72
+          f=ifort
+          o=' -fp-model strict -Gs -nologo -nbs -w '
+          opstat=' -static '</so>
       </job>
      </logged>
     </log>
@@ -251,15 +299,15 @@
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
    Expiration Date:    14 JUL 2013
-   Current Date:       27 SEP 2012
-   Days until program expires : 292
+   Current Date:       20 MAR 2013
+   Days until program expires : 114
     
     
     First Order Conditional Estimation with Interaction
     MONITORING OF SEARCH:
    
     
-   0ITERATION NO.:    0    OBJECTIVE VALUE:   3634.96125166100        NO. OF FUNC. EVALS.:   8
+   0ITERATION NO.:    0    OBJECTIVE VALUE:   3634.96125160225        NO. OF FUNC. EVALS.:   8
     CUMULATIVE NO. OF FUNC. EVALS.:        8
     NPARAMETR:  1.0000E+01  1.0000E+01  2.0000E-01  1.0000E+01  1.0000E+01  9.0000E-02  9.0000E-02  9.0000E-02  9.0000E-02
     PARAMETER:  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01  1.0000E-01
@@ -349,11 +397,11 @@
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:    5    OBJECTIVE VALUE:   2663.50071940116        NO. OF FUNC. EVALS.:  11
+   0ITERATION NO.:    5    OBJECTIVE VALUE:   2663.50076159368        NO. OF FUNC. EVALS.:  11
     CUMULATIVE NO. OF FUNC. EVALS.:       63
-    NPARAMETR:  1.0127E+01  1.1661E+01  2.9752E-02  6.3140E+00  9.5254E-02  9.4036E-02  9.0855E-02  9.1095E-02  9.0842E-02
+    NPARAMETR:  1.0127E+01  1.1661E+01  2.9752E-02  6.3140E+00  9.5254E-02  9.4036E-02  9.0855E-02  9.1094E-02  9.0842E-02
     PARAMETER:  1.0127E-01  1.1661E-01  1.4876E-02  6.3140E-02  9.5254E-04  1.2194E-01  1.0473E-01  1.0604E-01  1.0466E-01
-    GRADIENT:  -5.6125E+02 -1.3352E+02 -1.5834E+04 -5.2208E-01  1.2738E+02 -1.0705E+02 -2.1525E+01 -7.7361E+01  8.1735E+01
+    GRADIENT:  -5.6125E+02 -1.3352E+02 -1.5834E+04 -5.2208E-01  1.2739E+02 -1.0705E+02 -2.1525E+01 -7.7361E+01  8.1735E+01
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
@@ -385,11 +433,11 @@
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: Q   IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   10    OBJECTIVE VALUE:   2601.66241489167        NO. OF FUNC. EVALS.:  11
+   0ITERATION NO.:   10    OBJECTIVE VALUE:   2601.66241641079        NO. OF FUNC. EVALS.:  11
     CUMULATIVE NO. OF FUNC. EVALS.:      115
     NPARAMETR:  1.0236E+01  1.2210E+01  3.3490E-02  2.6076E+00  2.8066E-01  2.1775E-01  2.7430E-01  9.0956E-02  7.4921E-02
     PARAMETER:  1.0236E-01  1.2210E-01  1.6745E-02  2.6076E-02  2.8066E-03  5.4176E-01  6.5721E-01  1.0528E-01  8.3154E-03
-    GRADIENT:  -1.8421E+02 -3.3321E+01 -9.3363E+03 -3.6419E+01  5.5807E+02 -1.2626E+01  1.1290E+01 -3.5590E+01  3.2112E-01
+    GRADIENT:  -1.8421E+02 -3.3322E+01 -9.3363E+03 -3.6419E+01  5.5807E+02 -1.2626E+01  1.1290E+01 -3.5590E+01  3.2108E-01
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
@@ -481,11 +529,11 @@
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   15    OBJECTIVE VALUE:   2592.41248506552        NO. OF FUNC. EVALS.:  11
+   0ITERATION NO.:   15    OBJECTIVE VALUE:   2592.41250336296        NO. OF FUNC. EVALS.:  11
     CUMULATIVE NO. OF FUNC. EVALS.:      170
-    NPARAMETR:  1.0333E+01  1.2654E+01  3.4840E-02  8.5717E-02  2.7408E-04  2.2469E-01  2.4152E-01  9.1059E-02  7.4689E-02
-    PARAMETER:  1.0333E-01  1.2654E-01  1.7420E-02  8.5717E-04  2.7408E-06  5.5746E-01  5.9357E-01  1.0585E-01  6.7646E-03
-    GRADIENT:  -1.4747E+02 -1.3639E+01 -7.2518E+03 -2.5515E-02  2.9120E+02 -9.6218E+00  7.0314E+00 -2.1057E+01 -4.3217E-01
+    NPARAMETR:  1.0333E+01  1.2654E+01  3.4840E-02  8.5716E-02  2.7408E-04  2.2469E-01  2.4152E-01  9.1059E-02  7.4689E-02
+    PARAMETER:  1.0333E-01  1.2654E-01  1.7420E-02  8.5716E-04  2.7408E-06  5.5746E-01  5.9357E-01  1.0585E-01  6.7646E-03
+    GRADIENT:  -1.4747E+02 -1.3639E+01 -7.2518E+03 -2.5516E-02  2.9120E+02 -9.6218E+00  7.0314E+00 -2.1057E+01 -4.3222E-01
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
@@ -512,394 +560,524 @@
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.15E+01   1.29E+01   4.73E-02   1.69E-01  -9.73E-03
+     1.15E+01   1.29E+01   4.73E-02   1.72E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.15E+01   1.29E+01   4.73E-02   1.69E-01  -9.73E-03
+     1.15E+01   1.29E+01   4.73E-02   1.72E-01  -9.73E-03
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.15E+01   1.29E+01   4.73E-02   1.69E-01  -9.73E-03
+     1.15E+01   1.29E+01   4.73E-02   1.72E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.15E+01   1.29E+01   4.73E-02   1.69E-01  -9.73E-03
+     1.15E+01   1.29E+01   4.73E-02   1.72E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.10E+01   1.32E+01   4.28E-02   1.91E-01  -1.73E-03
+     1.10E+01   1.32E+01   4.28E-02   2.17E-01  -1.99E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.10E+01   1.32E+01   4.28E-02   1.91E-01  -9.73E-03
+     1.10E+01   1.32E+01   4.28E-02   2.17E-01  -9.73E-03
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   20    OBJECTIVE VALUE:   2571.67447730781        NO. OF FUNC. EVALS.:  14
-    CUMULATIVE NO. OF FUNC. EVALS.:      269
-    NPARAMETR:  1.1021E+01  1.3241E+01  4.2797E-02  1.9070E-01  2.7408E-04  2.5300E-01  2.1232E-01  8.6668E-02  7.4751E-02
-    PARAMETER:  1.1021E-01  1.3241E-01  2.1399E-02  1.9070E-03  2.7408E-06  6.1678E-01  5.2913E-01  8.1140E-02  7.1754E-03
-    GRADIENT:  -5.7493E+00  1.5282E+01 -6.0054E+02 -4.9749E-03  1.5346E+02  5.6805E-01 -5.6911E-03  1.4760E+01 -6.8520E-01
+   0ITERATION NO.:   20    OBJECTIVE VALUE:   2571.76998283564        NO. OF FUNC. EVALS.:  14
+    CUMULATIVE NO. OF FUNC. EVALS.:      268
+    NPARAMETR:  1.1021E+01  1.3239E+01  4.2795E-02  2.1695E-01  2.7408E-04  2.5299E-01  2.1231E-01  8.7768E-02  7.4750E-02
+    PARAMETER:  1.1021E-01  1.3239E-01  2.1398E-02  2.1695E-03  2.7408E-06  6.1677E-01  5.2911E-01  8.7443E-02  7.1690E-03
+    GRADIENT:  -5.6102E+00  1.5286E+01 -5.9128E+02 -3.8382E-03  1.3463E+02  5.5890E-01 -4.5144E-02  1.5395E+01 -6.0453E-01
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.10E+01   1.32E+01   4.28E-02   1.91E-01  -1.73E-03
+     1.10E+01   1.32E+01   4.28E-02   2.17E-01  -1.99E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.10E+01   1.32E+01   4.28E-02   1.91E-01  -9.73E-03
+     1.10E+01   1.32E+01   4.28E-02   2.17E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.31E+01   4.40E-02   3.71E-01  -9.73E-03
+     1.11E+01   1.31E+01   4.40E-02   3.13E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.31E+01   4.40E-02   3.71E-01  -9.73E-03
+     1.11E+01   1.31E+01   4.40E-02   3.13E-01  -9.73E-03
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.31E+01   4.40E-02   3.71E-01  -9.73E-03
+     1.11E+01   1.31E+01   4.40E-02   3.13E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.31E+01   4.40E-02   3.71E-01  -9.73E-03
+     1.11E+01   1.31E+01   4.40E-02   3.13E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.34E+01   4.32E-02   3.91E-01  -9.73E-03
+     1.11E+01   1.34E+01   4.32E-02   3.25E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.34E+01   4.32E-02   3.91E-01  -9.73E-03
+     1.11E+01   1.34E+01   4.32E-02   3.25E-01  -9.73E-03
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.34E+01   4.32E-02   3.91E-01  -9.73E-03
+     1.11E+01   1.34E+01   4.32E-02   3.25E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.34E+01   4.32E-02   3.91E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-    
-   0ITERATION NO.:   25    OBJECTIVE VALUE:   2570.47499232860        NO. OF FUNC. EVALS.:  30
-    CUMULATIVE NO. OF FUNC. EVALS.:      385             RESET HESSIAN, TYPE I
-    NPARAMETR:  1.1061E+01  1.3201E+01  4.3538E-02  4.0120E-01  2.7408E-04  2.5062E-01  2.0888E-01  6.5515E-02  7.5160E-02
-    PARAMETER:  1.1061E-01  1.3201E-01  2.1769E-02  4.0120E-03  2.7408E-06  6.1206E-01  5.2097E-01 -5.8762E-02  9.9041E-03
-    GRADIENT:   5.2647E+01  5.9090E+00  1.8039E+03 -1.0859E-03  4.9803E+01  1.1286E-02  1.0986E-01  1.4031E-01  6.5691E-01
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.35E-02   4.01E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.35E-02   4.01E-01  -9.73E-03
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.35E-02   4.01E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.35E-02   4.01E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.01E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.01E-01  -9.73E-03
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.01E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.01E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.24E-01  -7.54E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.21E-01  -9.73E-03
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-    
-   0ITERATION NO.:   30    OBJECTIVE VALUE:   2570.47436975164        NO. OF FUNC. EVALS.:  14
-    CUMULATIVE NO. OF FUNC. EVALS.:      485
-    NPARAMETR:  1.1062E+01  1.3215E+01  4.3568E-02  4.2122E-01  2.7408E-04  2.5059E-01  2.0854E-01  6.5333E-02  7.5176E-02
-    PARAMETER:  1.1062E-01  1.3215E-01  2.1784E-02  4.2122E-03  2.7408E-06  6.1201E-01  5.2016E-01 -6.0153E-02  1.0010E-02
-    GRADIENT:  -3.2457E-01 -1.4728E+00  5.8949E+00 -1.0077E-03  4.9179E+01  4.8523E-03  3.5314E-02  7.4800E-03  6.2221E-01
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.21E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.21E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.41E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.41E-01  -9.73E-03
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.41E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   4.41E-01  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.26E+00  -7.98E-04
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.25E+00  -9.73E-03
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.25E+00  -9.73E-03
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.25E+00  -9.73E-03
+     1.11E+01   1.34E+01   4.32E-02   3.25E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   35    OBJECTIVE VALUE:   2570.47364567506        NO. OF FUNC. EVALS.:  31
-    CUMULATIVE NO. OF FUNC. EVALS.:      604             RESET HESSIAN, TYPE I
-    NPARAMETR:  1.1062E+01  1.3223E+01  4.3566E-02  1.2591E+00  5.2441E-03  2.5059E-01  2.0846E-01  6.5329E-02  7.5118E-02
-    PARAMETER:  1.1062E-01  1.3223E-01  2.1783E-02  1.2591E-02  5.2441E-05  6.1200E-01  5.1996E-01 -6.0183E-02  9.6236E-03
-    GRADIENT:   5.2971E+01  1.0416E+01  1.8298E+03 -4.1595E-02  2.9363E+01 -4.9462E-05 -3.9392E-02  5.0801E-03  1.2322E-01
+   0ITERATION NO.:   25    OBJECTIVE VALUE:   2570.47493062644        NO. OF FUNC. EVALS.:  29
+    CUMULATIVE NO. OF FUNC. EVALS.:      381             RESET HESSIAN, TYPE I
+    NPARAMETR:  1.1061E+01  1.3202E+01  4.3539E-02  3.3496E-01  2.7408E-04  2.5061E-01  2.0883E-01  6.5482E-02  7.5169E-02
+    PARAMETER:  1.1061E-01  1.3202E-01  2.1769E-02  3.3496E-03  2.7408E-06  6.1204E-01  5.2085E-01 -5.9015E-02  9.9639E-03
+    GRADIENT:   5.2666E+01  6.0803E+00  1.8043E+03 -1.5510E-03  6.4047E+01  1.0034E-02  1.0110E-01  1.1409E-01  7.2914E-01
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.26E+00  -4.76E-03
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.26E+00  -1.05E-02
+     1.11E+01   1.32E+01   4.35E-02   3.35E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.26E+00  -4.76E-03
+     1.11E+01   1.32E+01   4.35E-02   3.35E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.35E-02   3.35E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   3.57E+00  -1.05E-02
+     1.11E+01   1.32E+01   4.35E-02   3.35E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   2.65E+00  -2.62E-03
+     1.11E+01   1.32E+01   4.36E-02   3.55E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.74E+00  -4.76E-03
+     1.11E+01   1.32E+01   4.36E-02   3.54E-01  -9.73E-03
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   3.56E+00  -1.05E-02
+     1.11E+01   1.32E+01   4.36E-02   3.54E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   2.65E+00  -2.62E-03
+     1.11E+01   1.32E+01   4.36E-02   3.54E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.74E+00  -4.76E-03
+     1.11E+01   1.32E+01   4.36E-02   3.65E-01  -5.18E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.90E+00  -1.05E-02
-    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.90E+00  -4.76E-03
+     1.11E+01   1.32E+01   4.36E-02   3.64E-01  -9.73E-03
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   40    OBJECTIVE VALUE:   2570.47343509213        NO. OF FUNC. EVALS.:  14
-    CUMULATIVE NO. OF FUNC. EVALS.:      717
-    NPARAMETR:  1.1062E+01  1.3218E+01  4.3565E-02  1.9009E+00  5.2441E-03  2.5059E-01  2.0861E-01  6.5335E-02  7.5110E-02
-    PARAMETER:  1.1062E-01  1.3218E-01  2.1783E-02  1.9009E-02  5.2441E-05  6.1200E-01  5.2033E-01 -6.0143E-02  9.5746E-03
-    GRADIENT:   2.1911E-02  5.0639E-02  1.4076E+00 -1.8286E-02  1.4572E+01 -9.1805E-05 -3.4782E-03  3.5035E-03 -2.3878E-02
+   0ITERATION NO.:   30    OBJECTIVE VALUE:   2570.47436012509        NO. OF FUNC. EVALS.:  14
+    CUMULATIVE NO. OF FUNC. EVALS.:      480
+    NPARAMETR:  1.1062E+01  1.3216E+01  4.3568E-02  3.6429E-01  2.7408E-04  2.5059E-01  2.0854E-01  6.5336E-02  7.5176E-02
+    PARAMETER:  1.1062E-01  1.3216E-01  2.1784E-02  3.6429E-03  2.7408E-06  6.1201E-01  5.2016E-01 -6.0131E-02  1.0011E-02
+    GRADIENT:  -3.3854E-01 -1.3356E+00  5.8084E+00 -1.3481E-03  5.9757E+01  4.3960E-03  3.4340E-02  1.0417E-02  6.2179E-01
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.90E+00  -1.05E-02
+     1.11E+01   1.32E+01   4.36E-02   3.64E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   1.90E+00  -4.76E-03
+     1.11E+01   1.32E+01   4.36E-02   3.64E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   2.92E+00  -4.76E-03
-    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
-   0PRED EXIT CODE = 1
-   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
-    THETA=
-     1.11E+01   1.32E+01   4.36E-02   2.92E+00  -1.05E-02
+     1.11E+01   1.32E+01   4.36E-02   5.19E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
    0PRED EXIT CODE = 1
    0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
     THETA=
-     1.11E+01   1.32E+01   4.36E-02   2.92E+00  -4.76E-03
+     1.11E+01   1.32E+01   4.36E-02   5.19E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.19E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.19E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.30E-01  -1.88E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.29E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.29E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.29E-01  -9.73E-03
     OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
     ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   45    OBJECTIVE VALUE:   2570.47261155436        NO. OF FUNC. EVALS.:  15
-    CUMULATIVE NO. OF FUNC. EVALS.:      822
-    NPARAMETR:  1.1062E+01  1.3214E+01  4.3568E-02  3.6425E+00  1.1452E-02  2.5059E-01  2.0873E-01  6.5324E-02  7.5114E-02
-    PARAMETER:  1.1062E-01  1.3214E-01  2.1784E-02  3.6425E-02  1.1452E-04  6.1200E-01  5.2062E-01 -6.0229E-02  9.6012E-03
-    GRADIENT:   5.1234E-02  5.9021E-01  3.2399E+00 -2.3780E-02 -5.9090E+00 -2.3844E-04 -2.3851E-02 -1.6471E-03  3.5695E-05
+   0ITERATION NO.:   35    OBJECTIVE VALUE:   2570.47427539495        NO. OF FUNC. EVALS.:  28
+    CUMULATIVE NO. OF FUNC. EVALS.:      595             RESET HESSIAN, TYPE I
+    NPARAMETR:  1.1063E+01  1.3224E+01  4.3566E-02  5.2878E-01  2.7408E-04  2.5058E-01  2.0840E-01  6.5321E-02  7.5058E-02
+    PARAMETER:  1.1063E-01  1.3224E-01  2.1783E-02  5.2878E-03  2.7408E-06  6.1198E-01  5.1984E-01 -6.0250E-02  9.2263E-03
+    GRADIENT:   5.3294E+01  9.6881E+00  1.8311E+03 -6.2681E-04  3.8133E+01 -3.3797E-03 -2.2921E-02 -1.5819E-02 -4.2714E-01
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.29E-01  -2.38E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.29E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.29E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   5.29E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.32E-01  -1.38E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.22E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.22E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.22E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.45E-01  -5.28E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.42E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   50    OBJECTIVE VALUE:   2570.28573870616        NO. OF FUNC. EVALS.:  16
-    CUMULATIVE NO. OF FUNC. EVALS.:      907
-    NPARAMETR:  1.1050E+01  1.0060E+01  4.3621E-02  5.8733E+02  2.9075E+00  2.5106E-01  3.5561E-01  6.5341E-02  7.4871E-02
-    PARAMETER:  1.1050E-01  1.0060E-01  2.1810E-02  5.8733E+00  2.9075E-02  6.1295E-01  7.8702E-01 -6.0092E-02  7.9805E-03
-    GRADIENT:  -3.4785E+00  2.4818E+00  1.3492E+01 -5.9824E-02  1.7560E+01  1.2333E-02 -1.3170E-01  2.3680E-01 -1.4667E+00
+   0ITERATION NO.:   40    OBJECTIVE VALUE:   2570.47425264360        NO. OF FUNC. EVALS.:  14
+    CUMULATIVE NO. OF FUNC. EVALS.:      695
+    NPARAMETR:  1.1063E+01  1.3223E+01  4.3566E-02  6.4172E-01  2.7408E-04  2.5058E-01  2.0841E-01  6.5323E-02  7.5064E-02
+    PARAMETER:  1.1063E-01  1.3223E-01  2.1783E-02  6.4172E-03  2.7408E-06  6.1198E-01  5.1985E-01 -6.0230E-02  9.2685E-03
+    GRADIENT:   2.4561E-01  1.6945E-01  1.6248E+00 -4.3359E-04  2.9101E+01 -3.1697E-03 -2.0046E-02 -1.2684E-02 -4.6750E-01
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.42E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.42E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.80E-01  -1.42E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.74E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.74E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.74E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.74E-01  -4.39E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.74E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.74E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.74E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   55    OBJECTIVE VALUE:   2570.13812041603        NO. OF FUNC. EVALS.:  15
-    CUMULATIVE NO. OF FUNC. EVALS.:      985
-    NPARAMETR:  1.1120E+01  9.8722E+00  4.4003E-02  1.3351E+03  3.0824E+00  2.5108E-01  3.7083E-01  6.4883E-02  7.5020E-02
-    PARAMETER:  1.1120E-01  9.8722E-02  2.2002E-02  1.3351E+01  3.0824E-02  6.1299E-01  8.0796E-01 -6.3612E-02  8.9742E-03
-    GRADIENT:   1.3071E+01  2.7692E+00  4.4002E+02 -1.2730E-02  5.3049E+00 -8.0055E-04 -2.3063E-02 -2.6041E-02  1.0087E-01
+   0ITERATION NO.:   45    OBJECTIVE VALUE:   2570.47419936637        NO. OF FUNC. EVALS.:  30
+    CUMULATIVE NO. OF FUNC. EVALS.:      810             RESET HESSIAN, TYPE I
+    NPARAMETR:  1.1062E+01  1.3223E+01  4.3566E-02  6.9481E-01  2.7408E-04  2.5059E-01  2.0848E-01  6.5336E-02  7.5140E-02
+    PARAMETER:  1.1062E-01  1.3223E-01  2.1783E-02  6.9481E-03  2.7408E-06  6.1200E-01  5.2002E-01 -6.0136E-02  9.7740E-03
+    GRADIENT:   5.2820E+01  9.3834E+00  1.8303E+03 -3.6409E-04  2.5374E+01  1.9634E-03  1.1735E-02  8.0129E-03  3.6524E-01
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.00E-01  -4.92E-05
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.95E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.95E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   6.95E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.18E-01  -2.52E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.12E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.12E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.12E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.15E-01  -5.48E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.14E-01  -1.37E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.13E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   60    OBJECTIVE VALUE:   2569.98552312379        NO. OF FUNC. EVALS.:  15
-    CUMULATIVE NO. OF FUNC. EVALS.:     1068
-    NPARAMETR:  1.1065E+01  9.3867E+00  4.3573E-02  3.2563E+03  3.4690E+00  2.5105E-01  4.0524E-01  6.5005E-02  7.4982E-02
-    PARAMETER:  1.1065E-01  9.3867E-02  2.1787E-02  3.2563E+01  3.4690E-02  6.1292E-01  8.5233E-01 -6.2671E-02  8.7210E-03
-    GRADIENT:  -1.5939E-01 -4.1554E-03 -4.6388E+01 -2.7043E-03  2.0196E+00  2.1968E-03 -2.2701E-02 -7.9319E-03  2.8054E-01
+   0ITERATION NO.:   50    OBJECTIVE VALUE:   2570.47418061908        NO. OF FUNC. EVALS.:  18
+    CUMULATIVE NO. OF FUNC. EVALS.:      912
+    NPARAMETR:  1.1062E+01  1.3223E+01  4.3566E-02  7.1281E-01  2.7408E-04  2.5059E-01  2.0847E-01  6.5332E-02  7.5127E-02
+    PARAMETER:  1.1062E-01  1.3223E-01  2.1783E-02  7.1281E-03  2.7408E-06  6.1200E-01  5.2000E-01 -6.0167E-02  9.6833E-03
+    GRADIENT:  -8.5333E-02 -5.9763E-02  2.4218E+00 -3.5111E-04  2.4491E+01  8.9246E-04  6.9965E-03  2.5406E-03  1.3251E-01
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.15E-01  -5.48E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.14E-01  -1.37E-04
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.13E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.12E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.12E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.12E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.02E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.02E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.02E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   65    OBJECTIVE VALUE:   2569.91090470105        NO. OF FUNC. EVALS.:  15
-    CUMULATIVE NO. OF FUNC. EVALS.:     1143
-    NPARAMETR:  1.1072E+01  9.1916E+00  4.3578E-02  1.9416E+04  3.6319E+00  2.5101E-01  4.2226E-01  6.5079E-02  7.5027E-02
-    PARAMETER:  1.1072E-01  9.1916E-02  2.1789E-02  1.9416E+02  3.6319E-02  6.1285E-01  8.7291E-01 -6.2107E-02  9.0221E-03
-    GRADIENT:   1.2466E+00 -4.3545E-01 -4.1708E+01 -8.2852E-05 -1.0490E+00 -1.2815E-02  7.8125E-02  8.4781E-02  9.3773E-01
+   0ITERATION NO.:   55    OBJECTIVE VALUE:   2570.47417423427        NO. OF FUNC. EVALS.:  30
+    CUMULATIVE NO. OF FUNC. EVALS.:     1028             RESET HESSIAN, TYPE I
+    NPARAMETR:  1.1062E+01  1.3223E+01  4.3566E-02  7.2225E-01  2.7408E-04  2.5059E-01  2.0846E-01  6.5330E-02  7.5113E-02
+    PARAMETER:  1.1062E-01  1.3223E-01  2.1783E-02  7.2225E-03  2.7408E-06  6.1199E-01  5.1996E-01 -6.0181E-02  9.5918E-03
+    GRADIENT:   5.2983E+01  9.4885E+00  1.8305E+03 -3.3713E-04  2.4131E+01 -1.6754E-04 -2.3014E-05 -7.4167E-04  1.0140E-01
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.22E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.22E-01  -9.73E-03
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.22E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
+   0PRED EXIT CODE = 1
+   0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+    THETA=
+     1.11E+01   1.32E+01   4.36E-02   7.22E-01  -9.73E-03
+    OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+    ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE                                                                                            
     
-   0ITERATION NO.:   70    OBJECTIVE VALUE:   2569.89619443960        NO. OF FUNC. EVALS.:  15
-    CUMULATIVE NO. OF FUNC. EVALS.:     1218
-    NPARAMETR:  1.1068E+01  9.1594E+00  4.3615E-02  1.3912E+05  3.6613E+00  2.5106E-01  4.2494E-01  6.4971E-02  7.4931E-02
-    PARAMETER:  1.1068E-01  9.1594E-02  2.1808E-02  1.3912E+03  3.6613E-02  6.1294E-01  8.7607E-01 -6.2938E-02  8.3774E-03
-    GRADIENT:   2.7218E-01 -1.7546E-01 -7.0077E-01 -1.6382E-06 -4.2815E-01 -2.8078E-03  2.5871E-02 -1.6821E-03  4.1957E-02
-    
-   0ITERATION NO.:   75    OBJECTIVE VALUE:   2569.89419780456        NO. OF FUNC. EVALS.:  15
-    CUMULATIVE NO. OF FUNC. EVALS.:     1293
-    NPARAMETR:  1.1067E+01  9.1559E+00  4.3617E-02  1.1074E+06  3.6644E+00  2.5108E-01  4.2511E-01  6.4968E-02  7.4921E-02
-    PARAMETER:  1.1067E-01  9.1559E-02  2.1809E-02  1.1074E+04  3.6644E-02  6.1297E-01  8.7627E-01 -6.2961E-02  8.3152E-03
-    GRADIENT:   2.8226E-01 -4.4437E-02  8.7172E-01 -2.5915E-08 -1.1822E-01  1.4895E-03  6.5149E-03 -3.2798E-03 -5.0637E-02
-    
-   0ITERATION NO.:   80    OBJECTIVE VALUE:   2569.89393796846        NO. OF FUNC. EVALS.:  16
-    CUMULATIVE NO. OF FUNC. EVALS.:     1371
-    NPARAMETR:  1.1066E+01  9.1623E+00  4.3618E-02  7.4054E+06  3.6601E+00  2.5108E-01  4.2484E-01  6.4964E-02  7.4927E-02
-    PARAMETER:  1.1066E-01  9.1623E-02  2.1809E-02  7.4054E+04  3.6601E-02  6.1297E-01  8.7596E-01 -6.2992E-02  8.3511E-03
-    GRADIENT:  -3.6024E-01  9.0695E-02  1.7567E+00 -5.7419E-10 -2.8786E-01  1.7391E-03  2.7907E-02 -7.5494E-03  1.3275E-02
-    
-   0ITERATION NO.:   82    OBJECTIVE VALUE:   2569.89393760215        NO. OF FUNC. EVALS.:  22
-    CUMULATIVE NO. OF FUNC. EVALS.:     1412
-    NPARAMETR:  1.1066E+01  9.1623E+00  4.3618E-02  7.4128E+06  3.6601E+00  2.5108E-01  4.2485E-01  6.4964E-02  7.4927E-02
-    PARAMETER:  1.1066E-01  9.1623E-02  2.1809E-02  7.4128E+04  3.6601E-02  6.1297E-01  8.7596E-01 -6.2991E-02  8.3511E-03
-    GRADIENT:   1.4186E-02  2.2025E-01 -3.8948E-01  1.1255E-08 -1.6422E-01 -1.0472E-02  2.7684E-02  5.1434E-02  3.4413E-02
-    Elapsed estimation time in seconds:    22.63
-    Elapsed covariance time in seconds:     4.35</so>
+   0ITERATION NO.:   57    OBJECTIVE VALUE:   2570.47417423427        NO. OF FUNC. EVALS.:  21
+    CUMULATIVE NO. OF FUNC. EVALS.:     1063
+    NPARAMETR:  1.1062E+01  1.3223E+01  4.3566E-02  7.1614E-01  2.7408E-04  2.5058E-01  2.0847E-01  6.5343E-02  7.5112E-02
+    PARAMETER:  1.1062E-01  1.3223E-01  2.1783E-02  7.2225E-03  2.7408E-06  6.1199E-01  5.1996E-01 -6.0181E-02  9.5918E-03
+    GRADIENT:   1.9730E-03  3.7680E-03 -2.8592E-02  3.0697E-04  0.0000E+00  3.6837E-05 -3.9704E-04 -2.3488E-03  1.6753E-03
+    Elapsed estimation time in seconds:    20.11</so>
   </job>
   <job>
    <do in="../nonmem/1003">if [ -e 1003.xml ];then cat 1003.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2012-09-27T20:37:38.746</nm:start_datetime>
+     <nm:start_datetime>2013-03-20T17:42:30.983</nm:start_datetime>
      <nm:control_stream>
      $PROB 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
      $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -940,8 +1118,8 @@
       <nm:license_information>
       License Registered to: Metrum Research Group
       Expiration Date:    14 JUL 2013
-      Current Date:       27 SEP 2012
-      Days until program expires : 292</nm:license_information>
+      Current Date:       20 MAR 2013
+      Days until program expires : 114</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -1064,125 +1242,120 @@
         <nm:estimation_method>focei</nm:estimation_method>
         <nm:estimation_title>First Order Conditional Estimation with Interaction</nm:estimation_title>
         <nm:monitor>
-         <nm:obj nm:iteration="0">3634.96125166100</nm:obj>
-         <nm:obj nm:iteration="5">2663.50071940116</nm:obj>
-         <nm:obj nm:iteration="10">2601.66241489167</nm:obj>
-         <nm:obj nm:iteration="15">2592.41248506552</nm:obj>
-         <nm:obj nm:iteration="20">2571.67447730781</nm:obj>
-         <nm:obj nm:iteration="25">2570.47499232860</nm:obj>
-         <nm:obj nm:iteration="30">2570.47436975164</nm:obj>
-         <nm:obj nm:iteration="35">2570.47364567506</nm:obj>
-         <nm:obj nm:iteration="40">2570.47343509213</nm:obj>
-         <nm:obj nm:iteration="45">2570.47261155436</nm:obj>
-         <nm:obj nm:iteration="50">2570.28573870616</nm:obj>
-         <nm:obj nm:iteration="55">2570.13812041603</nm:obj>
-         <nm:obj nm:iteration="60">2569.98552312379</nm:obj>
-         <nm:obj nm:iteration="65">2569.91090470105</nm:obj>
-         <nm:obj nm:iteration="70">2569.89619443960</nm:obj>
-         <nm:obj nm:iteration="75">2569.89419780456</nm:obj>
-         <nm:obj nm:iteration="80">2569.89393796846</nm:obj>
-         <nm:obj nm:iteration="82">2569.89393760215</nm:obj>
+         <nm:obj nm:iteration="0">3634.96125160225</nm:obj>
+         <nm:obj nm:iteration="5">2663.50076159368</nm:obj>
+         <nm:obj nm:iteration="10">2601.66241641079</nm:obj>
+         <nm:obj nm:iteration="15">2592.41250336296</nm:obj>
+         <nm:obj nm:iteration="20">2571.76998283564</nm:obj>
+         <nm:obj nm:iteration="25">2570.47493062644</nm:obj>
+         <nm:obj nm:iteration="30">2570.47436012509</nm:obj>
+         <nm:obj nm:iteration="35">2570.47427539495</nm:obj>
+         <nm:obj nm:iteration="40">2570.47425264360</nm:obj>
+         <nm:obj nm:iteration="45">2570.47419936637</nm:obj>
+         <nm:obj nm:iteration="50">2570.47418061908</nm:obj>
+         <nm:obj nm:iteration="55">2570.47417423427</nm:obj>
+         <nm:obj nm:iteration="57">2570.47417423427</nm:obj>
         </nm:monitor>
-        <nm:termination_status>0</nm:termination_status>
+        <nm:termination_status>136</nm:termination_status>
         <nm:termination_information>
-        0MINIMIZATION SUCCESSFUL
-         HOWEVER, PROBLEMS OCCURRED WITH THE MINIMIZATION.
-         REGARD THE RESULTS OF THE ESTIMATION STEP CAREFULLY, AND ACCEPT THEM ONLY
-         AFTER CHECKING THAT THE COVARIANCE STEP PRODUCES REASONABLE OUTPUT.
-         NO. OF FUNCTION EVALUATIONS USED:     1412
-         NO. OF SIG. DIGITS IN FINAL EST.:  3.6</nm:termination_information>
+        0MINIMIZATION TERMINATED
+         DUE TO PROXIMITY OF LAST ITERATION EST. TO A VALUE
+         AT WHICH THE OBJ. FUNC. IS INFINITE (ERROR=136)
+        0AT THE LAST COMPUTED INFINITE VALUE OF THE OBJ. FUNCT.:
+        0PRED EXIT CODE = 1
+        0INDIVIDUAL NO.       1   ID= 1.00000000000000E+00   (WITHIN-INDIVIDUAL) DATA REC NO.   1
+         THETA=
+          1.11E+01   1.32E+01   4.36E-02   7.22E-01  -9.73E-03
+         OCCURS DURING SEARCH FOR ETA AT INITIAL VALUE, ETA=0
+         ERROR IN TRANS4 ROUTINE: V3  IS NEGATIVE
+        
+         NO. OF FUNCTION EVALUATIONS USED:     1063
+         NO. OF SIG. DIGITS UNREPORTABLE</nm:termination_information>
         <nm:etabar>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">-2.361919762653861E-004</nm:col>
-          <nm:col nm:cname="ETA2">3.450117820444928E-002</nm:col>
-          <nm:col nm:cname="ETA3">9.089750144732730E-003</nm:col>
+          <nm:col nm:cname="ETA1">7.691155381433640E-005</nm:col>
+          <nm:col nm:cname="ETA2">1.210128847774157E-002</nm:col>
+          <nm:col nm:cname="ETA3">6.598085983090446E-003</nm:col>
          </nm:row>
         </nm:etabar>
         <nm:etabarse>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">7.806642574256756E-002</nm:col>
-          <nm:col nm:cname="ETA2">9.083412477484881E-002</nm:col>
-          <nm:col nm:cname="ETA3">3.747102571034837E-002</nm:col>
+          <nm:col nm:cname="ETA1">7.797140856214649E-002</nm:col>
+          <nm:col nm:cname="ETA2">6.468159886415943E-002</nm:col>
+          <nm:col nm:cname="ETA3">3.761743698234991E-002</nm:col>
          </nm:row>
         </nm:etabarse>
         <nm:etabarpval>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">0.997585966424719</nm:col>
-          <nm:col nm:cname="ETA2">0.704074554697133</nm:col>
-          <nm:col nm:cname="ETA3">0.808330277288898</nm:col>
+          <nm:col nm:cname="ETA1">0.999212954049659</nm:col>
+          <nm:col nm:cname="ETA2">0.851589992404807</nm:col>
+          <nm:col nm:cname="ETA3">0.860765604310752</nm:col>
          </nm:row>
         </nm:etabarpval>
         <nm:etashrink>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">0.209640395485394</nm:col>
-          <nm:col nm:cname="ETA2">10.7392074844358</nm:col>
-          <nm:col nm:cname="ETA3">5.83526048015187</nm:col>
+          <nm:col nm:cname="ETA1">0.233324295175109</nm:col>
+          <nm:col nm:cname="ETA2">9.25942849752228</nm:col>
+          <nm:col nm:cname="ETA3">5.73264099120013</nm:col>
          </nm:row>
         </nm:etashrink>
         <nm:epsshrink>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="EPS1">9.25782959172016</nm:col>
+          <nm:col nm:cname="EPS1">9.48570935608809</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>22.63</nm:estimation_elapsed_time>
-        <nm:covariance_information>
-        0R MATRIX ALGORITHMICALLY NON-POSITIVE-SEMIDEFINITE
-         BUT NONSINGULAR
-        0R MATRIX IS OUTPUT
-        0COVARIANCE STEP ABORTED</nm:covariance_information>
-        <nm:covariance_status nm:error="1" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>4.35</nm:covariance_elapsed_time>
+        <nm:estimation_elapsed_time>20.11</nm:estimation_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
-        <nm:final_objective_function>2569.89393760215</nm:final_objective_function>
+        <nm:final_objective_function>2570.47417423427</nm:final_objective_function>
         <nm:theta>
-         <nm:val nm:name="1">11.0661513347762</nm:val>
-         <nm:val nm:name="2">9.16227884596246</nm:val>
-         <nm:val nm:name="3">4.361776202862245E-002</nm:val>
-         <nm:val nm:name="4">7412809.74129497</nm:val>
-         <nm:val nm:name="5">3.66013097994866</nm:val>
+         <nm:val nm:name="1">11.0622558654388</nm:val>
+         <nm:val nm:name="2">13.2229273487500</nm:val>
+         <nm:val nm:name="3">4.356607668012754E-002</nm:val>
+         <nm:val nm:name="4">0.722245010547310</nm:val>
+         <nm:val nm:name="5">2.740787436029262E-004</nm:val>
         </nm:theta>
         <nm:omega>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">0.251076919607245</nm:col>
+          <nm:col nm:cname="1">0.250585035681000</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.424846427403015</nm:col>
+          <nm:col nm:cname="2">0.208455735345025</nm:col>
          </nm:row>
          <nm:row nm:rname="3">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="2">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="3">6.496357546985394E-002</nm:col>
+          <nm:col nm:cname="3">6.532976555900630E-002</nm:col>
          </nm:row>
         </nm:omega>
         <nm:sigma>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">7.492681773209298E-002</nm:col>
+          <nm:col nm:cname="1">7.511297187048153E-002</nm:col>
          </nm:row>
         </nm:sigma>
         <nm:omegac>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">0.501075762342627</nm:col>
+          <nm:col nm:cname="1">0.500584693814143</nm:col>
          </nm:row>
          <nm:row nm:rname="2">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="2">0.651802445072903</nm:col>
+          <nm:col nm:cname="2">0.456569529584515</nm:col>
          </nm:row>
          <nm:row nm:rname="3">
           <nm:col nm:cname="1">0.000000000000000E+000</nm:col>
           <nm:col nm:cname="2">0.000000000000000E+000</nm:col>
-          <nm:col nm:cname="3">0.254879531288517</nm:col>
+          <nm:col nm:cname="3">0.255596880964941</nm:col>
          </nm:row>
         </nm:omegac>
         <nm:sigmac>
          <nm:row nm:rname="1">
-          <nm:col nm:cname="1">0.273727634213451</nm:col>
+          <nm:col nm:cname="1">0.274067458612805</nm:col>
          </nm:row>
         </nm:sigmac>
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2012-09-27T20:38:06.007</nm:stop_datetime>
+     <nm:stop_datetime>2013-03-20T17:42:51.738</nm:stop_datetime>
     </nm:output>
    </so>
   </job>
@@ -1195,8 +1368,8 @@
        <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
        <alias id="folder">/mnt/nm72</alias>
        <alias id="target">/opt/NONMEM/nm72</alias>
-       <alias id="origin">/opt/nmqual</alias>
-       <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
+       <alias id="origin">/mnt/nmqual</alias>
+       <alias id="unlock">/mnt/nonmem.lic</alias>
        <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
        <!--The meta interface groups commands that collect metadata.-->
        <do on="meta">pwd</do>
@@ -1205,33 +1378,37 @@
        <do on="meta">echo $SHELL</do>
        <do on="meta">echo $USER</do>
        <do on="meta">echo $PATH</do>
+       <do on="meta">ifort --version</do>
+       <do on="meta">head -n 5 target/util/nmfe72</do>
        <!--The 'install' interface installs NONMEM.-->
-       <do on="install" as="xml">perl $0 $_0 meta</do>
+       <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir origin/temp</do>
+       <do on="install">mkdir -p -p origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
        <!--alters compile options in setup72-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir target</do>
+       <do on="install">mkdir -p -p target</do>
        <do on="install" in="origin/temp">pwd</do>
-       <do on="install" in="origin/temp">echo `ifort -V`</do>
+       <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-       <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir target/nmqual</do>
-       <do on="install">mkdir target/nmqual/doc</do>
-       <do on="install">cp origin/autolog.pl target/nmqual</do>
-       <!--runtime copy, uses nmqual/log.xml-->
-       <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/con/default.xsl target/nmqual</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-       <!--support for qualification-->
-       <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual</do>
+       <do on="install">mkdir -p -p target/nmqual/doc</do>
+       <do on="install">cp $0 target/nmqual</do>
+       <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+       <do on="install">cp -r origin/con target/nmqual</do>
+       <!--support for processing xml docs-->
+       <do on="install">cp -r origin/csv target/nmqual</do>
+       <!--support for processing csv docs-->
+       <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+       <!--reference modeling results-->
+       <do on="install">cp -r origin/psn target/nmqual</do>
+       <!--support for psn qualification-->
+       <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
        <!--keep for archival purposes-->
+       <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+       <!--keep for archival purposes-->
+       <do on="install">rm -rf origin/temp</do>
        <do on="install">cp -r origin/test target/nmqual</do>
        <!--supports control tests-->
        <do on="install">chmod 0777 target/license/nonmem.lic</do>
@@ -1240,10 +1417,11 @@
        <!--replace expired license-->
        <do on="install">cp mpicha target/mpi/mpi_lini</do>
        <!--replace default mpich archive-->
-       <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
+       <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
        <!--will need this soon-->
-       <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
+       <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
        <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+       <do on="install" as="xml">perl $0 $_0 meta</do>
        <to on="install">target/nmqual/log.xml</to>
        <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
        <!--Run directory and run name are required arguments.-->
@@ -1252,15 +1430,15 @@
        <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="basic" as="xml">cat target/nmqual/log.xml</do>
        <to on="basic">$_1/$_2.log.xml</to>
-       <!--The 'run' interface also expects a leading compile/execute argument.-->
+       <!--The 'run' interface expects a leading compile/execute argument.-->
        <do on="run" as="xml">perl $0 $_0 meta</do>
        <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
        <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="run" as="xml">cat target/nmqual/log.xml</do>
        <to on="run">$_2/$_3.log.xml</to>
-       <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
+       <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
        <do on="para" as="xml">perl $0 $_0 meta</do>
-       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
+       <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
        <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
        <do on="para" as="xml">cat target/nmqual/log.xml</do>
        <to on="para">$_2/$_3.log.xml</to>
@@ -1279,6 +1457,7 @@
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
        <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+       <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
        <to on="qualify">$_1</to>
        <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
        <do on="regress" as="xml">perl $0 $_0 meta</do>
@@ -1287,161 +1466,41 @@
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
        <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+       <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+       <do on="regress" as="xml">cat target/nmqual/log.xml</do>
        <to on="regress">$_1</to>
+       <!--The 'psntest' interface runs PsN control tests.-->
+       <do on="psntest" as="xml">perl $0 $_0 meta</do>
+       <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+       <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+       <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+       <to on="psntest">$_1</to>
        <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
        <do on="accept">echo $_</do>
        <to on="accept">$0</to>
       </config>
       <job>
-       <do>perl autolog.pl nix/nm72.xml meta</do>
-       <so>
-        <log>
-         <logged on="meta">
-          <config>
-           <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
-           <alias id="folder">/mnt/nm72</alias>
-           <alias id="target">/opt/NONMEM/nm72</alias>
-           <alias id="origin">/opt/nmqual</alias>
-           <alias id="unlock">/opt/NONMEM/nonmem.lic</alias>
-           <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
-           <!--The meta interface groups commands that collect metadata.-->
-           <do on="meta">pwd</do>
-           <do on="meta">date</do>
-           <do on="meta">perl -e 'use POSIX; print join qq(,),uname'</do>
-           <do on="meta">echo $SHELL</do>
-           <do on="meta">echo $USER</do>
-           <do on="meta">echo $PATH</do>
-           <!--The 'install' interface installs NONMEM.-->
-           <do on="install" as="xml">perl $0 $_0 meta</do>
-           <do on="install">rm -rf origin/temp</do>
-           <do on="install">mkdir origin/temp</do>
-           <do on="install">cp -r folder/* origin/temp</do>
-           <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
-           <!--alters compile options in setup72-->
-           <do on="install">rm -rf target</do>
-           <do on="install">mkdir target</do>
-           <do on="install" in="origin/temp">pwd</do>
-           <do on="install" in="origin/temp">echo `ifort -V`</do>
-           <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
-           <do on="install">rm -rf origin/temp</do>
-           <do on="install">mkdir target/nmqual</do>
-           <do on="install">mkdir target/nmqual/doc</do>
-           <do on="install">cp origin/autolog.pl target/nmqual</do>
-           <!--runtime copy, uses nmqual/log.xml-->
-           <do on="install">cp origin/con/contrast.pl target/nmqual</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/con/xpath.lst target/nmqual</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/con/default.xsl target/nmqual</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/doc/nix/qualify.xml target/nmqual/doc</do>
-           <!--support for qualification-->
-           <do on="install">cp origin/nix/setup72.diff target/nmqual</do>
-           <!--keep for archival purposes-->
-           <do on="install">cp -r origin/test target/nmqual</do>
-           <!--supports control tests-->
-           <do on="install">chmod 0777 target/license/nonmem.lic</do>
-           <!--enable overwriting-->
-           <do on="install">cp unlock target/license/nonmem.lic</do>
-           <!--replace expired license-->
-           <do on="install">cp mpicha target/mpi/mpi_lini</do>
-           <!--replace default mpich archive-->
-           <do on="install">cp origin/nix/nmfe72.diff target/nmqual</do>
-           <!--will need this soon-->
-           <do on="install" in="target">patch -p1 &lt; nmqual/nmfe72.diff</do>
-           <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
-           <to on="install">target/nmqual/log.xml</to>
-           <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
-           <!--Run directory and run name are required arguments.-->
-           <do on="basic" as="xml">perl $0 $_0 meta</do>
-           <do on="basic" in="$_1">target/util/nmfe72 $_2.ctl $_2.lst</do>
-           <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
-           <do on="basic" as="xml">cat target/nmqual/log.xml</do>
-           <to on="basic">$_1/$_2.log.xml</to>
-           <!--The 'run' interface also expects a leading compile/execute argument.-->
-           <do on="run" as="xml">perl $0 $_0 meta</do>
-           <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
-           <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
-           <do on="run" as="xml">cat target/nmqual/log.xml</do>
-           <to on="run">$_2/$_3.log.xml</to>
-           <!--The 'para' interface additionally expects [run].pmn to be present in the run directory.-->
-           <do on="para" as="xml">perl $0 $_0 meta</do>
-           <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pmn</do>
-           <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
-           <do on="para" as="xml">cat target/nmqual/log.xml</do>
-           <to on="para">$_2/$_3.log.xml</to>
-           <!--The 'test' interface invokes nmfe directly, without the compile/execute argument.-->
-           <do on="test" in="target/nmqual/test">target/util/nmfe72 $_1.ctl $_1.lst</do>
-           <do on="test" in="target/nmqual/test" as="xml">cat $_1.xml</do>
-           <!--The 'qualify' interface runs a full suite of qualification tests.-->
-           <do on="qualify" as="xml">perl $0 $_0 meta</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
-           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
-           <to on="qualify">$_1</to>
-           <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
-           <do on="regress" as="xml">perl $0 $_0 meta</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
-           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
-           <to on="regress">$_1</to>
-           <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
-           <do on="accept">echo $_</do>
-           <to on="accept">$0</to>
-          </config>
-          <job>
-           <do>pwd</do>
-           <so>/opt/nmqual</so>
-          </job>
-          <job>
-           <do>date</do>
-           <so>Wed Sep 26 15:37:32 UTC 2012</so>
-          </job>
-          <job>
-           <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-           <so>Linux,master,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
-          </job>
-          <job>
-           <do>echo $SHELL</do>
-           <so>/bin/bash</so>
-          </job>
-          <job>
-           <do>echo $USER</do>
-           <so>root</so>
-          </job>
-          <job>
-           <do>echo $PATH</do>
-           <so>/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/mpirt/bin/intel64:/opt/sge6/bin/lx24-amd64</so>
-          </job>
-         </logged>
-        </log>
-       </so>
+       <do>date</do>
+       <so>Tue Mar 19 15:11:18 UTC 2013</so>
       </job>
       <job>
-       <do>rm -rf /opt/nmqual/temp</do>
+       <do>rm -rf /mnt/nmqual/temp</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/nmqual/temp</do>
+       <do>mkdir -p -p /mnt/nmqual/temp</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /mnt/nm72/* /opt/nmqual/temp</do>
+       <do>cp -r /mnt/nm72/* /mnt/nmqual/temp</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/nmqual">patch -p0 &lt; nix/setup72.diff</do>
+       <do in="/mnt/nmqual">patch -p0 &lt; nix/setup72.diff</do>
        <so>patching file temp/SETUP72</so>
       </job>
       <job>
@@ -1449,24 +1508,26 @@
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm72</do>
+       <do>mkdir -p -p /opt/NONMEM/nm72</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/nmqual/temp">pwd</do>
-       <so>/opt/nmqual/temp</so>
+       <do in="/mnt/nmqual/temp">pwd</do>
+       <so>/mnt/nmqual/temp</so>
       </job>
       <job>
-       <do in="/opt/nmqual/temp">echo `ifort -V`</do>
-       <so/>
+       <do in="/mnt/nmqual/temp">ifort --version</do>
+       <so>ifort (IFORT) 12.0.4 20110427
+          Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
+          </so>
       </job>
       <job>
-       <do in="/opt/nmqual/temp">/bin/bash SETUP72 /opt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
+       <do in="/mnt/nmqual/temp">/bin/bash SETUP72 /mnt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
        <so>NONMEM 7.2.0 INSTALLATION UTILITY - UNIX Bourne-Again SHell version
           For instructions, see readme_7.2.0.pdf or readme_7.2.0.txt on the CD
            
-          SETUP72 /opt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip
-          CD-ROM drive is /opt/nmqual/temp
+          SETUP72 /mnt/nmqual/temp /opt/NONMEM/nm72 ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip
+          CD-ROM drive is /mnt/nmqual/temp
           NONMEM 7.2 directory is /opt/NONMEM/nm72
           Command for FORTRAN compiles is ifort
           Optimization for Fortran compiles is y
@@ -1483,8 +1544,8 @@
           % SETUP72 help
            
           directory /opt/NONMEM/nm72
-          Step 1a. Copy files from /opt/nmqual/temp to /opt/NONMEM/nm72
-          Step 1b. Copy files from /opt/nmqual/temp/NONMEM_7.2.0 to /opt/NONMEM/nm72
+          Step 1a. Copy files from /mnt/nmqual/temp to /opt/NONMEM/nm72
+          Step 1b. Copy files from /mnt/nmqual/temp/NONMEM_7.2.0 to /opt/NONMEM/nm72
            
           Installing NONMEM 7.2.0 (Enter Ctrl-C to interrupt) ...
           Step 2a. Make sub-directories of /opt/NONMEM/nm72
@@ -1572,7 +1633,7 @@
           Starting nonmem execution ...
           License Registered to: Temporary License File for Installation
           Expiration Date:    31 JUL 2011
-          Current Date:       26 SEP 2012
+          Current Date:       19 MAR 2013
            
             **** PROGRAM LICENSE HAS EXPIRED ****
             ****     PROGRAM TERMINATING     ****
@@ -1585,43 +1646,47 @@
           /opt/NONMEM/nm72/license/nonmem.lic</so>
       </job>
       <job>
-       <do>rm -rf /opt/nmqual/temp</do>
+       <do>mkdir -p -p /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm72/nmqual</do>
+       <do>mkdir -p -p /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm72/nmqual/doc</do>
+       <do>cp autolog.pl /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/autolog.pl /opt/NONMEM/nm72/nmqual</do>
+       <do>cp -r /mnt/nmqual/con /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/con/contrast.pl /opt/NONMEM/nm72/nmqual</do>
+       <do>cp -r /mnt/nmqual/csv /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/con/xpath.lst /opt/NONMEM/nm72/nmqual</do>
+       <do>cp /mnt/nmqual/doc/nix/* /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/con/default.xsl /opt/NONMEM/nm72/nmqual</do>
+       <do>cp -r /mnt/nmqual/psn /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/doc/nix/qualify.xml /opt/NONMEM/nm72/nmqual/doc</do>
+       <do>cp /mnt/nmqual/nix/setup72.diff /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/nix/setup72.diff /opt/NONMEM/nm72/nmqual</do>
+       <do>cp /mnt/nmqual/temp/SETUP72 /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /opt/nmqual/test /opt/NONMEM/nm72/nmqual</do>
+       <do>rm -rf /mnt/nmqual/temp</do>
+       <so/>
+      </job>
+      <job>
+       <do>cp -r /mnt/nmqual/test /opt/NONMEM/nm72/nmqual</do>
        <so/>
       </job>
       <job>
@@ -1629,7 +1694,7 @@
        <so/>
       </job>
       <job>
-       <do>cp /opt/NONMEM/nonmem.lic /opt/NONMEM/nm72/license/nonmem.lic</do>
+       <do>cp /mnt/nonmem.lic /opt/NONMEM/nm72/license/nonmem.lic</do>
        <so/>
       </job>
       <job>
@@ -1637,13 +1702,179 @@
        <so/>
       </job>
       <job>
-       <do>cp /opt/nmqual/nix/nmfe72.diff /opt/NONMEM/nm72/nmqual</do>
+       <do>cp /mnt/nmqual/nix/nmfe72.diff /opt/NONMEM/nm72/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/NONMEM/nm72">patch -p1 &lt; nmqual/nmfe72.diff</do>
+       <do in="/opt/NONMEM/nm72">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
        <so>patching file run/nmfe72
           patching file util/nmfe72</so>
+      </job>
+      <job>
+       <do>perl autolog.pl nix/nm72.xml meta</do>
+       <so>
+        <log>
+         <logged on="meta">
+          <config>
+           <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
+           <alias id="folder">/mnt/nm72</alias>
+           <alias id="target">/opt/NONMEM/nm72</alias>
+           <alias id="origin">/mnt/nmqual</alias>
+           <alias id="unlock">/mnt/nonmem.lic</alias>
+           <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
+           <!--The meta interface groups commands that collect metadata.-->
+           <do on="meta">pwd</do>
+           <do on="meta">date</do>
+           <do on="meta">perl -e 'use POSIX; print join qq(,),uname'</do>
+           <do on="meta">echo $SHELL</do>
+           <do on="meta">echo $USER</do>
+           <do on="meta">echo $PATH</do>
+           <do on="meta">ifort --version</do>
+           <do on="meta">head -n 5 target/util/nmfe72</do>
+           <!--The 'install' interface installs NONMEM.-->
+           <do on="install">date</do>
+           <do on="install">rm -rf origin/temp</do>
+           <do on="install">mkdir -p -p origin/temp</do>
+           <do on="install">cp -r folder/* origin/temp</do>
+           <do on="install" in="origin">patch -p0 &lt; nix/setup72.diff</do>
+           <!--alters compile options in setup72-->
+           <do on="install">rm -rf target</do>
+           <do on="install">mkdir -p -p target</do>
+           <do on="install" in="origin/temp">pwd</do>
+           <do on="install" in="origin/temp">ifort --version</do>
+           <do on="install" in="origin/temp">/bin/bash SETUP72 origin/temp target ifort y ar same rec q unzip nonmem72e.zip nonmem72r.zip</do>
+           <do on="install">mkdir -p -p target/nmqual</do>
+           <do on="install">mkdir -p -p target/nmqual/doc</do>
+           <do on="install">cp $0 target/nmqual</do>
+           <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
+           <do on="install">cp -r origin/con target/nmqual</do>
+           <!--support for processing xml docs-->
+           <do on="install">cp -r origin/csv target/nmqual</do>
+           <!--support for processing csv docs-->
+           <do on="install">cp origin/doc/nix/* target/nmqual/doc</do>
+           <!--reference modeling results-->
+           <do on="install">cp -r origin/psn target/nmqual</do>
+           <!--support for psn qualification-->
+           <do on="install">cp origin/nix/setup72.diff target/nmqual/doc</do>
+           <!--keep for archival purposes-->
+           <do on="install">cp origin/temp/SETUP72 target/nmqual/doc</do>
+           <!--keep for archival purposes-->
+           <do on="install">rm -rf origin/temp</do>
+           <do on="install">cp -r origin/test target/nmqual</do>
+           <!--supports control tests-->
+           <do on="install">chmod 0777 target/license/nonmem.lic</do>
+           <!--enable overwriting-->
+           <do on="install">cp unlock target/license/nonmem.lic</do>
+           <!--replace expired license-->
+           <do on="install">cp mpicha target/mpi/mpi_lini</do>
+           <!--replace default mpich archive-->
+           <do on="install">cp origin/nix/nmfe72.diff target/nmqual/doc</do>
+           <!--will need this soon-->
+           <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe72.diff</do>
+           <!--patches util/nmfe72 and run/nmfe72 to accept compile/execute option-->
+           <do on="install" as="xml">perl $0 $_0 meta</do>
+           <to on="install">target/nmqual/log.xml</to>
+           <!--The 'basic' interface does not expect a compile/execute argument (nmfe72-as-modified no longer requires it).-->
+           <!--Run directory and run name are required arguments.-->
+           <do on="basic" as="xml">perl $0 $_0 meta</do>
+           <do on="basic" in="$_1">target/util/nmfe72 $_2.ctl $_2.lst</do>
+           <do on="basic" in="$_1" as="xml">if [ -e $_2.xml ];then cat $_2.xml;else echo \&lt;nofile/\>; fi</do>
+           <do on="basic" as="xml">cat target/nmqual/log.xml</do>
+           <to on="basic">$_1/$_2.log.xml</to>
+           <!--The 'run' interface expects a leading compile/execute argument.-->
+           <do on="run" as="xml">perl $0 $_0 meta</do>
+           <do on="run" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst</do>
+           <do on="run" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
+           <do on="run" as="xml">cat target/nmqual/log.xml</do>
+           <to on="run">$_2/$_3.log.xml</to>
+           <!--The 'para' interface additionally expects [run].pnm to be present in the run directory.-->
+           <do on="para" as="xml">perl $0 $_0 meta</do>
+           <do on="para" in="$_2">target/util/nmfe72 $_1 $_3.ctl $_3.lst -parafile=$_3.pnm</do>
+           <do on="para" in="$_2" as="xml">if [ -e $_3.xml ];then cat $_3.xml;else echo \&lt;nofile/\>; fi</do>
+           <do on="para" as="xml">cat target/nmqual/log.xml</do>
+           <to on="para">$_2/$_3.log.xml</to>
+           <!--The 'test' interface invokes nmfe directly, without the compile/execute argument.-->
+           <do on="test" in="target/nmqual/test">target/util/nmfe72 $_1.ctl $_1.lst</do>
+           <do on="test" in="target/nmqual/test" as="xml">cat $_1.xml</do>
+           <!--The 'qualify' interface runs a full suite of qualification tests.-->
+           <do on="qualify" as="xml">perl $0 $_0 meta</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example5</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example6</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example7</do>
+           <do on="qualify" in="target/nmqual" as="xml">perl autolog.pl log.xml test example10</do>
+           <do on="qualify" as="xml">cat target/nmqual/log.xml</do>
+           <to on="qualify">$_1</to>
+           <!--The 'regress' interface runs a reduced suite of tests quickly, e.g. for regression testing.-->
+           <do on="regress" as="xml">perl $0 $_0 meta</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 3</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 4</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 5</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 6</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 7</do>
+           <do on="regress" in="target/nmqual" as="xml">perl autolog.pl log.xml test 8</do>
+           <do on="regress" as="xml">cat target/nmqual/log.xml</do>
+           <to on="regress">$_1</to>
+           <!--The 'psntest' interface runs PsN control tests.-->
+           <do on="psntest" as="xml">perl $0 $_0 meta</do>
+           <do on="psntest" in="target/nmqual/psn">execute -directory=runs -seed=1 TST33611.nmctl TST33612.nmctl TST33613.nmctl</do>
+           <do on="psntest" in="target/nmqual/psn">bootstrap -samples=20 -dir=boot -seed=1 TST3362.nmctl</do>
+           <do on="psntest" in="target/nmqual/psn/runs" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST33611.nmctl.csv</do>
+           <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/csv2xml.pl raw_results_TST3362.nmctl.csv</do>
+           <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl '^means' bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+           <do on="psntest" in="target/nmqual/psn/boot" as="xml">perl target/nmqual/csv/sections2csv.pl standard.error.confidence.intervals bootstrap_results.csv | perl target/nmqual/csv/csv2xml.pl</do>
+           <do on="psntest" as="xml">cat target/nmqual/log.xml</do>
+           <to on="psntest">$_1</to>
+           <!--The 'accept' interface embeds an acceptance statement at the end of the log.-->
+           <do on="accept">echo $_</do>
+           <to on="accept">$0</to>
+          </config>
+          <job>
+           <do>pwd</do>
+           <so>/mnt/nmqual</so>
+          </job>
+          <job>
+           <do>date</do>
+           <so>Tue Mar 19 15:15:49 UTC 2013</so>
+          </job>
+          <job>
+           <do>perl -e 'use POSIX; print join qq(,),uname'</do>
+           <so>Linux,master,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+          </job>
+          <job>
+           <do>echo $SHELL</do>
+           <so>/bin/bash</so>
+          </job>
+          <job>
+           <do>echo $USER</do>
+           <so>root</so>
+          </job>
+          <job>
+           <do>echo $PATH</do>
+           <so>/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64:/opt/chef/embedded/bin:/opt/chef/embedded/bin</so>
+          </job>
+          <job>
+           <do>ifort --version</do>
+           <so>ifort (IFORT) 12.0.4 20110427
+                     Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
+                     </so>
+          </job>
+          <job>
+           <do>head -n 5 /opt/NONMEM/nm72/util/nmfe72</do>
+           <so>#!/bin/bash
+                     dir=/opt/NONMEM/nm72
+                     f=ifort
+                     o=' -fp-model strict -Gs -nologo -nbs -w '
+                     opstat=' -static '</so>
+          </job>
+         </logged>
+        </log>
+       </so>
       </job>
      </logged>
     </log>
