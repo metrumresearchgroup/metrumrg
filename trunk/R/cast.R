@@ -19,6 +19,7 @@ setMethod(
     value = guess_value(data)
   ){
     theClass <- class(data[[value]])
+    coerce <- match.fun(glue('as.',theClass))
     x <- cast(
       data=as.data.frame(data),
       formula=formula,
@@ -35,7 +36,7 @@ setMethod(
     x <- data.frame(x, check.names=check.names,stringsAsFactors=stringsAsFactors)
     x <- as.keyed(x,key=key)
     nonKey <- x %-% key(x)
-    if(reclass) x[nonKey] <- lapply(x[nonKey],function(col)structure(col,class=theClass))
+    if(reclass)if(exists(coerce,mode='function')) x[nonKey] <- lapply(x[nonKey],coerce,...)
     x
   }
 )

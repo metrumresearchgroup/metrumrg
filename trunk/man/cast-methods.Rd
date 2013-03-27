@@ -15,7 +15,7 @@ For most purposes, a call to \code{cast} will dispatch \code{reshape::cast}, thu
 }
 
 \item{\code{signature(data = "keyed")}}{
-The method for \code{keyed} mostly declares the same arguments as for \code{\link{cast}}.  The default for \code{fill}, however, is changed to \code{NA}. Three new arguments are added (before \dots).     \code{check.names=FALSE} and  \code{stringsAsFactors=FALSE} are passed to \code{\link{data.frame}} while reformatting the object returned by \code{cast}.    The new argument \code{reclass=TRUE} is used to post-process the result:  if \code{TRUE}, an attempt will be made to restore output columns to the class that the \code{value} column had before cast called \code{\link{as.vector}} on it.  This method returns a keyed data.frame whose key is identical to \code{id.vars}.  See also \code{\link{melt.keyed}} and examples there.
+The method for \code{keyed} mostly declares the same arguments as for \code{\link{cast}}.  The default for \code{fill}, however, is changed to \code{NA}. Three new arguments are added (before \dots).     \code{check.names=FALSE} and  \code{stringsAsFactors=FALSE} are passed to \code{\link{data.frame}} while reformatting the object returned by \code{cast}.    The new argument \code{reclass=TRUE} is used to post-process the result:  if \code{TRUE}, an attempt will be made to restore output columns to the class that the \code{value} column had before cast called \code{\link{as.vector}} on it. The attempt aborts unless there exists a suitable 'as' function for that class.  This method returns a keyed data.frame whose key is identical to \code{id.vars}.  See also \code{\link{melt.keyed}} and examples there.
 
 }
 }}
