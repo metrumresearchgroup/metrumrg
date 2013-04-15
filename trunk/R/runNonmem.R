@@ -34,7 +34,8 @@ function (
 	sync=if(wait)'y'else'n',
 	interface='nm.pl',
 	...,
-	perm.cond=NULL
+	perm.cond=NULL,
+	pe=NA
 ){
   # Note: runNonmem calls runCommand, which supports the qsub argument 'pe';
   # it also calls PLOTR, which supports the trellis.skeleton argument 'perm.cond'.
@@ -54,6 +55,7 @@ function (
   catfile <- filename(rundir,run,'.cat')
   pnmfile <- sub('ctl$','pnm',ctlfile) # to support copy of pnm file where present
   pltfile <- filename(streams,'template','.pnm')
+  prnfile <- filename(dirname(command),'template','.pnm')
   
   #Immediately we need to get the run directory and cat file open, or return an error.
   if(command!='')if(compile){
@@ -114,8 +116,14 @@ function (
 	  	  return(msg)
 	  }
 	  file.copy(ctlfile, file.path(rundir,basename(ctlfile)), overwrite = TRUE)
-	  if(file.exists(pnmfile))file.copy(pnmfile,file.path(rundir,basename(pnmfile)),overwrite = TRUE)
-	  else if(file.exists(pltfile))file.copy(pltfile,file.path(rundir,basename(pnmfile)),overwrite=TRUE)
+	  #parallelization
+	  if(is.defined(pe)){
+	  	  if(file.exists(pnmfile))     file.copy(pnmfile,file.path(rundir,basename(pnmfile)),overwrite=TRUE)
+	  	  else if(file.exists(pltfile))file.copy(pltfile,file.path(rundir,basename(pnmfile)),overwrite=TRUE)
+	  	  else if(file.exists(prnfile))file.copy(prnfile,file.path(rundir,basename(pnmfile)),overwrite=TRUE)
+	  	  else(cat('pe is defined, but parallelization file not found',file=catfile,append=TRUE,sep='\n'))
+	  }
+	  
   }
   #Run NONMEM.
   if(command=='')res <- ''
@@ -135,6 +143,7 @@ function (
     	split=split,
     	sync=sync,
     	interface=interface,
+    	pe=pe,
     	...
   )
   #Clean up.

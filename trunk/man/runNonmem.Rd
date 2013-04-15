@@ -42,7 +42,8 @@ runNonmem(
 	sync=if(wait)'y'else'n',
 	interface='nm.pl',
 	...,
-	perm.cond=NULL
+	perm.cond=NULL,
+	pe=NA
 )
 }
 \arguments{
@@ -83,6 +84,7 @@ runNonmem(
   \item{interface}{the name of a function to prepare NONMEM command lines}
   \item{\dots}{extra arguments for other functions}
   \item{perm.cond}{passed to PLOTR; defined here to prevent partial matching of \code{pe} argument to \code{qsub}}
+  \item{pe}{passed to runCommand}
 }
 \value{the result of the call to \code{\link{runCommand}}; or empty string if \code{command} is empty string.}
 \references{\url{http://metrumrg.googlecode.com}}

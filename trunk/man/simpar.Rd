@@ -58,7 +58,10 @@ parameter set (row) is dropped from the result, with warning.
 matrix, with column names indicating parameters, and row names indicating set
 number before filtering by \code{min} and \code{max}.
 }
-\references{\url{http://metrumrg.googlecode.com}}
+\references{
+\url{http://metrumrg.googlecode.com}
+\url{http://www.page-meeting.org/page/page2006/P2006III_11.pdf}
+}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

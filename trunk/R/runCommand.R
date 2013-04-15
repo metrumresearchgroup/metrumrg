@@ -34,7 +34,7 @@
 ){
   force(L) #before command changes
   if(nix())internal <- FALSE
-
+  
   #draft a command
   if(!udef)command <- match.fun(interface)(
   	command=command,
@@ -57,8 +57,9 @@
 
   #set up the call
   execute <- function(command,intern,minimized,invisible,win,run,rdir){
-	  args <- list(command, intern=intern)
+    args <- list(command, intern=intern)
     if (win()) args <- c(args,list(minimized=minimized, invisible=invisible))
+    cat(command, file=file.path(rdir,glue(run,'.cat')),sep='\n',append=TRUE)
     result <- tryCatch(
       do.call(system,args),
       error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)

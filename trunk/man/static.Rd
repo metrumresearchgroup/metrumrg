@@ -50,10 +50,11 @@ called in turn by \code{static.data.frame} and \code{dynamic.data.frame}.
 	unique rows are returned. By default, the \code{keyed} method makes the 
 	key explicit; it will be a non-operation if keys are defined and non-duplicated
 	(i.e., all non-key columns are unique and therefore constant within the key,
-	so the whole data.frame is returned).
+	so the whole data.frame is returned).  In all cases, the result is coerced with
+	\code{as.keyed}, using \code{on} as the key (even if length zero).
 }
 \value{
-	data.frame; for \code{lyse.data.frame}, a list with elements \code{static} and \code{dynamic}.
+	keyed data.frame; for \code{lyse.data.frame}, a list with elements \code{static} and \code{dynamic}.
 }
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}

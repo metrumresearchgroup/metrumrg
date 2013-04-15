@@ -16,7 +16,7 @@ Tim Bergsma\\
 
 \section{Purpose}
 This script shows how to conduct a simulation that
-considers uncertainty in the parameter estimates.
+considers uncertainty in the parameter estimates.  See also \url{http://www.page-meeting.org/page/page2006/P2006III_11.pdf}.
 \section{Data}
 Here we load metrumrg and read in the data to be used
 for simulations.

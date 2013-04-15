@@ -1,3 +1,13 @@
+5.38
+
+* xlog and xpath2frame are introduced experimentally to deal with multiple xpath expressions.
+
+5.37
+
+* NONR72 now writes command to cat file.
+
+* runNonmem now accepts PE argument (default NA). Only if pe is defined, and attempt is made to copy the parallelization file.  If the file is not found, a message is written to run.cat. template.pnm is now sought in the parent of 'command' if not found in the streams directory.
+
 5.36
 
 * Bugfix in 'cast' method for class 'keyed': there is now an explicit search for 'as' function if and when restoring class of 'value'. see ?`cast,keyed-method`.
@@ -177,49 +187,49 @@ replaces 'boot';  'purge' replaces 'pattern'.
 
 NONR has been significantly redrafted ...
 
-*concurrent now defaults to grid & !boot.
+* concurrent now defaults to grid & !boot.
 
-*Experimental 'delay' has been dropped.
+* Experimental 'delay' has been dropped.
 
-*NONR now has an invisible return value.
+* NONR now has an invisible return value.
 
-*runCommand and runNonmem have return values.
+* runCommand and runNonmem have return values.
 
-*NONR help has example invocations.
+* NONR help has example invocations.
 
-*cleanup does not remove INTER (needed by runstate).
+* cleanup does not remove INTER (needed by runstate).
 
-*most errors are now silent return values.
+* most errors are now silent return values.
 
-*most warnings are now dumped to run.cat.
+* most warnings are now dumped to run.cat.
 
-*new functions progress, follow, and qstat help resolve run state.
+* new functions progress, follow, and qstat help resolve run state.
 
 
 rlog and related functions have been redrafted ...
 
-*default tool for partab, rlog, and as.unilog.run is now 'nm7' instead of 'nm6'
+* default tool for partab, rlog, and as.unilog.run is now 'nm7' instead of 'nm6'
 
-*cleanup does not remove INTER (needed by runstate).
+* cleanup does not remove INTER (needed by runstate).
 
-*runstate supports testfile "indifference".
+* runstate supports testfile "indifference".
 
-*runlog tries to give a more meaningful minimization status than just 1/0.
+* runlog tries to give a more meaningful minimization status than just 1/0.
 
-*rlog returns min: -1 for missing runs, rather than issuing a warning.
+* rlog returns min: -1 for missing runs, rather than issuing a warning.
 
-*rlog returns min:error for "running" runs (rather than ignoring).
+* rlog returns min:error for "running" runs (rather than ignoring).
 
 
 Additionally ...
 
-*as.nmctl no longer gives 80 column warning.
+* as.nmctl no longer gives 80 column warning.
 
-*new function 'tweak' adjusts initial estimates in a control stream.
+* new function 'tweak' adjusts initial estimates in a control stream.
 
-*new function 'padded' pads numbers on the left with zeros, to specified width.
+* new function 'padded' pads numbers on the left with zeros, to specified width.
 
-*superset now can grow the input data to match the dimensions of nrow-multiple output table.
+* superset now can grow the input data to match the dimensions of nrow-multiple output table.
 
 5.17
 
