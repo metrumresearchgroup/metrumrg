@@ -6,7 +6,7 @@
 
 * NONR72 now writes command to cat file.
 
-* runNonmem now accepts PE argument (default NA). Only if pe is defined, and attempt is made to copy the parallelization file.  If the file is not found, a message is written to run.cat. template.pnm is now sought in the parent of 'command' if not found in the streams directory.
+* runNonmem now accepts pe argument (default NA). Only if pe is defined, and attempt is made to copy the parallelization file.  If the file is not found, a message is written to run.cat. template.pnm is now sought in the parent of 'command' if not found in the streams directory.
 
 5.36
 
