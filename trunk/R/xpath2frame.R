@@ -1,8 +1,8 @@
-.xpath2vector <- function(x, doc, fun=xmlValue,...){
+.xpath2vector <- function(x, doc, fun = xmlValue, namespaces = FALSE, ...){
   stopifnot(length(x)==1)
   local <- !inherits(doc,'XMLInternalDocument')
   file <- local && is.character(doc) && file.exists(doc)
-  if(local) doc <- xmlParse(doc, asText = !file, error = NULL)
+  if(local) doc <- .parse(doc, asText = !file, error = NULL, namespaces = namespaces, ...)
   result <- xpathSApply(doc, x, fun = fun)
   if(local)free(doc)
   result
@@ -30,11 +30,11 @@ xmlValue.XMLAttributeValue <- function(x,...)as.best(x)
   x[depth]
 }
 
-.xmlCount <- function(x, doc, depth, ...){
+.xmlCount <- function(x, doc, depth, namespaces = FALSE, ...){
   stopifnot(length(x)==1,depth >= 1)
   local <- !inherits(doc,'XMLInternalDocument')
   file <- local && is.character(doc) && file.exists(doc)
-  if(local) doc <- xmlParse(doc, asText = !file, error = NULL)
+  if(local) doc <- .parse(doc, asText = !file, error = NULL, namespaces = namespaces, ...)
   x <- strsplit(x,'/')[[1]]
   node <- x != ''
   node <- cumsum(node)
@@ -63,12 +63,12 @@ xmlValue.XMLAttributeValue <- function(x,...)as.best(x)
   preds
 }
       
-.xpath2index <- function(x, doc, depth=1, ...){
+.xpath2index <- function(x, doc, depth=1, namespaces = FALSE, ...){
   # enumerate myself, convert to df with token as col name
   local <- !inherits(doc,'XMLInternalDocument')
   file <- local && is.character(doc) && file.exists(doc)
-  if(local) doc <- xmlParse(doc, asText = !file, error = NULL)
-  dim <- .xmlCount(x = x, doc= doc, depth = depth,...)
+  if(local) doc <- .parse(doc, asText = !file, error = NULL, namespaces = namespaces, ...)
+  dim <- .xmlCount(x = x, doc = doc, depth = depth,...)
   col <- data.frame(seq_len(dim))
   names(col) <- .token(x, depth = depth)
   # if I am terminal, return
@@ -88,8 +88,19 @@ xmlValue.XMLAttributeValue <- function(x,...)as.best(x)
   if(local)free(doc)
   reunion
 }
-
-.xmlSimplify <- function(x, stack=FALSE, ignore=character(0)){
+.newcolname <- function(base,existing){
+	stopifnot(length(base)==1)
+	nm <- base
+	count <- 0
+	while(nm %in% existing){
+		count <- count + 1
+		nm <- paste(base,count,sep='.')
+	}
+	return(nm)
+}
+		
+	
+.xmlSimplify <- function(x, stack=FALSE, ignore=character(0),nodebase='node',...){
   nms <- lapply(x, unique)
   stat <- sapply(nms, function(nm)length(nm) == 1 && length(nm[is.defined(nm)]) == 1)
   stat <- names(x)[stat] %-% ignore
@@ -99,23 +110,29 @@ xmlValue.XMLAttributeValue <- function(x,...)as.best(x)
   semi <- sapply(nms, function(nm)length(nm) == 2 && length(nm[is.defined(nm)]) == 1)
   semi <- names(x)[semi] %-% ignore
   if(!length(semi))return(x)
-  node <- 'node'
-  if(node %in% names(x)) node <- 'metrumrg:node'
+  node <- .newcolname(base=nodebase,existing=names(x))
   x[node] <- NA
-  x <- shuffle(x, c(node,'value'), NULL)
+  x <- shuffle(x, names(x)[names(x) %contains% glue('^',nodebase,'\\b')])
   for(column in semi){
     disposable <- all( is.na( x[ node ][ is.defined( x[ column ] ) ] ) )
     if(disposable) x[ node ][ is.defined( x[ column ] ) ] <- column
     if(disposable) x[column] <- NULL
   }
+  if(any(semi %in% names(x)))x <- .xmlSimplify(
+  	x, 
+  	stack = stack, 
+  	ignore = ignore, 
+  	nodebase = nodebase, 
+  	...
+  )
   x
 }
 
-.xpath2frame <- function(x, doc, fun=xmlValue, simplify = TRUE, ...){
-  stopifnot(length(x)==1, length(file)==1)
+.xpath2frame <- function(x, doc, fun=xmlValue, simplify = TRUE, namespaces = FALSE, ...){
+  stopifnot(length(x)==1, length(doc)==1)
   local <- !inherits(doc,'XMLInternalDocument')
   file <- local && is.character(doc) && file.exists(doc)
-  if(local) doc <- xmlParse(doc, asText = !file, error = NULL)
+  if(local) doc <- .parse(doc, asText = !file, error = NULL, namespaces = namespaces,...)
   index <- .xpath2index(x, doc,...)
   value <- .xpath2vector(x, doc, fun=xmlValue,...)
   stopifnot(nrow(index) == length(value))
@@ -125,37 +142,48 @@ xmlValue.XMLAttributeValue <- function(x,...)as.best(x)
   return(result)
 }
 
-xpath2frame <- function(x, doc, simplify = TRUE, ...){
-  stopifnot(length(file)==1)
+xpath2frame <- function(x, doc, simplify = TRUE, sort = TRUE, nodebase = 'node', namespaces = FALSE, ...){
+  stopifnot(length(doc)==1)
   local <- !inherits(doc,'XMLInternalDocument')
   file <- local && is.character(doc) && file.exists(doc)
-  if(local) doc <- xmlParse(doc, asText = !file, error = NULL)
-  result <- lapply(x,.xpath2frame, doc= doc, simplify = FALSE, ...)
+  if(local) doc <- .parse(doc, asText = !file, error = NULL, namespaces = namespaces)
+  result <- lapply(x,.xpath2frame, doc = doc, simplify = FALSE, ...)
   if(local)free(doc)
   result <- metaMerge(result)
   result <- shuffle(result, 'value',after=NULL)
-  node <- 'node'
-  if(node %in% names(result)) node <- 'metrumrg:node'
-  if(simplify) result <- .xmlSimplify(result, stack = TRUE)
+  if(simplify) result <- .xmlSimplify(result, stack = TRUE, nodebase = nodebase, ...)
+  result <- as.keyed(result, key = names(result) %-% 'value')
+  if(sort) result <- sort(result)
   return(result)
 }
-
+.parse <- function(doc, asText, error, namespaces,...){
+	doc <- xmlParse(doc, asText = asText, error=error,...)
+	if(!namespaces){
+		removeXMLNamespaces(xmlRoot(doc), all = TRUE)
+		doc <- xmlParse(saveXML(doc), asText = TRUE, error = function(...){})
+	}
+	doc
+}
 xlog <- function(
   run, 
   project = getwd(), 
   rundir = filename(project,run), 
   file= filename(rundir,run,'.xml'), 
   xpath=c(
-      '/nm:output/nm:nonmem/nm:problem/nm:estimation/nm:estimation_method',
-      '/nm:output/nm:nonmem/nm:problem/nm:estimation/nm:estimation_title',
-      '/nm:output/nm:nonmem/nm:problem/nm:estimation/nm:termination_status',
-      '/nm:output/nm:nonmem/nm:problem/nm:estimation/nm:final_objective_function',
-      '/nm:output/nm:nonmem/nm:problem/nm:estimation/nm:theta/nm:val',
-      '/nm:output/nm:nonmem/nm:problem/nm:estimation/nm:omega/nm:row/nm:col',
-      '/nm:output/nm:nonmem/nm:problem/nm:estimation/nm:sigma/nm:row/nm:col'
+      '/output/nonmem/problem/problem_title',
+      '/output/nonmem/problem/estimation/estimation_method',
+      '/output/nonmem/problem/estimation/estimation_title',
+      '/output/nonmem/problem/estimation/termination_status',
+      '/output/nonmem/problem/estimation/final_objective_function',
+      '/output/nonmem/problem/estimation/theta/val',
+      '/output/nonmem/problem/estimation/omega/row/col',
+      '/output/nonmem/problem/estimation/sigma/row/col'
   ),
   includeFile = NULL,
   simplify = TRUE,
+  sort = TRUE,
+  nodebase = 'node',
+  namespaces = FALSE,
   ...
 ){
   stopifnot(xor(missing(run), missing(file)))
@@ -166,11 +194,20 @@ xlog <- function(
   if(any(!exists))warning('One or more files does not exist, e.g. ', file[!exists][[1]])
   file <- file[exists]
   if(!mrun) run <- run[exists]
-  result <- lapply(file, function(doc) xpath2frame(x=xpath, doc=doc, simplify = FALSE, ...))
-  fnm <- 'file'
-  if(fnm %in% names(result))fnm <- 'metrumrg:file'
-  rnm <- 'run'
-  if(rnm %in% names(result))rnm <- 'metrumrg:run'
+  result <- lapply(
+	file, 
+	function(doc) xpath2frame(
+		x=xpath, 
+		doc=doc, 
+		simplify = FALSE, 
+		sort = FALSE, 
+		nodebase = nodebase,
+		namespaces = namespaces,
+		...
+	)
+  )
+  fnm <- .newcolname(base = 'file', existing=names(result))
+  rnm <- .newcolname(base = 'run', existing=names(result))
   identify <- function(i){
     dat <- result[[i]]
     if(mrun || includeFile) dat[fnm] <- file[[i]]
@@ -179,11 +216,11 @@ xlog <- function(
   }
   result <- lapply(seq_along(result), identify)
   result <- metaMerge(result)
+  if(simplify) result <- .xmlSimplify(result, stack = TRUE, ignore = c(fnm,rnm), nodebase = nodebase, ...)
   result <- shuffle(result, c(rnm,fnm) %n% names(result))
   result <- shuffle(result, 'value',after=NULL)  
-  node <- 'node'
-  if(node %in% names(result)) node <- 'metrumrg:node'
-  if(simplify) result <- .xmlSimplify(result, stack=TRUE, ignore=c(fnm,rnm))
+  result <- as.keyed(result, key = names(result) %-% 'value')
+  if(sort) result <- sort(result)
   return(result)
 }
 
