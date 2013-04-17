@@ -249,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Wed Mar 20 21:23:36 UTC 2013</so>
+       <so>Wed Apr 17 12:23:19 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node001,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node002,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -265,7 +265,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/41.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/2.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
       <job>
        <do>ifort --version</do>
@@ -299,8 +299,8 @@
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
    Expiration Date:    14 JUL 2013
-   Current Date:       20 MAR 2013
-   Days until program expires : 114
+   Current Date:       17 APR 2013
+   Days until program expires :  87
     
     
     First Order Conditional Estimation with Interaction
@@ -354,14 +354,14 @@
     NPARAMETR:  1.1063E+01  1.2989E+01  4.3570E-02  4.8777E+01  2.1890E-01  2.5061E-01  2.1597E-01  6.5318E-02  7.5106E-02
     PARAMETER:  2.2791E-01  3.9534E-01 -1.4560E+00  5.1724E+00 -3.7316E+00  6.1205E-01  5.3766E-01 -6.0274E-02  9.5445E-03
     GRADIENT:   4.4752E-03  1.1266E-02  7.0157E-02 -5.8258E-04  2.5984E-04 -2.3720E-04 -3.9228E-03  5.0420E-04 -3.9703E-03
-    Elapsed estimation time in seconds:     5.33
-    Elapsed covariance time in seconds:     4.04</so>
+    Elapsed estimation time in seconds:     5.29
+    Elapsed covariance time in seconds:     4.18</so>
   </job>
   <job>
    <do in="../nonmem/1004">if [ -e 1004.xml ];then cat 1004.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2013-03-20T21:23:44.307</nm:start_datetime>
+     <nm:start_datetime>2013-04-17T12:23:35.336</nm:start_datetime>
      <nm:control_stream>
      $PROB 1004 phase1 2 CMT like 1003 but better bounds
      $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -402,8 +402,8 @@
       <nm:license_information>
       License Registered to: Metrum Research Group
       Expiration Date:    14 JUL 2013
-      Current Date:       20 MAR 2013
-      Days until program expires : 114</nm:license_information>
+      Current Date:       17 APR 2013
+      Days until program expires :  87</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -578,10 +578,10 @@
           <nm:col nm:cname="EPS1">9.47686666663622</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>5.33</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>5.29</nm:estimation_elapsed_time>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>4.04</nm:covariance_elapsed_time>
+        <nm:covariance_elapsed_time>4.18</nm:covariance_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2570.45022641404</nm:final_objective_function>
         <nm:theta>
@@ -1000,7 +1000,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2013-03-20T21:23:54.009</nm:stop_datetime>
+     <nm:stop_datetime>2013-04-17T12:23:45.634</nm:stop_datetime>
     </nm:output>
    </so>
   </job>
@@ -1130,7 +1130,7 @@
       </config>
       <job>
        <do>date</do>
-       <so>Tue Mar 19 15:11:18 UTC 2013</so>
+       <so>Thu Mar 21 14:35:35 UTC 2013</so>
       </job>
       <job>
        <do>rm -rf /mnt/nmqual/temp</do>
@@ -1278,7 +1278,7 @@
           Starting nonmem execution ...
           License Registered to: Temporary License File for Installation
           Expiration Date:    31 JUL 2011
-          Current Date:       19 MAR 2013
+          Current Date:       21 MAR 2013
            
             **** PROGRAM LICENSE HAS EXPIRED ****
             ****     PROGRAM TERMINATING     ****
@@ -1485,7 +1485,7 @@
           </job>
           <job>
            <do>date</do>
-           <so>Tue Mar 19 15:15:49 UTC 2013</so>
+           <so>Thu Mar 21 14:40:03 UTC 2013</so>
           </job>
           <job>
            <do>perl -e 'use POSIX; print join qq(,),uname'</do>

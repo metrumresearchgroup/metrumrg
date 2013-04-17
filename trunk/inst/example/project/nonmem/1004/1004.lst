@@ -1,4 +1,4 @@
-Wed Mar 20 21:23:36 UTC 2013
+Wed Apr 17 12:23:21 UTC 2013
 $PROB 1004 phase1 2 CMT like 1003 but better bounds
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
 $DATA ../../data/derived/phase1.csv IGNORE=C
@@ -38,8 +38,8 @@ NM-TRAN MESSAGES
 
 License Registered to: Metrum Research Group
 Expiration Date:    14 JUL 2013
-Current Date:       20 MAR 2013
-Days until program expires : 114
+Current Date:       17 APR 2013
+Days until program expires :  87
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
  ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
  CURRENT DEVELOPERS ARE ROBERT BAUER, ICON DEVELOPMENT SOLUTIONS,
@@ -232,8 +232,8 @@ Days until program expires : 114
  EPSshrink(%):   9.4769E+00
  
  #TERE:
- Elapsed estimation time in seconds:     5.33
- Elapsed covariance time in seconds:     4.04
+ Elapsed estimation time in seconds:     5.29
+ Elapsed covariance time in seconds:     4.18
 1
  
  
@@ -586,4 +586,4 @@ Days until program expires : 114
          6.26E-04  5.71E-02  1.61E-01  4.01E-01  4.16E-01  1.07E+00  1.53E+00  1.97E+00  3.40E+00
  
 Stop Time:
-Wed Mar 20 21:23:54 UTC 2013
+Wed Apr 17 12:23:45 UTC 2013

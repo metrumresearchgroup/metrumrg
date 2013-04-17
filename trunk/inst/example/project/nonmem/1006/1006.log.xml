@@ -249,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Wed Mar 20 21:24:28 UTC 2013</so>
+       <so>Wed Apr 17 12:23:26 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node008,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,master,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -265,7 +265,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/42.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/6.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
       <job>
        <do>ifort --version</do>
@@ -307,8 +307,8 @@
     Parallelization Warnings are in FPWARN
    License Registered to: Metrum Research Group
    Expiration Date:    14 JUL 2013
-   Current Date:       20 MAR 2013
-   Days until program expires : 114
+   Current Date:       17 APR 2013
+   Days until program expires :  87
     Minimum value for a list item exceeded:      1
     Parallelization Warnings are in FPWARN
     
@@ -406,10 +406,10 @@
                -5.6186E-01 -6.6008E-01 -1.0280E+00 -2.5496E-01  4.5110E-01
     GRADIENT:  -1.7145E-04  1.0450E-03  8.2095E-03 -4.1351E-03  8.6133E-04  4.3338E-04 -9.9905E-05 -2.1088E-04 -6.5000E-04  6.1445E-05
                 2.0086E-03 -6.5592E-03  1.0227E-03  9.2251E-03  2.4185E-03
-    Elapsed estimation time in seconds:    21.94
+    Elapsed estimation time in seconds:    68.93
     Minimum value for a list item exceeded:      1
     Parallelization Warnings are in FPWARN
-    Elapsed covariance time in seconds:    14.78
+    Elapsed covariance time in seconds:    21.42
    
    ===================================================================================
    =   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
@@ -422,7 +422,7 @@
    <do in="../nonmem/1006">if [ -e 1006.xml ];then cat 1006.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2013-03-20T21:24:39.191</nm:start_datetime>
+     <nm:start_datetime>2013-04-17T12:23:43.776</nm:start_datetime>
      <nm:control_stream>
      $PROB 1006 like 1005 with tweaked initial estimates
      $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
@@ -513,8 +513,8 @@
       <nm:license_information>
       License Registered to: Metrum Research Group
       Expiration Date:    14 JUL 2013
-      Current Date:       20 MAR 2013
-      Days until program expires : 114</nm:license_information>
+      Current Date:       17 APR 2013
+      Days until program expires :  87</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -669,14 +669,14 @@
          NO. OF SIG. DIGITS IN FINAL EST.:  3.8</nm:termination_information>
         <nm:etabar>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">-6.902455958011811E-004</nm:col>
-          <nm:col nm:cname="ETA2">-5.843924411063920E-004</nm:col>
-          <nm:col nm:cname="ETA3">1.019760930154984E-003</nm:col>
+          <nm:col nm:cname="ETA1">-6.902455958011880E-004</nm:col>
+          <nm:col nm:cname="ETA2">-5.843924411064152E-004</nm:col>
+          <nm:col nm:cname="ETA3">1.019760930154979E-003</nm:col>
          </nm:row>
         </nm:etabar>
         <nm:etabarse>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">7.131139375068372E-002</nm:col>
+          <nm:col nm:cname="ETA1">7.131139375068371E-002</nm:col>
           <nm:col nm:cname="ETA2">4.696748161943543E-002</nm:col>
           <nm:col nm:cname="ETA3">3.164780287688759E-002</nm:col>
          </nm:row>
@@ -690,22 +690,22 @@
         </nm:etabarpval>
         <nm:etashrink>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="ETA1">1.22048038801856</nm:col>
+          <nm:col nm:cname="ETA1">1.22048038801857</nm:col>
           <nm:col nm:cname="ETA2">2.15244956776579</nm:col>
           <nm:col nm:cname="ETA3">6.06315373884497</nm:col>
          </nm:row>
         </nm:etashrink>
         <nm:epsshrink>
          <nm:row nm:rname="SUBPOP1">
-          <nm:col nm:cname="EPS1">7.05062084574342</nm:col>
-          <nm:col nm:cname="EPS2">7.05062084574342</nm:col>
+          <nm:col nm:cname="EPS1">7.05062084574340</nm:col>
+          <nm:col nm:cname="EPS2">7.05062084574340</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>21.94</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>68.93</nm:estimation_elapsed_time>
         <nm:parallel_cov nm:parafile="1006.pnm" nm:protocol="MPI" nm:nodes="16"/>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>14.78</nm:covariance_elapsed_time>
+        <nm:covariance_elapsed_time>21.42</nm:covariance_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2405.91625875217</nm:final_objective_function>
         <nm:theta>
@@ -1348,7 +1348,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2013-03-20T21:25:17.872</nm:stop_datetime>
+     <nm:stop_datetime>2013-04-17T12:25:15.162</nm:stop_datetime>
     </nm:output>
    </so>
   </job>
@@ -1478,7 +1478,7 @@
       </config>
       <job>
        <do>date</do>
-       <so>Tue Mar 19 15:11:18 UTC 2013</so>
+       <so>Thu Mar 21 14:35:35 UTC 2013</so>
       </job>
       <job>
        <do>rm -rf /mnt/nmqual/temp</do>
@@ -1626,7 +1626,7 @@
           Starting nonmem execution ...
           License Registered to: Temporary License File for Installation
           Expiration Date:    31 JUL 2011
-          Current Date:       19 MAR 2013
+          Current Date:       21 MAR 2013
            
             **** PROGRAM LICENSE HAS EXPIRED ****
             ****     PROGRAM TERMINATING     ****
@@ -1833,7 +1833,7 @@
           </job>
           <job>
            <do>date</do>
-           <so>Tue Mar 19 15:15:49 UTC 2013</so>
+           <so>Thu Mar 21 14:40:03 UTC 2013</so>
           </job>
           <job>
            <do>perl -e 'use POSIX; print join qq(,),uname'</do>

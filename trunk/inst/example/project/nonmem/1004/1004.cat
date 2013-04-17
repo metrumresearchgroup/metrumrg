@@ -1,2 +1,3 @@
-Wed Mar 20 21:23:34 2013
+Wed Apr 17 12:23:12 2013
+qsub -N Run1004 -o ../nonmem/1004 -e ../nonmem/1004   -V  -j y -q all.q -sync y -shell n -b y -cwd   perl -S /opt/NONMEM/nm72/nmqual/autolog.pl /opt/NONMEM/nm72/nmqual/log.xml run ce ../nonmem/1004 1004
 Run 1004 has exit code 0

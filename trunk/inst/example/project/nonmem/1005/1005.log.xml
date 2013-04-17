@@ -249,7 +249,7 @@
       </job>
       <job>
        <do>date</do>
-       <so>Wed Mar 20 21:23:36 UTC 2013</so>
+       <so>Wed Apr 17 12:23:19 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
@@ -265,7 +265,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/38.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/3.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
       <job>
        <do>ifort --version</do>
@@ -299,8 +299,8 @@
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
    Expiration Date:    14 JUL 2013
-   Current Date:       20 MAR 2013
-   Days until program expires : 114
+   Current Date:       17 APR 2013
+   Days until program expires :  87
     
     
     First Order Conditional Estimation with Interaction
@@ -388,13 +388,13 @@
     GRADIENT:   2.7830E-03  3.5372E-03 -4.6893E-02  7.7924E-03 -7.6366E-03  7.1181E-03 -2.5863E-04 -5.4952E-03  3.0215E-03  6.1203E-03
                -9.5211E-03  1.2040E-02 -1.1760E-03 -1.7425E-02  1.5433E-03
     Elapsed estimation time in seconds:     6.03
-    Elapsed covariance time in seconds:     7.78</so>
+    Elapsed covariance time in seconds:     7.82</so>
   </job>
   <job>
    <do in="../nonmem/1005">if [ -e 1005.xml ];then cat 1005.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2013-03-20T21:23:44.818</nm:start_datetime>
+     <nm:start_datetime>2013-04-17T12:23:34.716</nm:start_datetime>
      <nm:control_stream>
      $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
      $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
@@ -470,8 +470,8 @@
       <nm:license_information>
       License Registered to: Metrum Research Group
       Expiration Date:    14 JUL 2013
-      Current Date:       20 MAR 2013
-      Days until program expires : 114</nm:license_information>
+      Current Date:       17 APR 2013
+      Days until program expires :  87</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -659,7 +659,7 @@
         <nm:estimation_elapsed_time>6.03</nm:estimation_elapsed_time>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>7.78</nm:covariance_elapsed_time>
+        <nm:covariance_elapsed_time>7.82</nm:covariance_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2405.91626347113</nm:final_objective_function>
         <nm:theta>
@@ -1302,7 +1302,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2013-03-20T21:23:58.981</nm:stop_datetime>
+     <nm:stop_datetime>2013-04-17T12:23:48.928</nm:stop_datetime>
     </nm:output>
    </so>
   </job>
@@ -1432,7 +1432,7 @@
       </config>
       <job>
        <do>date</do>
-       <so>Tue Mar 19 15:11:18 UTC 2013</so>
+       <so>Thu Mar 21 14:35:35 UTC 2013</so>
       </job>
       <job>
        <do>rm -rf /mnt/nmqual/temp</do>
@@ -1580,7 +1580,7 @@
           Starting nonmem execution ...
           License Registered to: Temporary License File for Installation
           Expiration Date:    31 JUL 2011
-          Current Date:       19 MAR 2013
+          Current Date:       21 MAR 2013
            
             **** PROGRAM LICENSE HAS EXPIRED ****
             ****     PROGRAM TERMINATING     ****
@@ -1787,7 +1787,7 @@
           </job>
           <job>
            <do>date</do>
-           <so>Tue Mar 19 15:15:49 UTC 2013</so>
+           <so>Thu Mar 21 14:40:03 UTC 2013</so>
           </job>
           <job>
            <do>perl -e 'use POSIX; print join qq(,),uname'</do>
