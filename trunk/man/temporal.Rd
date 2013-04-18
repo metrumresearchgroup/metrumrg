@@ -75,8 +75,7 @@ as.mDateTime(x, ...)
 }
 
 \arguments{
-  \item{x}{character time as per format, numeric seconds since 1970-01-01, 
-  	or timepoint subclass}
+  \item{x}{character time as per format, numeric seconds since 1970-01-01, or timepoint subclass}
   \item{\dots}{other arguments, usually ignored}
   \item{y}{optional time for constructing mDateTime from mDate: anything coercible with \code{as.second()}}
   \item{format}{character, as per \code{\link{strftime}}}
@@ -102,10 +101,14 @@ as.mDateTime(x, ...)
   
   
   The timepoint classes are also subclasses \code{timeline}, which exists to support addition and subtraction of durations and timepoints.  See examples.
-  Exceptions: you cannot add two timepoints, nor can you subtract a timepoint. When one argument is a timepoint,
-  the other is coerced using \code{as.second}, and the result is the timepoint class.
-  For two durations, the second value is coerced to the class of the first, with a message, if necessary.
-  Otherwise, if only one argument is a duration, the other is coerced to that class. 
+  \itemize{
+  	  \item You cannot add two timepoints.
+  	  \item You cannot subtract a timepoint from a non-timepoint.
+  	  \item For the difference of two timepoints, the arguments and result are coerced with \code{as.second}.
+  	  \item When one argument is a timepoint, the other is coerced using \code{as.second}, and the result is the timepoint class.
+  	  \item For two durations, the second value is coerced to the class of the first, with a message, if necessary.
+  	  \item If only one argument is a duration, the other is coerced to that class. 
+  }
 }
 \value{
   \item{format}{character}
@@ -168,7 +171,7 @@ as.mTime('23:59:01')
 as.mTime('23:59:01',format='\%H:\%M:\%S')
 # 23:59+
 as.mTime('24:00')
-# NA
+# 00:00
 as.mDate('1970-01-02')
 # 1970-01-02
 as.mDate('01/02/1970',format='\%m/\%d/\%Y')
@@ -324,18 +327,33 @@ max(as.mDate(c('1970-01-01','1980-01-01','1975-01-01')))
 #operations
 as.mDateTime(0) + as.second(60)
 # 1970-01-01 00:01
-as.mDateTime(0) + 60
-# 1970-01-01 00:01
 as.second(60) + as.mDateTime(0)
 # 1970-01-01 00:01
-as.minute(1) + as.mDateTime(0)
+try(as.mDateTime(60) + as.mDateTime(60))
+# Error in `+.timeline`(as.mDateTime(60), as.mDateTime(60)) : 
+#   addition is undefined for two timepoints
+as.mDateTime(0) + 60
 # 1970-01-01 00:01
 60 + as.mDateTime(0)
+# 1970-01-01 00:01
+as.minute(1) + as.mDateTime(0)
 # 1970-01-01 00:01
 as.mDateTime(0) - as.second(60)
 # 1969-12-31 23:59
 as.mDateTime(0) - 60
 # 1969-12-31 23:59
+as.mDateTime(60) - as.mDateTime(0)
+# 60
+try(as.second(60) - as.mDateTime(60))
+# Error in `-.timeline`(as.second(60), as.mDateTime(60)) : 
+#   subtracting a timepoint from non-timepoint is undefined
+try(60 - as.mDateTime(60))
+# Error in `-.timeline`(as.second(60), as.mDateTime(60)) : 
+#   subtracting a timepoint from non-timepoint is undefined
+as.second(10) * 6
+# 60
+as.mDateTime(0) * 2 #meaningless, but not prevented
+# 1970-01-01 00:00
 
 #unary operations
 -as.mTime(1)

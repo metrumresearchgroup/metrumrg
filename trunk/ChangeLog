@@ -1,3 +1,9 @@
+5.39
+
+* A bug is fixed in xlog examples.
+
+* Support is added for finding the difference of two timepoints.
+
 5.38
 
 * xlog and xpath2frame are introduced experimentally to deal with multiple xpath expressions.
