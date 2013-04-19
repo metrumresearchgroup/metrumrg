@@ -26,7 +26,7 @@ metrumrgURL(url, lib.loc = NULL, browser = getOption("browser"), encodeIfNeeded 
 	}
 }
 \examples{
-metrumrgURL('example/wikimath/wikimath.pdf')
+\dontrun{metrumrgURL('example/wikimath/wikimath.pdf')}
 }
 \keyword{manip}
 
