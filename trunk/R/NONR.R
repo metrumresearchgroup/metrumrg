@@ -78,14 +78,14 @@ function (
     		args$run <- this
     	if (concurrent){
             library(fork)
-            suppressWarnings(handleSIGCLD())
+            suppressWarnings(fork::handleSIGCLD())
             pid <- fork::fork(NULL)
             if (pid == 0) {
                 tryCatch(
                 	do.call("runNonmem", args),
                 	error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
                 )
-                exit()
+                fork::exit()
             } else {
               pid
             }

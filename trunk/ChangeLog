@@ -1,6 +1,12 @@
-5.39
+5.40
 
-* A bug is fixed in xlog examples.
+* All metrumrgURL examples in help files are now configured not to run automatically.
+
+* NONR now calls fork::handleSIGCLD and fork::exit explicitly.
+
+* Additional error trapping is added for xpath2frame.
+
+5.39
 
 * Support is added for finding the difference of two timepoints.
 

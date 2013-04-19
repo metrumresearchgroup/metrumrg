@@ -319,8 +319,10 @@ File names and locations can be manipulated somewhat, i.e., by over-riding
 	}
 }
 \examples{
-metrumrgURL('example/project/script/model.pdf')
 \dontrun{
+#vignette:	
+metrumrgURL('example/project/script/model.pdf')
+
 #Assuming an NMQual-mediated NONMEM wrapper: /opt/NONMEM/nm72/nmqual/autolog.pl
 #Assuming this is some script directory, and contol streams (e.g. 1.ctl) are in a sibling directory "nonmem"
 

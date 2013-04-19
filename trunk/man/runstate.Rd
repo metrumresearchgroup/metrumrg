@@ -87,7 +87,7 @@ follow(
 	}
 }
 \examples{
-#metrumrgURL('example/project/script/model.pdf')	
+\dontrun{metrumrgURL('example/project/script/model.pdf')}
 runstate(1)
 }
 \keyword{manip}

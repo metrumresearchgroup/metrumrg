@@ -87,7 +87,7 @@ but it lets all the usual parameter details arise from a single specification th
 	}
 }
 \examples{
-metrumrgURL('example/project/script/parameters.pdf')	
+\dontrun{metrumrgURL('example/project/script/parameters.pdf')}
 }
 \keyword{manip}
 
