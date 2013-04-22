@@ -4,6 +4,7 @@
   file <- local && is.character(doc) && file.exists(doc)
   if(local) doc <- .parse(doc, asText = !file, error = NULL, namespaces = namespaces, ...)
   result <- xpathSApply(doc, x, fun = fun)
+  if(identical(result,list()))result <- numeric(0)
   if(local)free(doc)
   result
 }
@@ -133,12 +134,14 @@ xmlValue.XMLAttributeValue <- function(x,...)as.best(x)
   local <- !inherits(doc,'XMLInternalDocument')
   file <- local && is.character(doc) && file.exists(doc)
   if(local) doc <- .parse(doc, asText = !file, error = NULL, namespaces = namespaces,...)
-  index <- .xpath2index(x, doc,...)
-  value <- .xpath2vector(x, doc, fun=xmlValue,...)
+  # Technically, namespaces should now be irrelevant, as the document is already parsed.
+  index <- .xpath2index(x, doc, namespaces=namespaces,...)
+  value <- .xpath2vector(x, doc, fun=xmlValue, namespaces=namespaces, ...)
   stopifnot(nrow(index) == length(value))
-  result <- cbind(index, value, stringsAsFactors = FALSE)
-  stopifnot(ncol(result) >= 1)
-  names(result)[length(names(result))] <- 'value'
+  result <- cbind(index, value=value, stringsAsFactors = FALSE)
+  #stopifnot(ncol(result) >= 1)
+  #names(result)[length(names(result))] <- 'value'
+  if(!nrow(result))stop('no rows; names(index):',paste(collapse=',',names(index)),'; class(value):',paste(collapse=',',class(value)),'; doc:',substr(saveXML(doc),0,250))
   if(local)free(doc)
   if(simplify) result <- .xmlSimplify(result)
   return(result)

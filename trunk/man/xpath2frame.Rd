@@ -98,6 +98,7 @@ xpath2frame(
   system.file('example/project/nonmem/1005/1005.xml',package='metrumrg'),
   namespaces = TRUE
 )
+
 x <- xpath2frame(
   c(
     '/output/nonmem/problem/estimation/monitor/obj/@iteration',

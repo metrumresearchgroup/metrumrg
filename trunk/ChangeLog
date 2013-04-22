@@ -1,6 +1,12 @@
+5.42
+
+* This version attempts to fix a CRAN test error that occurs for an xpath2frame example: Casting formula contains variables not found in molten data: obj, node.
+
 5.41
 
 * A bug is fixed in the keyed method for cast: it prevented type coercion for 'value' columns with where length of class was greater than one.
+
+* An example is added illustrating cast(keyed(x)).  See ?melt.keyed.
 
 5.40
 
