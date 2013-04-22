@@ -18,7 +18,7 @@ setMethod(
     add.missing=FALSE, 
     value = guess_value(data)
   ){
-    theClass <- class(data[[value]])
+    theClass <- class(data[[value]])[[1]]
     coerce <- glue('as.',theClass)
     x <- cast(
       data=as.data.frame(data),

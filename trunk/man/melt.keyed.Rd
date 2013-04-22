@@ -53,6 +53,7 @@ summary(x)
 y <- melt(x)
 y
 summary(y)
+cast(y)
 }
 
 \keyword{ manip }

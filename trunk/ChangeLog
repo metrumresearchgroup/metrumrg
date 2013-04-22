@@ -1,3 +1,7 @@
+5.41
+
+* A bug is fixed in the keyed method for cast: it prevented type coercion for 'value' columns with where length of class was greater than one.
+
 5.40
 
 * All metrumrgURL examples in help files are now configured not to run automatically.
