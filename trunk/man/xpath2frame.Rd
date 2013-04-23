@@ -99,6 +99,8 @@ xpath2frame(
   namespaces = TRUE
 )
 
+if(as.numeric(libxmlVersion()$major) == 2 && as.numeric(libxmlVersion()$minor) == 8){
+# libxml 2.8 may be problematic
 x <- xpath2frame(
   c(
     '/output/nonmem/problem/estimation/monitor/obj/@iteration',
@@ -108,6 +110,8 @@ x <- xpath2frame(
 )
 x
 cast(x,obj~node)
+}
+
 xpath2frame(
   c(
     '/output/nonmem/problem/estimation/theta/val',

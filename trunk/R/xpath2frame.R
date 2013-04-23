@@ -4,7 +4,7 @@
   file <- local && is.character(doc) && file.exists(doc)
   if(local) doc <- .parse(doc, asText = !file, error = NULL, namespaces = namespaces, ...)
   result <- xpathSApply(doc, x, fun = fun)
-  if(identical(result,list()))result <- numeric(0)
+  if(length(result)==0)result <- numeric(0)
   if(local)free(doc)
   result
 }
@@ -141,7 +141,7 @@ xmlValue.XMLAttributeValue <- function(x,...)as.best(x)
   result <- cbind(index, value=value, stringsAsFactors = FALSE)
   #stopifnot(ncol(result) >= 1)
   #names(result)[length(names(result))] <- 'value'
-  if(!nrow(result))stop('no rows; names(index):',paste(collapse=',',names(index)),'; class(value):',paste(collapse=',',class(value)),'; doc:',substr(saveXML(doc),0,250))
+  #if(!nrow(result))stop('no rows; names(index):',paste(collapse=',',names(index)),'; class(value):',paste(collapse=',',class(value)),'; doc:',substr(saveXML(doc),0,250))
   if(local)free(doc)
   if(simplify) result <- .xmlSimplify(result)
   return(result)
@@ -155,7 +155,7 @@ xpath2frame <- function(x, doc, simplify = TRUE, sort = TRUE, nodebase = 'node',
   result <- lapply(x,.xpath2frame, doc = doc, simplify = FALSE, ...)
   if(local)free(doc)
   result <- metaMerge(result)
-  if(! 'value' %in% names(result))stop('expected colname "value" but got ',paste(collapse=', ',names(result)))
+  #if(! 'value' %in% names(result))stop('expected colname "value" but got ',paste(collapse=', ',names(result)))
   result <- shuffle(result, 'value',after=NULL)
   if(simplify) result <- .xmlSimplify(result, stack = TRUE, nodebase = nodebase, ...)
   result <- as.keyed(result, key = names(result) %-% 'value')

@@ -1,3 +1,7 @@
+4.43
+
+* The examples for xpath2frame trap the case where libxml version is 2.8; problems there are suspected.
+
 5.42
 
 * This version attempts to fix a CRAN test error that occurs for an xpath2frame example: Casting formula contains variables not found in molten data: obj, node.
