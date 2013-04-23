@@ -98,9 +98,10 @@ xpath2frame(
   system.file('example/project/nonmem/1005/1005.xml',package='metrumrg'),
   namespaces = TRUE
 )
-
-if(as.numeric(libxmlVersion()$major) == 2 && as.numeric(libxmlVersion()$minor) != 8){
-# libxml 2.8 may be problematic
+libxmlVersion()
+\dontrun{
+# libxml 2.8 (others?) may be problematic. You can switch to full path notation
+# as above, and use 'namespaces=TRUE' (not the default).
 x <- xpath2frame(
   c(
     '/output/nonmem/problem/estimation/monitor/obj/@iteration',
@@ -110,7 +111,7 @@ x <- xpath2frame(
 )
 x
 cast(x,obj~node)
-}
+
 
 xpath2frame(
   c(
@@ -122,6 +123,7 @@ xpath2frame(
 )
 project <- system.file('example/project/nonmem',package='metrumrg')
 xlog(1005:1006,project = project)
+}
 }
 \keyword{manip}
 

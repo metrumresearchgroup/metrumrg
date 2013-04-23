@@ -1,4 +1,8 @@
-4.43
+5.44
+
+* example(xpath2frame) is now not run, with explanation.
+
+5.43
 
 * The examples for xpath2frame trap the case where libxml version is 2.8; problems there are suspected.
 
