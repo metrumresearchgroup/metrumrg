@@ -99,7 +99,7 @@ xpath2frame(
   namespaces = TRUE
 )
 
-if(as.numeric(libxmlVersion()$major) == 2 && as.numeric(libxmlVersion()$minor) == 8){
+if(as.numeric(libxmlVersion()$major) == 2 && as.numeric(libxmlVersion()$minor) != 8){
 # libxml 2.8 may be problematic
 x <- xpath2frame(
   c(
