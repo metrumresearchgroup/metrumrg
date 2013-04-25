@@ -19,8 +19,8 @@ a \%crossed.on\% b
 \method{constant}{default}(x,within,...)
 }
 \arguments{
-  \item{a}{a list of equal length factors, or one factor}
-  \item{b}{a list of equal length factors, or one factor, same length as \code{a}}
+  \item{a}{a factor, something coercible to a factor, or a list of such having equal lengths (e.g. data.frame)}
+  \item{b}{like \code{a}, possibly a different number of factors, but same length(s)}
   \item{all}{whether to include first instances: see details}
   \item{x}{an object like \code{a}, or a data.frame}
   \item{within}{An object like \code{b}}
@@ -48,10 +48,10 @@ a \%crossed.on\% b
 For the following equivalency table, all assertions in a row are true if any of them is true.
 \tabular{lllll}{
 \bold{crosses}	\tab \bold{crossed.on} \tab \bold{nests} \tab \bold{nested.in} \tab \bold{constant} \cr
-a \%crosses\% b	\tab b \%crossed.on\% a \tab ! b \%nests\% a \tab ! a \%nested.in\% b \tab ! constant(b,within = a) \cr
-b \%crosses\% a	\tab a \%crossed.on\% b \tab ! a \%nests\% b \tab ! b \%nested.in\% a \tab ! constant(a,within = b) \cr
-! a \%crosses\% ! b \tab b \%crossed.on\% a \tab b \%nests\% a \tab a \%nested.in\% b \tab constant(b,within = a) \cr
-! b \%crosses\% ! a \tab a \%crossed.on\% b \tab a \%nests\% b \tab b \%nested.in\% a \tab constant(a,within = b)
+a \%crosses\% b	\tab b \%crossed.on\% a \tab !b \%nests\% a \tab !a \%nested.in\% b \tab !constant(b,within = a) \cr
+b \%crosses\% a	\tab a \%crossed.on\% b \tab !a \%nests\% b \tab !b \%nested.in\% a \tab !constant(a,within = b) \cr
+!a \%crosses\% b \tab !b \%crossed.on\% a \tab b \%nests\% a \tab a \%nested.in\% b \tab constant(b,within = a) \cr
+!b \%crosses\% a \tab !a \%crossed.on\% b \tab a \%nests\% b \tab b \%nested.in\% a \tab constant(a,within = b)
 }
 }
 \value{
@@ -70,7 +70,7 @@ with(CO2,constant(list(Type,Treatment),within=Plant)) #TRUE
 with(ChickWeight,constant(Diet,within=Chick)) #TRUE
 with(ChickWeight,constant(weight,within=list(Chick,Time))) #TRUE
 crosses(c(1,1,1),c(1,2,3)) # FALSE TRUE TRUE
-crosses(c(1,1,1),c(1,2,2)) # FALSE TRUE TRUE !
+crosses(c(1,1,1),c(1,2,2)) # FALSE TRUE TRUE
 crosses(c(1,1,1),c(2,2,1)) # FALSE FALSE TRUE
 crosses(c(1,1,1),c(1,2,3), all=TRUE) # TRUE TRUE TRUE
 crosses(c(1,2,3),c(1,1,1)) # FALSE FALSE FALSE
@@ -78,13 +78,13 @@ crosses(c(NA,2,3),c(NA,NA,NA)) # FALSE FALSE FALSE
 constant(Theoph$Wt,within=Theoph$Subject)#TRUE
 trt <- c('a','a','a','b')
 rep <- c(1,1,2,3)
-trt \%crosses\% rep # true
-rep \%nests\% trt # false
-trt \%nests\% rep # true
-rep \%nested.in\% trt # true
-rep \%crosses\% trt # false
-trt \%crossed.on\% rep #false
-constant(trt,within=rep) # true
+trt \%crosses\% rep # TRUE
+rep \%nests\% trt # FALSE
+trt \%nests\% rep # TRUE
+rep \%nested.in\% trt # TRUE
+rep \%crosses\% trt # FALSE
+trt \%crossed.on\% rep #FALSE
+constant(trt,within=rep) # TRUE
 
 }
 \keyword{manip}
