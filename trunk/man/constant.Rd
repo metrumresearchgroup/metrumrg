@@ -71,7 +71,7 @@ with(ChickWeight,constant(Diet,within=Chick)) #TRUE
 with(ChickWeight,constant(weight,within=list(Chick,Time))) #TRUE
 crosses(c(1,1,1),c(1,2,3)) # FALSE TRUE TRUE
 crosses(c(1,1,1),c(1,2,2)) # FALSE TRUE TRUE !
-crosses(c(1,1,1),c(2,2,1)) # FALSE TRUE TRUE
+crosses(c(1,1,1),c(2,2,1)) # FALSE FALSE TRUE
 crosses(c(1,1,1),c(1,2,3), all=TRUE) # TRUE TRUE TRUE
 crosses(c(1,2,3),c(1,1,1)) # FALSE FALSE FALSE
 crosses(c(NA,2,3),c(NA,NA,NA)) # FALSE FALSE FALSE

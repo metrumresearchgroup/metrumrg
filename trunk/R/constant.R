@@ -17,9 +17,13 @@ duplicated(
 	b <- do.call(paste,c(b,list(sep='\r')))	
 	a <- as.integer(factor(a))
 	b <- as.integer(factor(b))
-	i <- if(fromLast) rev(match(rev(a),rev(a))) else match(a,a) # indices for first matches
+	if(fromLast) a <- rev(a)
+	if(fromLast) b <- rev(b)
+	i <- match(a,a) # indices for first matches
 	c <- b[i] # canonical
-	b != c # does each value of b correspond to the canonical value (first within index) ?
+	res <- b != c # does each value of b correspond to the canonical value (first within index) ?
+	if(fromLast) res <- rev(res)
+	res
 }
 	
 
