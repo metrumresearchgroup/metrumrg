@@ -22,7 +22,7 @@ a \%crossed.on\% b
   \item{a}{a factor, something coercible to a factor, or a list of such having equal lengths (e.g. data.frame)}
   \item{b}{like \code{a}, possibly a different number of factors, but same length(s)}
   \item{all}{whether to include first instances: see details}
-  \item{x}{an object like \code{a}, or a data.frame}
+  \item{x}{an object like \code{a}}
   \item{within}{An object like \code{b}}
   \item{\dots}{extra arguments passed to other methods}
 }
@@ -31,7 +31,7 @@ a \%crossed.on\% b
   in which either a crosses b, or b nests a. Equivalently, in the former case 
   we could say b is crossed on/by a; in the latter we could say a is nested in b.
   In the case that b nests a, it must be true that b is constant within a. For example,
-  if treatment nests replicate, than for multiple observations of a single level 
+  if treatment nests replicate, then for multiple observations of a single level 
   of replicate, all observations of treatment must be the same. The value of 
   replicate implies the value of treatment (though the reverse need not be true).
 
@@ -41,7 +41,7 @@ a \%crossed.on\% b
   
   \code{crosses()} is the basis for all other functions, and is useful for determining
  positions at which crossing occurs (or nesting fails). For each level of a, it returns
- FALSE for the first unique value of b, and TRUE for any others. If all is TRUE,
+ FALSE for the first unique value of b, and TRUE for any others. If \code{all} is TRUE,
  however, it returns TRUE for the first unique value of b when there are others. 
 
 
