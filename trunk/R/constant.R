@@ -13,10 +13,10 @@ duplicated(
 .crosses <- function(a, b, fromLast = FALSE){
 	if(!inherits(a,'list')) a <- list(a)
 	if(!inherits(b,'list')) b <- list(b)
-	a <- do.call(paste,c(a,list(sep='.')))	
-	b <- do.call(paste,c(b,list(sep='.')))	
-	a <- factor(a)
-	b <- factor(b)
+	a <- do.call(paste,c(a,list(sep='\r')))	
+	b <- do.call(paste,c(b,list(sep='\r')))	
+	a <- as.integer(factor(a))
+	b <- as.integer(factor(b))
 	i <- if(fromLast) rev(match(rev(a),rev(a))) else match(a,a) # indices for first matches
 	c <- b[i] # canonical
 	b != c # does each value of b correspond to the canonical value (first within index) ?
