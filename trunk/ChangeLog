@@ -1,3 +1,7 @@
+5.45
+
+* crosses has been rewritten to solve a bug.  crosses(c(1,1,1),c(1,2,2)) now gives F T T not F T F.
+
 5.44
 
 * example(xpath2frame) is now not run, with explanation.

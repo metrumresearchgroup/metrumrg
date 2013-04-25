@@ -35,14 +35,25 @@ a \%crossed.on\% b
   of replicate, all observations of treatment must be the same. The value of 
   replicate implies the value of treatment (though the reverse need not be true).
 
-  Formally, a crosses b if any level of a is associated with more than one level of b.
+  Formally, a crosses b if any level of a is associated with more than one level of b. 
+  In this case, b is not constant within a.  If you are wondering why 
+  \code{!constant(x,y)}, examine \code{crosses(y,x)}.
   
   \code{crosses()} is the basis for all other functions, and is useful for determining
  positions at which crossing occurs (or nesting fails). For each level of a, it returns
  FALSE for the first unique value of b, and TRUE for any others. If all is TRUE,
  however, it returns TRUE for the first unique value of b when there are others. 
-}
 
+
+For the following equivalency table, all assertions in a row are true if any of them is true.
+\tabular{lllll}{
+\bold{crosses}	\tab \bold{crossed.on} \tab \bold{nests} \tab \bold{nested.in} \tab \bold{constant} \cr
+a \%crosses\% b	\tab b \%crossed.on\% a \tab ! b \%nests\% a \tab ! a \%nested.in\% b \tab ! constant(b,within = a) \cr
+b \%crosses\% a	\tab a \%crossed.on\% b \tab ! a \%nests\% b \tab ! b \%nested.in\% a \tab ! constant(a,within = b) \cr
+! a \%crosses\% ! b \tab b \%crossed.on\% a \tab b \%nests\% a \tab a \%nested.in\% b \tab constant(b,within = a) \cr
+! b \%crosses\% ! a \tab a \%crossed.on\% b \tab a \%nests\% b \tab b \%nested.in\% a \tab constant(a,within = b)
+}
+}
 \value{
 	Logical vector for \code{crosses()}; scalar logical for all others.
 }
@@ -58,7 +69,12 @@ CO2$Plant \%nested.in\% CO2$Type #TRUE
 with(CO2,constant(list(Type,Treatment),within=Plant)) #TRUE
 with(ChickWeight,constant(Diet,within=Chick)) #TRUE
 with(ChickWeight,constant(weight,within=list(Chick,Time))) #TRUE
-crosses(c(2,3,3,NA,5,5),c(1,1,1,NA,NA,4)) #FALSE FALSE FALSE FALSE FALSE TRUE
+crosses(c(1,1,1),c(1,2,3)) # FALSE TRUE TRUE
+crosses(c(1,1,1),c(1,2,2)) # FALSE TRUE TRUE !
+crosses(c(1,1,1),c(2,2,1)) # FALSE TRUE TRUE
+crosses(c(1,1,1),c(1,2,3), all=TRUE) # TRUE TRUE TRUE
+crosses(c(1,2,3),c(1,1,1)) # FALSE FALSE FALSE
+crosses(c(NA,2,3),c(NA,NA,NA)) # FALSE FALSE FALSE
 constant(Theoph$Wt,within=Theoph$Subject)#TRUE
 trt <- c('a','a','a','b')
 rep <- c(1,1,2,3)

@@ -10,6 +10,15 @@ duplicated(
 	as.data.frame(a)
 )
 
+.crosses <- function(a, b, fromLast = FALSE){
+	a <- interaction(a,drop=TRUE)
+	b <- interaction(b,drop=TRUE)
+	i <- if(fromLast) rev(match(rev(a),rev(a))) else match(a,a) # indices for first matches
+	c <- b[i] # canonical
+	b == c # does each value of b correspond to the canonical value (first within index)
+}
+	
+
 `crosses` <- function(a,b,all=FALSE)if(all) .crosses(a,b,FALSE) | .crosses(a,b,TRUE) else .crosses(a,b,FALSE)
 `%crosses%` <- function(a,b)any(crosses(a,b))
 `%crossed.on%` <- function(a,b)b %crosses% a
