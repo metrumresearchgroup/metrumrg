@@ -11,8 +11,8 @@ duplicated(
 )
 
 .crosses <- function(a, b, fromLast = FALSE){
-	if(!inherits(a,'list')) a <- list(a)
-	if(!inherits(b,'list')) b <- list(b)
+	if(!is.list(a)) a <- list(a)
+	if(!is.list(b)) b <- list(b)
 	a <- do.call(paste,c(a,list(sep='\r')))	
 	b <- do.call(paste,c(b,list(sep='\r')))	
 	a <- as.integer(factor(a))
