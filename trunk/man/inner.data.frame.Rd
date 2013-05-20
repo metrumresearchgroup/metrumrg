@@ -69,7 +69,7 @@ x
 inner(x,id.var=c('Month','Day'),na.rm=TRUE)#identity
 inner(x,id.var='Month',preserve='Day',na.rm=TRUE)#quantiles within Month
 inner(x,preserve=c('Month','Day'),na.rm=TRUE)#quantiles across all rows
-inner(x,measure.var=c('Ozone','Solar.R','Wind','Temp'),na.rm=TRUE)#like previous, but dropping Month, Day
+inner(x,measure.var=c('Ozone','Solar.R','Wind','Temp'),na.rm=TRUE)# dropping Month, Day
 inner(rock,prob=0.5)
 }
 \keyword{manip}

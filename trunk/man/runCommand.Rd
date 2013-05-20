@@ -20,7 +20,8 @@ runCommand(
 	udef = FALSE,
 	ctlfile,
 	outfile,
-	perl = if (nix()) 'perl -S' else if (!invisible) 'cmd /K perl -S' else 'cmd /C perl -S',
+	perl = if (nix()) 'perl -S' else if (!invisible) 'cmd /K perl -S' 
+	else 'cmd /C perl -S',
 	intern = invisible,
 	minimized = invisible,
 	invisible = FALSE,
@@ -28,7 +29,8 @@ runCommand(
 	N = glue('Run', run, if (split) c('c', 'e') else NULL),
 	o = rdir,
 	e = rdir,
-	L=if(split & is.character(interface) & interface=='nm.pl')c(compileflag(compiler(config(dirname(command)))),NA)else NA,
+	L=if(split & is.character(interface) & interface=='nm.pl')
+	c(compileflag(compiler(config(dirname(command)))),NA)else NA,
 	hold_jid = if (split) c(NA, glue('Run', run, 'c')) else NA,
 	V = '',
 	j = 'y',

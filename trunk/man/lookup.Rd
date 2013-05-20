@@ -60,11 +60,11 @@ corresponding to x, but having some other form (representing some other attribut
 \author{Tim Bergsma}
 \examples{
 codes <- c(
-	'; etc <parameter name="THETA1" lattice="TH1" latex="\\\\Theta_1">effect of weight on clearance</parameter>',
-	'and some other stuff',
-	';<parameter name="OMEGA1" lattice="OM1" latex="\\\\Omega_1">interindivdual variance on volume</parameter>',
-	'with maybe a < sign',
-	';<parameter name="SIGMA1" lattice="SG1" latex="\\\\Sigma_1">additive error</parameter>'
+'; etc <parameter name="THETA1" lattice="TH1" latex="\\\\Theta_1">wt. on cl.</parameter>',
+'and some other stuff',
+';<parameter name="OMEGA1" lattice="OM1" latex="\\\\Omega_1">iiv on vol.</parameter>',
+'with maybe a < sign',
+';<parameter name="SIGMA1" lattice="SG1" latex="\\\\Sigma_1">additive error</parameter>'
 )
 codes
 doc <- ctl2xml(codes)

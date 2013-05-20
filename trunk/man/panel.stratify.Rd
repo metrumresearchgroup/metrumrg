@@ -23,8 +23,10 @@ panel.stratify(
 	col.symbol = if (is.null(groups)) plot.symbol$col else superpose.symbol$col, 
 	font = if (is.null(groups)) 
 	plot.symbol$font else superpose.symbol$font, 
-	fontfamily = if (is.null(groups)) plot.symbol$fontfamily else superpose.symbol$fontfamily, 
-	fontface = if (is.null(groups)) plot.symbol$fontface else superpose.symbol$fontface, 
+	fontfamily = if (is.null(groups)) plot.symbol$fontfamily 
+	else superpose.symbol$fontfamily, 
+	fontface = if (is.null(groups)) plot.symbol$fontface 
+	else superpose.symbol$fontface, 
 	lty = if (is.null(groups)) 
 	plot.line$lty else superpose.line$lty, 
 	cex = if (is.null(groups)) plot.symbol$cex else superpose.symbol$cex, 

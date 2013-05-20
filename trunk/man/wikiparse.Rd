@@ -8,7 +8,20 @@
 \title{Parse Wikimath}
 \description{Parse wikimath, optionally overriding default style arguments.}
 \usage{
-wikiparse(x, sim = "~", dot = "*", pregreek = "", sup = "^", openSup = "{", closeSup = "}", sub = "_", openSub = "{", closeSub = "}", wrap = "", ...)
+wikiparse(
+	x, 
+	sim = "~", 
+	dot = "*", 
+	pregreek = "", 
+	sup = "^", 
+	openSup = "{", 
+	closeSup = "}", 
+	sub = "_", 
+	openSub = "{", 
+	closeSub = "}", 
+	wrap = "", 
+	...
+)
 wiki2latex(x,...)
 wiki2plotmath(x,...)
 wiki2label(x,...)

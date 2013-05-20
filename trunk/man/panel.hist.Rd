@@ -11,7 +11,8 @@
   rescaled so that maximum bar height is 1.
 }
 \usage{
-panel.hist(x,y,level,horizontal,col.line,fill,factor,border=col.line,col=fill,offset=-0.5,font,fontface,...)
+panel.hist(x,y,level,horizontal,col.line,fill,factor,border=col.line,col=fill,
+offset=-0.5,font,fontface,...)
 panel.bar(x,y,level,horizontal,col,col.line,fill,factor,font,fontface,...)
 unitHist(x, plot = FALSE, ...)
 }

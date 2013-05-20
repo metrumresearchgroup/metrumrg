@@ -72,8 +72,24 @@ Cascading diagnostic plotting for data frames and data digests.
 \method{plot}{digest}(x, motif = as.motif(x), roles = as.roles(x, motif = motif), ...)
 \method{plot}{isolated}(x, ...)
 \method{plot}{keyed}(x, roles = as.roles(x), ...)
-\method{splom}{conditioned}(x, data=NULL, roles = as.roles(x), main = "", xlab = "", pscales = 0, ...)
-\method{splom}{digest}(x, data=NULL, motif = as.motif(x), roles = as.roles(x, motif = motif), main = "", xlab = "", pscales = 0, ...)
+\method{splom}{conditioned}(
+	x, 
+	data=NULL, 
+	roles = as.roles(x), 
+	main = "", 
+	xlab = "", 
+	pscales = 0, 
+	...
+)
+\method{splom}{digest}(
+	x, 
+	data=NULL, 
+	motif = as.motif(x), 
+	roles = as.roles(x, motif = motif), 
+	main = "", xlab = "", 
+	pscales = 0, 
+	...
+)
 \method{splom}{keyed}(x, data=NULL, roles = as.roles(x), ...)
 legacy(x, ...)
 legacy(x) <- value

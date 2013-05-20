@@ -32,7 +32,8 @@ qsub(command, ...)
 	}
 }
 \examples{
-qsub('nm.pl',`@`='options',hard='',i='stdin',soft='',hard='',N=c('Run3c','Run3e'),hold_jid=c(NA,'Run3c'))
+qsub('nm.pl',`@`='options',hard='',i='stdin',soft='',hard='',N=c('Run3c','Run3e'),
+hold_jid=c(NA,'Run3c'))
 #[1] 'qsub -@ options -hard  -i stdin -soft  -hard  -N Run3c  nm.pl'               
 #[2] 'qsub -@ options -hard  -i stdin -soft  -hard  -N Run3e -hold_jid Run3c nm.pl'
 }

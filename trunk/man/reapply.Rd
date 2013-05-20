@@ -59,7 +59,8 @@ Theoph$Subject <- as.character(Theoph$Subject)
 Theoph$where <- TRUE
 Theoph <- within(Theoph, where[Subject == 2 & conc == 0] <- FALSE)
 Theoph <- rbind(Theoph, aug(Theoph[1,],Subject = NA))
-Theoph$misc <- reapply(Theoph$conc,INDEX=Theoph[,c('Subject','Dose')],where=Theoph$where,FUN= `[`,1:3)
+Theoph$misc <- reapply(Theoph$conc,INDEX=Theoph[,c('Subject','Dose')],
+where=Theoph$where,FUN= `[`,1:3)
 Theoph
 stopifnot(class(reapply(c('foo','bar'),INDEX=c(1,1),FUN=function(x)x=='foo'))=='logical')
 }
