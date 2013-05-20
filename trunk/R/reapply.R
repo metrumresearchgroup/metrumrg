@@ -14,9 +14,10 @@ reapply <-
     val <- lapply(vals, FUN, ...)
     dim <- table(INDEX)
     val <- lapply(seq_along(val),function(i)rep(val[[i]], length.out=dim[[i]]))
+    t <- NA # default to logical
     if(length(val)) if(length(val[[1]])) t <- val[[1]][[1]] # sample type given by FUN
-    t <- NA # default to logical, preserve class if present
-    y <- rep(t,length(x))
+    t[[1]] <- NA # ensure non-informative
+    y <- rep(t[[1]],length(x))
     split(y,INDEX) <- val # minimal bias with respect to class
     y[is.na(INDEX)] <- NA # probably true already
     y
