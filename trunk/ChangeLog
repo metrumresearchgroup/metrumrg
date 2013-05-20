@@ -1,6 +1,7 @@
 5.46
 
 * reapply returns same class as FUN; since 5.35 class has been that of x.
+* only is rewritten without ifelse, so that it does not unclass its argument.
 
 5.45
 
