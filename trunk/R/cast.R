@@ -49,6 +49,7 @@ melt.keyed <- function(
   na.rm = FALSE, 
   ...
 ){
+  if(missing(id.vars))message('using (key) ',paste(id.vars,collapse=', '),' as id.vars')
   x <- melt(
     data=as.data.frame(data),
     id.vars=id.vars,

@@ -2,6 +2,7 @@
 
 * reapply returns same class as FUN; since 5.35 class has been that of x.
 * only is rewritten without ifelse, so that it does not unclass its argument.
+* melt.keyed now gives a message if id.vars defaults to the key.
 
 5.45
 
