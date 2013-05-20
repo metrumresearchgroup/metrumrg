@@ -1,3 +1,7 @@
+5.47
+
+* Documentation has been altered to comply with new CRAN line length restrictions.
+
 5.46
 
 * reapply returns same class as FUN; since 5.35 class has been that of x.
