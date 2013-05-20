@@ -77,23 +77,12 @@ nth <- function(
 }
 first <- function(x,where,within,...)nth(x=x,where=where,within=within,n=1)
 last <-  function(x,where,within,...)nth(x=x,where=where,within=within,n=-1)
-only <- function(x,where,within,...)ifelse(
-	is.na(
-		nth(
-			x=x,
-			where=where,
-			within=within,
-			n=2
-		)
-	),
-	nth(
-		x=x,
-		where=where,
-		within=within,
-		n=1
-	),
-	NA
-)
+only <- function(x,where,within,...){
+	first  <- nth(x=x,where=where,within=within,n=1)
+	second <- nth(x=x,where=where,within=within,n=1)
+	first[is.defined(second)] <- NA
+	first
+}
 	
 
 #logicals

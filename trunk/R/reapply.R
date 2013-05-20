@@ -14,7 +14,10 @@ reapply <-
     val <- lapply(vals, FUN, ...)
     dim <- table(INDEX)
     val <- lapply(seq_along(val),function(i)rep(val[[i]], length.out=dim[[i]]))
-    split(x,INDEX) <- val
-    x[is.na(INDEX)] <- NA
-    x
+    t <- val[[1]][[1]]
+    t <- NA
+    y <- rep(t,length(x))
+    split(y,INDEX) <- val # minimal bias with respect to class
+    y[is.na(INDEX)] <- NA # probably true already
+    y
   }

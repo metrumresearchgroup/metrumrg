@@ -1,3 +1,7 @@
+5.46
+
+* reapply returns same class as FUN; since 5.35 class has been that of x.
+
 5.45
 
 * crosses has been rewritten to solve a bug.  crosses(c(1,1,1),c(1,2,2)) now gives F T T not F T F.

@@ -8,7 +8,7 @@ reapply(x, INDEX, FUN, where, ...)
 \arguments{
   \item{x}{an atomic object, typically a vector}
   \item{INDEX}{list of factors, each of same length as \code{x}}
-  \item{FUN}{the function to be applied. In the case of functions like \code{+}, \code{\%*\%}, etc., the function name must be quoted.}
+  \item{FUN}{a function that accepts a vector and returns a vector}
   \item{where}{logical, restricting the domain of x}
   \item{\dots}{optional arguments to \code{FUN}}
 }
@@ -34,7 +34,12 @@ these elements in isolation.
 \value{an atomic object, typically a vector}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
-
+\note{
+Caution!  If \code{FUN} is isometric (output has same length as input, e.g. \code{cumsum} but not \code{mean}) then
+use of \code{where} may give surprising results.  If \code{where} is ever \code{FALSE},
+then the input to \code{FUN} will be necessarily shorter than the required output,
+and recycling will be in effect.
+}
 \seealso{
 	\itemize{
 		\item \code{\link{tapply}}
@@ -56,7 +61,7 @@ Theoph <- within(Theoph, where[Subject == 2 & conc == 0] <- FALSE)
 Theoph <- rbind(Theoph, aug(Theoph[1,],Subject = NA))
 Theoph$misc <- reapply(Theoph$conc,INDEX=Theoph[,c('Subject','Dose')],where=Theoph$where,FUN= `[`,1:3)
 Theoph
-
+stopifnot(class(reapply(c('foo','bar'),INDEX=c(1,1),FUN=function(x)x=='foo'))=='logical')
 }
 \keyword{manip}
 
