@@ -93,6 +93,7 @@ an S3 "num" object with class \code{c(n, 'duration','timeline','numeric')}, wher
 	\itemize{
 		\item \code{\link{as.mDateTime}}
 		\item \code{\link{timeline}}
+		\item \code{\link{c.timeline}}
 	}
 }
 \examples{
@@ -107,5 +108,10 @@ as.week(2) + 1
 as.week(2) - 1
 2 + as.week(1)
 2 - as.week(1)
+class(c(as.day(1),as.day(2)))
+class(as.day(1:5)[3])
+class(as.day(1:5)[[3]])
+class(seq(from=as.day(2),to=as.day(6)))
+class(rep(as.day(1),5))
 }
 \keyword{manip}

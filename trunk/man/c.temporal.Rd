@@ -1,32 +1,32 @@
-\name{c.timepoint}
-\alias{c.timepoint}
-\alias{[.timepoint}
+\name{c.timeline}
+\alias{c.timeline}
+\alias{[.timeline}
 \alias{[<-.timepoint}
-\alias{[[.timepoint}
+\alias{[[.timeline}
 \alias{as.character.timepoint}
 \alias{as.chartime.numeric}
 \alias{as.chartime}
 \alias{as.numeric.chartime}
 \alias{print.timepoint}
-\alias{seq.timepoint}
-\alias{rep.timepoint}
+\alias{seq.timeline}
+\alias{rep.timeline}
 \title{Support for timepoint Classes}
 \description{
-  These functions support classes timepoint, mTime, mDate, and mDateTime
+  These functions support classes timepoint, timeline, mTime, mDate, and mDateTime
   (and related functions).  They are mostly S3 methods for base R generics.
 }
 \usage{
-\method{c}{timepoint}(..., recursive = FALSE)
-\method{[}{timepoint}(x, ..., drop = TRUE)
+\method{c}{timeline}(..., recursive = FALSE)
+\method{[}{timeline}(x, ..., drop = TRUE)
 \method{[}{timepoint}(x, ...) <- value
-\method{[[}{timepoint}(x, ..., drop = TRUE)
+\method{[[}{timeline}(x, ..., drop = TRUE)
 \method{as.character}{timepoint}(x, ...)
 as.chartime(x, ...)
 \method{as.chartime}{numeric}(x, format, mark=TRUE,...)
 \method{as.numeric}{chartime}(x, format,...)
 \method{print}{timepoint}(x, ...)
-\method{rep}{timepoint}(x, ...)
-\method{seq}{timepoint}(from, to, by, length.out, along.with, ...)
+\method{rep}{timeline}(x, ...)
+\method{seq}{timeline}(from, to, by, length.out, along.with, ...)
 }
 
 \arguments{
@@ -47,7 +47,7 @@ as.chartime(x, ...)
   Normally you shouldn't need to worry about these functions.  \code{c} and the \sQuote{[} 
   variants exist just so that class information is not lost on invocation of the 
   generic.  \code{as.character.timepoint} and \code{print.timepoint} just call \code{format}.
-  \code{chartime} variants are used internally by other functions.  \code{seq.timepoint} 
+  \code{chartime} variants are used internally by other functions.  \code{seq.timeline} 
   requires \code{from}. If an interval cannot be calculated from supplied arguments,
   \code{by} is set to 1 hour for \code{mTime} or 1 day for \code{mDate} or \code{mDateTime}.
 }

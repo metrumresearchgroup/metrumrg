@@ -121,7 +121,7 @@ as.mDateTime(x, ...)
 \seealso{
 	\itemize{
 		\item \code{\link{duration}}
-		\item \code{\link{c.timepoint}}
+		\item \code{\link{c.timeline}}
 	}
 }
 \examples{

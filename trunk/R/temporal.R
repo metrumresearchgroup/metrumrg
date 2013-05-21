@@ -45,13 +45,13 @@ print.timepoint <-function(x,...){
 	print(format(x,...),quote=FALSE)
 	invisible(x)
 }
-c.timepoint <- function (..., recursive = FALSE){
+c.timeline <- function (..., recursive = FALSE){
 	args <- list(...)
 	oldclass <- class(args[[1]])	
 	structure(c(unlist(lapply(args, unclass))), class = oldclass)
 }
-seq.timepoint <- function (from, to, by, length.out, along.with, ...){
-  if(missing(from))stop('seq.timepoint requires "from"')
+seq.timeline <- function (from, to, by, length.out, along.with, ...){
+  if(missing(from))stop('seq.timeline requires "from"')
   #defaults for interval can be set, if neither specified nor implied
   specified <- !missing(by)
   implied <- !missing(to) & (!missing(length.out) | !missing(along.with))
@@ -81,11 +81,11 @@ seq.timepoint <- function (from, to, by, length.out, along.with, ...){
 as.mTime.mTime <- function(x,...)x
 as.mDate.mDate <- function(x,...)x
 as.mDateTime.mDateTime <- function(x,...)x
-rep.timepoint <- function (x, ...) structure(rep(as.numeric(x),...),class=class(x))
+rep.timeline <- function (x, ...) structure(rep(as.numeric(x),...),class=class(x))
 
 
-`[.timepoint` <- function (x, ..., drop = TRUE)structure(NextMethod(.Generic), class = oldClass(x))
-`[[.timepoint` <- function (x, ..., drop = TRUE)structure(NextMethod(.Generic), class = oldClass(x))
+`[.timeline` <- function (x, ..., drop = TRUE)structure(NextMethod(.Generic), class = oldClass(x))
+`[[.timeline` <- function (x, ..., drop = TRUE)structure(NextMethod(.Generic), class = oldClass(x))
 
 `[<-.timepoint` <- function (x, ..., value){
     if (!(length(value)))return(x)

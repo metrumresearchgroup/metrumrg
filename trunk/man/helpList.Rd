@@ -14,12 +14,12 @@
 \item \link{[.initList} subset initList
 \item \link{[.keyed} subset a keyed data frame
 \item \link{[.nmctl} subset a control stream object
-\item \link{[.timepoint} subset a timepoint object
+\item \link{[.timeline} subset a timeline object
 \item \link{[.uniKey} subset a uniKey object
 \item \link{[[.comment} select element from a comment
 \item \link{[[.flag} select element from a flag
 \item \link{[[.nmctl} select element from a control stream object
-\item \link{[[.timepoint} select element from a timepoint object
+\item \link{[[.timeline} select element from a timeline object
 \item \link{[[.uniKey} select element from a uniKey object
 \item \link{[<-.timepoint} assign to a timepoint object
 \item \link{\%+\%} generic set union binary operator
@@ -227,7 +227,7 @@
 \item \link{bundleRead} read filtered directory contents into a list
 \item \link{c.comment} combine comment
 \item \link{c.flag} combine flag
-\item \link{c.timepoint} combine timepoint
+\item \link{c.timeline} combine timeline
 \item \link{c.uniKey} combine uniKey
 \item \link{cast,keyed-method} cast a keyed data.frame, restoring key and output classes
 \item \link{cavg} calculate average concentration
@@ -475,7 +475,7 @@
 \item \link{reapply} apply a function across cells of an indexed vector, giving an identically-indexed result
 \item \link{rep.comment} repeat comment
 \item \link{rep.flag} repeat flag
-\item \link{rep.timepoint} repeat timepoint
+\item \link{rep.timeline} repeat timeline
 \item \link{rep.uniKey} repeat uniKey
 \item \link{resample.csv.filename} create replicate data sets by stratified sampling with replacement, after reading csv file
 \item \link{resample.data.frame} create replicate data sets by stratified sampling with replacement
@@ -498,7 +498,7 @@
 \item \link{safe.call} call a function, passing only those extra arguments that the function accepts
 \item \link{safeQuote} single-quote unquoted text that contains space
 \item \link{scavenge} find an expression in lines of text
-\item \link{seq.timepoint} generate timepoint sequence
+\item \link{seq.timeline} generate timeline sequence
 \item \link{setCwres} append conditional weighted residuals to an appropriate file
 \item \link{shuffle} move columns in a data frame
 \item \link{sigmacor} convert sigma covariance in NONMEM output to correlation matrix
