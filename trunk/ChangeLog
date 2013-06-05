@@ -1,3 +1,7 @@
+5.50
+
+* bugfix for only: broken since 5.46.
+
 5.49
 
 * c.timepoint, seq.timepoint, rep.timepoint, [.timepoint, and [[.timepoint have been replaced with *.timeline equivalents.  Intent is to support basic manipulations for duration objects as well as timepoint objects, both of which inherit from timeline.

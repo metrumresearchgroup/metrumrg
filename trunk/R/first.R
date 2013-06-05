@@ -79,7 +79,7 @@ first <- function(x,where,within,...)nth(x=x,where=where,within=within,n=1)
 last <-  function(x,where,within,...)nth(x=x,where=where,within=within,n=-1)
 only <- function(x,where,within,...){
 	first  <- nth(x=x,where=where,within=within,n=1)
-	second <- nth(x=x,where=where,within=within,n=1)
+	second <- nth(x=x,where=where,within=within,n=2)
 	first[is.defined(second)] <- NA
 	first
 }
