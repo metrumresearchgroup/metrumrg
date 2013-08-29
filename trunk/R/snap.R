@@ -1,12 +1,11 @@
 snap <- function(x,rule=1,left=TRUE,...){
-	y <- x
-	x <- x[is.finite(x)]
 	stopifnot(
 		is.numeric(x),
 		is.numeric(rule),
-		is.finite(x),
+		#is.finite(x),
 		is.finite(rule)
 	)
+	if(!length(x))return(x)
 	rule <- sort(unique(rule))
 	if(length(rule)==1){
 		stopifnot(rule > 0)
@@ -24,6 +23,5 @@ snap <- function(x,rule=1,left=TRUE,...){
 	rt <- rule[rt]
 	fun <- match.fun(if(left) '<=' else '<')
 	closer <- ifelse(fun(abs(x-lt),abs(rt - x)), lt, rt)
-	y[is.finite(y)] <- closer
-	y
+	closer
 }

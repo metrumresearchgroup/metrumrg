@@ -19,6 +19,7 @@ to \code{cut}: whereas in \code{cut} one specifies the "breaks", with \code{snap
 specifies a set of "attractors" (breaks are the implied midpoints); both functions map their
 primary argument to a (possibly) smaller set of values.}
 \value{numeric}
+\note{If length of x is zero, it is returned unmodified. If length of rule is zero, value is all NA.}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{
 Tim Bergsma
@@ -35,6 +36,8 @@ snap(-10:10, 0.3)
 xyplot(conc~Time,data=Theoph,groups=Subject)
 times <- c(0,.25,.5,1,2,4,5,7,9,12,24)
 xyplot(conc~snap(Time,times),data=Theoph,groups=Subject)
+snap(c(3,NA,5), c(2,4,6))
+snap(c(3,NA,5), numeric(0))
 }
 \keyword{ manip }
 
