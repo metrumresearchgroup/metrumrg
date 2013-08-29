@@ -4,7 +4,7 @@
 * iterations is tolerant of NUMSIGDIG.
 * worker directories purged by default in purgeRunDir, etc.
 * Categorical covariates (cat.cov) in PLOTR are coerced to factor.
-* snap accepts non-finite elements, returning them unaltered.
+* snap accepts non-finite elements.
 * rlog tolerates runs with maxeval:0.
 * NONR:checkrunno works with control streams having comments after $PROBLEM.
 * tabular.data.frame picks up source and file arguments, as for ltable.

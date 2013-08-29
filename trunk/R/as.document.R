@@ -11,6 +11,7 @@ as.document.character <- function(
     papersize <- glue('{',wide,'mm',',',long,'mm}')
     doc <-  c(
     	command('documentclass',args='article'),
+    	command('usepackage',args='colortbl'),
     	command(
 	      'usepackage',
 	      options=list(
