@@ -8,10 +8,11 @@ as.document.character <- function(
 	epilog=NULL,
 	...
 ){
+
     papersize <- glue('{',wide,'mm',',',long,'mm}')
     doc <-  c(
     	command('documentclass',args='article'),
-    	command('usepackage',args='colortbl'),
+    	command('usepackage',options=list('usenames','dvispnames','svgnames','table'),args='xcolor'),
     	command(
 	      'usepackage',
 	      options=list(
