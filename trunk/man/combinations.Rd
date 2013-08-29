@@ -1,5 +1,6 @@
 \name{combinations}
 \alias{combinations}
+\alias{combinations.data.frame}
 
 \title{Display Combinations of Column Values}
 \description{

@@ -37,7 +37,7 @@ information to uniquely distinguish each row.  Specific functions and methods
 take advantage of this information.
 }
 \usage{
-\method{[}{keyed}( x, i, j, drop = if (missing(i)) TRUE else length(cols) == 1)
+\method{[}{keyed}( x, i, j, drop)
 \method{aggregate}{keyed}(x, by=x[,setdiff(key(x),across),drop=FALSE], FUN, across=character(0), ...)
 \method{as.keyed}{data.frame}(x, key=character(0), ...)
 dupKeys(x, ...)

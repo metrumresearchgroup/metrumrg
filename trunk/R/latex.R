@@ -240,7 +240,7 @@ tabular.data.frame <- function(
     rowbreaks <- rowbreaks - 1
   }
   x <- wrap(x,'tabular',args=format)
-  class(x) <- c('tabular',class(res))
+  class(x) <- c('tabular',class(x))
     if(!is.null(source))if(!is.null(source.label)) x <- c(x,glue('\\\\{\\tiny ',source.label,source,'}'))
   if(!is.null(file))if(!is.null(file.label)) x <- c(
     x,
