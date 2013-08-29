@@ -17,8 +17,8 @@ defaults to the method for keyed, which returns the merge of the two data sets.
  	suppx,
 	...
  )
-}
- \method{supp}{keyed}(
+ 
+\method{supp}{keyed}(
  	x,
  	suppx,
  	value= 'QVAL',  # possibly QORIG or QEVAL
@@ -44,6 +44,7 @@ See p. 124.
 	\itemize{
 		\item \code{\link{as.keyed}}
 	}
+}
 \examples{
 \dontrun{
 library(foreign)

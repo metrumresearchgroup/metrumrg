@@ -52,6 +52,7 @@ with a leading asterisk on column names.  See examples.
 	\itemize{
 		\item \code{\link{as.keyed}}
 	}
+}
 \examples{
 combinations(
 	iris[,c('Species','Petal.Width','Sepal.Length')],

@@ -40,6 +40,7 @@ A vector (same length as x) \code{nondecreasing} and \code{nonincreasing}.
 	\itemize{
 		\item \code{\link{prev}}
 	}
+}
 \examples{
 x <- c(1,2,2,3,4)
 nondecreasing(x)
