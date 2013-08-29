@@ -66,7 +66,7 @@ combinations(
 	count=TRUE
 )
 
-	}
 }
+
 \keyword{manip}
 

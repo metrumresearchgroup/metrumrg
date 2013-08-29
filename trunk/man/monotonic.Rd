@@ -25,7 +25,7 @@
 
 \arguments{
   \item{x}{vector}
-  \item
+  \item{strict}{if FALSE, repeated values are tolerated. See examples.}
   \item{\dots}{ignored}
 }
 
