@@ -185,7 +185,7 @@ aggregate.keyed <- function(
   if(!missing(j))if(inherits(j, 'character')){
     detect <- grepl('^\\*',j)
     j <- sub('^\\*','',j)
-    token <- options('defined')
+    token <- getOption('defined')
     if(is.null(token)) token <- 'defined'
     for(col in j[detect]) x[[col]][is.defined(x[[col]])] <- token
     
