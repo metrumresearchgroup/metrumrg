@@ -21,5 +21,6 @@ I want to ....
 \item \link[=is.defined]{test whether elements are defined}
 \item \link[=pool]{test for unique and shared elements among two vectors}
 \item \link[=as.vector.keyed]{binary operators for set relations}
+\item \link[=monotonic]{check whether vector is nonincreasing, nondecreasing, and/or monotonic}
 }
 }

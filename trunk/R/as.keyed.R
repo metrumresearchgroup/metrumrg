@@ -176,12 +176,24 @@ aggregate.keyed <- function(
 	x[do.call(order,KEY),,drop=FALSE]
 }
 
-`[.keyed` <- function(x,...){
-	y <- NextMethod()
-	key(y) <- key(x)
-	y
+`[.keyed` <- function (
+  x, 
+  i,
+  j, 
+  drop = if (missing(i)) TRUE else length(cols) == 1
+){
+  if(!missing(j))if(inherits(j, 'character')){
+    detect <- grepl('^\\*',j)
+    j <- sub('^\\*','',j)
+    token <- options('defined')
+    if(is.null(token)) token <- 'defined'
+    for(col in j[detect]) x[[col]][is.defined(x[[col]])] <- token
+    
+  }
+  y <- NextMethod()
+  key(y) <- key(x)
+  y
 }
-
 transform.keyed <- function(`_data`,...){
 	x <- NextMethod('transform',`_data`,...)
 	class(x) <- class(`_data`)

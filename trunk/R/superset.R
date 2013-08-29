@@ -211,7 +211,7 @@ superset <- function(
     if(is.na(val))stop('no value')
     if(is.na(op))op <- 'EQ'
     pos <- match(label,labels)
-    vec <- data[pos]
+    vec <- data[,pos]
     if(any(is.na(vec))){
     	    warning('imputing NA as "."')
     	    vec[is.na(vec)] <- '.'
@@ -261,6 +261,7 @@ superset <- function(
   x <- x[x != '']
   x <- sub('^\\s+','',x)
   x <- sub(';.*','',x)
+  x <- x[x != '']
   x <- paste(x,collapse=' ')
   x <- gsub(',',' ',x)
   x <- gsub(' +',' ',x)

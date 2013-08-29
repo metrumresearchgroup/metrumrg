@@ -1,5 +1,6 @@
 iterations <-
 function(x,...){
+	x[x %contains% 'NUMSIGDIG'] <- ''
 	nodes <- grepl('ITERATION NO.:',x)
 	if(sum(nodes)==0)stop('no iterations found')
 	first <- first(where=nodes)

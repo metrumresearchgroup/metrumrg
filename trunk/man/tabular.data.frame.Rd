@@ -37,6 +37,7 @@ and tries to open those pdfs for viewing.
 	colgroups = names(x), 
 	rowbreaks = if (grid) breaks(rowgroups, ...) else 0,
 	colbreaks = if (grid) breaks(colgroups, ...) else 0, 
+	rowcolors=NULL,	
 	charjust = "left", 
 	numjust = "right", 
 	justify = ifelse(sapply(x, is.numeric), numjust, charjust), 
@@ -46,6 +47,12 @@ and tries to open those pdfs for viewing.
 	verbatim = ifelse(sapply(x, is.numeric), TRUE, FALSE), 
 	escape = "#", 
 	trim = TRUE, 
+	source=NULL,
+	file=NULL,
+	source.label='source: ',
+	file.label='file: ',
+	basefile=FALSE,
+
 	...
 )
 \method{as.document}{data.frame}(
@@ -57,6 +64,7 @@ and tries to open those pdfs for viewing.
 	colgroups = names(x), 
 	rowbreaks = if (grid) breaks(rowgroups, ...) else 0,
 	colbreaks = if (grid) breaks(colgroups, ...) else 0, 
+	rowcolors=NULL,	
 	charjust = "left", 
 	numjust = "right", 
 	justify = ifelse(sapply(x, is.numeric), numjust, charjust), 
@@ -113,6 +121,7 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{colgroups}{a vector as long as names(x), non-repeats trigger vertical lines}
   \item{rowbreaks}{numeric: a manual way to specify numbers of lines between rows (ignores grid and rowgroups)}
   \item{colbreaks}{numeric: a manual way to specify numbers of lines between columns (ignores grid and colgroups)}
+  \item{rowcolors}{character vector of color names, recycled as necessary to color all rows (NULL: no color)}
   \item{charjust}{default justification for character columns}
   \item{numjust}{default justification for numeric columns}
   \item{justify}{manual specification of column justifications: left, right, center, or decimal (vector as long as ncol(x))}
@@ -123,6 +132,11 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{escape}{symbol used by `verb' command as delimiter.  A warning is issued if it is found in non-NA text.}
   \item{trim}{passed to the format command: true by default, so that 
   alignment is the responsibility of just the tabular environment arguments}
+  \item{source}{optional source attribution}
+  \item{file}{optional file name}
+  \item{source.label}{optional text to preceed source if specified}
+  \item{file.label}{optional text to preceed file if specified}
+  \item{basefile}{if TRUE, strip path from file for display purposes}
   \item{wide}{document width in mm}
   \item{long}{document lenth in mm}
   \item{wider}{additional document width in mm}
@@ -147,6 +161,14 @@ objects that show implicitly which sets of columns or rows go together. Neighbor
 groups will be separated with a line.  For multiple lines at a given 
 position, explicit control is offered by rowbreaks and colbreaks.  These 
 latter have lengths one less than their respective dimensions.
+
+If \code{source} and \code{source.label} are defined, they will be printed in a tiny font immediately
+under the table (bound to the tabular element).  If \code{file} and \code{file.label} are defined as well,
+they will be printed (tiny) under source.  Set \code{source.label} to NULL to 
+suppress embedding of \code{source}; set to empty string to suppress source label. Set \code{file.label} to NULL to 
+suppress embedding of \code{file}; set to empty string to suppress file label. Note that
+\code{file} controls file destination, whether or not represented in the result.
+
 
 Rownames are ignored.  If informative, capture them as a column.
 }

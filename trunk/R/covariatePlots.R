@@ -14,6 +14,7 @@ function (
     if(length(cat.cov)) cat.cov <- intersect(cat.cov,names(data))
     if(length(par.list)) par.list <- intersect(par.list,names(data))
     if(length(eta.list)) eta.list <- intersect(eta.list,names(data))
+    for(cov in cat.cov)data[[cov]] <- factor(data[[cov]])
     data <- data[!duplicated(data$ID),]
     #Covariate SPLOM
     if (length(cont.cov) >= 2)plots$covSplom <- splom(
@@ -186,6 +187,7 @@ function (
     #If we got here, we have only one variant.
     if(length(cont.cov)) cont.cov <- intersect(cont.cov,names(data))
     if(length(cat.cov)) cat.cov <- intersect(cat.cov,names(data))
+    for(cov in cat.cov)data[[cov]] <- factor(data[[cov]])
     names(data)[names(data)==variant] <- '.res' # canonical name for easy melt formulas
     #variant vs. Categoricals
     if(length(cat.cov)){

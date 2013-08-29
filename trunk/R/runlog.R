@@ -120,6 +120,7 @@ as.unilog.run <- function(
 			.minstat(xml),
 			error=function(e)'error'
 		)
+		if(is.null(min))min <- NA
 		locator <- with(out,parameter=='min' & moment == 'status')
 		if(sum(locator)==1) out$value[locator] <- min
 	}

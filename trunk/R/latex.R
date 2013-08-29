@@ -129,7 +129,7 @@ ltable.data.frame <- function(
   basefile=FALSE,
   ...
 ){
-  x <- tabular(x,...)
+  x <- tabular(x, ...)
   if(!is.null(source))if(!is.null(source.label)) x <- c(x,glue('\\\\{\\tiny ',source.label,source,'}'))
   if(!is.null(file))if(!is.null(file.label)) x <- c(
     x,
@@ -178,6 +178,7 @@ tabular.data.frame <- function(
   colgroups=names(x),
   rowbreaks=if(grid)breaks(rowgroups,...)else 0,
   colbreaks=if(grid)breaks(colgroups,...)else 0,
+  rowcolors=NULL,  
   charjust='left',
   numjust='right',
   justify=ifelse(sapply(x,is.numeric),numjust,charjust),
@@ -187,6 +188,11 @@ tabular.data.frame <- function(
   verbatim=ifelse(sapply(x,is.numeric),TRUE,FALSE),
   escape='#',
   trim=TRUE,
+  source=NULL,
+  file=NULL,
+  source.label='source: ',
+  file.label='file: ',
+  basefile=FALSE,
   ...
 ){
   #groom arguments
@@ -197,6 +203,7 @@ tabular.data.frame <- function(
   colgroups <- rep(colgroups, length.out=ncol(x))
   rowbreaks <- rep(rowbreaks, length.out=nrow(x)-1)
   colbreaks <- rep(colbreaks, length.out=ncol(x)-1)
+  rowcolors <- rep(rowcolors, length.out=nrow(x))
   stopifnot(length(charjust)==1)
   stopifnot(length(numjust)==1)	
   stopifnot(length(escape)==1)	
@@ -224,6 +231,7 @@ tabular.data.frame <- function(
   # splice in the horizontal rules
   # we treat header as a row, and treat rules[2:3] as pertaining to first and last row.
   # we create an empty row to represent pre-header
+  if(!is.null(rowcolors))x <- glue('\\rowcolor{',rowcolors,'}',x)
   x <- c('',header,x)
   rowbreaks <- c(rules[1:2],rowbreaks,rules[[3]])
   stopifnot(length(rowbreaks)==length(x))
@@ -231,7 +239,21 @@ tabular.data.frame <- function(
     x[rowbreaks > 0] <- paste(x[rowbreaks > 0],'\\hline')
     rowbreaks <- rowbreaks - 1
   }
-  res <- wrap(x,'tabular',args=format)
-  class(res) <- c('tabular',class(res))
-  res
+  x <- wrap(x,'tabular',args=format)
+  class(x) <- c('tabular',class(res))
+    if(!is.null(source))if(!is.null(source.label)) x <- c(x,glue('\\\\{\\tiny ',source.label,source,'}'))
+  if(!is.null(file))if(!is.null(file.label)) x <- c(
+    x,
+    glue(
+      '\\\\{\\tiny ',
+      file.label,
+      if(basefile)basename(file) else file,
+      '}'
+    )
+  )
+  if(is.null(file))return(x)
+  else{
+      writeLines(x,file)
+      invisible(x)
+  }
 }

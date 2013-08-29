@@ -167,6 +167,7 @@ purgeRunDir <- function(
         	'WK', 'LNK$', 'fort', '^nm', 'lnk$', 
         	'set$','^gar', '^temp', '^tr','^new', 
         	'^Run\\d+\\.o\\d+$','^prsizes','log$',
+        	'worker',
         	if(!debug)c('^FD','^PR')
         ),
         extra=character(0),

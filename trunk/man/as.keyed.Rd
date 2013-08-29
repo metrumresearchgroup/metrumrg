@@ -37,7 +37,7 @@ information to uniquely distinguish each row.  Specific functions and methods
 take advantage of this information.
 }
 \usage{
-\method{[}{keyed}(x, ...)
+\method{[}{keyed}( x, i, j, drop = if (missing(i)) TRUE else length(cols) == 1)
 \method{aggregate}{keyed}(x, by=x[,setdiff(key(x),across),drop=FALSE], FUN, across=character(0), ...)
 \method{as.keyed}{data.frame}(x, key=character(0), ...)
 dupKeys(x, ...)
@@ -54,6 +54,9 @@ unsorted(x, ...)
 }
 \arguments{
   \item{x}{a (keyed) data.frame}
+  \item{i}{first index}
+  \item{j}{second index}
+  \item{drop}{whether to drop unused dimensions}
   \item{by}{a list of indices as long as \code{nrow(x)}, whose interaction gives the aggregates (groups)}
   \item{FUN}{an aggregating function}
   \item{across}{column names in \code{key(x)} across which to aggregate; see details}

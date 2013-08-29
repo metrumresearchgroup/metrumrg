@@ -7,7 +7,7 @@ a vector of candidate values.}
 snap(x, rule = 1, left = TRUE, ...)
 }
 \arguments{
-  \item{x}{finite numeric}
+  \item{x}{numeric}
   \item{rule}{a vector of (finite numeric) candidates, or a single value giving candidate interval on the real number line}
   \item{left}{whether to return the lesser of two equidistant candidates}
   \item{\dots}{ignored}

@@ -1,3 +1,17 @@
+5.51
+
+* Better logic for ignore functionality under superset.
+* iterations is tolerant of NUMSIGDIG.
+* worker directories purged by default in purgeRunDir, etc.
+* Categorical covariates (cat.cov) in PLOTR are coerced to factor.
+* snap accepts non-finite elements, returning them unaltered.
+* rlog tolerates runs with maxeval:0.
+* NONR:checkrunno works with control streams having comments after $PROBLEM.
+* tabular.data.frame picks up source and file arguments, as for ltable.
+* tabular.data.frame supports row color.
+* [.keyed supports detection of defined elements.
+* New functions: combinations, supp, nondecreasing, nonincreasing, monotonic.
+
 5.50
 
 * bugfix for only: broken since 5.46.

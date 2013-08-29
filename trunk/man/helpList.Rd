@@ -239,6 +239,7 @@
 \item \link{cmin} calculate minimum steady-state concentration
 \item \link{colname<-} change identified column names
 \item \link{command} generate a latex command
+\item \link{combinations} show sorted unique rows
 \item \link{compileflag} calculate compiler flag for qsub
 \item \link{compiler} extract compiler specification from configuration file
 \item \link{compute.cwres} compute conditional weighted residuals
@@ -389,6 +390,12 @@
 \item \link{minus.moot} drop moot rows
 \item \link{moot.nm} identify moot rows (rows not influencing NONMEM estimates)
 \item \link{moot} generic
+\item \link{monotonic} generic
+\item \link{monotonic.default} check whether the values in a vector are monotonic
+\item \link{nondecreasing} generic
+\item \link{nondecreasing.default} check whether the values in a vector are nondecreasing
+\item \link{nonincreasing}generic
+\item \link{nonincreasing.default} check whether the values in a vector are nonincreasing
 \item \link{motif} alias for as.motif
 \item \link{msffile} extract msffile specification from a control stream
 \item \link{naInContext} display rows of data with missing values, as well as other rows with the same key
@@ -522,6 +529,9 @@
 \item \link{summary.keyed} summarize a keyed data frame
 \item \link{summary.nm} summarize an nm object
 \item \link{superset} combine all NONMEM input with all output
+\item \link{supp} generic
+\item \link{supp.data.frame} supplement a CDISC data.frame
+\item \link{supp.keyed} supplement a CDISC keyed data.frame
 \item \link{svnIsText} check if subversioned files are text rather than binary
 \item \link{svnMarkAsNonText} tell Subversion to treat files as binary
 \item \link{svnMarkAsText} tell Subversion to treat files as text
