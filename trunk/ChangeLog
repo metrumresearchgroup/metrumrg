@@ -1,3 +1,10 @@
+
+5.52
+
+* prev supports factors.
+* merge.nm is undefined.
+* as.nm no longer limits the significance of time variables.
+
 5.51
 
 * Better logic for ignore functionality under superset.

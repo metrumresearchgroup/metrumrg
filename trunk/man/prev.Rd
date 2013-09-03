@@ -52,6 +52,8 @@ maxChar(c(1.2,1.234))
 prev(c(1,2,NA,3,3,NA,4))
 nxt(c(1,2,NA,3,3,NA,4))
 runhead(c(1,2,NA,3,3,NA,4))
+runhead(logical(0))
+runhead(factor(c('a',NA,'a','a','b','b')))
 }
 \keyword{manip}
 

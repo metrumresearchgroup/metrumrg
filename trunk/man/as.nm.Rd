@@ -15,8 +15,10 @@ suitable columns and column classes (essentially, a template for dataset constru
 \code{as.nm} and \code{as.nm.data.frame} construct an
 nm object from an existing object.  The read and write methods are wrappers
 for \file{.csv} equivalents. \code{read.nm} reconstitutes classes for flags, 
-DATETIME, and C.  \code{merge.nm} coerces its result using \code{as.nm}, guaranteeing
-a consistent left hand object when using \code{Ops.keyed}.
+DATETIME, and C.  
+
+%\code{merge.nm} coerces its result using \code{as.nm}, guaranteeing
+%a consistent left hand object when using \code{Ops.keyed}.
 }
 \usage{
 nm()

@@ -157,7 +157,7 @@ badII.nm <- function (x, ...){
 	...
 )
 
-merge.nm <- function(x,y,...)as.nm(merge(data.frame(x),y,...))
+#merge.nm <- function(x,y,...)as.nm(merge(data.frame(x),y,...))
 
 `nm` <- function()as.nm(
 	data.frame(
@@ -218,7 +218,7 @@ merge.nm <- function(x,y,...)as.nm(merge(data.frame(x),y,...))
 	#Relativize to earliest value.
 	
 	x <- sort(x) #NAs will be last
-	x$TIME <- signif(x$TIME - first(x$TIME,where=!is.na(x$TIME),within=x$ID),7)
+	x$TIME <- x$TIME - first(x$TIME,where=!is.na(x$TIME),within=x$ID)
 	
 	#PRIME
 	#If data set contains AMT, prime can be calculated as the first non(commented) dose at any
@@ -230,7 +230,7 @@ merge.nm <- function(x,y,...)as.nm(merge(data.frame(x),y,...))
 	#TAFD
 	#Time After First Dose. The time of the first defined amount per subject is a local origin.
 	#Domain is active records.  Range is all records.
-	if(length(prime))x$TAFD <- x$TAFD <- signif(x$TIME - first(x$TIME,where=prime,within=x$ID),6)
+	if(length(prime))x$TAFD <- x$TAFD <- x$TIME - first(x$TIME,where=prime,within=x$ID)
 	
 	#TAD
 	#Time After Dose.  
@@ -250,16 +250,15 @@ merge.nm <- function(x,y,...)as.nm(merge(data.frame(x),y,...))
 		z							
 	}
 	s <- suppressWarnings
-	if(length(prime))x$TAD <- signif(x$TIME - s(first(x$TIME,where=prime & !x$C,within=list(x$ID,cumsum(prime)))),5)
-	if(length(prime) & all(c('ADDL','II') %in% names(x)))x$TAD <- signif(
-		x$TIME - tMostRecentDose(
+	if(length(prime))x$TAD <- x$TIME - s(first(x$TIME,where=prime & !x$C,within=list(x$ID,cumsum(prime))))
+	if(length(prime) & all(c('ADDL','II') %in% names(x)))x$TAD <- 
+		x$TIME - 
+		tMostRecentDose(
 			x$TIME,#ceiling reference
 			s(first(x$TIME, where=prime            ,    within=list(x$ID,cumsum(prime)))), # most recent dose record
 			s(first(x$ADDL, where=!is.na(x$ADDL) & !x$C,within=list(x$ID,cumsum(prime)))), # most recent ADDL value
 			s(first(x$II,   where=!is.na(x$II)   & !x$C,within=list(x$ID,cumsum(prime))))  # most recent II value
-		),
-		5
-	)	
+		)
 	#Impute flags.  Check whether merge drops flag status.
 	flags <- names(x)[sapply(names(x),function(col)inherits(x[[col]],'flag'))]
 	#x <- as.keyed(cbind(x[,names(x)[!names(x) %in% flags],drop=FALSE],data.frame(lapply(x[,flags,drop=FALSE],function(col){col[is.na(col)] <- 0;return(col)})))[names(x)],key=key(x))
