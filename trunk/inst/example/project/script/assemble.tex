@@ -3,7 +3,6 @@
 
  
 \begin{document}
-\input{assemble-concordance}
 \vspace*{2cm}
 \begin{center}
 \vspace{1.5cm}
@@ -139,6 +138,15 @@ unsorted: 2
 562   40   72   NA
 \end{Soutput}
 \begin{Sinput}
+> !pk
+\end{Sinput}
+\begin{Soutput}
+    SUBJ HOUR    DV
+560   40   72  35.5
+561   40   NA 100.0
+562   40   72    NA
+\end{Soutput}
+\begin{Sinput}
 > bad <- pk[with(pk,is.na(HOUR) |is.na(DV)),]
 > bad
 \end{Sinput}
@@ -173,11 +181,11 @@ The plus operator means ``outer join'' or ``full merge'' when the arguments are 
 The pipe operator means ``left join'' (merge, all.x=TRUE) when the arguments are ``keyed'' data.frames.
 \begin{Schunk}
 \begin{Sinput}
-> dat <- 
-+ 	nm() + 
-+ 	aug(dose,SEQ=1,EVID=1) + 
-+ 	aug(pk,  SEQ=0,EVID=0) | 
-+ 	dem
+> dat <- as.nm( 
++ 	  aug(dose,SEQ=1,EVID=1) + 
++ 	  aug(pk,  SEQ=0,EVID=0) | 
++ 	  dem
++ )
 > summary(dat)
 \end{Sinput}
 \begin{Soutput}
@@ -257,20 +265,20 @@ badII           0
 > head(dat)
 \end{Sinput}
 \begin{Soutput}
-  C SUBJ TIME SEQ HOUR EVID ID  AMT TAFD  TAD LDOS    DV MDV HEIGHT WEIGHT SEX
-1 C    1 0.00   0 0.00    0  1   NA 0.00   NA   NA 0.000   0    174   74.2   0
-2 .    1 0.00   1 0.00    1  1 1000 0.00 0.00 1000    NA   1    174   74.2   0
-3 .    1 0.25   0 0.25    0  1   NA 0.25 0.25 1000 0.363   0    174   74.2   0
-4 .    1 0.50   0 0.50    0  1   NA 0.50 0.50 1000 0.914   0    174   74.2   0
-5 .    1 1.00   0 1.00    0  1   NA 1.00 1.00 1000 1.120   0    174   74.2   0
-6 .    1 2.00   0 2.00    0  1   NA 2.00 2.00 1000 2.280   0    174   74.2   0
-   AGE DOSE FED SMK DS CRCN predose zerodv
-1 29.1 1000   1   0  0 83.5       1      0
-2 29.1 1000   1   0  0 83.5       0      0
-3 29.1 1000   1   0  0 83.5       0      0
-4 29.1 1000   1   0  0 83.5       0      0
-5 29.1 1000   1   0  0 83.5       0      0
-6 29.1 1000   1   0  0 83.5       0      0
+  C SUBJ TIME SEQ HOUR EVID  AMT    DV HEIGHT WEIGHT SEX  AGE DOSE FED SMK DS
+1 C    1 0.00   0 0.00    0   NA 0.000    174   74.2   0 29.1 1000   1   0  0
+2 .    1 0.00   1 0.00    1 1000    NA    174   74.2   0 29.1 1000   1   0  0
+3 .    1 0.25   0 0.25    0   NA 0.363    174   74.2   0 29.1 1000   1   0  0
+4 .    1 0.50   0 0.50    0   NA 0.914    174   74.2   0 29.1 1000   1   0  0
+5 .    1 1.00   0 1.00    0   NA 1.120    174   74.2   0 29.1 1000   1   0  0
+6 .    1 2.00   0 2.00    0   NA 2.280    174   74.2   0 29.1 1000   1   0  0
+  CRCN ID TAFD  TAD LDOS MDV predose zerodv
+1 83.5  1 0.00   NA   NA   0       1      0
+2 83.5  1 0.00 0.00 1000   1       0      0
+3 83.5  1 0.25 0.25 1000   0       0      0
+4 83.5  1 0.50 0.50 1000   0       0      0
+5 83.5  1 1.00 1.00 1000   0       0      0
+6 83.5  1 2.00 2.00 1000   0       0      0
 \end{Soutput}
 \end{Schunk}
 We could rearrange columns for convenience and clarity.
@@ -280,20 +288,20 @@ We could rearrange columns for convenience and clarity.
 > head(dat)
 \end{Sinput}
 \begin{Soutput}
-  C ID TIME SEQ EVID  AMT    DV SUBJ HOUR TAFD  TAD LDOS MDV HEIGHT WEIGHT SEX
-1 C  1 0.00   0    0   NA 0.000    1 0.00 0.00   NA   NA   0    174   74.2   0
-2 .  1 0.00   1    1 1000    NA    1 0.00 0.00 0.00 1000   1    174   74.2   0
-3 .  1 0.25   0    0   NA 0.363    1 0.25 0.25 0.25 1000   0    174   74.2   0
-4 .  1 0.50   0    0   NA 0.914    1 0.50 0.50 0.50 1000   0    174   74.2   0
-5 .  1 1.00   0    0   NA 1.120    1 1.00 1.00 1.00 1000   0    174   74.2   0
-6 .  1 2.00   0    0   NA 2.280    1 2.00 2.00 2.00 1000   0    174   74.2   0
-   AGE DOSE FED SMK DS CRCN predose zerodv
-1 29.1 1000   1   0  0 83.5       1      0
-2 29.1 1000   1   0  0 83.5       0      0
-3 29.1 1000   1   0  0 83.5       0      0
-4 29.1 1000   1   0  0 83.5       0      0
-5 29.1 1000   1   0  0 83.5       0      0
-6 29.1 1000   1   0  0 83.5       0      0
+  C ID TIME SEQ EVID  AMT    DV SUBJ HOUR HEIGHT WEIGHT SEX  AGE DOSE FED SMK
+1 C  1 0.00   0    0   NA 0.000    1 0.00    174   74.2   0 29.1 1000   1   0
+2 .  1 0.00   1    1 1000    NA    1 0.00    174   74.2   0 29.1 1000   1   0
+3 .  1 0.25   0    0   NA 0.363    1 0.25    174   74.2   0 29.1 1000   1   0
+4 .  1 0.50   0    0   NA 0.914    1 0.50    174   74.2   0 29.1 1000   1   0
+5 .  1 1.00   0    0   NA 1.120    1 1.00    174   74.2   0 29.1 1000   1   0
+6 .  1 2.00   0    0   NA 2.280    1 2.00    174   74.2   0 29.1 1000   1   0
+  DS CRCN TAFD  TAD LDOS MDV predose zerodv
+1  0 83.5 0.00   NA   NA   0       1      0
+2  0 83.5 0.00 0.00 1000   1       0      0
+3  0 83.5 0.25 0.25 1000   0       0      0
+4  0 83.5 0.50 0.50 1000   0       0      0
+5  0 83.5 1.00 1.00 1000   0       0      0
+6  0 83.5 2.00 2.00 1000   0       0      0
 \end{Soutput}
 \end{Schunk}
 We create a file using write.nm to format NAs specially, etc.
