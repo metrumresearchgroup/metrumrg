@@ -1,15 +1,57 @@
 \documentclass[titlepage]{article}
-\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor,colortbl}
+\usepackage{courier}
+\usepackage[colorlinks,linkcolor=blue,citecolor=blue,urlcolor=blue,breaklinks=true]{hyperref}
+\lstset{basicstyle=\ttfamily\small , breaklines}
 \usepackage[left=3cm,top=3cm,bottom=3cm, right=3cm,includehead,includefoot]{geometry}
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+\rhead{Metrum Research Group LLC \\ }
+\lhead{\includegraphics[scale=.5]{logo.png}}
+\cfoot{Page \thepage\ of \pageref{LastPage}}
+\fancyhfoffset{.25in}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\footrulewidth}{0pt} 
+\setlength{\headheight}{23pt}
+\renewcommand{\labelitemiii}{$\circ$}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{courier}
 \usepackage{graphicx}
 \usepackage{tocbibind}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{upgreek}
+\usepackage{textpos}
+\usepackage{relsize}
+\usepackage{upquote}
+% Use \begin{landscape} and end{landscape} to rotate text %%%
+\usepackage{pdflscape}
+\usepackage{textcomp}
+\usepackage{float}
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+\usepackage[printonlyused,nohyperlinks]{acronym}
+\def\bflabel#1{{\large#1\ \ \ \ }\hfill}
 \usepackage{fixltx2e}
+\setlength{\belowcaptionskip}{10pt}
 \usepackage{Sweave}
 
  
-
 \begin{document}
-\input{tabular-concordance}
+\vspace*{2cm}
+\begin{center}
+\vspace{1.5cm}
+{\Large Tabular}\\
+~\\
+\today\\
+~\\
+Tim Bergsma\\
+\end{center}
+\newpage
 \section*{tabular}
 We make a sample data frame.
 \begin{Schunk}
@@ -247,6 +289,25 @@ Now we try various invocations.
    PROT01 & \verb#1002# & \verb#0# & \verb#0.5 # \\ \hline
    PROT01 & \verb#1002# & \verb#1# & \verb#200   # \\ \hline
     & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(ltable(x,caption='Row Colors',rowcolors=c('white','lightgray')))
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Row Colors]{Row Colors }
+ \begin{center}
+  \begin{tabular}{lrrr}
+    \hline \hline
+   study & subject & time & conc \\ \hline
+   \rowcolor{white}PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+   \rowcolor{lightgray}PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+   \rowcolor{white}PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\
+   \rowcolor{lightgray}PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+   \rowcolor{white}PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+   \rowcolor{lightgray} & \verb#1002# & \verb#2# & \verb## \\ \hline
   \end{tabular}
  \end{center}
 \end{table}\end{Schunk}
