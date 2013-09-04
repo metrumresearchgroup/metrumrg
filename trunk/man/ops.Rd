@@ -24,7 +24,8 @@ using left subsets of the key (e.g. subj, subj-time, subj-time-cmt, etc.).
 \code{!}, a unary operator, returns rows in x that have NA keys or duplicate/duplicated keys.
 
 The syntax can be extended to subclasses of
-\code{keyed} by writing additional proxy methods.
+\code{keyed} by writing additional proxy methods. Note, however, that proxy methods
+may be eliminated in future versions for simplification.
 }
 \usage{
 \method{Ops}{keyed}(e1, e2)
@@ -83,8 +84,8 @@ need for parenthetical grouping of terms (which is available nonetheless).
 
 Proxy methods have been defined on these operators for class \sQuote{keyed}.  Users
 can implement differing assembly operations by creating additional classes
-and defining proxy methods for them.  \code{plus.rigged} and \code{minus.moot} are 
-examples.  See examples for \code{as.nm}.
+and defining proxy methods for them. This is discouraged, however, as proxy methods
+may be eliminated in future versions.
 }
 \value{keyed data.frame}
 \references{\url{http://metrumrg.googlecode.com}}

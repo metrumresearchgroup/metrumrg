@@ -14,7 +14,8 @@
 \title{Modify Assembly of nm Objects}
 \description{
 These are special preparations of nm objects or their sources.  Proxy methods
-for \code{Ops.keyed} are techniques for dynamic preparation.
+for \code{Ops.keyed} are techniques for dynamic preparation.  Deprecated, except
+for \code{deranged}.
 }
 \usage{
 \method{moot}{nm}(

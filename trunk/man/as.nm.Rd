@@ -87,12 +87,9 @@ classes and methods. Column-specific methods may make use of the passed argument
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \note{
-In the examples below, note that assembly chains beginning with \code{nm} will 
-have class \code{nm} for every sub-result.  This requires more evaluations of \code{as.nm}
-but is useful if later operations depend on imputed or calculated variables.
-Note, for example, that \code{-.moot} only makes sense if the left operand already
-resolves to class \code{nm}, since currently \code{moot.nm} is the only method defined for
-generic \code{moot}.
+	Assembly chains, such as \code{nm() + dose + samp | demo}, are no longer
+	supported.  \code{as.moot} and \code{as.rigged} are deprecated.
+
 }
 \seealso{
 	\itemize{
@@ -133,19 +130,19 @@ meds <- as.keyed(
 )
 
 nm()
-nm() + dose
+#nm() + dose
 as.nm(dose)
 as.nm(dose + samp)
 as.nm(dose + samp | demo) #as.nm executes once
-nm() + dose + samp | demo #same result, but as.nm executes 4 times
+#nm() + dose + samp | demo #deprecated
 
 meds
 long <- deranged(meds,start='HOUR',stop='STOP')
 long$EVID <- 2
-nm() + dose + samp + long
-nm() + dose + samp + long - as.moot() 
-nm() + dose + samp + as.rigged(n=10) 
-data <- nm() + transform(dose,EVID=1) + transform(samp,EVID=0) | demo
+as.nm( dose + samp + long)
+#nm() + dose + samp + long - as.moot() # deprecated
+#nm() + dose + samp + as.rigged(n=10) # deprecated
+data <- as.nm( aug(dose,EVID=1) + aug(samp,EVID=0) | demo)
 summary(data,by=c('EVID','SEQ'))
 \dontrun{index(data)}
 }
