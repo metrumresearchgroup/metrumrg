@@ -5,10 +5,10 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2013-04-17T12:23:43.776</nm:start_datetime>
+<nm:start_datetime>2013-09-04T21:56:05.890</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1006 like 1005 with tweaked initial estimates
-$INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
+$INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED
 $DATA ../../data/derived/phase1.csv IGNORE=C
 $SUBROUTINE ADVAN4 TRANS4
 $PK
@@ -96,9 +96,9 @@ $TABLE NOPRINT FILE=./1006par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 <nm:nonmem nm:version='7.2.0'>
 <nm:license_information><![CDATA[
 License Registered to: Metrum Research Group
-Expiration Date:    14 JUL 2013
-Current Date:       17 APR 2013
-Days until program expires :  87
+Expiration Date:    14 JUL 2014
+Current Date:        4 SEP 2013
+Days until program expires : 315
 ]]></nm:license_information>
 <nm:program_information><![CDATA[
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
@@ -117,18 +117,18 @@ Days until program expires :  87
  DATA SET LOCATED ON UNIT NO.:    2
  THIS UNIT TO BE REWOUND:        NO
  NO. OF DATA RECS IN DATA SET:      550
- NO. OF DATA ITEMS IN DATA SET:  18
+ NO. OF DATA ITEMS IN DATA SET:  15
  ID DATA ITEM IS DATA ITEM NO.:   2
  DEP VARIABLE IS DATA ITEM NO.:   6
- MDV DATA ITEM IS DATA ITEM NO.: 12
+ MDV DATA ITEM IS DATA ITEM NO.: 15
 0INDICES PASSED TO SUBROUTINE PRED:
    4   3   5   0   0   0   0   0   0   0   0
 0LABELS FOR DATA ITEMS:
- C ID TIME EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
+ C ID TIME EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED MDV
 0(NONBLANK) LABELS FOR PRED-DEFINED ITEMS:
  CL V2 KA Q V3 IPRE
 0FORMAT FOR DATA:
- (1(12E6.0/),6E6.0)
+ (E2.0,E3.0,E5.0,E2.0,2E6.0,E3.0,E5.0,E4.0,E5.0,E2.0,E5.0,2E6.0,1F2.0)
 
  TOT. NO. OF OBS RECS:      510
  TOT. NO. OF INDIVIDUALS:     40
@@ -257,14 +257,14 @@ Days until program expires :  87
 ]]></nm:termination_information>
 <nm:etabar>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>-6.902455958011880E-004</nm:col>
-<nm:col nm:cname='ETA2'>-5.843924411064152E-004</nm:col>
-<nm:col nm:cname='ETA3'>1.019760930154979E-003</nm:col>
+<nm:col nm:cname='ETA1'>-6.902455958011893E-004</nm:col>
+<nm:col nm:cname='ETA2'>-5.843924411064072E-004</nm:col>
+<nm:col nm:cname='ETA3'>1.019760930154975E-003</nm:col>
 </nm:row>
 </nm:etabar>
 <nm:etabarse>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>7.131139375068371E-002</nm:col>
+<nm:col nm:cname='ETA1'>7.131139375068372E-002</nm:col>
 <nm:col nm:cname='ETA2'>4.696748161943543E-002</nm:col>
 <nm:col nm:cname='ETA3'>3.164780287688759E-002</nm:col>
 </nm:row>
@@ -278,23 +278,23 @@ Days until program expires :  87
 </nm:etabarpval>
 <nm:etashrink>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>1.22048038801857</nm:col>
+<nm:col nm:cname='ETA1'>1.22048038801856</nm:col>
 <nm:col nm:cname='ETA2'>2.15244956776579</nm:col>
 <nm:col nm:cname='ETA3'>6.06315373884497</nm:col>
 </nm:row>
 </nm:etashrink>
 <nm:epsshrink>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='EPS1'>7.05062084574340</nm:col>
-<nm:col nm:cname='EPS2'>7.05062084574340</nm:col>
+<nm:col nm:cname='EPS1'>7.05062084574342</nm:col>
+<nm:col nm:cname='EPS2'>7.05062084574342</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>68.93</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>29.09</nm:estimation_elapsed_time>
 <nm:parallel_cov nm:parafile='1006.pnm' nm:protocol='MPI' nm:nodes='16'/>
 <nm:covariance_information><![CDATA[
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='0' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>21.42</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>7.34</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2405.91625875217</nm:final_objective_function>
 <nm:theta>
@@ -937,5 +937,5 @@ Days until program expires :  87
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2013-04-17T12:25:15.162</nm:stop_datetime>
+<nm:stop_datetime>2013-09-04T21:56:43.370</nm:stop_datetime>
 </nm:output>

@@ -249,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Wed Apr 17 12:23:19 UTC 2013</so>
+       <so>Wed Sep  4 21:55:03 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node006,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node004,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -265,7 +265,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/3.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/633.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
       <job>
        <do>ifort --version</do>
@@ -298,9 +298,9 @@
    IN REGULAR/FILE TRANSFER
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
-   Expiration Date:    14 JUL 2013
-   Current Date:       17 APR 2013
-   Days until program expires :  87
+   Expiration Date:    14 JUL 2014
+   Current Date:        4 SEP 2013
+   Days until program expires : 315
     
     
     First Order Conditional Estimation with Interaction
@@ -387,17 +387,17 @@
                -5.6239E-01 -6.6007E-01 -1.0286E+00 -2.5497E-01  4.5111E-01
     GRADIENT:   2.7830E-03  3.5372E-03 -4.6893E-02  7.7924E-03 -7.6366E-03  7.1181E-03 -2.5863E-04 -5.4952E-03  3.0215E-03  6.1203E-03
                -9.5211E-03  1.2040E-02 -1.1760E-03 -1.7425E-02  1.5433E-03
-    Elapsed estimation time in seconds:     6.03
-    Elapsed covariance time in seconds:     7.82</so>
+    Elapsed estimation time in seconds:     6.92
+    Elapsed covariance time in seconds:     8.99</so>
   </job>
   <job>
    <do in="../nonmem/1005">if [ -e 1005.xml ];then cat 1005.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2013-04-17T12:23:34.716</nm:start_datetime>
+     <nm:start_datetime>2013-09-04T21:55:11.007</nm:start_datetime>
      <nm:control_stream>
      $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
-     $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
+     $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED
      $DATA ../../data/derived/phase1.csv IGNORE=C
      $SUBROUTINE ADVAN4 TRANS4
      $PK
@@ -469,9 +469,9 @@
      <nm:nonmem nm:version="7.2.0">
       <nm:license_information>
       License Registered to: Metrum Research Group
-      Expiration Date:    14 JUL 2013
-      Current Date:       17 APR 2013
-      Days until program expires :  87</nm:license_information>
+      Expiration Date:    14 JUL 2014
+      Current Date:        4 SEP 2013
+      Days until program expires : 315</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -488,18 +488,18 @@
         DATA SET LOCATED ON UNIT NO.:    2
         THIS UNIT TO BE REWOUND:        NO
         NO. OF DATA RECS IN DATA SET:      550
-        NO. OF DATA ITEMS IN DATA SET:  18
+        NO. OF DATA ITEMS IN DATA SET:  15
         ID DATA ITEM IS DATA ITEM NO.:   2
         DEP VARIABLE IS DATA ITEM NO.:   6
-        MDV DATA ITEM IS DATA ITEM NO.: 12
+        MDV DATA ITEM IS DATA ITEM NO.: 15
        0INDICES PASSED TO SUBROUTINE PRED:
           4   3   5   0   0   0   0   0   0   0   0
        0LABELS FOR DATA ITEMS:
-        C ID TIME EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED
+        C ID TIME EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED MDV
        0(NONBLANK) LABELS FOR PRED-DEFINED ITEMS:
         CL V2 KA Q V3 IPRE
        0FORMAT FOR DATA:
-        (1(12E6.0/),6E6.0)
+        (E2.0,E3.0,E5.0,E2.0,2E6.0,E3.0,E5.0,E4.0,E5.0,E2.0,E5.0,2E6.0,1F2.0)
        
         TOT. NO. OF OBS RECS:      510
         TOT. NO. OF INDIVIDUALS:     40
@@ -656,10 +656,10 @@
           <nm:col nm:cname="EPS2">7.04870164208036</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>6.03</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>6.92</nm:estimation_elapsed_time>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>7.82</nm:covariance_elapsed_time>
+        <nm:covariance_elapsed_time>8.99</nm:covariance_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2405.91626347113</nm:final_objective_function>
         <nm:theta>
@@ -1302,7 +1302,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2013-04-17T12:23:48.928</nm:stop_datetime>
+     <nm:stop_datetime>2013-09-04T21:55:27.261</nm:stop_datetime>
     </nm:output>
    </so>
   </job>

@@ -249,11 +249,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Wed Apr 17 12:23:19 UTC 2013</so>
+       <so>Wed Sep  4 21:55:03 UTC 2013</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node005,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node003,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -265,7 +265,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/4.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
+       <so>/tmp/631.1.all.q:/usr/local/mpich2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/bin/intel64/:/opt/sge6/bin/lx24-amd64</so>
       </job>
       <job>
        <do>ifort --version</do>
@@ -298,9 +298,9 @@
    IN REGULAR/FILE TRANSFER
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
-   Expiration Date:    14 JUL 2013
-   Current Date:       17 APR 2013
-   Days until program expires :  87
+   Expiration Date:    14 JUL 2014
+   Current Date:        4 SEP 2013
+   Days until program expires : 315
     
     
     First Order Conditional Estimation with Interaction
@@ -684,13 +684,13 @@
                -1.2633E-01  4.6314E-01
     GRADIENT:   1.5954E-02  9.5683E-02 -3.6131E-01 -1.7546E-07  3.0192E-01 -4.8916E-03 -6.6618E-03 -6.4339E-04  5.6880E-04  0.0000E+00
                -5.3134E-02  2.3495E-03
-    Elapsed estimation time in seconds:    21.92</so>
+    Elapsed estimation time in seconds:    22.76</so>
   </job>
   <job>
    <do in="../nonmem/1002">if [ -e 1002.xml ];then cat 1002.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2013-04-17T12:23:35.183</nm:start_datetime>
+     <nm:start_datetime>2013-09-04T21:55:11.271</nm:start_datetime>
      <nm:control_stream>
      $PROB 1002 phase1 2 CMT
      $INPUT C ID TIME SEQ=DROP EVID AMT DV
@@ -730,9 +730,9 @@
      <nm:nonmem nm:version="7.2.0">
       <nm:license_information>
       License Registered to: Metrum Research Group
-      Expiration Date:    14 JUL 2013
-      Current Date:       17 APR 2013
-      Days until program expires :  87</nm:license_information>
+      Expiration Date:    14 JUL 2014
+      Current Date:        4 SEP 2013
+      Days until program expires : 315</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.2.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -922,7 +922,7 @@
           <nm:col nm:cname="EPS2">9.16580834518731</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>21.92</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>22.76</nm:estimation_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2525.96522290374</nm:final_objective_function>
         <nm:theta>
@@ -1007,7 +1007,7 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2013-04-17T12:23:57.599</nm:stop_datetime>
+     <nm:stop_datetime>2013-09-04T21:55:34.373</nm:stop_datetime>
     </nm:output>
    </so>
   </job>
