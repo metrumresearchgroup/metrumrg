@@ -57,12 +57,20 @@ Installing SIGCHLD signal handler...Done.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-            0             0             0             5             0 
+            3             0             0             2             0 
 \end{Soutput}
 \begin{Sinput}
 > follow(1001:1005,project='../nonmem')
 \end{Sinput}
 \begin{Soutput}
+       queued      compiled       running          done indeterminate 
+            5             0             0             0             0 
+       queued      compiled       running          done indeterminate 
+            0             1             4             0             0 
+       queued      compiled       running          done indeterminate 
+            0             0             4             1             0 
+       queued      compiled       running          done indeterminate 
+            0             0             2             3             0 
        queued      compiled       running          done indeterminate 
             0             0             0             5             0 
 \end{Soutput}
@@ -162,19 +170,7 @@ We request some variants of PRED and CWRES.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-            1             0             0             0             0 
-       queued      compiled       running          done indeterminate 
             0             1             0             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
        queued      compiled       running          done indeterminate 
             0             0             1             0             0 
        queued      compiled       running          done indeterminate 
@@ -335,69 +331,69 @@ Strip comments and view.
 > ctl                                                            # print it like text
 \end{Sinput}
 \begin{Soutput}
- [1] "$PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3"                                   
- [2] "$INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR TAFD TAD LDOS MDV HEIGHT WT SEX AGE DOSE FED"
- [3] "$DATA ../../data/derived/phase1.csv IGNORE=C"                                                
- [4] "$SUBROUTINE ADVAN4 TRANS4"                                                                   
- [5] "$PK"                                                                                         
- [6] " CL=THETA(1)*EXP(ETA(1)) * THETA(6)**SEX * (WT/70)**THETA(7)"                                
- [7] " V2 =THETA(2)*EXP(ETA(2))"                                                                   
- [8] " KA=THETA(3)*EXP(ETA(3))"                                                                    
- [9] " Q  =THETA(4)"                                                                               
-[10] " V3=THETA(5)"                                                                                
-[11] " S2=V2"                                                                                      
-[12] " "                                                                                           
-[13] "$ERROR"                                                                                      
-[14] " Y=F*(1+ERR(1)) + ERR(2)"                                                                    
-[15] " IPRE=F"                                                                                     
-[16] ""                                                                                            
-[17] "$THETA"                                                                                      
-[18] "(0,10,50)"                                                                                   
-[19] "(0,10,100)"                                                                                  
-[20] "(0,0.2, 5)"                                                                                  
-[21] "(0,10,50)"                                                                                   
-[22] "(0,100,1000)"                                                                                
-[23] "(0,1,2)"                                                                                     
-[24] "(0,0.75,3)"                                                                                  
-[25] ""                                                                                            
-[26] "$OMEGA BLOCK(3)"                                                                             
-[27] ".1"                                                                                          
-[28] ".01 .1"                                                                                      
-[29] ".01 .01 .1"                                                                                  
-[30] ""                                                                                            
-[31] ""                                                                                            
-[32] ""                                                                                            
-[33] ""                                                                                            
-[34] ""                                                                                            
-[35] ""                                                                                            
-[36] ""                                                                                            
-[37] ""                                                                                            
-[38] "$SIGMA 0.1 0.1"                                                                              
-[39] ""                                                                                            
-[40] ""                                                                                            
-[41] ""                                                                                            
-[42] ""                                                                                            
-[43] "$ESTIMATION MAXEVAL=9999 PRINT=5 NOABORT METHOD=1 INTER MSFO=./1005.msf"                     
-[44] "$COV PRINT=E"                                                                                
-[45] "$TABLE NOPRINT FILE=./1005.tab ONEHEADER ID AMT TIME EVID PRED IPRE CWRES"                   
-[46] "$TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3"            
-[47] ""                                                                                            
-[48] ""                                                                                            
-[49] ""                                                                                            
-[50] ""                                                                                            
-[51] ""                                                                                            
-[52] ""                                                                                            
-[53] ""                                                                                            
-[54] ""                                                                                            
-[55] ""                                                                                            
-[56] ""                                                                                            
-[57] ""                                                                                            
-[58] ""                                                                                            
-[59] ""                                                                                            
-[60] ""                                                                                            
-[61] ""                                                                                            
-[62] ""                                                                                            
-[63] ""                                                                                            
+ [1] "$PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3"                       
+ [2] "$INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED"      
+ [3] "$DATA ../../data/derived/phase1.csv IGNORE=C"                                    
+ [4] "$SUBROUTINE ADVAN4 TRANS4"                                                       
+ [5] "$PK"                                                                             
+ [6] " CL=THETA(1)*EXP(ETA(1)) * THETA(6)**SEX * (WT/70)**THETA(7)"                    
+ [7] " V2 =THETA(2)*EXP(ETA(2))"                                                       
+ [8] " KA=THETA(3)*EXP(ETA(3))"                                                        
+ [9] " Q  =THETA(4)"                                                                   
+[10] " V3=THETA(5)"                                                                    
+[11] " S2=V2"                                                                          
+[12] " "                                                                               
+[13] "$ERROR"                                                                          
+[14] " Y=F*(1+ERR(1)) + ERR(2)"                                                        
+[15] " IPRE=F"                                                                         
+[16] ""                                                                                
+[17] "$THETA"                                                                          
+[18] "(0,10,50)"                                                                       
+[19] "(0,10,100)"                                                                      
+[20] "(0,0.2, 5)"                                                                      
+[21] "(0,10,50)"                                                                       
+[22] "(0,100,1000)"                                                                    
+[23] "(0,1,2)"                                                                         
+[24] "(0,0.75,3)"                                                                      
+[25] ""                                                                                
+[26] "$OMEGA BLOCK(3)"                                                                 
+[27] ".1"                                                                              
+[28] ".01 .1"                                                                          
+[29] ".01 .01 .1"                                                                      
+[30] ""                                                                                
+[31] ""                                                                                
+[32] ""                                                                                
+[33] ""                                                                                
+[34] ""                                                                                
+[35] ""                                                                                
+[36] ""                                                                                
+[37] ""                                                                                
+[38] "$SIGMA 0.1 0.1"                                                                  
+[39] ""                                                                                
+[40] ""                                                                                
+[41] ""                                                                                
+[42] ""                                                                                
+[43] "$ESTIMATION MAXEVAL=9999 PRINT=5 NOABORT METHOD=1 INTER MSFO=./1005.msf"         
+[44] "$COV PRINT=E"                                                                    
+[45] "$TABLE NOPRINT FILE=./1005.tab ONEHEADER ID AMT TIME EVID PRED IPRE CWRES"       
+[46] "$TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3"
+[47] ""                                                                                
+[48] ""                                                                                
+[49] ""                                                                                
+[50] ""                                                                                
+[51] ""                                                                                
+[52] ""                                                                                
+[53] ""                                                                                
+[54] ""                                                                                
+[55] ""                                                                                
+[56] ""                                                                                
+[57] ""                                                                                
+[58] ""                                                                                
+[59] ""                                                                                
+[60] ""                                                                                
+[61] ""                                                                                
+[62] ""                                                                                
+[63] ""                                                                                
 \end{Soutput}
 \end{Schunk}
 Fix records of interest.
@@ -450,7 +446,7 @@ This run makes the predictions (simulations).
        queued      compiled       running          done indeterminate 
             0             0             0             0             1 
        queued      compiled       running          done indeterminate 
-            0             1             0             0             0 
+            0             0             1             0             0 
        queued      compiled       running          done indeterminate 
             0             0             1             0             0 
        queued      compiled       running          done indeterminate 
@@ -937,31 +933,19 @@ We also show densityplots of predictions at those quartiles.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-          156            46            17            81             0 
+           90            45            21           144             0 
        queued      compiled       running          done indeterminate 
-          134            52            20            94             0 
+           71            42            25           161             1 
        queued      compiled       running          done indeterminate 
-          119            49            20           112             0 
+           56            24            35           185             0 
        queued      compiled       running          done indeterminate 
-          104            46            20           130             0 
+           25            36            26           211             2 
        queued      compiled       running          done indeterminate 
-           88            41            25           146             0 
+            4            41            25           230             0 
        queued      compiled       running          done indeterminate 
-           67            45            19           169             0 
+            0            16            35           249             0 
        queued      compiled       running          done indeterminate 
-           41            53            19           187             0 
-       queued      compiled       running          done indeterminate 
-           35            36            25           203             1 
-       queued      compiled       running          done indeterminate 
-            9            38            26           226             1 
-       queued      compiled       running          done indeterminate 
-            0            35            22           243             0 
-       queued      compiled       running          done indeterminate 
-            0            15            15           270             0 
-       queued      compiled       running          done indeterminate 
-            0             3             9           288             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1           299             0 
+            0             0             9           291             0 
        queued      compiled       running          done indeterminate 
             0             0             0           300             0 
 \end{Soutput}
