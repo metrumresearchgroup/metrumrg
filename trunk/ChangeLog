@@ -4,6 +4,7 @@
 * prev supports factors.
 * merge.nm is undefined.
 * as.nm no longer limits the significance of time variables.
+* runhead and prev support factor; both now return logical(0) if argument is logical(0).
 
 5.51
 
