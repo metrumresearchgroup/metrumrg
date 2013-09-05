@@ -3,7 +3,7 @@
 \alias{as.nm}
 \alias{as.nm.default}
 \alias{as.nm.data.frame}
-\alias{merge.nm}
+%\alias{merge.nm}
 \alias{read.nm}
 \alias{write.nm}
 
@@ -23,7 +23,6 @@ DATETIME, and C.
 \usage{
 nm()
 \method{as.nm}{data.frame}(x, ...)
-\method{merge}{nm}(x, y, ...)
 read.nm(x,na.strings='.',as.is=TRUE,key=c('SUBJ','TIME','SEQ'),flags=character(0),...)
 write.nm(x, file, na = '.', row.names = FALSE, quote = FALSE, ...)
 }
