@@ -140,7 +140,7 @@ long$EVID <- 2
 as.nm( dose + samp + long)
 #nm() + dose + samp + long - as.moot() # deprecated
 #nm() + dose + samp + as.rigged(n=10) # deprecated
-data <- as.nm( aug(dose,EVID=1) + aug(samp,EVID=0) | demo)
+data <- as.nm( aug(dose,EVID=1, SEQ=1) + aug(samp,EVID=0, SEQ=0) | demo)
 summary(data,by=c('EVID','SEQ'))
 \dontrun{index(data)}
 }

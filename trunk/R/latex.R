@@ -203,7 +203,7 @@ tabular.data.frame <- function(
   colgroups <- rep(colgroups, length.out=ncol(x))
   rowbreaks <- rep(rowbreaks, length.out=nrow(x)-1)
   colbreaks <- rep(colbreaks, length.out=ncol(x)-1)
-  rowcolors <- rep(rowcolors, length.out=nrow(x))
+  if(!is.null(rowcolors))rowcolors <- rep(rowcolors, length.out=nrow(x))
   stopifnot(length(charjust)==1)
   stopifnot(length(numjust)==1)	
   stopifnot(length(escape)==1)	

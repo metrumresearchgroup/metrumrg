@@ -14,8 +14,8 @@ function(x){
 
 `runhead` <-
 function(x){#not like last observation
-	n <- x!=prev(x)
-	n[[1]] <- TRUE
+	n <- x != prev(x)
+	if(length(n)) n[[1]] <- TRUE
 	n
 }
 
