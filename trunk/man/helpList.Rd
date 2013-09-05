@@ -377,7 +377,7 @@
 \item \link{maxChar} return the number of printed characters for the widest element of x
 \item \link{melt.keyed} melt keyed data frames, restoring key
 \item \link{merge.keyed} merge keyed data frames, preserving attributes
-\item \link{merge.nm} merge nm objects
+%\item \link{merge.nm} merge nm objects
 \item \link{metaMerge.character} recursively merge based on a vector of file names
 \item \link{metaMerge.default} merge two groomed objects
 \item \link{metaMerge.list} recursively merge elements of a list

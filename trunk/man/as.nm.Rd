@@ -28,7 +28,6 @@ write.nm(x, file, na = '.', row.names = FALSE, quote = FALSE, ...)
 }
 \arguments{
   \item{x}{data.frame or nm}
-  \item{y}{right merge argument}
   \item{na.strings}{passed to \code{read.csv}}
   \item{as.is}{passed to \code{read.csv}}
   \item{key}{passed to \code{as.keyed}}
