@@ -103,6 +103,10 @@ ignored(
 	if \code{key} is provided.  Note that when \code{key} is provided, innocuous
 	warnings result (e.g. 'nothing to merge') if items are tabled that are 
 	already present in the original data set.
+	
+	Early versions of these functions supported the documented ignore/accept
+	syntax, e.g. \code{REP.GT.0}.  As of v. 5.52, Fortran 95 syntax is also
+	supported, e.g. \code{REP > 0}.  
 }
 \value{
 	\itemize{

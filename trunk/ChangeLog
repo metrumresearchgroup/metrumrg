@@ -4,7 +4,8 @@
 * prev supports factors.
 * merge.nm is undefined.
 * as.nm no longer limits the significance of time variables.
-* runhead and prev support factor; both now return logical(0) if argument is logical(0).
+* runhead and prev now return logical(0) if argument is logical(0).
+* superset supports Fortran 95 comparison operators, e.g. IGNORE=(REP > 0), etc.
 
 5.51
 
