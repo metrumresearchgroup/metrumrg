@@ -9,7 +9,7 @@ preamble <- function(
 	geoBottom = '1mm',
 	documentclass = command('documentclass',args='article'),
 	xcolorPackage = command('usepackage',options=list('usenames','dvispnames','svgnames','table'),args='xcolor'),
-    	geometryPackage = command('usepackage',options=list(left=geoLeft,top=geoTop,bottom=geoBottom,right=geoRight),args='geometry')
+    	geometryPackage = command('usepackage',options=list(left=geoLeft,top=geoTop,bottom=geoBottom,right=geoRight),args='geometry'),
 	geometry = command('geometry',args=list(glue('papersize=',glue('{',wide,'mm',',',long,'mm}')))),
 	morePreamble = NULL,
 	...
