@@ -88,6 +88,10 @@ and tries to open those pdfs for viewing.
 	epilog=NULL,
 	...
 )
+
+\method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
+\method{as.pdf}{character}(x,stem,...)
+\method{as.pdf}{data.frame}(x,stem,...)
 preamble(
 	landscape=FALSE,
 	wide=if(landscape) 279.4 else 215.9,
@@ -103,9 +107,6 @@ preamble(
 	morePreamble = NULL,
 	...
 )
-\method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
-\method{as.pdf}{character}(x,stem,...)
-\method{as.pdf}{data.frame}(x,stem,...)
 tex2pdf(
 	x,
 	stem=NULL,
@@ -148,6 +149,7 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{long}{document lenth in mm}
   \item{wider}{additional document width in mm}
   \item{longer}{additional document lenth in mm}
+  \item{preamble}{latex markup to include before beginning the document}
   \item{landscape}{if TRUE, default orientation is `landscape' not `portrait'}
   \item{geoLeft}{geometry package: left margin}
   \item{geoRight}{geometry package: right margin}
