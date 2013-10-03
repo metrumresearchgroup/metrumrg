@@ -1,5 +1,5 @@
 as.document <- function(x,...)UseMethod('as.document')
-preamble <- function(
+makePreamble <- function(
 	landscape=FALSE,
 	wide=if(landscape) 279.4 else 215.9,
 	long=if(landscape) 215.9 else 279.4,
@@ -23,7 +23,7 @@ preamble <- function(
         
 as.document.character <- function(
 	x,
-	preamble=preamble(...),
+	preamble=makePreamble(...),
 	thispagestyle=command('thispagestyle',args='empty'),
 	pagestyle=command('pagestyle',args='empty'),
 	prolog=NULL,

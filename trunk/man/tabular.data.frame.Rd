@@ -10,7 +10,7 @@
 \alias{tabular}
 \alias{as.tabular}
 \alias{tex2pdf}
-\alias{preamble}
+\alias{makePreamble}
 \alias{viewtex}
 
 \title{Convert a Data Frame to a Latex Tabular Environment, Latex Document, or PDF}
@@ -81,7 +81,7 @@ and tries to open those pdfs for viewing.
 )
 \method{as.document}{character}(
 	x,
-	preamble=preamble(...),
+	preamble=makePreamble(...),
 	thispagestyle=command('thispagestyle',args='empty'),
 	pagestyle=command('pagestyle',args='empty'),
 	prolog=NULL,
@@ -92,7 +92,7 @@ and tries to open those pdfs for viewing.
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
 \method{as.pdf}{character}(x,stem,...)
 \method{as.pdf}{data.frame}(x,stem,...)
-preamble(
+makePreamble(
 	landscape=FALSE,
 	wide=if(landscape) 279.4 else 215.9,
 	long=if(landscape) 215.9 else 279.4,
@@ -192,9 +192,9 @@ suppress embedding of \code{file}; set to empty string to suppress file label. N
 Rownames are ignored.  If informative, capture them as a column.
 
 Converting a \code{tabular} object or any character vector to a document causes
-inclusion of default values for the the arguments of \code{preamble} and 
+inclusion of default values for the the arguments of \code{makePreamble} and 
 \code{as.document.character}.  Any of these can be dropped by passing NULL.  Invocation
-of \code{preamble} can be avoided entirely by passing a value for the eponymous argument.
+of \code{makePreamble} can be avoided entirely by passing a value for \code{preamble}.
 Alternatively, specify \code{morePreamble} to extend the preamble, or to replace any elements
 you may have dropped.
 

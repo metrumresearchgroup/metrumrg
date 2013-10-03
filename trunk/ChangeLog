@@ -2,7 +2,7 @@
 
 * accept now has arguments for lib, lib.loc, and type; it now logs the paths of packages.
 * NONR, NONR72, runNonmem, runCommand, and PLOTR now have dots in the second position of argument list, to prevent accidental partial matching.
-* preamble is introduced for greater control of as.document and as.pdf. Related functions are reorganized.
+* makePreamble is introduced for greater control of as.document and as.pdf. Related functions are reorganized.
 
 5.52
 
