@@ -1,3 +1,7 @@
+5.53
+
+* accept now has arguments for lib, lib.loc, and type; it now logs the paths of packages.
+* NONR, NONR72, runNonmem, runCommand, and PLOTR now have dots in the second position of argument list, to prevent accidental partial matching.
 
 5.52
 

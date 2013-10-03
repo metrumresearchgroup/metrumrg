@@ -16,6 +16,7 @@
 \usage{
 NONR(
 	run, 
+	...,
 	command, 
 	project = getwd(), 
 	wait = TRUE,
@@ -40,12 +41,11 @@ NONR(
 	cat.cov = NULL, 
 	par.list = NULL, 
 	eta.list = NULL, 
-	missing = -99, 
-
-	...
+	missing = -99
 )
 NONR72(
 	run, 
+	...,
 	command, 
 	project = getwd(), 
 	wait = TRUE,
@@ -70,8 +70,7 @@ NONR72(
 	cat.cov = NULL, 
 	par.list = NULL, 
 	eta.list = NULL, 
-	missing = -99, 
-	...,
+	missing = -99,
 	interface='autolog.pl',
 	q='all.q',
 	pe=NA

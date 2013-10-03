@@ -1,5 +1,6 @@
 `PLOTR` <-function(
-	run, 
+	run,
+	...,
 	project=getwd(), 
 	rundir=filename(project,run),
 	grp = NULL, 
@@ -15,8 +16,7 @@
 	eta.list = NULL, 
 	missing = -99,
 	estimated = NULL,
-	superset = FALSE,
-	...
+	superset = FALSE
 ){
   if(superset) data <- .dataSuperset(
     	run=run,

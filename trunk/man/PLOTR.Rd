@@ -11,7 +11,8 @@
 }
 \usage{
 PLOTR(
-	run, 
+	run,
+	...,
 	project=getwd(), 
 	rundir=filename(project,run),
 	grp = NULL,
@@ -27,8 +28,7 @@ PLOTR(
 	eta.list = NULL, 
 	missing = -99,
 	estimated = NULL,
-	superset = FALSE,
-	...
+	superset = FALSE
 )
 }
 

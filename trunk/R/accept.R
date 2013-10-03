@@ -31,24 +31,33 @@ function(
 		"SASxport",
 		"survival"
 	),
-	installMissing=TRUE
+	installMissing=TRUE,
+	...,
+	lib.loc=.libPaths(),
+	lib=lib.loc[[1]],
+	type='source'
 ){
 	check <- NULL
+	stopifnot(length(lib) == 1)
 	if(!is.null(contingencies)){
 		if(!inherits(contingencies,"character"))stop("contingencies must be a character vector of package names, or NULL")
 		if(installMissing){
-			installed <- installed.packages(lib.loc=.Library)[,1]
+			installed <- installed.packages(noCache=TRUE,lib.loc=lib.loc)[,1]
 			missing <- setdiff(contingencies,installed)
 			if(length(missing))try(
-				install.packages(missing,lib=.Library,type='source')
+				install.packages(missing,lib=lib,type=type)
 			)
 		}
-		check <- sapply(contingencies,packageCheck,lib.loc=.Library)
+		check <- sapply(contingencies,packageCheck,lib.loc=lib.loc)
 		if(any(check==0))stop(paste("check failed for",paste(names(check)[check==0],collapse=", ")))
 	}
+
+	installed <- installed.packages(noCache=TRUE,lib.loc=lib.loc)
 	acceptor <- Sys.info()["login"]
 	time <- Sys.time()
+	
 	filepath <- file.path(.Library,"accept.xml")
+	
 	as.XMLNode <- function(x,...)UseMethod("as.XMLNode")
 	as.XMLNode.XMLDocument <- function(x,...)xmlTreeParse(x,...)$doc$children[[1]]
 	as.XMLNode.character <- function(x,...)xmlTreeParse(x,...)$doc$children[[1]]
@@ -57,10 +66,13 @@ function(
 	accepted <- newXMLNode("accepted")
 	accepted <- addChildren(accepted,newXMLNode("acceptor",acceptor))
 	accepted <- addChildren(accepted,newXMLNode("time",as.character(time)))
+	
 	for (package in names(check)){
 		test <- newXMLNode("test")
 		test <- addChildren(test,newXMLNode("package",package))
-		test <- addChildren(test,newXMLNode("version",check[package]))
+		#test <- addChildren(test,newXMLNode("version",check[package]))
+		test <- addChildren(test,newXMLNode("version",installed[package,'Version']))
+		test <- addChildren(test,newXMLNode("path",installed[package,'LibPath']))
 		accepted <- addChildren(accepted,test)
 	}
 	doc <- addChildren(doc,as.XMLNode(saveXML(accepted),asText=TRUE))

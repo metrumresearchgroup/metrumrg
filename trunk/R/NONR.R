@@ -1,6 +1,7 @@
 `NONR` <-  
 function (
-	run, 
+	run,
+	...,
 	command, 
 	project = getwd(), 
 	wait = TRUE,
@@ -25,8 +26,7 @@ function (
 	cat.cov = NULL, 
 	par.list = NULL, 
 	eta.list = NULL, 
-	missing = -99, 
-	...
+	missing = -99
 ){
     if (win())  grid <- FALSE
     if (win())  concurrent <- FALSE
@@ -104,6 +104,7 @@ nix <- function().Platform$OS.type == 'unix'
 win <- function().Platform$OS.type == 'windows'
 NONR72 <- function(
 	run, 
+	...,
 	command, 
 	project = getwd(), 
 	wait = TRUE,
@@ -129,7 +130,6 @@ NONR72 <- function(
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
-	...,
 	interface='autolog.pl',
 	q='all.q',
 	pe=NA
@@ -160,9 +160,9 @@ NONR72 <- function(
 	par.list=par.list,
 	eta.list=eta.list,
 	missing= missing,
-	...,
 	interface=interface,
 	q=q,
-	pe=pe
+	pe=pe,
+	...
 )
 

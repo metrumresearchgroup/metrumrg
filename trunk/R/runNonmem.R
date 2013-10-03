@@ -1,6 +1,7 @@
 `runNonmem` <-
 function (
 	run,
+	...,
 	command,
 	project,
 	wait,
@@ -33,7 +34,6 @@ function (
 	purge = TRUE,
 	sync=if(wait)'y'else'n',
 	interface='nm.pl',
-	...,
 	perm.cond=NULL,
 	pe=NA
 ){
