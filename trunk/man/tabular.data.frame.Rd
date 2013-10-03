@@ -53,7 +53,7 @@ and tries to open those pdfs for viewing.
 	source.label='source: ',
 	file.label='file: ',
 	basefile=FALSE,
-	tabularEnvironment='tabular'
+	tabularEnvironment='tabular',
 	...
 )
 \method{as.document}{data.frame}(
