@@ -10,12 +10,13 @@
 \alias{tabular}
 \alias{as.tabular}
 \alias{tex2pdf}
+\alias{preamble}
 \alias{viewtex}
 
 \title{Convert a Data Frame to a Latex Tabular Environment, Latex Document, or PDF}
 
 \description{ The functions \code{tabular}, \code{as.document}, and \code{as.pdf}
-are generic.  Methods are given here that cascade in the order data.frame -> tabular
+are generic.  Methods are given here that cascade in the order data.frame -> tabular (character)
 -> document -> pdf.  \code{as.document.data.frame} is argued identically to \code{tabular},
 except for a few extra arguments; the function tries to guess the exact length and
 width for a page size identical to the printed area (you can modify with the arguments
@@ -52,58 +53,63 @@ and tries to open those pdfs for viewing.
 	source.label='source: ',
 	file.label='file: ',
 	basefile=FALSE,
-
+	tabularEnvironment='tabular'
 	...
 )
 \method{as.document}{data.frame}(
-	x, 
-	rules = c(2, 1, 1), 
-	walls = 0, 
-	grid = FALSE, 
-	rowgroups = rownames(x), 
-	colgroups = names(x), 
-	rowbreaks = if (grid) breaks(rowgroups, ...) else 0,
-	colbreaks = if (grid) breaks(colgroups, ...) else 0, 
-	rowcolors=NULL,	
-	charjust = "left", 
-	numjust = "right", 
-	justify = ifelse(sapply(x, is.numeric), numjust, charjust), 
-	colwidth = NA, 
-	paralign = "top", 
-	na = "", 
-	verbatim = ifelse(sapply(x, is.numeric), TRUE, FALSE), 
-	escape = "#", 
-	trim = TRUE,
-	wider = 0,
-	longer = 0,
-	prolog = NULL,
-	epilog = NULL,	
-	...
+	  x,
+	  rules = c(2, 1, 1), 
+	  walls = 0, 
+	  grid = FALSE, 
+	  rowgroups = rownames(x), 
+	  colgroups = names(x), 
+	  rowbreaks = if (grid) breaks(rowgroups, ...) else 0,
+	  colbreaks = if (grid) breaks(colgroups, ...) else 0, 
+	  rowcolors=NULL,
+	  charjust = "left", 
+	  numjust = "right", 
+	  justify = ifelse(sapply(x, is.numeric), numjust, charjust), 
+	  colwidth = NA, 
+	  paralign = "top", 
+	  na = "", 
+	  verbatim = ifelse(sapply(x, is.numeric), TRUE, FALSE), 
+	  escape = "#", 
+	  trim = TRUE, 
+	  wider=0,
+	  longer=0,
+	  ...
 )
 \method{as.document}{character}(
 	x,
-	landscape=FALSE,
-	wide=if(landscape) 279.4 else 215.9,
-	long=if(landscape) 215.9 else 279.4,
+	preamble=preamble(...),
+	thispagestyle=command('thispagestyle',args='empty'),
+	pagestyle=command('pagestyle',args='empty'),
 	prolog=NULL,
 	epilog=NULL,
 	...
 )
-\method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
-\method{as.pdf}{character}(
-	x,
-	stem,
+preamble(
 	landscape=FALSE,
 	wide=if(landscape) 279.4 else 215.9,
 	long=if(landscape) 215.9 else 279.4,
+	geoLeft = '1mm',
+	geoRight = '1mm',
+	geoTop = '1mm',
+	geoBottom = '1mm',
+	documentclass = command('documentclass',args='article'),
+	xcolorPackage = command('usepackage',options=list('usenames','dvispnames','svgnames','table'),args='xcolor'),
+    	geometryPackage = command('usepackage',options=list(left=geoLeft,top=geoTop,bottom=geoBottom,right=geoRight),args='geometry')
+	geometry = command('geometry',args=list(glue('papersize=',glue('{',wide,'mm',',',long,'mm}')))),
+	morePreamble = NULL,
 	...
 )
+\method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
+\method{as.pdf}{character}(x,stem,...)
 \method{as.pdf}{data.frame}(x,stem,...)
 tex2pdf(
 	x,
 	stem=NULL,
 	dir=NULL,
-	landscape=FALSE,
 	clean=TRUE,
 	onefile=FALSE,
 	...
@@ -137,13 +143,25 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{source.label}{optional text to preceed source if specified}
   \item{file.label}{optional text to preceed file if specified}
   \item{basefile}{if TRUE, strip path from file for display purposes}
+  \item{tabularEnvironment}{default \code{tabular}; consider also \code{longtable}}
   \item{wide}{document width in mm}
   \item{long}{document lenth in mm}
   \item{wider}{additional document width in mm}
   \item{longer}{additional document lenth in mm}
-  \item{prolog}{latex markup to include before the tabular environment}
-  \item{epilog}{latex markup to include after the tabular environment}
   \item{landscape}{if TRUE, default orientation is `landscape' not `portrait'}
+  \item{geoLeft}{geometry package: left margin}
+  \item{geoRight}{geometry package: right margin}
+  \item{geoTop}{geometry package: top margin}
+  \item{geoBottom}{geometry package: bottom margin}
+  \item{documentclass}{document class command}
+  \item{xcolorPackage}{xcolor package command}
+  \item{geometryPackage}{geometry package command}
+  \item{geometry}{geometry specification}
+  \item{morePreamble}{additional preamble before beginning the document}
+  \item{thispagestyle}{thispagestyle command}
+  \item{pagestyle}{pagestyle command}
+  \item{prolog}{latex markup to include before x}
+  \item{epilog}{latex markup to include after x}
   \item{stem}{the stem of a file name (no extension)}
   \item{dir}{output directory}
   \item{clean}{whether to delete system files after pdf creation}
@@ -169,8 +187,15 @@ suppress embedding of \code{source}; set to empty string to suppress source labe
 suppress embedding of \code{file}; set to empty string to suppress file label. Note that
 \code{file} controls file destination, whether or not represented in the result.
 
-
 Rownames are ignored.  If informative, capture them as a column.
+
+Converting a \code{tabular} object or any character vector to a document causes
+inclusion of default values for the the arguments of \code{preamble} and 
+\code{as.document.character}.  Any of these can be dropped by passing NULL.  Invocation
+of \code{preamble} can be avoided entirely by passing a value for the eponymous argument.
+Alternatively, specify \code{morePreamble} to extend the preamble, or to replace any elements
+you may have dropped.
+
 }
 \value{character}
 \references{\url{http://metrumrg.googlecode.com}}

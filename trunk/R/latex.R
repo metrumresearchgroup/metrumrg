@@ -193,6 +193,7 @@ tabular.data.frame <- function(
   source.label='source: ',
   file.label='file: ',
   basefile=FALSE,
+  tabularEnvironment='tabular'
   ...
 ){
   #groom arguments
@@ -239,7 +240,7 @@ tabular.data.frame <- function(
     x[rowbreaks > 0] <- paste(x[rowbreaks > 0],'\\hline')
     rowbreaks <- rowbreaks - 1
   }
-  x <- wrap(x,'tabular',args=format)
+  x <- wrap(x,tabularEnvironment,args=format)
   class(x) <- c('tabular',class(x))
     if(!is.null(source))if(!is.null(source.label)) x <- c(x,glue('\\\\{\\tiny ',source.label,source,'}'))
   if(!is.null(file))if(!is.null(file.label)) x <- c(

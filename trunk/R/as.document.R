@@ -1,67 +1,69 @@
 as.document <- function(x,...)UseMethod('as.document')
-as.document.character <- function(
-	x,
+preamble <- function(
 	landscape=FALSE,
 	wide=if(landscape) 279.4 else 215.9,
 	long=if(landscape) 215.9 else 279.4,
+	geoLeft = '1mm',
+	geoRight = '1mm',
+	geoTop = '1mm',
+	geoBottom = '1mm',
+	documentclass = command('documentclass',args='article'),
+	xcolorPackage = command('usepackage',options=list('usenames','dvispnames','svgnames','table'),args='xcolor'),
+    	geometryPackage = command('usepackage',options=list(left=geoLeft,top=geoTop,bottom=geoBottom,right=geoRight),args='geometry')
+	geometry = command('geometry',args=list(glue('papersize=',glue('{',wide,'mm',',',long,'mm}')))),
+	morePreamble = NULL,
+	...
+)c(
+	documentclass,
+	xcolorPackage,
+	geometryPackage,
+	geometry,
+	morePreamble
+)
+        
+as.document.character <- function(
+	x,
+	preamble=preamble(...),
+	thispagestyle=command('thispagestyle',args='empty'),
+	pagestyle=command('pagestyle',args='empty'),
 	prolog=NULL,
 	epilog=NULL,
 	...
 ){
-
-    papersize <- glue('{',wide,'mm',',',long,'mm}')
-    doc <-  c(
-    	command('documentclass',args='article'),
-    	command('usepackage',options=list('usenames','dvispnames','svgnames','table'),args='xcolor'),
-    	command(
-	      'usepackage',
-	      options=list(
-		  left='1mm',
-		  top='1mm',
-		  bottom='1mm',
-		  right='1mm'
-	      ),
-	      args='geometry'
-	    ),
-	    command('geometry',args=list(glue('papersize=',papersize))),
-	    wrap(
-	      environment='document',
-	      c(
-		command('thispagestyle',args='empty'),
-		command('pagestyle',args='empty'),
-		prolog,
-		x,
-		epilog
-	      )
-	    )
-	  )
-	  class(doc) <- c('document',class(doc))
-	  doc
+	content <- c(
+	    thispagestyle,
+	    pagestyle,
+	    prolog,
+	    x,
+	    epilog
+       )
+       body <- wrap(environment='document', content)
+       doc <- c(preamble, body)
+       class(doc) <- c('document',class(doc))
+       doc
 }
 as.document.data.frame <- function(
-  x,
-  rules = c(2, 1, 1), 
-  walls = 0, 
-  grid = FALSE, 
-  rowgroups = rownames(x), 
-  colgroups = names(x), 
-  rowbreaks = if (grid) breaks(rowgroups, ...) else 0,
-  colbreaks = if (grid) breaks(colgroups, ...) else 0, 
-  rowcolors=NULL,
-  charjust = "left", 
-  numjust = "right", 
-  justify = ifelse(sapply(x, is.numeric), numjust, charjust), 
-  colwidth = NA, 
-  paralign = "top", 
-  na = "", 
-  verbatim = ifelse(sapply(x, is.numeric), TRUE, FALSE), 
-  escape = "#", 
-  trim = TRUE, 
-  wider=0,
-  longer=0,
-  prolog=NULL,
-  epilog=NULL,
-  ...
+	  x,
+	  rules = c(2, 1, 1), 
+	  walls = 0, 
+	  grid = FALSE, 
+	  rowgroups = rownames(x), 
+	  colgroups = names(x), 
+	  rowbreaks = if (grid) breaks(rowgroups, ...) else 0,
+	  colbreaks = if (grid) breaks(colgroups, ...) else 0, 
+	  rowcolors=NULL,
+	  charjust = "left", 
+	  numjust = "right", 
+	  justify = ifelse(sapply(x, is.numeric), numjust, charjust), 
+	  colwidth = NA, 
+	  paralign = "top", 
+	  na = "", 
+	  verbatim = ifelse(sapply(x, is.numeric), TRUE, FALSE), 
+	  escape = "#", 
+	  trim = TRUE, 
+	  wider=0,
+	  longer=0,
+	  ...
 ){
   stopifnot(inherits(x,'data.frame'))
   rules <- rep(rules, length.out = 3)
@@ -103,7 +105,7 @@ as.document.data.frame <- function(
           trim=trim,
           ...
   )
-  doc <-  as.document(tab,wide=wide,long=long,prolog=prolog,epilog=epilog,...)
+  doc <-  as.document(tab,wide=wide,long=long,...)
   doc
 }
 as.pdf <- function(x,...)UseMethod('as.pdf')
@@ -130,30 +132,13 @@ as.pdf.document <- function(
 	if(clean)file.remove(actuals)
 	invisible(result)
 }
-as.pdf.character <- function(
-	x,
-	stem,
-	landscape=FALSE,
-	wide=if(landscape) 279.4 else 215.9,
-	long=if(landscape) 215.9 else 279.4,
-	...
-)as.pdf(
-	as.document(
-		x,
-		wide=wide,
-		long=long,
-		...
-	),
-	stem=stem,
-	...
-)
+as.pdf.character <- function(x,stem,...)as.pdf(as.document(x,...),stem=stem,...)
 as.pdf.data.frame <- function(x,stem,...)as.pdf(as.document(x,...),stem=stem,...)
 
 tex2pdf <- function(
 	x,
 	stem=NULL,
 	dir=NULL,
-	landscape=FALSE,
 	clean=TRUE,
 	onefile=FALSE,
 	...
@@ -181,7 +166,6 @@ tex2pdf <- function(
 			dat[[index]],
 			stem=target[[index]],
 			dir=dir[[index]],
-			landscape=landscape,
 			clean=clean,
 			...
 		)

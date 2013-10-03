@@ -455,6 +455,7 @@
 \item \link{plus.rigged} merge an nm object with a rigged data frame
 \item \link{pool} test for unique and shared elments among two vectors
 \item \link{posmat} coerce a matrix to be positive definite
+\item \link{preamble} construct a preamble for a latex document
 \item \link{predoseDv.nm} DV is defined before the first record within SUBJ where EVID is 1
 \item \link{predoseDv} generic
 \item \link{prev} calculate the previous element for each element of x
