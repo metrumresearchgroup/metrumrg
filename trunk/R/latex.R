@@ -193,7 +193,7 @@ tabular.data.frame <- function(
   source.label='source: ',
   file.label='file: ',
   basefile=FALSE,
-  tabularEnvironment='tabular'
+  tabularEnvironment='tabular',
   ...
 ){
   #groom arguments
