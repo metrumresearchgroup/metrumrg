@@ -33,6 +33,6 @@ duplicated(
 `%nests%` <- function(a,b)!b %crosses% a
 `%nested.in%` <- function(a,b) b %nests% a
 constant <- function(x,...)UseMethod('constant')
-constant.default <- function(x,within,...)x%nests%within
+constant.default <- function(x,within=rep(TRUE,length(x)),...)x%nests%within
 
 

@@ -1,4 +1,4 @@
-.onLoad <-function(lib,pkg)
+.onLoad <-function(libname,pkgname)
 {
     methods::setClass(
     	"nm.data", 
@@ -15,3 +15,4 @@
 	packageStartupMessage(paste('metrumrg',utils::packageDescription('metrumrg',fields='Version')))
 	packageStartupMessage('enter "?metrumrg" for help')
 }
+

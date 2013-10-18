@@ -13,29 +13,11 @@ encode.character <- function(x,labels=NULL,sep='/',...){
   x
 } 
 encode.default <- function(x,labels=NULL,sep='/',...)encode(as.character(x),labels=labels,sep=sep,...)
-
-
-###
-a <- encode(
-  x = list(
-    c('M','F'),
-    c(1:4)
-  ),
-  labels = list(
-    c('male','female'),
-    c('caucasian','asian','african',NA)
-  )
-)
-b <- encode(c(1:2),c('pediatric','adult'))
-a
-b
-
-###
-
-
 .encoded <- function(x,...){
   stopifnot(length(x) == 1)
   x <- as.character(x)
+  x <- sub('^\\s','',x)
+  x <- sub('\\s$','',x)
   if(is.na(x))return(FALSE)
   if (nchar(x) < 5 )return(FALSE)
   first <- substr(x,1,1)
@@ -52,17 +34,56 @@ b
 }
 encoded <- function(x, ...)UseMethod('encoded')
 encoded.default <- function(x, ...)sapply(x,.encoded,USE.NAMES=FALSE)
-
-ranged <- function(x,...)grepl('(\\(|\\[)[.1-9]*,[.1-9]*(\\)|\\])$',x,...)
-ranged(c('foo','[4,8.2]','(,8.2]','(,]'))
-
-###
-encoded(a)
-encoded(b)
-c <- c('a',NA,'##b##')
-encoded(c)
-###
-
+extract <- function(x, pattern, group = 0, invert=FALSE,...){
+  y <- regexec(pattern,x)
+  scale <- sapply(y,length)
+  group <- rep(group, length.out= length(y))
+  group <- group + 1
+  start <- sapply(seq_along(y), function(i){
+    y <- y[[i]]
+    group <- group[[i]]
+    if(group > length(y)) return(0)
+    y[[group]]
+  })
+  start[is.na(start)] <- 0
+  start[start < 0] <- 0
+  len <- sapply(seq_along(y), function(i){
+    y <- y[[i]]
+    group <- group[[i]]
+    if(group > length(y)) return(0)
+    attr(y,'match.length')[[group]]
+  })
+  len[is.na(len)] <- 0
+  len[len < 0] <- 0
+  stop <- start + len - 1
+  stop[stop < 0] <- 0
+  indices <- lapply(seq_along(y),function(i)start[[i]]:stop[[i]])
+  indices[len == 0] <- 0
+  splits <- strsplit(x,NULL)
+  welds <- sapply(seq_along(splits), function(i){
+    z <- splits[[i]]
+    index <- indices[[i]]
+    if(invert){
+      if(len[i] > 0) z <- z[-index]
+    } else z <- z[index]
+    z <- paste(z,collapse='')
+    z
+   })
+  welds[is.na(x)] <- NA
+  welds
+}
+guidetext <- function(x,...)UseMethod('guidetext')
+guidetext.spec <- function(x,column=x$column,...){
+  x <- x[x$column %in% column,]
+  pattern <- '((\\(|\\[) *([-+eE.0-9]*) *, *([-+eE.0-9]*) *(\\)|\\])) *$'
+  y <- extract(x$guide,pattern=pattern,invert=TRUE)
+  y <- sub('^\\s','',y)
+  y <- sub('\\s$','',y)
+  y[encoded(y)] <- NA
+  y[y == ''] <- NA
+  y[y$type == 'datetime'] <- NA
+  y
+}
 .extract <- function(x,node,...){
   stopifnot(length(x) == 1)
   x <- as.character(x)
@@ -80,15 +101,8 @@ encoded(c)
   y <- as.character(y)
   y
 } 
-
-.extract('..1..',1)
-.extract('..1.a..',2)
-.extract('..1..',2)
-
-
 .codes <- function(x,...).extract(x,node=1,...)
 .decodes <- function(x,...).extract(x,node=2,...)
-
 codes <- function(x,...)UseMethod('codes')
 codes.default <- function(x, simplify = TRUE, ...){
   y <- lapply(x,.codes)
@@ -102,17 +116,6 @@ decodes.default <- function(x, simplify = TRUE, ...){
   if(length(y) == 1 & simplify) y <- y[[1]]
   y
 }
-###
-codes(a)
-codes(b)
-codes(b,simplify=F)
-codes(c)
-codes('..1..')
-decodes(a)
-decodes(b)
-decodes(c)
-###
-
 as.spec <- function(x, ...)UseMethod('as.spec')
 as.spec.data.frame <- function(x, ...){
   stopifnot(identical(names(x),c('column','label','type','guide','required','comment')))
@@ -144,7 +147,6 @@ as.spec.character <- function(x,...){
   y <- read.spec(x)
   y
 }
-
 specification <- function(x,...)UseMethod('specification')
 specification.default <- function(x, ...)x
 specification.comment <- function(x,...)factor(x, levels=c(TRUE,FALSE), labels=c('C','.'))
@@ -157,7 +159,11 @@ specification.comment <- function(x,...)factor(x, levels=c(TRUE,FALSE), labels=c
   return(as.character(NA))
 }
 .guide.numeric <- function(x,...){
-  if(all(x=round(x),na.rm=TRUE)) .quide(as.integer(x))
+  if(all(x == round(x),na.rm=TRUE)) .guide(as.integer(x))
+  else glue('[',min(x,na.rm=TRUE),',',max(x,na.rm=TRUE),']')
+}
+.guide.integer <- function(x,tol=10,...){
+  if(length(unique(x)) <= tol) .guide(as.factor(x))
   else glue('[',min(x,na.rm=TRUE),',',max(x,na.rm=TRUE),']')
 }
 .guide.factor <- function(x,sep='/',...){
@@ -180,7 +186,6 @@ specification.comment <- function(x,...)factor(x, levels=c(TRUE,FALSE), labels=c
 }
 .required <- function(x,...)UseMethod('.required')
 .required.default <- function(x,...)as.integer(all(is.defined(x)))
-
 specification.data.frame <- function(x,tol=10,sep='/',...){
   x[] <- lapply(x,specification)
   y <- data.frame(
@@ -240,7 +245,7 @@ specification.data.frame <- function(x,tol=10,sep='/',...){
       message(col, ' not (coercible to) ', format)
       return(FALSE)
     }
-  }
+  } 
   z <- y[encoded(y$guide),]
   allgoodcodes <- TRUE
   for(col in z$column){
@@ -255,17 +260,77 @@ specification.data.frame <- function(x,tol=10,sep='/',...){
     }
   }
   if(!allgoodcodes)return(FALSE)
+  allrequired <- TRUE
   for(col in y$column){
     condition <- y$required[y$column == col]
     required <- as.logical(eval(parse(text=condition), envir=x))
     required[is.na(required)] <- TRUE
     missing <- is.na(x[,col])
     exceptions <- sum(required & missing)
-    if(exceptions)stop('found ',exceptions,' NA in ',col,' for condition ',condition)
+    if(exceptions){
+      message('found ',exceptions,' NA in ',col,' for condition ',condition)
+      allrequired <- FALSE
+    }
+    if(!allrequired)return(FALSE)
   }
+  pattern <- '((\\(|\\[) *([-+eE.0-9]*) *, *([-+eE.0-9]*) *(\\)|\\])) *$'
+  y$lo <- extract(y$guide,pattern,group=3)
+  y$hi <- extract(y$guide,pattern,group=4)
+  
+  y$oplo <- extract(y$guide,pattern,group=2)
+  y$ophi <- extract(y$guide,pattern,group=5)
+  y$lo[y$lo == ''] <- NA
+  y$hi[y$hi == ''] <- NA
+  y$oplo[y$oplo == ''] <- NA
+  y$ophi[y$ophi == ''] <- NA
+  y$mn <- sapply(y$column,function(col)if(is.numeric(x[[col]]))min(x[[col]],na.rm=TRUE) else NA)
+  y$mx <- sapply(y$column,function(col)if(is.numeric(x[[col]]))max(x[[col]],na.rm=TRUE) else NA)
+  y$goodlo <- TRUE
+  y$goodhi <- TRUE
+  y$goodlo[with(y, is.defined(lo) & is.defined(oplo) & is.defined(mn) & oplo=='(' & mn <= lo)] <- FALSE
+  y$goodlo[with(y, is.defined(lo) & is.defined(oplo) & is.defined(mn) & oplo=='[' & mn <  lo)] <- FALSE
+  y$goodhi[with(y, is.defined(hi) & is.defined(ophi) & is.defined(mx) & ophi==')' & mx >= hi)] <- FALSE
+  y$goodhi[with(y, is.defined(hi) & is.defined(ophi) & is.defined(mx) & ophi==']' & mx >  hi)] <- FALSE
+  y$interval <- extract(y$guide,pattern, group=1)
+  y$msg <- with(y, paste(column,'range',mn,',',mx,'outside of interval',interval,'\n'))
+  y$failed <- !y$goodlo | !y$goodhi
+  if(any(y$failed)){
+    message(y$msg[y$failed])
+    return(FALSE)
+  }  
   TRUE
 }
-  
+
+
+ <- c(' kg ',' //a/A//b/B// ',NA,' kg [ 4 , 8.2 ]','(,1.025e-6]','(,] ')
+pattern <- '((\\(|\\[) *([-+eE.0-9]*) *, *([-+eE.0-9]*) *(\\)|\\])) *$'
+extract(x,pattern,group=5)
+a <- encode(
+  x = list(
+    c('M','F'),
+    c(1:4)
+  ),
+  labels = list(
+    c('male','female'),
+    c('caucasian','asian','african',NA)
+  )
+)
+b <- encode(c(1:2),c('pediatric','adult'))
+a
+b
+encoded(a)
+encoded(b)
+c <- c('a',NA,'##b##')
+encoded(c)
+encoded(' //4// ')
+codes(a)
+codes(b)
+codes(b,simplify=F)
+codes(c)
+codes('..1..')
+decodes(a)
+decodes(b)
+decodes(c)
 
 test <- Theoph
 names(test) <- c('SUBJ','WT','DOSE','DATETIME','DV')

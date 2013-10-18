@@ -16,7 +16,7 @@ a \%nests\% b
 a \%nested.in\% b
 a \%crosses\% b
 a \%crossed.on\% b
-\method{constant}{default}(x,within,...)
+\method{constant}{default}(x,within=rep(TRUE,length(x)),...)
 }
 \arguments{
   \item{a}{a factor, something coercible to a factor, or a list of such having equal lengths (e.g. data.frame)}
