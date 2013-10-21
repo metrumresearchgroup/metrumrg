@@ -1,4 +1,3 @@
-library(metrumrg)
 encode <- function(x,...)UseMethod('encode')
 encode.list <- function(x,labels=NULL,sep='/',...){
   if(!is.null(labels) & length(labels) != length(x))stop('lengths of x and labels must match')
@@ -34,6 +33,7 @@ encode.default <- function(x,labels=NULL,sep='/',...)encode(as.character(x),labe
 }
 encoded <- function(x, ...)UseMethod('encoded')
 encoded.default <- function(x, ...)sapply(x,.encoded,USE.NAMES=FALSE)
+encoded.spec <- function(x,column=x$column,...)encoded(x$guide[x$column %in% column])
 extract <- function(x, pattern, group = 0, invert=FALSE,...){
   y <- regexec(pattern,x)
   scale <- sapply(y,length)
@@ -81,7 +81,7 @@ guidetext.spec <- function(x,column=x$column,...){
   y <- sub('\\s$','',y)
   y[encoded(y)] <- NA
   y[y == ''] <- NA
-  y[y$type == 'datetime'] <- NA
+  y[x$type == 'datetime'] <- NA
   y
 }
 .extract <- function(x,node,...){
@@ -109,13 +109,15 @@ codes.default <- function(x, simplify = TRUE, ...){
   if(length(y) == 1 & simplify) y <- y[[1]]
   y
 }
-
+codes.spec <- function(x,column=x$column,...)codes(x$guide[x$column %in% column])
 decodes <- function(x,...)UseMethod('decodes')
 decodes.default <- function(x, simplify = TRUE, ...){
   y <- lapply(x,.decodes)
   if(length(y) == 1 & simplify) y <- y[[1]]
   y
 }
+decodes.spec <- function(x,column=x$column,...)decodes(x$guide[x$column %in% column])
+labels.spec <- function(x,column=x$column,...)x$label[x$column %in% column]
 as.spec <- function(x, ...)UseMethod('as.spec')
 as.spec.data.frame <- function(x, ...){
   stopifnot(identical(names(x),c('column','label','type','guide','required','comment')))
@@ -212,6 +214,8 @@ specification.data.frame <- function(x,tol=10,sep='/',...){
   x %matches% y
 }
 `%matches%.data.frame` <- function(x, y, ...)as.keyed(x) %matches% y
+
+
 `%matches%.keyed` <- function(x, y, ...){
   y <- as.spec(y)
   x[] <- lapply(x,specification)
@@ -301,52 +305,26 @@ specification.data.frame <- function(x,tol=10,sep='/',...){
   TRUE
 }
 
+specfile <- function(
+  run,
+  project=getwd(),
+  rundir = filename(project,run), 
+  ctlfile = filename(rundir, run, ".ctl"),
+  ...
+){
+  #stopifnot('header' %in% names(read.input))
+  if(!missing(run))run <- as.character(run)
+  if(!missing(rundir))rundir <- as.character(rundir)
+  if(missing(run) & missing(rundir) & missing(ctlfile))stop('one of run, rundir, or ctlfile must be supplied')
+  if(missing(run) & missing(ctlfile)) run <- basename(rundir)      
+  if(missing(run) & missing(rundir))run <- sub('[.][^.]+$','',basename(ctlfile))
+  if(missing(project) & !missing(rundir))project <- dirname(rundir)
+  if(missing(project) & missing(rundir) & !missing(ctlfile))project <- dirname(dirname(ctlfile))
+  dropped <- ignored(run=run,project=project,rundir=rundir,ctlfile=ctlfile,read.input=read.input,...)
+  control <- read.nmctl(ctlfile)
+  dname <- getdname(control)
+  datafile <- resolve(dname,rundir)
+  specfile <- sub('\\.csv$','.spec',datafile)
+  specfile
+}
 
- <- c(' kg ',' //a/A//b/B// ',NA,' kg [ 4 , 8.2 ]','(,1.025e-6]','(,] ')
-pattern <- '((\\(|\\[) *([-+eE.0-9]*) *, *([-+eE.0-9]*) *(\\)|\\])) *$'
-extract(x,pattern,group=5)
-a <- encode(
-  x = list(
-    c('M','F'),
-    c(1:4)
-  ),
-  labels = list(
-    c('male','female'),
-    c('caucasian','asian','african',NA)
-  )
-)
-b <- encode(c(1:2),c('pediatric','adult'))
-a
-b
-encoded(a)
-encoded(b)
-c <- c('a',NA,'##b##')
-encoded(c)
-encoded(' //4// ')
-codes(a)
-codes(b)
-codes(b,simplify=F)
-codes(c)
-codes('..1..')
-decodes(a)
-decodes(b)
-decodes(c)
-
-test <- Theoph
-names(test) <- c('SUBJ','WT','DOSE','DATETIME','DV')
-test$DATETIME <- as.mDateTime(as.mDate('2013-10-17'),as.mTime(as.second(round(as.minute(as.second(as.hour(test$DATETIME)))))))
-test <- as.nm(test)
-summary(test)
-head(test)
-spec <- specification(test)
-summary(spec)
-write.spec(spec,'test.spec')
-write.nm(test, 'test.csv')
-test %matches% spec
-test %matches% 'test.spec'
-'test.csv' %matches% spec
-'test.csv' %matches% 'test.spec'
-spec %matches% test
-spec %matches% 'test.csv'
-unlink('test.csv')
-unlink('test.spec')
