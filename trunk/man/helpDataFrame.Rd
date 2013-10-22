@@ -17,5 +17,6 @@ I want to ....
 \item \link[=nasum]{diagnose missingness}
 \item \link[=combinations]{show sorted unique rows}
 \item \link[=supp]{add supplemental data to a CDISC data set}
+\item \link[=specification]{document and enforce data set properties}
 }
 }

@@ -15,6 +15,7 @@ I want to ....
 \item \link[=as.second]{interconvert time units}
 \item \link[=Ops.keyed]{join or subtract keyed data.frames}
 \item \link[=as.nm]{create and manipulate nm objects}
+\item \link[=as.spec]{create and manipulate data specification objects}
 %\item \link[=as.moot]{modify the assembly of nm objects}
 }
 }

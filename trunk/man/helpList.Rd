@@ -33,6 +33,11 @@
 \item \link{\%contains\%} test whether x contains y
 \item \link{\%crossed.on\%} test whether a is crossed on b
 \item \link{\%crosses\%} test whether a crosses b
+\item \link{\%matches\%} generic
+\item \link{\%matches.character\%} test whether data (file name) matches spec
+\item \link{\%matches.data.frame\%} test whether data.frame matches spec
+\item \link{\%matches.keyed\%} test whether keyed data.frame matches spec
+\item \link{\%matches.spec\%} test whether spec matches data
 \item \link{\%nested.in\%} test whether a is nested in b
 \item \link{\%nests\%} test whether a nests b
 \item \link{$.init} select init element
@@ -183,6 +188,9 @@
 \item \link{as.second.numeric} coerce numeric to second
 \item \link{as.second.second} coerce second to second
 \item \link{as.second} coerce to second (time unit)
+\item \link{as.spec} generic
+\item \link{as.spec.data.frame} convert data.frame to spec
+\item \link{as.spec.character} convert file name to spec
 \item \link{as.tabular} convert to a latex tabular environment
 \item \link{as.unilog.lst} convert nonmem output (.lst) to unilog
 \item \link{as.unilog.pxml} convert nonmem output (.ext) to unilog
@@ -190,6 +198,7 @@
 \item \link{as.unilog.runlog} convert runlog to unilog
 \item \link{as.week.day} coerce day to week
 \item \link{as.vector.keyed} coerce keyed to vector
+\item \link{as.vector.spec} coerce spec to vector
 \item \link{as.vector.uniKey} coerce uniKey to vector
 \item \link{as.week.duration} coerce duration to week
 \item \link{as.week.numeric} coerce numeric to week
@@ -237,6 +246,9 @@
 \item \link{closers} set closing positions for wikmath nests
 \item \link{cmax} calculate maximum steady-state concentration
 \item \link{cmin} calculate minimum steady-state concentration
+\item \link{codes} generic
+\item \link{codes.default} extract codes from an encoded vector
+\item \link{codes.spec} extract codes from a spec guide
 \item \link{colname<-} change identified column names
 \item \link{command} generate a latex command
 \item \link{combinations} show sorted unique rows
@@ -258,6 +270,9 @@
 \item \link{cwresPlots} create conditional weighted residual diagnostic plots
 \item \link{dataFormat} combine NONMEM predictions, parameter estimates, and covariates into a standard format
 \item \link{dataSynthesis} build a standard plotting data set for a given NONR run
+\item \link{decodes} generic
+\item \link{decodes.default} extract decodes from an encoded vector
+\item \link{decodes.spec} extract decodes from a spec guide
 \item \link{deranged.data.frame} instantiate records implied by range data
 \item \link{deranged.keyed} instantiate records implied by range data
 \item \link{deranged} generic
@@ -272,9 +287,17 @@
 \item \link{dynamic.keyed} return the dynamic portion of a keyed data frame
 \item \link{dynamic} generic
 \item \link{electronicAppendix} create an FDA-style electronic appendix from a subversioned directory
+\item \link{encode} generic
+\item \link{encode.list} encode levels and labels in simple strings
+\item \link{encode.character} encode levels and labels in simple strings
+\item \link{encode.default} encode levels and labels in simple strings
+\item \link{encoded} generic
+\item \link{encoded.default} test whether a vector is encoded
+\item \link{encoded.spec} test whether the guide column of a spec is encoded
 \item \link{episcript} run a script in an environment that defines the passed arguments
 \item \link{explicitPath} add separators to control stream paths that have none
 \item \link{extfile} extract arbitrary file specification from a control stream
+\item \link{extract} extract numbered parenthetical substrings of regular expressions
 \item \link{extractPath} isolate file path from surrounding text (MSF, TAB files).
 \item \link{f} alias for as.flag
 \item \link{falseAmt.nm} AMT defined where EVID is not 1
@@ -315,6 +338,8 @@
 \item \link{getTabs} return the observation rows (EVID==0) corresponding to the specified filename (internal)
 \item \link{glue} paste with no separator
 \item \link{groupnames} construct a single vector of group names from possibly multiple indices to the plotting data set (internal)
+\item \link{guidetext} generic
+\item \link{guidetext.spec} extract guide text from a spec
 \item \link{half.matrix} vectorize the lower triangular portion of a symmetric matrix
 \item \link{half} generic
 \item \link{hash} prepend a character to each line of output
@@ -354,6 +379,7 @@
 \item \link{ke} calculate elimination constant
 \item \link{key} return the key of a keyed data frame
 \item \link{key<-} assign a key
+\item \link{labels.spec} extract labels from a spec
 \item \link{last} repeat, for each element, the last element where a condition is \code{TRUE} (usually, within levels of an index)
 \item \link{latest} identify the latest of each set of variants
 \item \link{latex.args} format latex arguments
@@ -480,6 +506,7 @@
 \item \link{read.cwres.data} compute conditional weighted residuals (internal)
 \item \link{read.nm} read a csv file and try to transform to nm
 \item \link{read.nmctl} read a NONMEM control stream, converting to modifiable object
+\item \link{read.spec} read a spec
 \item \link{reapply} apply a function across cells of an indexed vector, giving an identically-indexed result
 \item \link{rep.comment} repeat comment
 \item \link{rep.flag} repeat flag
@@ -515,6 +542,11 @@
 \item \link{snap} coerce values to nearest of candidates
 \item \link{sort.keyed} sort a keyed data frame
 \item \link{spaces} create a string of spaces
+\item \link{specification} generic
+\item \link{specification.comment} pre-format a comment for specification
+\item \link{specification.data.frame} develop a draft specification for a data.frame
+\item \link{specification.default} pre-format a vector for specification
+\item \link{specfile} for a run and project, guess a path to a data specification file
 \item \link{splom.conditioned} scatterplot for conditioned
 \item \link{splom.digest} scatterplot for digest
 \item \link{splom.keyed} scatterplot for keyed
@@ -529,6 +561,7 @@
 \item \link{summary.hidden.data.frame} summarize hidden rows of a data frame
 \item \link{summary.keyed} summarize a keyed data frame
 \item \link{summary.nm} summarize an nm object
+\item \link{summary.spec} summarize a spec object
 \item \link{superset} combine all NONMEM input with all output
 \item \link{supp} generic
 \item \link{supp.data.frame} supplement a CDISC data.frame
@@ -586,6 +619,7 @@
 \item \link{wrap} wrap text in a latex environment
 \item \link{write.nm} write an nm object to file
 \item \link{write.nmctl} write an nmctl object to file
+\item \link{write.spec} write a spec object to file
 \item \link{xpath} extract value of an xpath exrpession from an xml file
 \item \link{xtfrm.comment} produce a numeric vector that sorts in the same order as comment
 \item \link{xtfrm.flag} produce a numeric vector that sorts in the same order as flag

@@ -22,5 +22,7 @@ I want to ....
 \item \link[=pool]{test for unique and shared elements among two vectors}
 \item \link[=as.vector.keyed]{binary operators for set relations}
 \item \link[=monotonic]{check whether vector is nonincreasing, nondecreasing, and/or monotonic}
+\item \link[=encode]{collapse levels and labels into simple strings}
+\item \link[=extract]{extract numbered parenthetical substrings of regular expressions}
 }
 }

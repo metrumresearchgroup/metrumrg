@@ -16,5 +16,6 @@ I want to ....
 \item \link[=helpStrategic]{perform strategic data manipulations}
 \item \link[=metaMerge.list]{merge recursively}
 \item \link[=digest]{diagnose and visualize static relationships}
+\item \link[=specification]{document and enforce data set properties}
 }
 }
