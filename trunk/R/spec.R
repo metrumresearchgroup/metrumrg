@@ -120,8 +120,12 @@ decodes.spec <- function(x,column=x$column,...)decodes(x$guide[x$column %in% col
 labels.spec <- function(x,column=x$column,...)x$label[x$column %in% column]
 as.spec <- function(x, ...)UseMethod('as.spec')
 as.spec.data.frame <- function(x, ...){
-  stopifnot(identical(names(x),c('column','label','type','guide','required','comment')))
-  #x$guide <- as.guide(x$guide)
+  expected <- c('column','label','type','guide','required','comment')
+  found <- names(x)
+  missing <- expected %-% found
+  extra <- found %-% expected
+  if(length(missing))warning('missing expected column(s) ',paste(missing,collapse=', '))
+  if(length(extra))message('found unexpected column(s) ',paste(extra,collapse=', '))
   x <- as.keyed(x,'column')
   class(x) <- 'spec' %u% class(x)
   x
