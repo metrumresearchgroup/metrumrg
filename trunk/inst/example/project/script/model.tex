@@ -57,7 +57,7 @@ Installing SIGCHLD signal handler...Done.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-            3             0             0             2             0 
+            5             0             0             0             0 
 \end{Soutput}
 \begin{Sinput}
 > follow(1001:1005,project='../nonmem')
@@ -66,7 +66,7 @@ Installing SIGCHLD signal handler...Done.
        queued      compiled       running          done indeterminate 
             5             0             0             0             0 
        queued      compiled       running          done indeterminate 
-            0             1             4             0             0 
+            0             5             0             0             0 
        queued      compiled       running          done indeterminate 
             0             0             4             1             0 
        queued      compiled       running          done indeterminate 
@@ -162,7 +162,8 @@ We request some variants of PRED and CWRES.
 +      checkrunno=TRUE,                     # default
 +      diag=TRUE,                           # default
 +      streams='../nonmem/ctl',             # software will look for 1006.pmn or template.pmn
-+      plotfile='../nonmem/*/*.pdf'
++      plotfile='../nonmem/*/*.pdf',
++      epilog='../../../misc/epilog.R'
 + )
 > Sys.sleep(5)
 > qstat()
@@ -171,10 +172,6 @@ We request some variants of PRED and CWRES.
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
             0             1             0             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
        queued      compiled       running          done indeterminate 
             0             0             1             0             0 
        queued      compiled       running          done indeterminate 
@@ -445,8 +442,6 @@ This run makes the predictions (simulations).
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
             0             0             0             0             1 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
        queued      compiled       running          done indeterminate 
             0             0             1             0             0 
        queued      compiled       running          done indeterminate 
@@ -933,19 +928,33 @@ We also show densityplots of predictions at those quartiles.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-           90            45            21           144             0 
+          219            38            28            14             1 
        queued      compiled       running          done indeterminate 
-           71            42            25           161             1 
+          185            55            16            44             0 
        queued      compiled       running          done indeterminate 
-           56            24            35           185             0 
+          167            55            17            61             0 
        queued      compiled       running          done indeterminate 
-           25            36            26           211             2 
+          153            30            41            75             1 
        queued      compiled       running          done indeterminate 
-            4            41            25           230             0 
+          128            43            17           112             0 
        queued      compiled       running          done indeterminate 
-            0            16            35           249             0 
+           99            62            12           127             0 
        queued      compiled       running          done indeterminate 
-            0             0             9           291             0 
+           88            42            30           140             0 
+       queued      compiled       running          done indeterminate 
+           62            40            28           170             0 
+       queued      compiled       running          done indeterminate 
+           39            51            16           194             0 
+       queued      compiled       running          done indeterminate 
+           19            52            22           207             0 
+       queued      compiled       running          done indeterminate 
+            5            31            41           223             0 
+       queued      compiled       running          done indeterminate 
+            0            23            23           254             0 
+       queued      compiled       running          done indeterminate 
+            0            10            11           279             0 
+       queued      compiled       running          done indeterminate 
+            0             0             7           293             0 
        queued      compiled       running          done indeterminate 
             0             0             0           300             0 
 \end{Soutput}

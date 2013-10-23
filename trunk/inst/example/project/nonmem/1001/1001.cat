@@ -1,3 +1,3 @@
-Wed Sep  4 21:55:01 2013
+Wed Oct 23 19:55:36 2013
 qsub -N Run1001 -o ../nonmem/1001 -e ../nonmem/1001   -V  -j y -q all.q -sync y -shell n -b y -cwd   perl -S /opt/NONMEM/nm72/nmqual/autolog.pl /opt/NONMEM/nm72/nmqual/log.xml run ce ../nonmem/1001 1001
 Run 1001 has exit code 0
