@@ -6,7 +6,7 @@ Version: 5.53
 Date: 2013-10-22
 Author: Tim Bergsma, Bill Knebel, Leonid Gibiansky, Natalie Hsiang
 Maintainer: Tim Bergsma <timb@metrumrg.com>
-Imports: reshape, methods, lattice, grid, XML, MASS, stats
+Depends: reshape, lattice, XML, MASS, methods, grid 
 Suggests: chron, fork
 Description: 
  Pharmacometric tools for common data preparation tasks, stratified 
