@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2013-10-23T19:56:40.983</nm:start_datetime>
+<nm:start_datetime>2013-10-23T22:22:13.067</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1006 like 1005 with tweaked initial estimates
 $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED
@@ -257,44 +257,44 @@ Days until program expires : 266
 ]]></nm:termination_information>
 <nm:etabar>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='ETA1'>-6.902455958011699E-004</nm:col>
-<nm:col nm:cname='ETA2'>-5.843924411063739E-004</nm:col>
-<nm:col nm:cname='ETA3'>1.019760930154986E-003</nm:col>
+<nm:col nm:cname='ETA1'>-6.902455958011977E-004</nm:col>
+<nm:col nm:cname='ETA2'>-5.843924411063934E-004</nm:col>
+<nm:col nm:cname='ETA3'>1.019760930154974E-003</nm:col>
 </nm:row>
 </nm:etabar>
 <nm:etabarse>
 <nm:row nm:rname='SUBPOP1'>
 <nm:col nm:cname='ETA1'>7.131139375068371E-002</nm:col>
-<nm:col nm:cname='ETA2'>4.696748161943543E-002</nm:col>
-<nm:col nm:cname='ETA3'>3.164780287688760E-002</nm:col>
+<nm:col nm:cname='ETA2'>4.696748161943544E-002</nm:col>
+<nm:col nm:cname='ETA3'>3.164780287688759E-002</nm:col>
 </nm:row>
 </nm:etabarse>
 <nm:etabarpval>
 <nm:row nm:rname='SUBPOP1'>
 <nm:col nm:cname='ETA1'>0.992277096559607</nm:col>
-<nm:col nm:cname='ETA2'>0.990072528026350</nm:col>
+<nm:col nm:cname='ETA2'>0.990072528026349</nm:col>
 <nm:col nm:cname='ETA3'>0.974294761867904</nm:col>
 </nm:row>
 </nm:etabarpval>
 <nm:etashrink>
 <nm:row nm:rname='SUBPOP1'>
 <nm:col nm:cname='ETA1'>1.22048038801857</nm:col>
-<nm:col nm:cname='ETA2'>2.15244956776579</nm:col>
+<nm:col nm:cname='ETA2'>2.15244956776577</nm:col>
 <nm:col nm:cname='ETA3'>6.06315373884497</nm:col>
 </nm:row>
 </nm:etashrink>
 <nm:epsshrink>
 <nm:row nm:rname='SUBPOP1'>
-<nm:col nm:cname='EPS1'>7.05062084574343</nm:col>
-<nm:col nm:cname='EPS2'>7.05062084574343</nm:col>
+<nm:col nm:cname='EPS1'>7.05062084574340</nm:col>
+<nm:col nm:cname='EPS2'>7.05062084574340</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>10.37</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>10.47</nm:estimation_elapsed_time>
 <nm:parallel_cov nm:parafile='1006.pnm' nm:protocol='MPI' nm:nodes='16'/>
 <nm:covariance_information><![CDATA[
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='0' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>5.01</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>6.55</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2405.91625875217</nm:final_objective_function>
 <nm:theta>
@@ -937,5 +937,5 @@ Days until program expires : 266
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2013-10-23T19:56:57.320</nm:stop_datetime>
+<nm:stop_datetime>2013-10-23T22:22:31.260</nm:stop_datetime>
 </nm:output>

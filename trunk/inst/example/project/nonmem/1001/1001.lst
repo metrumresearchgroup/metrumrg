@@ -1,4 +1,4 @@
-Wed Oct 23 19:55:38 UTC 2013
+Wed Oct 23 22:21:09 UTC 2013
 $PROB 1001 phase1 1CMT
 $INPUT C ID TIME SEQ=DROP EVID AMT DV
 $DATA ../../data/derived/phase1.csv IGNORE=C
@@ -203,8 +203,8 @@ Days until program expires : 266
  EPSshrink(%):   9.3358E+00  9.3358E+00
  
  #TERE:
- Elapsed estimation time in seconds:     2.38
- Elapsed covariance time in seconds:     2.69
+ Elapsed estimation time in seconds:     2.62
+ Elapsed covariance time in seconds:     2.96
 1
  
  
@@ -570,4 +570,4 @@ Days until program expires : 266
  
 1THERE ARE ERROR MESSAGES IN FILE PRDERR                                                                  
 Stop Time:
-Wed Oct 23 19:55:54 UTC 2013
+Wed Oct 23 22:21:22 UTC 2013

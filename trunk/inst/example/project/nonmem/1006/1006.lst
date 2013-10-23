@@ -1,4 +1,4 @@
-Wed Oct 23 19:56:30 UTC 2013
+Wed Oct 23 22:22:01 UTC 2013
 $PROB 1006 like 1005 with tweaked initial estimates
 $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED
 $DATA ../../data/derived/phase1.csv IGNORE=C
@@ -334,8 +334,8 @@ Days until program expires : 266
  EPSshrink(%):   7.0506E+00  7.0506E+00
  
  #TERE:
- Elapsed estimation time in seconds:    10.37
- Elapsed covariance time in seconds:     5.01
+ Elapsed estimation time in seconds:    10.47
+ Elapsed covariance time in seconds:     6.55
 1
  
  
@@ -750,4 +750,4 @@ Days until program expires : 266
           1.91E+00  2.44E+00  4.16E+00
  
 Stop Time:
-Wed Oct 23 19:56:57 UTC 2013
+Wed Oct 23 22:22:31 UTC 2013

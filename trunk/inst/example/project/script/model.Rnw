@@ -83,7 +83,8 @@ NONR72(
      diag=TRUE,                           # default
      streams='../nonmem/ctl',             # software will look for 1006.pmn or template.pmn
      plotfile='../nonmem/*/*.pdf',
-     epilog='../../../misc/epilog.R'
+     epilog='../../misc/epilog.R',
+     eta.list='ETA1'
 )
 Sys.sleep(5)
 qstat()

@@ -1,8 +1,9 @@
-epilog <- function(run,project,...){
+#epilog <- function(run,project,...){
 
     #See R help. dataSynthesis() gives the same dataset that is used by PLOTR.
-    data <- dataSynthesis(run=run,project=project,...)
-    
+    #data <- dataSynthesis(run=run,project=project,...)
+    data <- dataSynthesis(run=run,project=project,eta.list=eta.list)
+
     numDV<-intersect(c('DV','LDV','AMT'),names(data)) 
     # loop to change variables in numDV to numeric
     for(k in numDV) data[[k]]<-as.numeric(as.character(data[[k]]))
@@ -32,4 +33,4 @@ epilog <- function(run,project,...){
     hist(subj$ETA1, main='Histogram of ETA1')
 
     dev.off()
-}
+#}
