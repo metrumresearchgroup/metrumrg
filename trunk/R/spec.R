@@ -120,7 +120,7 @@ decodes.spec <- function(x,column=x$column,...)decodes(x$guide[x$column %in% col
 labels.spec <- function(object,column=object$column,...)object$label[object$column %in% column]
 as.spec <- function(x, ...)UseMethod('as.spec')
 as.spec.data.frame <- function(x, ...){
-  expected <- c('column','label','type','guide','required','comment')
+  expected <- c('column','label','type','guide','required','derivation')
   found <- names(x)
   missing <- expected %-% found
   extra <- found %-% expected

@@ -12,7 +12,7 @@ Create and Manipulate spec Objects
 \description{
 	A \code{spec} is a keyed data.frame giving an abstract specification of
 	a data table.  It has columns \code{column, label, type, guide, required,
-	and comment}.  These are descriptive or prescriptive for the specified table.
+	and derivation}.  These are descriptive or prescriptive for the specified table.
 	The \code{character} method for \code{as.spec} expects a scalar file name.
 	\code{as.vector} returns the documented column names.  \code{read.spec}
 	and \code{write.spec} use unquoted, tab-delimited cells, with `', `.', and 
@@ -54,9 +54,8 @@ Create and Manipulate spec Objects
 	any R expression that can be coerced to logical and evaluated in the environment
 	defined by the specified data frame.
 	
-	\code{comment} is free text (no tab characters): anything of interest not 
-	captured elsewhere; e.g. notes regarding the source of the data, or other 
-	complex qualities.
+	\code{derivation} is (non-tab) free text intended as a high-level
+	description of how the column depends on other columns or data sources.  
 	
 	
 }
