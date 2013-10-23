@@ -36,7 +36,7 @@ directly or on the object as a whole.}
 \item{\dots}{ignored}
 }
 \details{
-	\code{encoded} always returns true or false, telling whether the corresponding
+	\code{encoded} always returns TRUE or FALSE, telling whether the corresponding
 	element represents an encoding of levels and labels.  See \code{\link{encode}}.
 	\code{codes} returns a list(or vector) giving the element-wise codes (levels) or NA;
 	\code{decodes} returns the corresponding decodes (labels) or NA.  \code{labels}

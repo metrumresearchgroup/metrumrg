@@ -20,7 +20,9 @@ extract(x, pattern, group = 0, invert = FALSE, ...)
 \details{
 \code{\link{regexec}} determines all the numbered matches corresponding to 
  sets of parentheses.  \code{extract} uses these to locate and return particular
- numbered matches, or to delete them, returning what remains.
+ numbered matches, or to delete them, returning what remains. \code{group = 0} 
+ refers to the entire match (first element of each regexec result).  Non-matches 
+ give an empty string; matching NA results in NA.
 }
 \value{
 character

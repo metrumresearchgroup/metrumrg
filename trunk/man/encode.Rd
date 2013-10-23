@@ -25,10 +25,10 @@
 }
 \details{
 An 'encoding' must be at least 5 characters long, beginning and ending with two
-instances of \code{sep}. Specified levels are likewise separated by a double separators.
+instances of \code{sep}. Specified levels are likewise separated by double separators.
 If a label (decode) is available for a level, it follows the corresponding level: the
 two are separated by a single instance of \code{sep}.  Separators may be mixed
-within an encoded vector, but not within an element.  "--0-male--1-female--" indicates
+within an encoded vector, but not within an element.  \code{--0-male--1-female--} indicates
 that the value 0 represents the concept "male" and the value 1 represents "female".
 }
 \value{

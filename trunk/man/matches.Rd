@@ -8,7 +8,8 @@
 \title{Test the Correspondence between a Table and a Specification}
 \description{ The \code{\%matches\%} operators test whether a data frame matches its 
 	corresponding \code{spec}, and vice versa.  The character method treats
-	x as a single file name for data, and coerces y using \code{as.spec}. The 
+	x as the name of a csv-encoded file (na strings `', `.', and NA), 
+	and coerces y using \code{as.spec}. The 
 	latter in turn should be a single file name for a spec, if character. 
 	The method for \code{spec} treats y as the data frame.  The real work
 	is done by the \code{keyed} method.
@@ -38,8 +39,8 @@ following, and issues appropriate messages as necessary.
 	format string.  
 	\item Each element of a column with an encoded guide element must be one
 	of the encoded levels, or NA.
-	\item if the guide element ends with some variant of the range specifier
-	-- (0, 30) [0, 30] etc. -- then all non-missing values must fall in the range.
+	\item If the guide element ends with some variant of the range specifier
+	-- (0, 30) [0, 30] etc. -- then all non-missing values must fall in that range.
 	\item Each element of a column must be defined (not NA) wherever the 
 	corresponding `required' expression evaluates to TRUE.
 }

@@ -13,7 +13,7 @@ Create and Manipulate spec Objects
 	A \code{spec} is a keyed data.frame giving an abstract specification of
 	a data table.  It has columns \code{column, label, type, guide, required,
 	and comment}.  These are descriptive or prescriptive for the specified table.
-	The \code{charater} method for \code{as.spec} expects a scalar file name.
+	The \code{character} method for \code{as.spec} expects a scalar file name.
 	\code{as.vector} returns the documented column names.  \code{read.spec}
 	and \code{write.spec} use unquoted, tab-delimited cells, with `', `.', and 
 	`NA' representing missing values (na strings).  The \code{summary} method

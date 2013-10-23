@@ -25,14 +25,14 @@
 }
 \details{
 \code{specification} pre-processes each column, and then proceeds with generic 
-documentation (see \code{link{as.spec}}).  It tries to guess among the standard types: 
+documentation (see \code{\link{as.spec}}).  It tries to guess among the standard types: 
 character, numeric, integer,
 datetime, providing range and level information as appropriate. By default, labels
 are the same as the column names, unless the columns have a label attribute. Labels for 
 the levels of factor-like objects (true factors, and other vectors with few unique values)
 are by default the same as the values themselves. Units for numerics are not guessed.
 Typically one refines the resulting spec to more closely specify data characteristics.  
-It should always be true that \code{x \%matches\% as.spec(x)}.}
+It should always be true that \code{x \%matches\% specification(x)}.}
 
 \value{object with class \code{spec keyed data.frame}}
 \references{\url{http://metrumrg.googlecode.com}}
