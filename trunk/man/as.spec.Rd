@@ -7,7 +7,7 @@
 \alias{write.spec}
 \alias{summary.spec}
 \title{
-Create and Manipulate spec Objects~
+Create and Manipulate spec Objects
 }
 \description{
 	A \code{spec} is a keyed data.frame giving an abstract specification of
@@ -31,10 +31,10 @@ Create and Manipulate spec Objects~
 
 \arguments{
 \item{x}{object of dispatch}
+\item{object}{object of dispatch}
 \item{mode}{passed to \code{as.vector}}
 \item{file}{character}
 \item{\dots}{ignored or passed}
-}
 }
 \details{
 	\code{column} gives the name and order of columns. 
@@ -46,7 +46,7 @@ Create and Manipulate spec Objects~
 	
 	\code{guide} is interpretive material:  typically units for numeric 
 	columns, or \code{\link{encoded}} levels for factor-like columns.  \code{datetime} 
-	columns expect a corresponding format string, as for \link{code{as.mDateTime}}.
+	columns expect a corresponding format string, as for \code{\link{as.mDateTime}}.
 	Numeric guides are formally composed of an optional descriptor called \code{\link{guidetext}}
 	followed by an optional range specifier in the form [0,30] or (0,30], etc.
 	
@@ -70,10 +70,10 @@ Create and Manipulate spec Objects~
 		\item \code{\link{specification}}
 		\item \code{\link{codes}}
 		\item \code{\link{encode}}
-		\item \code{\link{%matches%}}
+		\item \code{\link{\%matches\%}}
 	}
 }
 \examples{
-example(`%matches%`)
+example(`\%matches\%`)
 }
 \keyword{manip}

@@ -34,10 +34,10 @@
 \item \link{\%crossed.on\%} test whether a is crossed on b
 \item \link{\%crosses\%} test whether a crosses b
 \item \link{\%matches\%} generic
-\item \link{\%matches.character\%} test whether data (file name) matches spec
-\item \link{\%matches.data.frame\%} test whether data.frame matches spec
-\item \link{\%matches.keyed\%} test whether keyed data.frame matches spec
-\item \link{\%matches.spec\%} test whether spec matches data
+\item \link{\%matches\%.character} test whether data (file name) matches spec
+\item \link{\%matches\%.data.frame} test whether data.frame matches spec
+\item \link{\%matches\%.keyed} test whether keyed data.frame matches spec
+\item \link{\%matches\%.spec} test whether spec matches data
 \item \link{\%nested.in\%} test whether a is nested in b
 \item \link{\%nests\%} test whether a nests b
 \item \link{$.init} select init element

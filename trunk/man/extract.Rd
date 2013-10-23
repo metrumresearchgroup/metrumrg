@@ -3,7 +3,7 @@
 
 \title{Extract a Parenthetically-grouped Substring of a Regular Expression}
 \description{
-~Given a regular expression with parenthetically-grouped substrings, return or drop
+Given a regular expression with parenthetically-grouped substrings, return or drop
 the substring of interest.
 }
 \usage{
@@ -18,7 +18,7 @@ extract(x, pattern, group = 0, invert = FALSE, ...)
   \item{\dots}{ignored}
 }
 \details{
- ~~\code{\link{regexec}} determines all the numbered matches corresponding to 
+\code{\link{regexec}} determines all the numbered matches corresponding to 
  sets of parentheses.  \code{extract} uses these to locate and return particular
  numbered matches, or to delete them, returning what remains.
 }
@@ -37,7 +37,7 @@ character
 }
 \examples{
 x <- c(' kg ',' //a/A//b/B// ',NA,' kg [ 4 , 8.2 ]','(,1.025e-6]','(,] ')
-pattern <- '((\\(|\\[) *([-+eE.0-9]*) *, *([-+eE.0-9]*) *(\\)|\\])) *$'
+pattern <- '((\\\\(|\\\\[) *([-+eE.0-9]*) *, *([-+eE.0-9]*) *(\\\\)|\\\\])) *$'
 extract(x,pattern,group=5)	
 }
 \keyword{manip}

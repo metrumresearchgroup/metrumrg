@@ -1,14 +1,12 @@
-\name{%matches%}
-\alias{%matches%}
-\alias{%matches%.character}
-\alias{%matches%.data.frame}
-\alias{%matches%.keyed}
-\alias{%matches%.spec}
-
+\name{matches}
+\alias{\%matches\%}
+\alias{\%matches\%.character}
+\alias{\%matches\%.data.frame}
+\alias{\%matches\%.keyed}
+\alias{\%matches\%.spec}
+\alias{matches}
 \title{Test the Correspondence between a Table and a Specification}
-~~
-}
-\description{ The `matches' operators test whether a data frame matches its 
+\description{ The \code{\%matches\%} operators test whether a data frame matches its 
 	corresponding \code{spec}, and vice versa.  The character method treats
 	x as a single file name for data, and coerces y using \code{as.spec}. The 
 	latter in turn should be a single file name for a spec, if character. 
@@ -17,10 +15,10 @@
 
 }
 \usage{
-	\method{%matches%}{character}(x, y, ...)
-	\method{%matches%}{data.frame}(x, y, ...)
-	\method{%matches%}{keyed}(x, y, ...)
-	\method{%matches%}{spec}(x, y, ...)
+	\method{\%matches\%}{character}(x, y, ...)
+	\method{\%matches\%}{data.frame}(x, y, ...)
+	\method{\%matches\%}{keyed}(x, y, ...)
+	\method{\%matches\%}{spec}(x, y, ...)
 }
 
 \arguments{
@@ -29,8 +27,7 @@
   \item{\dots}{ignored}
 }
 \details{
-
-	\code{matches} returns TRUE if no exceptions are detected.  It checks the 
+\code{matches} returns TRUE if no exceptions are detected.  It checks the 
 following, and issues appropriate messages as necessary.
 \itemize{
 	\item Column names must match.
@@ -87,14 +84,13 @@ codes(as.spec('test.spec'))
 decodes(as.spec('test.spec'))
 guidetext(as.spec('test.spec'))
 
-test %matches% spec
-test %matches% 'test.spec'
-'test.csv' %matches% spec
-'test.csv' %matches% 'test.spec'
-spec %matches% test
-spec %matches% 'test.csv'
+test \%matches\% spec
+test \%matches\% 'test.spec'
+'test.csv' \%matches\% spec
+'test.csv' \%matches\% 'test.spec'
+spec \%matches\% test
+spec \%matches\% 'test.csv'
 unlink('test.csv')
-unlink('test.spec')
-	
+unlink('test.spec')	
 }
 \keyword{manip}

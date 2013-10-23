@@ -6,7 +6,7 @@ Version: 5.53
 Date: 2013-10-22
 Author: Tim Bergsma, Bill Knebel, Leonid Gibiansky, Natalie Hsiang
 Maintainer: Tim Bergsma <timb@metrumrg.com>
-Depends: reshape, methods, lattice, grid, XML, MASS
+Depends: reshape, methods, lattice, grid, XML, MASS 
 Suggests: chron, fork
 Description: 
  Pharmacometric tools for common data preparation tasks, stratified 

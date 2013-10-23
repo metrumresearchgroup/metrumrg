@@ -24,18 +24,19 @@ directly or on the object as a whole.}
 	\method{encoded}{spec}   (x, column=x$column, ...)
 	\method{codes}{spec}     (x, column=x$column, ...)
 	\method{decodes}{spec}   (x, column=x$column, ...)
-	\method{labels}{spec}    (x, column=x$column, ...)
+	\method{labels}{spec}    (object, column=object$column, ...)
 	\method{guidetext}{spec} (x, column=x$column, ...)
 }
 
 \arguments{
-\item{x}{character, or spec}}
+\item{x}{character, or spec}
+\item{object}{character, or spec}
 \item{simplify}{reduce a list to a vector if possible}
 \item{column}{which column(s) to address}
 \item{\dots}{ignored}
 }
 \details{
-	~~\code{encoded} always returns true or false, telling whether the corresponding
+	\code{encoded} always returns true or false, telling whether the corresponding
 	element represents an encoding of levels and labels.  See \code{\link{encode}}.
 	\code{codes} returns a list(or vector) giving the element-wise codes (levels) or NA;
 	\code{decodes} returns the corresponding decodes (labels) or NA.  \code{labels}
@@ -55,10 +56,10 @@ directly or on the object as a whole.}
 		\item \code{\link{specification}}
 		\item \code{\link{encode}}
 		\item \code{\link{extract}}
-		\item \code{\link{%matches%}}
+		\item \code{\link{\%matches\%}}
 	}
 }
-\example{
+\examples{
 a <- encode(
   x = list(
     c('M','F'),
@@ -79,12 +80,12 @@ encoded(c)
 encoded(' //4// ')
 codes(a)
 codes(b)
-codes(b,simplify=F)
+codes(b,simplify=FALSE)
 codes(c)
 codes('..1..')
 decodes(a)
 decodes(b)
 decodes(c)
-example(`%matches%`)
+example(matches)
 }
 \keyword{manip}

@@ -3,10 +3,7 @@
 \alias{encode.default}
 \alias{encode.list}
 \alias{encode.character}
-
 \title{Encode Factor-like Levels and Labels as a Simple String}
-~~
-}
 \description{
 	For compact storage, \code{encode} combines a set of levels and 
 	labels (codes and decodes) into a simple string.  The default method
@@ -19,7 +16,6 @@
 	\method{encode}{character}(x, labels = NULL, sep = '/',...)
 	\method{encode}{list}(x, labels = NULL, sep = '/',...)
 }
-
 \arguments{
   \item{x}{typically character}
   \item{labels}{typically character}
@@ -27,9 +23,8 @@
   \item{\dots}{ignored}
 
 }
-}
 \details{
-~~An 'encoding' must be at least 5 characters long, beginning and ending with two
+An 'encoding' must be at least 5 characters long, beginning and ending with two
 instances of \code{sep}. Specified levels are likewise separated by a double separators.
 If a label (decode) is available for a level, it follows the corresponding level: the
 two are separated by a single instance of \code{sep}.  Separators may be mixed
@@ -37,10 +32,9 @@ within an encoded vector, but not within an element.  "--0-male--1-female--" ind
 that the value 0 represents the concept "male" and the value 1 represents "female".
 }
 \value{
-
+character
 }
 \references{\url{http://metrumrg.googlecode.com}}
-
 \author{ Tim Bergsma }
 \seealso{
 	\itemize{
@@ -48,7 +42,7 @@ that the value 0 represents the concept "male" and the value 1 represents "femal
 		\item \code{\link{specfile}}
 		\item \code{\link{specification}}
 		\item \code{\link{codes}}
-		\item \code{\link{%matches%}}
+		\item \code{\link{\%matches\%}}
 	}
 }
 \examples{

@@ -2,7 +2,7 @@
 \alias{specfile}
 
 \title{
-~~Determine the Expected Path to a Specification File
+Determine the Expected Path to a Specification File
 }
 \description{If one supplies a run name and project directory, the related control
 stream can be sought, and the data file extracted.  One expects that the name
@@ -25,7 +25,7 @@ specfile(
   \item{\dots}{ignored}
 }
 
-}
+
 \value{
 character
 }

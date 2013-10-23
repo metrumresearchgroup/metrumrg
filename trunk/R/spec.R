@@ -117,7 +117,7 @@ decodes.default <- function(x, simplify = TRUE, ...){
   y
 }
 decodes.spec <- function(x,column=x$column,...)decodes(x$guide[x$column %in% column])
-labels.spec <- function(x,column=x$column,...)x$label[x$column %in% column]
+labels.spec <- function(object,column=object$column,...)object$label[object$column %in% column]
 as.spec <- function(x, ...)UseMethod('as.spec')
 as.spec.data.frame <- function(x, ...){
   expected <- c('column','label','type','guide','required','comment')
@@ -316,7 +316,6 @@ specfile <- function(
   ctlfile = filename(rundir, run, ".ctl"),
   ...
 ){
-  #stopifnot('header' %in% names(read.input))
   if(!missing(run))run <- as.character(run)
   if(!missing(rundir))rundir <- as.character(rundir)
   if(missing(run) & missing(rundir) & missing(ctlfile))stop('one of run, rundir, or ctlfile must be supplied')
@@ -324,7 +323,6 @@ specfile <- function(
   if(missing(run) & missing(rundir))run <- sub('[.][^.]+$','',basename(ctlfile))
   if(missing(project) & !missing(rundir))project <- dirname(rundir)
   if(missing(project) & missing(rundir) & !missing(ctlfile))project <- dirname(dirname(ctlfile))
-  dropped <- ignored(run=run,project=project,rundir=rundir,ctlfile=ctlfile,read.input=read.input,...)
   control <- read.nmctl(ctlfile)
   dname <- getdname(control)
   datafile <- resolve(dname,rundir)
