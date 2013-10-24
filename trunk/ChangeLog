@@ -1,3 +1,8 @@
+5.54
+
+* rlog fixes a bug where failed covariance step was reported as 0 instead of 1.
+* Example scripts have been rerun.
+
 5.53
 
 * accept now has arguments for lib, lib.loc, and type; it now logs the paths of packages.

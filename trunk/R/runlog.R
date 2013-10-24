@@ -109,7 +109,9 @@ as.unilog.run <- function(
 		tool=tool,
 		...
 	)
-	requested <- 'cov' %in% names(read.nmctl(outfile))
+	#requested <- 'cov' %in% names(read.nmctl(outfile))
+	requested <- any(grepl('^cov',names(read.nmctl(outfile))))
+	
 	if(tool=='nm7')if(!requested) pars$value[pars$parameter=='cov' & pars$moment=='status'] <- '0'		
 	other <- as.unilog.lst(file=outfile,run=run,tool=tool,...)
 	
