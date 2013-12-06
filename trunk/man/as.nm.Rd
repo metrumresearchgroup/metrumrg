@@ -63,7 +63,7 @@ classes and methods. Column-specific methods may make use of the passed argument
   \item \code{nm} will be keyed on \code{SUBJ}, \code{TIME}, and \code{SEQ}. \code{SEQ} determines sort order for rows with matching \code{TIME}.
   \item Result will be sorted.
   \item \code{TIME} will be relativized to earliest extant value, incl. those in comments.
-  \item \code{TAFD} (time after first dose), \code{TAD} (time since most recent dose), and \code{LDOS} (amount of most recent dose) will be calculated if \code{AMT} is present. \code{TAD} and \code{LDOS} are very literal:  they return NA if no dose has been given yet, and will "remember" the time and amount of the most recent dose whether or not it is still conceptually relevant, given study design.  If two doses are given at the same time, say in different compartments, LDOS reflects the first AMT with respect to sort order.
+  \item \code{TAFD} (time after first non-commented dose), \code{TAD} (time since most recent non-commented dose), and \code{LDOS} (amount of most recent non-commented dose) will be calculated if \code{AMT} is present. \code{TAD} and \code{LDOS} are very literal:  they return NA if no dose has been given yet, and will "remember" the time and amount of the most recent dose whether or not it is still conceptually relevant, given study design.  If two doses are given at the same time, say in different compartments, LDOS reflects the first AMT with respect to sort order.
   \item \code{TAD} will consider \code{ADDL} and \code{II} if present.
   \item \code{NA} flags will be imputed as zero.
   \item \code{MDV} (missing dependent value) will be calculated if \code{DV} is present, preserving non-NA MDV, if present.

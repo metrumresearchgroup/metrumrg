@@ -1,5 +1,5 @@
 `diagnosticPlots` <-
-function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...) 
+function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,variant=NULL,...) 
 {
   plots <-list()
   value <- NULL # prevent warning from R CMD check
@@ -19,7 +19,8 @@ function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,...)
   obsid <- c("DV","grpnames")
   observed <- list()
   if(length(obsvar) & length(obsid))observed <- melt(data,measure.var=obsvar,id.var=obsid)
-  res <- c('RES','NRES','WRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','ERES','EWRES','ECWRES')
+  res <- c('RES','NRES','WRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
+  if(!is.null(variant)) res <- variant
   resvar <- intersect(res,names(data))
   resid <- intersect(c("PRED","TIME","grpnames","TAD"),names(data))
   res <- list()

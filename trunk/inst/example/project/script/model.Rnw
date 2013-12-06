@@ -67,7 +67,7 @@ We request some variants of PRED and CWRES.
 <<cwres>>=
 ctl[[12]]
 preds <- c('NPRED','CPRED','CPREDI','EPRED')
-res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','ERES','EWRES','ECWRES')
+res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
 ctl[[12]] <- c(ctl[[12]],preds, res)
 @
 <<>>=

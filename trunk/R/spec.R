@@ -201,7 +201,7 @@ specification.data.frame <- function(x,tol=10,sep='/',...){
     type=sapply(x,.type,...),
     guide=sapply(x,.guide,tol=tol,sep=sep,...),
     required=sapply(x,.required,...),
-    comment=NA
+    derivation=NA
   )
   y$label[is.na(y$label)] <- y$column[is.na(y$label)]
   rownames(y) <- NULL

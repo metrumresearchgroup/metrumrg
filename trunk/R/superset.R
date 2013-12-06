@@ -209,21 +209,22 @@ superset <- function(
     val <- x['value']
     if(is.na(label))stop('no label')
     if(is.na(val))stop('no value')
-    if(is.na(op))op <- 'EQ'
+    if(is.na(op))op <- 'EQ' # case should not occur; see .ignorecondition
     pos <- match(label,labels)
     vec <- data[,pos]
     if(any(is.na(vec))){
     	    warning('imputing NA as "."')
     	    vec[is.na(vec)] <- '.'
     }
-    if(!op %in% c('EQ','NE')){
+    if(!op %in% c('EQ','NE')){ # EQ and NE compared as character (EQN and NEN compared as numeric)
+      vec[vec == '.'] <- 0 # NONMEM help for ignore:  under this condition, values are coerced to numeric.  Presumably '.' treated as 0.
       val <- as.numeric(val)
       vec <- as.numeric(vec)
     }
     op <- map(
       op, 
-      from=c('EQ','NE','GT','GE','LT','LE'),
-      to=  c('==','!=', '>','>=','<' ,'<=')
+      from=c('EQ','NE','GT','GE','LT','LE','EQN','NEN'),
+      to=  c('==','!=', '>','>=','<' ,'<=','==' ,'!=' )
     )
     fun <- match.fun(op)
     fun(vec,val)
@@ -319,29 +320,43 @@ superset <- function(
   x <- strsplit(x,'[\n\t ]*,[\n\t ]*')[[1]] #only need the first, since x was scalar
   #now x is a chararcter vector of conditions (possibly scalar)
   #We now have character tests, or comparisons in the form 
-  #label=value or label="value" or label='value' or label.op.value or label.value etc.
-  x <- sub('=','.',x)
+  #label=value or label="value" or label='value' or label.op.value or label value 
+  #x <- sub('=','.',x)
   x <- lapply(x,.ignorecondition)
   x
 }
 
 .ignorecondition <- function(x,...){ # convert conditional tests to canonical form
-  # x is a single condition of the form value or label.value or label.op.value or possibly (version 5.52) label > value
-  x <- gsub('\\s','',x) # strip all white space
-  # x is a single condition of the form value or label.value or label.op.value or possibly label>value
-  # collapse cases:  Fortran 95 supports == /= < > <= >=
+  # x is a single condition of the form value or label=value or label.op.value or possibly (version 5.52) label > value or label value
+  #x <- gsub('\\s','',x) # strip all white space
+  x <- sub('^\\s','',x) #strip leading white
+  x <- sub('\\s$','',x) # strip trailing white
+  # x is a single condition of the form value or label.value or label.op.value or possibly label>value or label=value with value possibly y.z
+  # no leading or trailing space.  No space in label or value.  
+  # collapse cases:  Fortran 95 supports == /= < > <= >=  nm720.pdf p. 9.
+  x <- sub( '=','.EQ.',x) # actually, NONMEM case (not fortran 95)
   x <- sub('==','.EQ.',x)
   x <- sub('/=','.NE.',x)
   x <- sub('>=','.GE.',x)
   x <- sub('<=','.LE.',x)
   x <- sub('>' ,'.GT.',x)
   x <- sub('<' ,'.LT.',x)
-  # x is a single condition of the form value or label.value or label.op.value
-  x <- strsplit(x,'.',fixed=TRUE)[[1]]
-  stopifnot(length(x) %in% c(1:3))
+  # No translations for .EQN. or .NEN. (NONMEM 73)
+  # Now op, if present, is one of above.  We collapse all space around dots.
+  x <- gsub(' *\\. *','.',x)
+  # Now space, if present, occurs in a string without an operator, and therefore represents the equality operator.
+  x <- sub(' ','.EQ.',x)
+  # x is a single condition of the form value or label.op.value with value possibly y.z with y or z missing.
+  # value does not contain space or comma.
+  # Per NONMEM help for INPUT, a label must begin with a letter A-Z.
+  # To distinguish between decimal dot and separator dot, we substitute all separator dot with comma
+  x <- sub('\\.(EQ|NE|GE|LE|GT|LT|EQN|NEN)\\.',',\\1,',x)
+  # Now all comma is element delimiter.
+  x <- strsplit(x,',',fixed=TRUE)[[1]]
+  stopifnot(length(x) %in% c(1,3))
   #label the list members
   if(length(x)==1)names(x) <- 'value'
-  if(length(x)==2)names(x) <- c('label','value')
+  #if(length(x)==2)names(x) <- c('label','value')
   if(length(x)==3)names(x) <- c('label','operator','value')
   #remove quotes from values
   x['value'] <- sub('^"','',x['value'])
