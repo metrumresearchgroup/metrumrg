@@ -22,8 +22,38 @@ wikiparse(
 	wrap = "", 
 	...
 )
-wiki2latex(x,...)
-wiki2plotmath(x,...)
+wiki2latex    <- function(
+	x,
+	sim='\\\\sim',
+	dot='\\\\cdot',
+	pregreek = '\\\\',
+	wrap=c('$\\mathrm{','}$'),
+	...
+)wikiparse(
+	x,
+	sim=sim,
+	dot=dot,
+	pregreek = pregreek,
+	wrap=wrap,
+	...
+)
+wiki2plotmath <- function(
+	x,
+	sim='%~~%',
+	dot='%.%',
+	sub='',
+	openSub='[',
+	closeSub=']',
+	...
+)wikiparse(
+	x,
+	sim=sim,
+	dot=dot,
+	sub=sub,
+	openSub=openSub,
+	closeSub=closeSub,
+	...
+)
 wiki2label(x,...)
 wiki2parameter(x,...)
 }

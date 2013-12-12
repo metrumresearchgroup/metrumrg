@@ -1,49 +1,20 @@
 \name{NONR}
 \alias{NONR}
-\alias{NONR72}
 \title{Run NONMEM}
 \description{
 \code{NONR} executes, from R, a NONMEM run for which there exists a compatible (see note)
   control stream. Supported platforms include MS Windows and 
   Unix-like operating systems (Nix).  Special support is included for Sun Grid
-  Engine with Nix.  Generally, NONMEM needs to be installed using NMQual
-  (http://nmqual.googlecode.com).  Execution on the Nix grid requires
+  Engine with Nix.  Defaults are currently chosen for NONMEM 7.3. Generally, 
+  NONMEM needs to be installed using NMQual
+  (http://nmqual.googlecode.com). See also \code{\link{autolog.pl}}. 
+  Execution on the Nix grid requires
   the installation of Sun Grid Engine v6.  Following a successful NONMEM
   run \code{NONR} can call \code{PLOTR} to create diagnostic plots (pdf format) and/or
-  run a user-written script. \code{NONR72} is a wrapper designed to invoke an 
-  NMQual-mediated installation of NONMEM 7.2.0 or above.  See \code{\link{autolog.pl}}.
+  run a user-written script. 
 }
 \usage{
 NONR(
-	run, 
-	...,
-	command, 
-	project = getwd(), 
-	wait = TRUE,
-	grid = FALSE, 
-	concurrent = grid & wait,
-	udef= FALSE, 
-	invisible=udef,
-	compile = TRUE,
-	execute = TRUE,
-	split = grid & compile & execute,
-	checkrunno = TRUE, 
-	checksum = TRUE, 
-	diag = wait, 
-	fdata = TRUE, 
-	logtrans = FALSE,
-	nice= TRUE, 
-	epilog = NULL, 
-	dvname = NULL, 
-	grp = NULL, 
-	grpnames = NULL, 
-	cont.cov = NULL, 
-	cat.cov = NULL, 
-	par.list = NULL, 
-	eta.list = NULL, 
-	missing = -99
-)
-NONR72(
 	run, 
 	...,
 	command, 
@@ -160,8 +131,8 @@ NONR72(
   committing to a run.  You can run the compiled object later with \code{compile=FALSE}.}
 
   \item{split}{whether to compile and execute as separate steps.  If both
-  compile and execute are \code{TRUE}, the run can be split into two separate steps (this 
-  is the default if grid is \code{TRUE}.  Though \code{split}, \code{compile}, and 
+  compile and execute are \code{TRUE}, the run can be split into two separate steps.
+  Though \code{split}, \code{compile}, and 
   \code{execute} can be manipulated independently, it makes no sense to split a run
   unless \code{compile} and \code{execute} are both \code{TRUE}.  The greatest advantage
   to splitting is realized on a grid, with \code{grid=TRUE}: runs will be split
@@ -328,7 +299,7 @@ metrumrgURL('example/project/script/model.pdf')
 
 #regular run, no grid
 path <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
-NONR72(
+NONR(
 	run=1,
 	command=path,
 	project='../nonmem',
@@ -338,7 +309,7 @@ NONR72(
 )
 
 #regular run on grid
-NONR72(
+NONR(
 	run=1,
 	command=path,
 	project='../nonmem',
@@ -348,7 +319,7 @@ NONR72(
 )
 
 #bootstrap run, no grid (uncommon)
-NONR72(
+NONR(
 	run=1,
 	command=path,
 	project='../nonmem',
@@ -358,7 +329,7 @@ NONR72(
 )
 
 #bootstrap run on grid
-NONR72(
+NONR(
 	run=1,
 	command=path,
 	project='../nonmem',
