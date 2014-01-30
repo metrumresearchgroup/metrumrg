@@ -153,7 +153,7 @@ function (
     plots
 }
 `cwresPlots` <-
-function (cwre
+function (
 	data,
 	cont.cov=NULL, 
 	cat.cov=NULL,
