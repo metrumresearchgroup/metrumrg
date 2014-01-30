@@ -278,7 +278,7 @@ dataFormat <- function(
 	run,
 	...
 ){
-    if (logtrans) tabdata <- backtrans(tabdata,intersect(names(tabdata),c('DV','PRED','NPRED','CPRED','CPREDI','EPRED','IPRE','IPRED')))    
+    if (logtrans) tabdata <- backtrans(tabdata,intersect(names(tabdata),c('DV','PRED','NPRED','CPRED','CPREDI','EPRED','IPRE','IPRED','PREDI','CIPRED')))    
     available <- unique(c(names(tabdata),names(covdata),names(pardata)))
     grp <- strain(grp,available)
     cont.cov <- strain(cont.cov,available)

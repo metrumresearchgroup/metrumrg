@@ -153,7 +153,7 @@ function (
     plots
 }
 `cwresPlots` <-
-function (
+function (cwre
 	data,
 	cont.cov=NULL, 
 	cat.cov=NULL,
@@ -161,7 +161,7 @@ function (
 	...
 ) 
 {
-    res <- c('RES','NRES','WRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
+    res <- c('RES','NRES','WRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','CIRES','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
     if(is.null(variant)) variant <- res
     variant <- intersect(variant, names(data))
     plots <- list()

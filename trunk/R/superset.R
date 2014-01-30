@@ -272,10 +272,10 @@ superset <- function(
     'EVID','AMT','RATE','SS','II','ADDL','CMT','PCMT','CALL','CONT',
     'XVID1','XVID2','XVID3','XVID4','XVID5'
   )
-  x <- gsub('DROP=','',x)
-  x <- gsub('SKIP=','',x)
-  x <- gsub('=DROP','',x)
-  x <- gsub('=SKIP','',x)
+  x <- gsub('DROP *= *','',x)
+  x <- gsub('SKIP *= *','',x)
+  x <- gsub(' *= *DROP','',x)
+  x <- gsub(' *= *SKIP','',x)
   labels <- strsplit(x,' ')[[1]] # x is length one, so we keep just the first list
   labels <- lapply(labels,strsplit,'=')
  labels <- lapply(labels,unlist)
