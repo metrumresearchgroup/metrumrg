@@ -8,13 +8,16 @@
   Perform an n-way merge, given multiple objects or file names.
 }
 \usage{
-	\method{metaMerge}{list}(x,...)
-	\method{metaMerge}{character}(x,import=read.table,...)
-	\method{metaMerge}{default}(x,y,...)
+	\method{metaMerge}{list}(x,all=TRUE,...)
+	\method{metaMerge}{character}(x,import=read.table,all=TRUE,...)
+	\method{metaMerge}{default}(x,y,all=TRUE,...)
+	\method{metaMerge}{data.frame}(x,y,all=TRUE,...)
+	\method{metaMerge}{NULL}(x,y,all=TRUE,...)
 }
 \arguments{
   \item{x}{a list of objects, e.g. data.frames, or a character vector of file names}
   \item{y}{a second object}
+  \item{all}{passed to \code{merge}}
   \item{import}{a function for reading files}
   \item{\dots}{passed to \code{import}}
 }
