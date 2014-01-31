@@ -63,12 +63,12 @@ writeLines(format(ctl$theta))
 ctl$prob
 ctl$prob <- '1006 like 1005 with tweaked initial estimates'
 @
-We request some variants of PRED and CWRES. 
+We request some variants of PRED and CWRES if running under NONMEM 7.3.
 <<cwres>>=
 ctl[[12]]
 preds <- c('NPRED','CPRED','CPREDI','EPRED')
 res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
-ctl[[12]] <- c(ctl[[12]],preds, res)
+if(findNonmemCommand()[[1]] %contains% '73')  ctl[[12]] <- c(ctl[[12]],preds, res)
 @
 <<>>=
 write.nmctl(ctl,file='../nonmem/ctl/1006.ctl')
