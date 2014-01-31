@@ -12,7 +12,7 @@ metaMerge.character <- function(x,import=read.table,all=TRUE,...){
 	metaMerge(x,all=all,...)
 }
 metaMerge.default <- function(x,y,all=TRUE,...)merge(x,y,all=all,...)
-metaMerge.data.frame <- function(x,y,all=TRUE...){
+metaMerge.data.frame <- function(x,y,all=TRUE,...){
 	if(is.null(y))warning('merging data.frame with NULL object')
 	merge(x,y,all=all,...)
 }

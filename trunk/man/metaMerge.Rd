@@ -2,7 +2,9 @@
 \alias{metaMerge}
 \alias{metaMerge.list}
 \alias{metaMerge.character}
+\alias{metaMerge.data.frame}
 \alias{metaMerge.default}
+\alias{metaMerge.NULL}
 \title{Recursively Merge Multiple Tables}
 \description{
   Perform an n-way merge, given multiple objects or file names.

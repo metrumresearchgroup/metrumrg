@@ -89,7 +89,7 @@ set <- lapply(
 \section{Simulation}
 Finally, we run NONMEM simulations using NONR.
 <<nonr,eval=FALSE>>=
-NONR72(
+NONR(
 	run=1:10,
 	command="/opt/NONMEM/nm72/nmqual/autolog.pl",
 	project="../nonmem/sim",

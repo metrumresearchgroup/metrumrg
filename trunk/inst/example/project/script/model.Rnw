@@ -28,7 +28,7 @@ eta.list=paste('ETA',1:10,sep='')
 @
 \subsection{Run NONMEM.}
 <<run>>=
-NONR72(
+NONR(
      run=1001:1005,                       # 5 models, ctl pre-written
      #command=command,                    # this version will search for NONMEM
      project='../nonmem',                 # must specify, unless ctl in getwd()
@@ -72,7 +72,7 @@ ctl[[12]] <- c(ctl[[12]],preds, res)
 @
 <<>>=
 write.nmctl(ctl,file='../nonmem/ctl/1006.ctl')
-NONR72(
+NONR(
      run=1006,
      project='../nonmem',
      grid=TRUE,
@@ -150,7 +150,7 @@ write.nmctl(ctl,'../nonmem/ctl/1105.ctl')
 \subsection{Run the simulation.}
 This run makes the predictions (simulations).
 <<sim>>=
-NONR72(
+NONR(
      run=1105,
      #command=command,
      project='../nonmem',
@@ -358,14 +358,14 @@ invisible(
 <<boot>>=
 #intentionally trying a non-existent run ... 1 should be 001 per above. 
 #Parentheses force display of invisible NONR result.
-(NONR72(
+(NONR(
      run=1,
      wait=FALSE,
      grid=TRUE,
      project='../nonmem/1005boot',
      streams='../nonmem/1005bootctl'
 ))
-NONR72(
+NONR(
      run=RUN,
      wait=FALSE,
      grid=TRUE,

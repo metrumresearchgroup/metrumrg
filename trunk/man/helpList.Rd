@@ -440,7 +440,7 @@
 \item \link{nmVersion} extract NONMEM version specification from configuration file
 \item \link{nocb} impute NA with next observation carried backward
 \item \link{NONR} run NONMEM and create diagnostic plots
-\item \link{NONR72} run NONMEM 7.2.0 or later
+%\item \link{NONR72} run NONMEM 7.2.0 or later
 \item \link{noPk.nm} rows where EVID is never 0 within SUBJ
 \item \link{noPk} generic
 \item \link{nospace} drop spaces from text

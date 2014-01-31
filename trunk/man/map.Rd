@@ -44,7 +44,7 @@ error if \code{from} and \code{to} have different lengths.
 	}
 }
 \examples{
-map
+map(
 	c('white','Asian','Indian'),
 	from=c('white','White','black','Black','asian','Asian'),
 	to=  c(   1,      1,      2,      2,      3,      3   )

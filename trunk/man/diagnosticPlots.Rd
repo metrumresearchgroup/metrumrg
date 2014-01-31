@@ -13,6 +13,7 @@ diagnosticPlots(
 	group=NULL, 
 	model=NULL, 
 	include.all=FALSE,
+	variant=NULL,
 	...
 )
 

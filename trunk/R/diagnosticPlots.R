@@ -1,5 +1,13 @@
 `diagnosticPlots` <-
-function (data, dvname='DV', group=NULL, model=NULL, include.all=FALSE,variant=NULL,...) 
+function (
+	data, 
+	dvname='DV', 
+	group=NULL, 
+	model=NULL, 
+	include.all=FALSE,
+	variant=NULL,
+	...
+) 
 {
   plots <-list()
   value <- NULL # prevent warning from R CMD check
