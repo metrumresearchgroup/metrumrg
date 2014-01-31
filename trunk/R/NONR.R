@@ -48,16 +48,26 @@ function (
     	command <- candidate
     }    
     args <- list(
-	run = run, 
+	run = run,
+	...,
 	command = command, 
 	project = project, 
 	wait = wait,
+	grid = grid, 
+	# concurrent used only in this scope
+	udef = udef, 
+	invisible = invisible, 
+	compile = compile,
+	execute = execute,
+	split = split,
 	checkrunno = checkrunno, 
+	checksum = checksum, 
 	diag = diag, 
 	fdata = fdata, 
+	logtrans = logtrans, 
+	nice = nice,
 	epilog = epilog, 
 	dvname = dvname, 
-	logtrans = logtrans, 
 	grp = grp, 
 	grpnames = grpnames, 
 	cont.cov = cont.cov, 
@@ -65,15 +75,9 @@ function (
 	par.list = par.list, 
 	eta.list = eta.list, 
 	missing = missing,
-	invisible = invisible, 
-	checksum = checksum, 
-	grid = grid, 
-	nice = nice,
-	udef = udef, 
-	split = split,
-	compile = compile,
-	execute = execute,
-	...
+	interface = interface,
+	q = q,
+	pe = pe
     )
     res <- lapply(
     	run,
