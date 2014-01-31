@@ -1,3 +1,0 @@
-Wed Oct 23 22:21:58 2013
-qsub -N Run1006 -o ../nonmem/1006 -e ../nonmem/1006   -V  -j y -q all.q -sync y -shell n -b y -cwd  -pe orte 16 perl -S /opt/NONMEM/nm72/nmqual/autolog.pl /opt/NONMEM/nm72/nmqual/log.xml para ce ../nonmem/1006 1006
-Run 1006 has exit code 0
