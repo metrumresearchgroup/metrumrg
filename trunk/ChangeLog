@@ -1,3 +1,16 @@
+5.55
+
+* [.keyed is more robust when assigning 'defined' for various vector types.
+* cwresPlots looks for CIRES, CIWRES, CIWRESI in addition to the usual variants.
+* diagnosticPlots is now aware of CIRES, CIWRES, CIWRESI, PREDI, CIPRED.
+* map gains an argument: strict.
+* metaMerge methods have bug fixes and additions.
+* NONR72 is eliminated and NONR inherits its defaults.
+* PLOTR conditionally backtransforms PREDI and CIPRED.
+* specification.data.frame has a bug fix.
+* superset supports wider range of NONMEM syntax.
+* wiki2latex and wiki2plotmath allow their defaults to be overridden.
+
 5.54
 
 * rlog fixes a bug where failed covariance step was reported as 0 instead of 1.

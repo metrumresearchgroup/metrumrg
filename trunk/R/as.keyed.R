@@ -187,7 +187,7 @@ aggregate.keyed <- function(
     j <- sub('^\\*','',j)
     token <- getOption('defined')
     if(is.null(token)) token <- 'defined'
-    for(col in j[detect]) x[[col]] <- ifelse(is.defined(x[[col]]),x[[col]],token)    
+    for(col in j[detect]) x[[col]] <- ifelse(is.defined(x[[col]]),token,x[[col]])    
   }
   y <- NextMethod()
   key(y) <- key(x)
