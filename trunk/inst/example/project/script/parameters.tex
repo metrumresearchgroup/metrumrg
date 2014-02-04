@@ -67,12 +67,12 @@ We do some science on the result first, and then some aesthetics for printing in
 14                                               err_prop ~ Sigma_1.1   0.0492
 15                                                err_add ~ Sigma_2.2   0.2020
    prse
-1  9.72
-2  9.56
-3  7.34
+1  9.75
+2  9.55
+3  7.35
 4  15.4
-5  20.9
-6    11
+5    21
+6  11.1
 7  28.3
 8  22.8
 9  26.4
@@ -244,23 +244,23 @@ The estimates of matrix off-diagonals are covariances, and are more useful if tr
 \end{Sinput}
 \begin{Soutput}
            [,1]       [,2]       [,3]
-[1,]  1.0000000  0.8494277 -0.1162464
-[2,]  0.8494277  1.0000000 -0.5605290
-[3,] -0.1162464 -0.5605290  1.0000000
+[1,]  1.0000000  0.8494444 -0.1165179
+[2,]  0.8494444  1.0000000 -0.5608629
+[3,] -0.1165179 -0.5608629  1.0000000
 \end{Soutput}
 \begin{Sinput}
 > half(cor)
 \end{Sinput}
 \begin{Soutput}
        1.1        2.1        2.2        3.1        3.2        3.3 
- 1.0000000  0.8494277  1.0000000 -0.1162464 -0.5605290  1.0000000 
+ 1.0000000  0.8494444  1.0000000 -0.1165179 -0.5608629  1.0000000 
 \end{Soutput}
 \begin{Sinput}
 > offdiag(half(cor))
 \end{Sinput}
 \begin{Soutput}
        2.1        3.1        3.2 
- 0.8494277 -0.1162464 -0.5605290 
+ 0.8494444 -0.1165179 -0.5608629 
 \end{Soutput}
 \begin{Sinput}
 > off <- is.iiv(tab$parameter) & is.offdiagonal(tab$parameter)
@@ -283,10 +283,10 @@ The estimates of matrix off-diagonals are covariances, and are more useful if tr
 6     THETA6 MALE_CL/F   1.0200        NA        NA         NA
 7     THETA7   WT_CL/F   1.1900        NA        NA         NA
 8   OMEGA1.1  IIV_CL/F   0.2140 0.4884902        NA         NA
-9   OMEGA2.1  cov_CL,V   0.1210        NA        NA  0.8494277
+9   OMEGA2.1  cov_CL,V   0.1210        NA        NA  0.8494444
 10  OMEGA2.2 IIV_V_c/F   0.0945 0.3148161        NA         NA
-11  OMEGA3.1 cov_CL,Ka  -0.0116        NA        NA -0.1162464
-12  OMEGA3.2  cov_V,Ka  -0.0372        NA        NA -0.5605290
+11  OMEGA3.1 cov_CL,Ka  -0.0116        NA        NA -0.1165179
+12  OMEGA3.2  cov_V,Ka  -0.0372        NA        NA -0.5608629
 13  OMEGA3.3   IIV_K_a   0.0466 0.2184098        NA         NA
 14  SIGMA1.1  err_prop   0.0492 0.2218107        NA         NA
 15  SIGMA2.2   err_add   0.2020        NA 0.4494441         NA
@@ -301,7 +301,7 @@ We wish to include 95 percentiles in our table as confidence intervals.
 \end{Sinput}
 \begin{Soutput}
   X tool run parameter   moment            value
-1 1  nm7   1       ofv  minimum 2459.17577376723
+1 1  nm7   1       ofv  minimum 2459.17577212358
 2 2  nm7   1    THETA1 estimate          9.90624
 3 3  nm7   1    THETA1     prse             <NA>
 4 4  nm7   1    THETA1       se             <NA>
@@ -320,7 +320,7 @@ We wish to include 95 percentiles in our table as confidence intervals.
 3  8  nm7   1    THETA3 0.0708172
 4 11  nm7   1    THETA4   3.36908
 5 14  nm7   1    THETA5   94.6441
-6 17  nm7   1    THETA6  0.972459
+6 17  nm7   1    THETA6  0.972458
 \end{Soutput}
 \begin{Sinput}
 > boot <- boot[,c('run','parameter','estimate')]
@@ -352,7 +352,7 @@ We wish to include 95 percentiles in our table as confidence intervals.
 3   1    THETA3  0.0708172 0.0625 0.0838
 4   1    THETA4  3.3690800   2.78   4.91
 5   1    THETA5 94.6441000   85.6    559
-6   1    THETA6  0.9724590  0.847   1.24
+6   1    THETA6  0.9724580  0.847   1.25
 \end{Soutput}
 \begin{Sinput}
 > boot <- unique(boot[,c('parameter','lo','hi')])
@@ -365,11 +365,11 @@ We wish to include 95 percentiles in our table as confidence intervals.
 3     THETA3  0.0625   0.0838
 4     THETA4    2.78     4.91
 5     THETA5    85.6      559
-6     THETA6   0.847     1.24
+6     THETA6   0.847     1.25
 7     THETA7    0.61     1.91
 8   OMEGA1.1   0.128    0.321
 9   OMEGA2.1  0.0606    0.183
-10  OMEGA2.2  0.0471    0.158
+10  OMEGA2.2   0.047    0.158
 11  OMEGA3.1 -0.0448   0.0261
 12  OMEGA3.2 -0.0577 -0.00491
 13  OMEGA3.3  0.0236   0.0811
@@ -388,11 +388,11 @@ We wish to include 95 percentiles in our table as confidence intervals.
 3     THETA3  0.0625   0.0838    (0.0625,0.0838)
 4     THETA4    2.78     4.91        (2.78,4.91)
 5     THETA5    85.6      559         (85.6,559)
-6     THETA6   0.847     1.24       (0.847,1.24)
+6     THETA6   0.847     1.25       (0.847,1.25)
 7     THETA7    0.61     1.91        (0.61,1.91)
 8   OMEGA1.1   0.128    0.321      (0.128,0.321)
 9   OMEGA2.1  0.0606    0.183     (0.0606,0.183)
-10  OMEGA2.2  0.0471    0.158     (0.0471,0.158)
+10  OMEGA2.2   0.047    0.158      (0.047,0.158)
 11  OMEGA3.1 -0.0448   0.0261   (-0.0448,0.0261)
 12  OMEGA3.2 -0.0577 -0.00491 (-0.0577,-0.00491)
 13  OMEGA3.3  0.0236   0.0811    (0.0236,0.0811)
@@ -422,12 +422,12 @@ We wish to include 95 percentiles in our table as confidence intervals.
 14  SIGMA1.1                            proportional error
 15  SIGMA2.2                                additive error
                                                            model estimate prse
-1  CL/F  ~ theta_1 *  theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1   9.5100 9.72
-2                        V_c /F  ~ theta_2 * (WT/70)^1 * e^eta_2  22.8000 9.56
-3                                       K_a  ~ theta_3 * e^eta_3   0.0714 7.34
+1  CL/F  ~ theta_1 *  theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1   9.5100 9.75
+2                        V_c /F  ~ theta_2 * (WT/70)^1 * e^eta_2  22.8000 9.55
+3                                       K_a  ~ theta_3 * e^eta_3   0.0714 7.35
 4                                                 Q/F  ~ theta_4   3.4700 15.4
-5                                              V_p /F  ~ theta_5 113.0000 20.9
-6                                            MALE_CL/F ~ theta_6   1.0200   11
+5                                              V_p /F  ~ theta_5 113.0000   21
+6                                            MALE_CL/F ~ theta_6   1.0200 11.1
 7                                              WT_CL/F ~ theta_7   1.1900 28.3
 8                                           IIV_CL/F ~ Omega_1.1   0.2140 22.8
 9                                           cov_CL,V ~ Omega_2.1   0.1210 26.4
@@ -443,13 +443,13 @@ We wish to include 95 percentiles in our table as confidence intervals.
 3  h^-1        K_a        NA        NA         NA    (0.0625,0.0838)
 4    L/h       Q/F        NA        NA         NA        (2.78,4.91)
 5      L     V_p/F        NA        NA         NA         (85.6,559)
-6        MALE_CL/F        NA        NA         NA       (0.847,1.24)
+6        MALE_CL/F        NA        NA         NA       (0.847,1.25)
 7          WT_CL/F        NA        NA         NA        (0.61,1.91)
 8         IIV_CL/F 0.4884902        NA         NA      (0.128,0.321)
-9         cov_CL,V        NA        NA  0.8494277     (0.0606,0.183)
-10       IIV_V_c/F 0.3148161        NA         NA     (0.0471,0.158)
-11       cov_CL,Ka        NA        NA -0.1162464   (-0.0448,0.0261)
-12        cov_V,Ka        NA        NA -0.5605290 (-0.0577,-0.00491)
+9         cov_CL,V        NA        NA  0.8494444     (0.0606,0.183)
+10       IIV_V_c/F 0.3148161        NA         NA      (0.047,0.158)
+11       cov_CL,Ka        NA        NA -0.1165179   (-0.0448,0.0261)
+12        cov_V,Ka        NA        NA -0.5608629 (-0.0577,-0.00491)
 13         IIV_K_a 0.2184098        NA         NA    (0.0236,0.0811)
 14        err_prop 0.2218107        NA         NA    (0.0399,0.0587)
 15         err_add        NA 0.4494441         NA     (0.0836,0.329)
@@ -497,17 +497,17 @@ Note that no parameter defines more than one of CV, SD,and COR.  We could collap
   \begin{tabular}{llllll}
     \hline \hline
    description & model & estimate & prse & ci & variability \\ \hline
-   apparent oral clearance                       & $\mathrm{CL/F  \sim \theta_{1}\cdot  \theta_{6}^{MALE}\cdot (WT/70)^{\theta_{7}}\cdot e^{\eta_{1}}}$ & 9.51 $ L/h $     & 9.72 & (7.31,11.1)        &  \\
-   central volume of distribution                & $\mathrm{V_{c}/F  \sim \theta_{2}\cdot (WT/70)^{1}\cdot e^{\eta_{2}}}$                                  & 22.8 $ L $       & 9.56 & (19.2,27.9)        &  \\
-   absorption rate constant                      & $\mathrm{K_{a} \sim \theta_{3}\cdot e^{\eta_{3}}}$                                                       & 0.0714 $ h^-1  $ & 7.34 & (0.0625,0.0838)    &  \\
+   apparent oral clearance                       & $\mathrm{CL/F  \sim \theta_{1}\cdot  \theta_{6}^{MALE}\cdot (WT/70)^{\theta_{7}}\cdot e^{\eta_{1}}}$ & 9.51 $ L/h $     & 9.75 & (7.31,11.1)        &  \\
+   central volume of distribution                & $\mathrm{V_{c}/F  \sim \theta_{2}\cdot (WT/70)^{1}\cdot e^{\eta_{2}}}$                                  & 22.8 $ L $       & 9.55 & (19.2,27.9)        &  \\
+   absorption rate constant                      & $\mathrm{K_{a} \sim \theta_{3}\cdot e^{\eta_{3}}}$                                                       & 0.0714 $ h^-1  $ & 7.35 & (0.0625,0.0838)    &  \\
    intercompartmental clearance                  & $\mathrm{Q/F  \sim \theta_{4}}$                                                                            & 3.47 $ L/h $     & 15.4 & (2.78,4.91)        &  \\
-   peripheral volume of distribution             & $\mathrm{V_{p}/F  \sim \theta_{5}}$                                                                        & 113 $ L $        & 20.9 & (85.6,559)         &  \\
-   male effect on clearance                      & $\mathrm{MALE_{CL/F}\sim \theta_{6}}$                                                                      & 1.02 $  $        & 11   & (0.847,1.24)       &  \\
+   peripheral volume of distribution             & $\mathrm{V_{p}/F  \sim \theta_{5}}$                                                                        & 113 $ L $        & 21   & (85.6,559)         &  \\
+   male effect on clearance                      & $\mathrm{MALE_{CL/F}\sim \theta_{6}}$                                                                      & 1.02 $  $        & 11.1 & (0.847,1.25)       &  \\
    weight effect on clearance                    & $\mathrm{WT_{CL/F}\sim \theta_{7}}$                                                                        & 1.19 $  $        & 28.3 & (0.61,1.91)        &  \\
    interindividual variability of clearance      & $\mathrm{IIV_{CL/F}\sim \Omega_{1.1}}$                                                                     & 0.214 $  $       & 22.8 & (0.128,0.321)      & \%CV = 48.8  \\
    interindividual clearance-volume covariance   & $\mathrm{cov_{CL,V}\sim \Omega_{2.1}}$                                                                     & 0.121 $  $       & 26.4 & (0.0606,0.183)     & CORR = 0.849  \\
-   interindividual variability of central volume & $\mathrm{IIV_{V_{c}/F}\sim \Omega_{2.2}}$                                                                  & 0.0945 $  $      & 33.2 & (0.0471,0.158)     & \%CV = 31.5  \\
-   interindividual clearance-Ka covariance       & $\mathrm{cov_{CL,Ka} \sim \Omega_{3.1}}$                                                                   & -0.0116 $  $     & 173  & (-0.0448,0.0261)   & CORR = -0.116 \\
+   interindividual variability of central volume & $\mathrm{IIV_{V_{c}/F}\sim \Omega_{2.2}}$                                                                  & 0.0945 $  $      & 33.2 & (0.047,0.158)      & \%CV = 31.5  \\
+   interindividual clearance-Ka covariance       & $\mathrm{cov_{CL,Ka} \sim \Omega_{3.1}}$                                                                   & -0.0116 $  $     & 173  & (-0.0448,0.0261)   & CORR = -0.117 \\
    interindividual volume-Ka covariance          & $\mathrm{cov_{V,Ka} \sim \Omega_{3.2}}$                                                                    & -0.0372 $  $     & 36.1 & (-0.0577,-0.00491) & CORR = -0.561 \\
    interindividual variability of Ka             & $\mathrm{IIV_{K_{a}}\sim \Omega_{3.3}}$                                                                    & 0.0466 $  $      & 34.8 & (0.0236,0.0811)    & \%CV = 21.8  \\
    proportional error                            & $\mathrm{err_{prop}\sim \Sigma_{1.1}}$                                                                     & 0.0492 $  $      & 10.9 & (0.0399,0.0587)    & \%CV = 22.2  \\
@@ -523,12 +523,12 @@ We can make a quick parameter table that does not use wikitab markup. Table \ref
 \end{Sinput}
 \begin{Soutput}
   tool  run parameter   moment            value
-1  nm7 1005       ofv  minimum 2405.91626347113
-2  nm7 1005    THETA1 estimate           9.5079
-3  nm7 1005    THETA1     prse             9.72
-4  nm7 1005    THETA1       se         0.923845
-5  nm7 1005    THETA2 estimate          22.7899
-6  nm7 1005    THETA2     prse             9.56
+1  nm7 1005       ofv  minimum 2405.91626140177
+2  nm7 1005    THETA1 estimate          9.50789
+3  nm7 1005    THETA1     prse             9.75
+4  nm7 1005    THETA1       se          0.92708
+5  nm7 1005    THETA2 estimate           22.791
+6  nm7 1005    THETA2     prse             9.55
 \end{Soutput}
 \begin{Sinput}
 > tab$tool <- NULL
@@ -549,12 +549,12 @@ We can make a quick parameter table that does not use wikitab markup. Table \ref
 \end{Sinput}
 \begin{Soutput}
    parameter estimate   prse
-1     THETA1   9.5100   9.72
-2     THETA2  22.8000   9.56
-3     THETA3   0.0714   7.34
+1     THETA1   9.5100   9.75
+2     THETA2  22.8000   9.55
+3     THETA3   0.0714   7.35
 4     THETA4   3.4700  15.40
-5     THETA5 113.0000  20.90
-6     THETA6   1.0200  11.00
+5     THETA5 113.0000  21.00
+6     THETA6   1.0200  11.10
 7     THETA7   1.1900  28.30
 8   OMEGA1.1   0.2140  22.80
 9   OMEGA2.1   0.1210  26.40
@@ -572,12 +572,12 @@ We can make a quick parameter table that does not use wikitab markup. Table \ref
 \end{Sinput}
 \begin{Soutput}
     parameter estimate   prse
-1    theta_1    9.5100   9.72
-2    theta_2   22.8000   9.56
-3    theta_3    0.0714   7.34
+1    theta_1    9.5100   9.75
+2    theta_2   22.8000   9.55
+3    theta_3    0.0714   7.35
 4    theta_4    3.4700  15.40
-5    theta_5  113.0000  20.90
-6    theta_6    1.0200  11.00
+5    theta_5  113.0000  21.00
+6    theta_6    1.0200  11.10
 7    theta_7    1.1900  28.30
 8  Omega_1.1    0.2140  22.80
 9  Omega_2.1    0.1210  26.40
@@ -595,12 +595,12 @@ We can make a quick parameter table that does not use wikitab markup. Table \ref
 \end{Sinput}
 \begin{Soutput}
                    parameter estimate   prse
-1    $\\mathrm{\\theta_{1}}$   9.5100   9.72
-2    $\\mathrm{\\theta_{2}}$  22.8000   9.56
-3    $\\mathrm{\\theta_{3}}$   0.0714   7.34
+1    $\\mathrm{\\theta_{1}}$   9.5100   9.75
+2    $\\mathrm{\\theta_{2}}$  22.8000   9.55
+3    $\\mathrm{\\theta_{3}}$   0.0714   7.35
 4    $\\mathrm{\\theta_{4}}$   3.4700  15.40
-5    $\\mathrm{\\theta_{5}}$ 113.0000  20.90
-6    $\\mathrm{\\theta_{6}}$   1.0200  11.00
+5    $\\mathrm{\\theta_{5}}$ 113.0000  21.00
+6    $\\mathrm{\\theta_{6}}$   1.0200  11.10
 7    $\\mathrm{\\theta_{7}}$   1.1900  28.30
 8  $\\mathrm{\\Omega_{1.1}}$   0.2140  22.80
 9  $\\mathrm{\\Omega_{2.1}}$   0.1210  26.40
@@ -619,12 +619,12 @@ We can make a quick parameter table that does not use wikitab markup. Table \ref
   \begin{tabular}{lrr}
     \hline \hline
    parameter & estimate & prse \\ \hline
-   $\mathrm{\theta_{1}}$   & \verb#9.5100# & \verb#9.72# \\
-   $\mathrm{\theta_{2}}$   & \verb#22.8000# & \verb#9.56# \\
-   $\mathrm{\theta_{3}}$   & \verb#0.0714# & \verb#7.34# \\
+   $\mathrm{\theta_{1}}$   & \verb#9.5100# & \verb#9.75# \\
+   $\mathrm{\theta_{2}}$   & \verb#22.8000# & \verb#9.55# \\
+   $\mathrm{\theta_{3}}$   & \verb#0.0714# & \verb#7.35# \\
    $\mathrm{\theta_{4}}$   & \verb#3.4700# & \verb#15.40# \\
-   $\mathrm{\theta_{5}}$   & \verb#113.0000# & \verb#20.90# \\
-   $\mathrm{\theta_{6}}$   & \verb#1.0200# & \verb#11.00# \\
+   $\mathrm{\theta_{5}}$   & \verb#113.0000# & \verb#21.00# \\
+   $\mathrm{\theta_{6}}$   & \verb#1.0200# & \verb#11.10# \\
    $\mathrm{\theta_{7}}$   & \verb#1.1900# & \verb#28.30# \\
    $\mathrm{\Omega_{1.1}}$ & \verb#0.2140# & \verb#22.80# \\
    $\mathrm{\Omega_{2.1}}$ & \verb#0.1210# & \verb#26.40# \\
