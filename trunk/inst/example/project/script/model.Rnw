@@ -89,7 +89,7 @@ NONR(
 Sys.sleep(5)
 qstat()
 follow(1006,project='../nonmem')
-Sys.sleep(10)
+Sys.sleep(20)
 @
 We can make a quick run log using some simple tools. Table \ref{runlog}.
 <<runlog>>=
@@ -160,7 +160,7 @@ NONR(
      streams='../nonmem/ctl'
 )
 follow(1105,project='../nonmem')
-Sys.sleep(5) # let all processes complete
+Sys.sleep(80) # let all processes complete
 @
 \subsection{Combine the original data and the simulation data.}
 Now we fetch the results and integrate them with the other data.
@@ -385,6 +385,7 @@ boot <- rlog(
   file=NULL
 )
 write.csv(boot, '../nonmem/1005bootlog.csv')
+Sys.sleep(5)
 @
 \section{File Disposition}
 Predictive checks and bootstraps make huge files that need not be retained.

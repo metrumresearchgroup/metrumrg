@@ -31,7 +31,7 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \subsection{Run NONMEM.}
 \begin{Schunk}
 \begin{Sinput}
-> NONR72(
+> NONR(
 +      run=1001:1005,                       # 5 models, ctl pre-written
 +      #command=command,                    # this version will search for NONMEM
 +      project='../nonmem',                 # must specify, unless ctl in getwd()
@@ -57,7 +57,7 @@ Installing SIGCHLD signal handler...Done.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-            5             0             0             0             0 
+            4             0             0             1             0 
 \end{Soutput}
 \begin{Sinput}
 > follow(1001:1005,project='../nonmem')
@@ -68,7 +68,7 @@ Installing SIGCHLD signal handler...Done.
        queued      compiled       running          done indeterminate 
             0             0             5             0             0 
        queued      compiled       running          done indeterminate 
-            0             0             3             2             0 
+            0             0             4             1             0 
        queued      compiled       running          done indeterminate 
             0             0             2             3             0 
        queued      compiled       running          done indeterminate 
@@ -135,7 +135,7 @@ We confirm that we can get similar results with different initial estimates.
 > ctl$prob <- '1006 like 1005 with tweaked initial estimates'
 \end{Sinput}
 \end{Schunk}
-We request some variants of PRED and CWRES. 
+We request some variants of PRED and CWRES if running under NONMEM 7.3.
 \begin{Schunk}
 \begin{Sinput}
 > ctl[[12]]
@@ -145,14 +145,14 @@ We request some variants of PRED and CWRES.
 \end{Soutput}
 \begin{Sinput}
 > preds <- c('NPRED','CPRED','CPREDI','EPRED')
-> res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','ERES','EWRES','ECWRES')
-> ctl[[12]] <- c(ctl[[12]],preds, res)
+> res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
+> if(findNonmemCommand()[[1]] %contains% '73')  ctl[[12]] <- c(ctl[[12]],preds, res)
 \end{Sinput}
 \end{Schunk}
 \begin{Schunk}
 \begin{Sinput}
 > write.nmctl(ctl,file='../nonmem/ctl/1006.ctl')
-> NONR72(
+> NONR(
 +      run=1006,
 +      project='../nonmem',
 +      grid=TRUE,
@@ -181,7 +181,7 @@ We request some variants of PRED and CWRES.
             0             0             0             1             0 
 \end{Soutput}
 \begin{Sinput}
-> Sys.sleep(10)
+> Sys.sleep(20)
 \end{Sinput}
 \end{Schunk}
 We can make a quick run log using some simple tools. Table \ref{runlog}.
@@ -194,10 +194,10 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
 \end{Sinput}
 \begin{Soutput}
   tool  run parameter   moment            value
-1  nm7 1001       ofv  minimum 2526.39867230153
+1  nm7 1001       ofv  minimum 2526.39867049215
 2  nm7 1001    THETA1 estimate          11.7167
 3  nm7 1001    THETA1     prse             8.67
-4  nm7 1001    THETA1       se          1.01628
+4  nm7 1001    THETA1       se           1.0163
 5  nm7 1001    THETA2 estimate          14.5657
 6  nm7 1001    THETA2     prse             8.67
 \end{Soutput}
@@ -206,7 +206,7 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
 \end{Sinput}
 \begin{Soutput}
     tool  run parameter   moment                                         value
-299  nm7 1006  SIGMA2.2       se                                     0.0676642
+299  nm7 1006  SIGMA2.2       se                                     0.0675535
 300  nm7 1006       cov   status                                             0
 301  nm7 1006      prob     text 1006 like 1005 with tweaked initial estimates
 302  nm7 1006       min   status                                             0
@@ -263,27 +263,27 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
 301 1006      prob    text
 302 1006       min  status
                                                           value
-1                                              2526.39867230153
+1                                              2526.39867049215
 38                                                            0
 39                                             1001 phase1 1CMT
 40                                                            0
-42                                             2525.96522290374
+42                                             2525.96554218893
 112                                                           1
 113                                           1002 phase1 2 CMT
 114                                                         134
-116                                            2570.47417423427
+116                                            2570.47417267741
 153                                                           1
 154 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err
 155                                                         136
-157                                            2570.45022641404
-194                                                           0
+157                                            2570.45022474012
+194                                                           1
 195               1004 phase1 2 CMT like 1003 but better bounds
 196                                                           0
-198                                            2405.91626347113
+198                                            2405.91626140177
 247                                                           0
 248         1005 phase1 2 CMT like 1004 but diff. initial on V3
 249                                                           0
-251                                            2405.91625875217
+251                                            2405.91625717115
 300                                                           0
 301               1006 like 1005 with tweaked initial estimates
 302                                                           0
@@ -309,7 +309,7 @@ We can make a quick run log using some simple tools. Table \ref{runlog}.
    \verb#1001# & 1001 phase1 1CMT                                            & 0 & 0   & \verb#2526.40# \\
    \verb#1002# & 1002 phase1 2 CMT                                           & 1 & 134 & \verb#2525.97# \\
    \verb#1003# & 1003 phase1 2 CMT like 1002 but no eta on Q/v3 and no + err & 1 & 136 & \verb#2570.47# \\
-   \verb#1004# & 1004 phase1 2 CMT like 1003 but better bounds               & 0 & 0   & \verb#2570.45# \\
+   \verb#1004# & 1004 phase1 2 CMT like 1003 but better bounds               & 1 & 0   & \verb#2570.45# \\
    \verb#1005# & 1005 phase1 2 CMT like 1004 but diff. initial on V3         & 0 & 0   & \verb#2405.92# \\
    \verb#1006# & 1006 like 1005 with tweaked initial estimates               & 0 & 0   & \verb#2405.92# \\ \hline
   \end{tabular}
@@ -429,7 +429,7 @@ Fix records of interest.
 This run makes the predictions (simulations).
 \begin{Schunk}
 \begin{Sinput}
-> NONR72(
+> NONR(
 +      run=1105,
 +      #command=command,
 +      project='../nonmem',
@@ -442,20 +442,10 @@ This run makes the predictions (simulations).
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-            0             0             0             0             1 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
-       queued      compiled       running          done indeterminate 
-            0             0             1             0             0 
-       queued      compiled       running          done indeterminate 
             0             0             0             1             0 
 \end{Soutput}
 \begin{Sinput}
-> Sys.sleep(5) # let all processes complete
+> Sys.sleep(80) # let all processes complete
 \end{Sinput}
 \end{Schunk}
 \subsection{Combine the original data and the simulation data.}
@@ -483,11 +473,11 @@ Now we fetch the results and integrate them with the other data.
 \begin{Soutput}
   SUBJ TIME    DV    PRED SIM
 2    1 0.00     . 0.00000   1
-3    1 0.25 0.363 0.72558   1
-4    1 0.50 0.914 1.38350   1
-5    1 1.00  1.12 2.06760   1
-6    1 2.00  2.28 3.48620   1
-7    1 3.00  1.63 5.44660   1
+3    1 0.25 0.363 0.72576   1
+4    1 0.50 0.914 1.38380   1
+5    1 1.00  1.12 2.06800   1
+6    1 2.00  2.28 3.48710   1
+7    1 3.00  1.63 5.44790   1
 \end{Soutput}
 \begin{Sinput}
 > nrow(x)
@@ -503,7 +493,7 @@ Now we fetch the results and integrate them with the other data.
  $ SUBJ: int  1 1 1 1 1 1 1 1 1 1 ...
  $ TIME: num  0 0.25 0.5 1 2 3 4 6 8 12 ...
  $ DV  : chr  "." "0.363" "0.914" "1.12" ...
- $ PRED: num  0 0.726 1.383 2.068 3.486 ...
+ $ PRED: num  0 0.726 1.384 2.068 3.487 ...
  $ SIM : int  1 1 1 1 1 1 1 1 1 1 ...
 \end{Soutput}
 \begin{Sinput}
@@ -523,12 +513,12 @@ Therefore, we wish to calculate summary statistics for each subject,
 \end{Sinput}
 \begin{Soutput}
   SUBJ TIME    DV    PRED SIM
-3    1 0.25 0.363 0.72558   1
-4    1 0.50 0.914 1.38350   1
-5    1 1.00 1.120 2.06760   1
-6    1 2.00 2.280 3.48620   1
-7    1 3.00 1.630 5.44660   1
-8    1 4.00 2.040 2.99170   1
+3    1 0.25 0.363 0.72576   1
+4    1 0.50 0.914 1.38380   1
+5    1 1.00 1.120 2.06800   1
+6    1 2.00 2.280 3.48710   1
+7    1 3.00 1.630 5.44790   1
+8    1 4.00 2.040 2.99230   1
 \end{Soutput}
 \begin{Sinput}
 > subject <- melt(x,measure.var=c('DV','PRED'))
@@ -561,11 +551,11 @@ Now we cast, ignoring time.
 \begin{Soutput}
   SUBJ SIM variable       min    med     max
 1    1   1       DV  0.363000 1.6100  3.0900
-2    1   1     PRED  0.725580 3.4797  5.4466
+2    1   1     PRED  0.725760 3.4805  5.4479
 3    1   2       DV  0.363000 1.6100  3.0900
-4    1   2     PRED -0.085238 2.2940  4.6461
+4    1   2     PRED -0.085183 2.2938  4.6454
 5    1   3       DV  0.363000 1.6100  3.0900
-6    1   3     PRED -0.022438 4.8888 12.3760
+6    1   3     PRED -0.022076 4.8891 12.3770
 \end{Soutput}
 \end{Schunk}
 Note that regardless of SIM, DV (observed) is constant.
@@ -579,11 +569,11 @@ Now we melt the metrics.
 \begin{Soutput}
   SUBJ SIM variable metric     value
 1    1   1       DV    min  0.363000
-2    1   1     PRED    min  0.725580
+2    1   1     PRED    min  0.725760
 3    1   2       DV    min  0.363000
-4    1   2     PRED    min -0.085238
+4    1   2     PRED    min -0.085183
 5    1   3       DV    min  0.363000
-6    1   3     PRED    min -0.022438
+6    1   3     PRED    min -0.022076
 \end{Soutput}
 \begin{Sinput}
 > metr$value <- reapply(
@@ -596,13 +586,13 @@ Now we melt the metrics.
 > head(metr)
 \end{Sinput}
 \begin{Soutput}
-  SUBJ SIM metric    DV      PRED
-1    1   1    min 0.139 -0.615480
-2    1   1    med 1.025  1.258600
-3    1   1    max 2.530  2.176200
-4    1   2    min 0.139 -0.351970
-5    1   2    med 1.025  1.209335
-6    1   2    max 2.530  2.424000
+  SUBJ SIM metric    DV     PRED
+1    1   1    min 0.139 -0.61532
+2    1   1    med 1.025  1.25850
+3    1   1    max 2.530  2.17590
+4    1   2    min 0.139 -0.35190
+5    1   2    med 1.025  1.20924
+6    1   2    max 2.530  2.42400
 \end{Soutput}
 \begin{Sinput}
 > nrow(metr)
@@ -648,13 +638,13 @@ befor trimming the data.
 > head(med)
 \end{Sinput}
 \begin{Soutput}
-   SUBJ SIM    DV     PRED
-2     1   1 1.025 1.258600
-5     1   2 1.025 1.209335
-8     1   3 1.025 1.579650
-11    1   4 1.025 0.884860
-14    1   5 1.025 1.658650
-17    1   6 1.025 0.950105
+   SUBJ SIM    DV    PRED
+2     1   1 1.025 1.25850
+5     1   2 1.025 1.20924
+8     1   3 1.025 1.57950
+11    1   4 1.025 0.88477
+14    1   5 1.025 1.65875
+17    1   6 1.025 0.95005
 \end{Soutput}
 \begin{Sinput}
 > trim <- inner(med, id.var=c('SIM'),measure.var=c('PRED','DV'))
@@ -686,13 +676,13 @@ befor trimming the data.
 > head(trim)
 \end{Sinput}
 \begin{Soutput}
-    SIM   DV    PRED
-501   1 1.13 2.05870
-502   2 1.13 2.00520
-503   3 1.13 1.65485
-504   4 1.13 1.06910
-505   5 1.13 2.05965
-506   6 1.13 0.98596
+    SIM   DV     PRED
+501   1 1.13 2.058700
+502   2 1.13 2.005300
+503   3 1.13 1.654800
+504   4 1.13 1.069000
+505   5 1.13 2.059750
+506   6 1.13 0.985885
 \end{Soutput}
 \begin{Sinput}
 > print(
@@ -722,13 +712,13 @@ We also show densityplots of predictions at those quartiles.
 > head(trim)
 \end{Sinput}
 \begin{Soutput}
-    SIM   DV    PRED
-501   1 1.13 2.05870
-502   2 1.13 2.00520
-503   3 1.13 1.65485
-504   4 1.13 1.06910
-505   5 1.13 2.05965
-506   6 1.13 0.98596
+    SIM   DV     PRED
+501   1 1.13 2.058700
+502   2 1.13 2.005300
+503   3 1.13 1.654800
+504   4 1.13 1.069000
+505   5 1.13 2.059750
+506   6 1.13 0.985885
 \end{Soutput}
 \begin{Sinput}
 > quantile(trim$DV)
@@ -755,26 +745,26 @@ We also show densityplots of predictions at those quartiles.
 > head(quart)
 \end{Sinput}
 \begin{Soutput}
-  SIM variable     X25.     X50.     X75.
-1   1       DV  7.95000 20.25000 100.1000
-2   1     PRED 11.92750 22.16550 103.9625
-3   2       DV  7.95000 20.25000 100.1000
-4   2     PRED  7.23535 20.27100 105.2067
-5   3       DV  7.95000 20.25000 100.1000
-6   3     PRED  7.82700 14.50425  98.2655
+  SIM variable      X25.     X50.      X75.
+1   1       DV  7.950000 20.25000 100.10000
+2   1     PRED 11.929000 22.16550 103.96000
+3   2       DV  7.950000 20.25000 100.10000
+4   2     PRED  7.234725 20.27300 105.19700
+5   3       DV  7.950000 20.25000 100.10000
+6   3     PRED  7.826900 14.50475  98.27925
 \end{Soutput}
 \begin{Sinput}
 > molt <- melt(quart,id.var='variable',measure.var=c('X25.','X50.','X75.'),variable_name='quartile')
 > head(molt)
 \end{Sinput}
 \begin{Soutput}
-  variable quartile    value
-1       DV     X25.  7.95000
-2     PRED     X25. 11.92750
-3       DV     X25.  7.95000
-4     PRED     X25.  7.23535
-5       DV     X25.  7.95000
-6     PRED     X25.  7.82700
+  variable quartile     value
+1       DV     X25.  7.950000
+2     PRED     X25. 11.929000
+3       DV     X25.  7.950000
+4     PRED     X25.  7.234725
+5       DV     X25.  7.950000
+6     PRED     X25.  7.826900
 \end{Soutput}
 \begin{Sinput}
 > levels(molt$quartile)
@@ -787,13 +777,13 @@ We also show densityplots of predictions at those quartiles.
 > head(molt)
 \end{Sinput}
 \begin{Soutput}
-  variable       quartile    value
-1       DV first quartile  7.95000
-2     PRED first quartile 11.92750
-3       DV first quartile  7.95000
-4     PRED first quartile  7.23535
-5       DV first quartile  7.95000
-6     PRED first quartile  7.82700
+  variable       quartile     value
+1       DV first quartile  7.950000
+2     PRED first quartile 11.929000
+3       DV first quartile  7.950000
+4     PRED first quartile  7.234725
+5       DV first quartile  7.950000
+6     PRED first quartile  7.826900
 \end{Soutput}
 \begin{Sinput}
 > levels(molt$variable)
@@ -904,7 +894,7 @@ We also show densityplots of predictions at those quartiles.
 \begin{Sinput}
 > #intentionally trying a non-existent run ... 1 should be 001 per above. 
 > #Parentheses force display of invisible NONR result.
-> (NONR72(
+> (NONR(
 +      run=1,
 +      wait=FALSE,
 +      grid=TRUE,
@@ -917,7 +907,7 @@ We also show densityplots of predictions at those quartiles.
 [1] "../nonmem/1005bootctl/1.ctl not found"
 \end{Soutput}
 \begin{Sinput}
-> NONR72(
+> NONR(
 +      run=RUN,
 +      wait=FALSE,
 +      grid=TRUE,
@@ -929,27 +919,17 @@ We also show densityplots of predictions at those quartiles.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-          149            34            36            79             2 
+           52            37            35           176             0 
        queued      compiled       running          done indeterminate 
-          132            46            12           110             0 
+           37            44            17           201             1 
        queued      compiled       running          done indeterminate 
-          105            56            19           120             0 
+           15            44            30           211             0 
        queued      compiled       running          done indeterminate 
-           96            29            34           141             0 
+            4            35            31           230             0 
        queued      compiled       running          done indeterminate 
-           73            27            27           173             0 
+            0            14            28           258             0 
        queued      compiled       running          done indeterminate 
-           39            52            19           190             0 
-       queued      compiled       running          done indeterminate 
-           27            44            29           200             0 
-       queued      compiled       running          done indeterminate 
-           15            21            39           225             0 
-       queued      compiled       running          done indeterminate 
-            0            24            21           255             0 
-       queued      compiled       running          done indeterminate 
-            0             0            24           276             0 
-       queued      compiled       running          done indeterminate 
-            0             0             3           297             0 
+            0             0            16           284             0 
        queued      compiled       running          done indeterminate 
             0             0             0           300             0 
 \end{Soutput}
@@ -963,6 +943,7 @@ We also show densityplots of predictions at those quartiles.
 +   file=NULL
 + )
 > write.csv(boot, '../nonmem/1005bootlog.csv')
+> Sys.sleep(5)
 \end{Sinput}
 \end{Schunk}
 \section{File Disposition}
