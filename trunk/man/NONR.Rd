@@ -52,7 +52,9 @@ NONR(
 
   \item{run}{
   vector of control stream names.  Typically integer.
-  e.g. 1:10 corresponds to 1.ctl, 2.ctl, ... 10.ctl.
+  e.g. 1:10 corresponds to 1.ctl, 2.ctl, ... 10.ctl. Character names are supported, 
+  especially '001' etc. But beware!  Names with non-digit characters may match patterns
+  in \code{\link{purgeRunDir}} and are therefore strongly discouraged.
  } 
 
   \item{command}{
@@ -215,7 +217,7 @@ run in \code{project}. It looks for \code{<run>.ctl} in \code{project},
 cleans it up as necessary, and writes it to the subdirectory, in which context
 NONMEM is invoked (using \code{runCommand}).  The output of NONMEM will be 
 \file{<run>.lst} in the subdirectory.  Files matching patterns in \code{purgeRunDir:standard} will
-be removed. Attempts will be made to run \code{PLOTR} and \code{epilog}.  
+be removed (unless you pass \code{purge=FALSE} as a dots argument: see entry above for \dots). Attempts will be made to run \code{PLOTR} and \code{epilog}.  
 Then a \sQuote{complete} message is printed.
 
 As of version 5.22, parallelization is directly supported.
