@@ -1,13 +1,14 @@
 \name{Ops.keyed}
+\alias{+.keyed}
+\alias{|.keyed}
+\alias{-.keyed}
+\alias{+.keyed}
+\alias{^.keyed}
+\alias{*.keyed}
+\alias{/.keyed}
+\alias{!.keyed}
+\alias{&.keyed}
 \alias{Ops.keyed}
-\alias{and.keyed}
-\alias{left.keyed}
-\alias{minus.keyed}
-\alias{plus.keyed}
-\alias{raised.keyed}
-\alias{times.keyed}
-\alias{divide.keyed}
-\alias{not.keyed}
 
 \title{Operator Syntax for Joining Keyed Data Frames}
 \description{
@@ -23,27 +24,21 @@ using left subsets of the key (e.g. subj, subj-time, subj-time-cmt, etc.).
 
 \code{!}, a unary operator, returns rows in x that have NA keys or duplicate/duplicated keys.
 
-The syntax can be extended to subclasses of
-\code{keyed} by writing additional proxy methods. Note, however, that proxy methods
-may be eliminated in future versions for simplification.
+Previous versions supported proxy methods, such as \code{plus.keyed}, but these have been
+removed for simplicity.
 }
 \usage{
-\method{Ops}{keyed}(e1, e2)
-plus.keyed(x, y)
-times.keyed(x, y)
-and.keyed(x, y)
-minus.keyed(x, y)
-divide.keyed(x, y)
-left.keyed(x, y)
-raised.keyed(x, y)
+\method{+}{keyed}(e1, e2)
+\method{*}{keyed}(e1, e2)
+\method{&}{keyed}(e1, e2)
+\method{-}{keyed}(e1, e2)
+\method{/}{keyed}(e1, e2)
+\method{|}{keyed}(e1, e2)
+\method{^}{keyed}(e1, e2)
 }
 \arguments{
   \item{e1}{left argument to Ops}
   \item{e2}{right argument to Ops}
-  \item{x}{left argument to proxies}
-  \item{y}{right argument to proxies}
-  
-  
 }
 \details{
 A concise syntax for joining of data.frames facilitates dynamic assembly of data.
@@ -52,17 +47,17 @@ dispatch rules, if both left and right operands resolve to the same the method,
 that method is used.  Operator methods are already defined for data.frame, but
 the existence of class \sQuote{keyed} creates an opportunity for syntax specification.
 
-\code{Ops.keyed} selects a \dfn{proxy} method, and dispatches on the right hand operand.  
-Proxy methods are text equivalents of simple operators, e.g. the proxy \code{plus} 
-corresponds to \code{+}.  They are necessary because direct specification of, say,
-\code{+.keyed} could not be overridden for subclasses of \code{keyed} (\code{Ops} mechanism would
-detect conflicting methods for the two operands, and would default to primitives.)
+%\code{Ops.keyed} selects a \dfn{proxy} method, and dispatches on the right hand operand.  
+%Proxy methods are text equivalents of simple operators, e.g. the proxy \code{plus} 
+%corresponds to \code{+}.  They are necessary because direct specification of, say,
+%\code{+.keyed} could not be overridden for subclasses of \code{keyed} (\code{Ops} mechanism would
+%detect conflicting methods for the two operands, and would default to primitives.)
 
-Dispatch on the right hand operand is consistent with a general syntax of data
-assembly.  For \code{a + b + c ...}, results accumulate on the left under a somewhat
-fixed typology (class), and the next operand on the right controls the next
-step of assembly, perhaps invoking a specialized method by means of its class 
-(S3 dispatch mechanism).
+%Dispatch on the right hand operand is consistent with a general syntax of data
+%assembly.  For \code{a + b + c ...}, results accumulate on the left under a somewhat
+%fixed typology (class), and the next operand on the right controls the next
+%step of assembly, perhaps invoking a specialized method by means of its class 
+%(S3 dispatch mechanism).
 
 Operators have been chosen to coordinate intuition about their effects with 
 existing operator precedence and a general data assembly pattern. \code{+} gives
@@ -73,8 +68,8 @@ the result.  \code{-} suggests removal: it is used for methods that drop rows. \
 gives a left join (\code{merge}, \code{all.x=TRUE}). Mnemonically, it suggests conditioning (as
 with formulas): use of rows on the right is conditional on existence of matches on the left.
 Right joins are currently not implemented, but most can be expressed as left joins by 
-rearrangement. \code{!} invokes the proxy \code{not.keyed}, which is the best mnemonic: rows are returned
-that have problematic keys (NA or duplicates), i.e. ``not keyed'' correctly.
+rearrangement. \code{!} suggests ``not'': rows are returned
+that have problematic keys (NA or duplicates), i.e. not keyed correctly.
 
 Operators \code{+,*,/} and \code{-} have higher precedence than \code{&,|} and \code{!}.
 Within groups, operators have equal precedence and resolve left to right (see \code{?S3groupGeneric}). 
@@ -82,10 +77,10 @@ A common assembly sequence is one or more full joins followed by one or more
 left joins. Correspondence to the existing order of operations minimizes the 
 need for parenthetical grouping of terms (which is available nonetheless).
 
-Proxy methods have been defined on these operators for class \sQuote{keyed}.  Users
-can implement differing assembly operations by creating additional classes
-and defining proxy methods for them. This is discouraged, however, as proxy methods
-may be eliminated in future versions.
+%Proxy methods have been defined on these operators for class \sQuote{keyed}.  Users
+%can implement differing assembly operations by creating additional classes
+%and defining proxy methods for them. This is discouraged, however, as proxy methods
+%may be eliminated in future versions.
 }
 \value{keyed data.frame}
 \references{\url{http://metrumrg.googlecode.com}}

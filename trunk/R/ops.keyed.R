@@ -5,13 +5,13 @@
 #Redirect dispatches on right argument.
 #Specific methods may be defined for redirect values. 
 
-Ops.keyed <- function(e1,e2){
-	methods  <- c('plus','minus','and','left', 'times','divide','raised','mod','div','not')
-	generics <- c('+',   '-',    '&',   '|',   '*',    '/',     '^',     '%%', '%/%','!' )
-	method   <- methods[match(.Generic,generics)]
-	if(method=='not')UseMethod(method,e1)
-	UseMethod(method,e2)
-}
+#Ops.keyed <- function(e1,e2){
+#	methods  <- c('plus','minus','and','left', 'times','divide','raised','mod','div','not')
+#	generics <- c('+',   '-',    '&',   '|',   '*',    '/',     '^',     '%%', '%/%','!' )
+#	method   <- methods[match(.Generic,generics)]
+#	if(method=='not')UseMethod(method,e1)
+#	UseMethod(method,e2)
+#}
 .reportCols <- function(key){
 	lim <- 7
 	if(length(key) > lim) lim <- 5
@@ -25,99 +25,99 @@ Ops.keyed <- function(e1,e2){
 	return(paste(msg,msg2))
 }
 	
-`plus.keyed` <- function(x,y){
-	xr <- nrow(x)
-	yr <- nrow(y)
-	key <- intersect(names(x),names(y))
-	matching <- sum(uniKey(x,key) %in% uniKey(y,key))
+`+.keyed` <- function(e1,e2){
+	xr <- nrow(e1)
+	yr <- nrow(e2)
+	key <- intersect(names(e1),names(e2))
+	matching <- sum(uniKey(e1,key) %in% uniKey(e2,key))
 	matchmsg <- paste(' with',matching,'matches')
 	message('full join of ',xr,' rows and ',yr,' rows on ', .reportCols(key), matchmsg)
-	merge(x,y,all=TRUE)
+	merge(e1,e2,all=TRUE)
 
 }
 
-`and.keyed` <- function(x,y){
-	xr <- nrow(x)
-	yr <- nrow(y)
-	key <- intersect(names(x),names(y))
-	matching <- sum(uniKey(x,key) %in% uniKey(y,key))
+`&.keyed` <- function(e1,e2){
+	xr <- nrow(e1)
+	yr <- nrow(e2)
+	key <- intersect(names(e1),names(e2))
+	matching <- sum(uniKey(e1,key) %in% uniKey(e2,key))
 	message('inner join of ',xr,' rows and ',yr,' rows on ', .reportCols(key),' with ',matching,' matches')
-	merge(x,y)
+	merge(e1,e2)
 }
 
-`left.keyed` <- function(x,y){
-	xr <- nrow(x)
-	yr <- nrow(y)
-	key <- intersect(names(x),names(y))
+`|.keyed` <- function(e1,e2){
+	xr <- nrow(e1)
+	yr <- nrow(e2)
+	key <- intersect(names(e1),names(e2))
 	message('left join of ',xr,' rows and ',yr,' rows on ', .reportCols(key))	
-	left <- unique(uniKey(x,key))
-	right <- unique(uniKey(y,key))
+	left <- unique(uniKey(e1,key))
+	right <- unique(uniKey(e2,key))
 	unmatched <- setdiff(left,right)
 	unused <- setdiff(right,left)
 	if(length(unmatched))warning(length(unmatched),' unmatched keys e.g.: ',unmatched[1])
 	if(length(unused))warning(length(unused),' unused keys, e.g.: ',unused[1])
-	right <- uniKey(y,key)
+	right <- uniKey(e2,key)
 	dups <- duplicated(right)
 	if(any(dups))warning(sum(dups),' duplicated keys, e.g.: ',right[dups][1])
-	merge(x,y,all.x=TRUE)
+	merge(e1,e2,all.x=TRUE)
 }
 
-`minus.keyed` <- function(x,y){
-	xr <- nrow(x)
-	yr <- nrow(y)
-	key <- intersect(names(x),names(y))
-	bad <- uniKey(x,key) %in% uniKey(y,key)
+`-.keyed` <- function(e1,e2){
+	xr <- nrow(e1)
+	yr <- nrow(e2)
+	key <- intersect(names(e1),names(e2))
+	bad <- uniKey(e1,key) %in% uniKey(e2,key)
 	message('dropping ',sum(bad),' of ',xr,' rows matching on ', .reportCols(key))	
-	x[!bad,,drop=FALSE]
+	e1[!bad,,drop=FALSE]
 }
 
-`divide.keyed` <- function (x, y){
-  xr <- nrow(x)
-  yr <- nrow(y)
-  key <- intersect(names(x), names(y))
-  good <- uniKey(x, key) %in% uniKey(y, key)
+`/.keyed` <- function (e1,e2){
+  xr <- nrow(e1)
+  yr <- nrow(e2)
+  key <- intersect(names(e1), names(e2))
+  good <- uniKey(e1, key) %in% uniKey(e2, key)
   message("keeping ", sum(good), " of ", xr, " rows matching on ", .reportCols(key))
-  x[good, ,drop=FALSE]
+  e1[good, ,drop=FALSE]
 }
 
-`raised.keyed` <- function (x, y) {
-  key <- key(y)
-  message("serial left join of ", nrow(x), " rows and ", nrow(y), " rows on ", .reportCols(key))
-  known <- names(x)[!names(x) %in% key]
+`^.keyed` <- function (e1,e2) {
+  key <- key(e2)
+  message("serial left join of ", nrow(e1), " rows and ", nrow(e2), " rows on ", .reportCols(key))
+  known <- names(e1)[!names(e1) %in% key]
   series <- lapply(seq_along(key), function(n) key[seq_len(n)])
   for(i in seq_along(series)){
     key <- series[[i]]
     # This is by definition a fishing expedition, so don't look in y cols already defined in x
-    y <- y[,setdiff(names(y),known),drop=FALSE]
-    z <- static(y,on=key)
+    e2 <- e2[,setdiff(names(e2),known),drop=FALSE]
+    z <- static(e2,on=key)
     new <- setdiff(names(z),key)
     known <- union(known,new)
-    try(x <- stableMerge(x, z), silent = TRUE)
+    try(e1 <- stableMerge(e1, z), silent = TRUE)
   }
-  x
+  e1
 }
 
-`times.keyed` <- function (x, y) {
-  key <- intersect(names(x), names(y))
-  existing <- uniKey(y, key) %in% uniKey(x, key)
-  y <- unique(y[!existing,,drop=FALSE])
-  xr <- nrow(x)
-  yr <- nrow(y)
+`*.keyed` <- function (e1,e2) {
+  key <- intersect(names(e1), names(e2))
+  existing <- uniKey(e2, key) %in% uniKey(e1, key)
+  e2 <- unique(e2[!existing,,drop=FALSE])
+  xr <- nrow(e1)
+  yr <- nrow(e2)
   message("column-stable full join of ", xr, " existing rows and ", yr, " novel rows on ", .reportCols(key))
-  merge(x, y, all = TRUE)[,names(x),drop=FALSE]
+  merge(e1, e2, all = TRUE)[,names(e1),drop=FALSE]
 }
 
-`not.keyed` <- function(x)x[dupKeys(x) | naKeys(x),,drop=FALSE]
+`!.keyed` <- function(e1)e1[dupKeys(e1) | naKeys(e1),,drop=FALSE]
 
-`as.vector.keyed` <- function(x,mode='any')names(x)
+`as.vector.keyed` <- function(e1,mode='any')names(e1)
 
-`%+%` <- function(x,y)UseMethod('%+%')
-`%&%` <- function(x,y)UseMethod('%&%')
-`%u%` <- function(x,y)UseMethod('%+%')
-`%n%` <- function(x,y)UseMethod('%&%')
-`%-%` <- function(x,y)UseMethod('%-%')
-`%+%.default` <- function(x,y)union(x,y)
-`%&%.default` <- function(x,y)intersect(x,y)
-`%-%.default` <- function(x,y)setdiff(x,y)
+`%+%` <- function(e1,e2)UseMethod('%+%')
+`%&%` <- function(e1,e2)UseMethod('%&%')
+`%u%` <- function(e1,e2)UseMethod('%+%')
+`%n%` <- function(e1,e2)UseMethod('%&%')
+`%-%` <- function(e1,e2)UseMethod('%-%')
+`%+%.default` <- function(e1,e2)union(e1,e2)
+`%&%.default` <- function(e1,e2)intersect(e1,e2)
+`%-%.default` <- function(e1,e2)setdiff(e1,e2)
 
 

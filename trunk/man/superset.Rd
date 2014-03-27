@@ -121,7 +121,7 @@ ignored(
 	\itemize{
 		\item \code{\link{PLOTR}}
 		\item \code{\link{dataSynthesis}}
-		\item \code{\link{raised.keyed}}
+		\item \code{\link{^.keyed}}
 	}
 }
 \keyword{manip}

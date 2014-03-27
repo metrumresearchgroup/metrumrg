@@ -53,7 +53,7 @@
 \item \link{after} test whether elements occur after some condition is \code{TRUE}
 \item \link{aggregate.keyed} aggregate a keyed data frame
 \item \link{align.decimal} align numeric column in latex table on the decimal
-\item \link{and.keyed} produce inner join of two keyed data frames
+%\item \link{and.keyed} produce inner join of two keyed data frames
 \item \link{as.best.data.frame} coerce a data.frame to unambigous numeric or character columns
 \item \link{as.best.default} coerce a vector unambiguously to numeric or character
 \item \link{as.best.digest} coerce a digest to unambiguous numeric or character
@@ -154,7 +154,7 @@
 \item \link{as.month.duration} coerce duration to month
 \item \link{as.month.numeric} coerce numeric to month
 \item \link{as.month} coerce to month
-\item \link{as.moot} convert to moot
+%\item \link{as.moot} convert to moot
 \item \link{as.motif.digest} create motif for digest
 \item \link{as.motif.keyed} create motif for keyed
 \item \link{as.motif.motif} create motif from motif
@@ -175,7 +175,7 @@
 \item \link{as.pdf.document} convert latex document to pdf
 \item \link{as.pdf} convert to pdf
 \item \link{as.pxml.ext} convert a param file to XML
-\item \link{as.rigged} convert to rigged
+%\item \link{as.rigged} convert to rigged
 \item \link{as.roles.digest} create roles for digest
 \item \link{as.roles.keyed} create roles for keyed
 \item \link{as.roles} create default roles for parts of objects
@@ -279,7 +279,7 @@
 \item \link{diagnosticPlots} create standard diagnostic plots
 \item \link{digest} alias for as.digest
 \item \link{distance} calculate element positions relative to the \eqn{n^{th}}{n^th} \code{TRUE} element positions (usually, within levels of an index)
-\item \link{divide.keyed} for keyed data frames, rows in x that have matching keys in y
+%\item \link{divide.keyed} for keyed data frames, rows in x that have matching keys in y
 \item \link{dupKeys.default} give a logical index to duplicated rows of a keyed data frame, AND the rows of which they are duplicates
 \item \link{dupKeys.nm} default behavior, after stripping comments
 \item \link{dupKeys} generic
@@ -385,7 +385,7 @@
 \item \link{latex.args} format latex arguments
 \item \link{latex.options} format latex options
 \item \link{lbm} calculate lean body mass
-\item \link{left.keyed} produce left join of two keyed data frames
+%\item \link{left.keyed} produce left join of two keyed data frames
 \item \link{legacy} extract legacy from a conditioned object
 \item \link{legacy<-} assign legacy for a conditioned object
 \item \link{lhs} extract left-hand side of wikimath
@@ -413,10 +413,10 @@
 \item \link{metaSub.filename} systematically substitute elements in a text file
 \item \link{metaSub} generic
 \item \link{metrumrgURL} view a file in the metrumrg package
-\item \link{minus.keyed} drop rows in x that have matching rows in y
-\item \link{minus.moot} drop moot rows
-\item \link{moot.nm} identify moot rows (rows not influencing NONMEM estimates)
-\item \link{moot} generic
+%\item \link{minus.keyed} drop rows in x that have matching rows in y
+%\item \link{minus.moot} drop moot rows
+%\item \link{moot.nm} identify moot rows (rows not influencing NONMEM estimates)
+%\item \link{moot} generic
 \item \link{monotonic} generic
 \item \link{monotonic.default} check whether the values in a vector are monotonic
 \item \link{nondecreasing} generic
@@ -444,7 +444,7 @@
 \item \link{noPk.nm} rows where EVID is never 0 within SUBJ
 \item \link{noPk} generic
 \item \link{nospace} drop spaces from text
-\item \link{not.keyed} keyed data frame rows that have problematic keys (NA, dups)
+%\item \link{not.keyed} keyed data frame rows that have problematic keys (NA, dups)
 \item \link{noUnits} drop units from wikimath
 \item \link{nth} repeat, for each element, the \eqn{n^{th}}{n^th} element where a condition is \code{TRUE}  (usually, within levels of an index)
 \item \link{nxt} calculate the next element for each element of x
@@ -478,8 +478,8 @@
 \item \link{plot.nm} generate standard plots for an nm object using \code{\link{nmPlots}}
 \item \link{plotfilename} make a name for a diagnostic plot file
 \item \link{PLOTR} create diagnostic plots for NONMEM runs
-\item \link{plus.keyed} produce and outer join of keyed data frames
-\item \link{plus.rigged} merge an nm object with a rigged data frame
+%\item \link{plus.keyed} produce and outer join of keyed data frames
+%\item \link{plus.rigged} merge an nm object with a rigged data frame
 \item \link{pool} test for unique and shared elments among two vectors
 \item \link{posmat} coerce a matrix to be positive definite
 \item \link{predoseDv.nm} DV is defined before the first record within SUBJ where EVID is 1
@@ -502,7 +502,7 @@
 \item \link{purgeRunDir} delete certain files from run directories
 \item \link{qstat} invoke SGE qstat
 \item \link{qsub} prepare commandlines for qsub
-\item \link{raised.keyed} produce sequential left join of two keyed data frames
+%\item \link{raised.keyed} produce sequential left join of two keyed data frames
 \item \link{read.cwres.data} compute conditional weighted residuals (internal)
 \item \link{read.nm} read a csv file and try to transform to nm
 \item \link{read.nmctl} read a NONMEM control stream, converting to modifiable object
@@ -518,8 +518,8 @@
 \item \link{resample} generic
 \item \link{resolve} reinterpret relative file paths with respect to specified directory.
 \item \link{rhs} extract right-hand side of wikimath
-\item \link{rig.nm} generate extra rows, spaced across each subject's timecourse, for obtaining model predictions in NONMEM (EVID==2)
-\item \link{rig} generic
+%\item \link{rig.nm} generate extra rows, spaced across each subject's timecourse, for obtaining model predictions in NONMEM (EVID==2)
+%\item \link{rig} generic
 \item \link{rinvchisq} generate inverse chi-square distribution
 \item \link{riwish} generate inverse Wishart distribution
 \item \link{rlog} generate a combined run log for multiple NONMEM runs
@@ -583,7 +583,7 @@
 \item \link{tagvalue} convert a list to a string of delimited tag-value pairs
 \item \link{tex2pdf} convert tex files to pdf
 \item \link{text2decimal} convert mixed text to decimal
-\item \link{times.keyed} column stable left join for keyed data frames
+%\item \link{times.keyed} column stable left join for keyed data frames
 \item \link{titleCase} convert mixed case to title case, strictly by default
 \item \link{Tmax} calculate the time associated with the maximum concentration for each subject
 \item \link{tmax} calculate the time of the maximum concentration

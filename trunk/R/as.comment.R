@@ -55,7 +55,7 @@
 	class(y) <- class(x)
 	y
 }
-`format.comment` <- function(x,...)unclass(ifelse(x,"C","."))
+`format.comment` <- function(x,...)map(x, from = c(TRUE,FALSE,NA), to = c('C','.','NA'))
 
 `print.comment` <- function(x,...){
 	print(format(x),...,quote=FALSE)
