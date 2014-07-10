@@ -284,7 +284,8 @@ specification.data.frame <- function(x,tol=10,sep='/',...){
   pattern <- '((\\(|\\[) *([-+eE.0-9]*) *, *([-+eE.0-9]*) *(\\)|\\])) *$'
   y$lo <- extract(y$guide,pattern,group=3)
   y$hi <- extract(y$guide,pattern,group=4)
-  
+  y$lo <- as.numeric(y$lo)
+  y$hi <- as.numeric(y$hi)
   y$oplo <- extract(y$guide,pattern,group=2)
   y$ophi <- extract(y$guide,pattern,group=5)
   y$lo[y$lo == ''] <- NA
@@ -329,4 +330,5 @@ specfile <- function(
   specfile <- sub('\\.csv$','.spec',datafile)
   specfile
 }
+# need a function to clean up quotations, whitespace, update ranges, etc
 

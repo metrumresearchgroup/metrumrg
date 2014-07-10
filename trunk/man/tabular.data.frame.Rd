@@ -22,7 +22,8 @@ except for a few extra arguments; the function tries to guess the exact length a
 width for a page size identical to the printed area (you can modify with the arguments
 \code{wider} and \code{longer}).  \code{as.pdf.document} needs a file stem and 
 (optionally) whether to perform clean-up.  The other \code{as.pdf} methods are 
-convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
+convenience wrappers. \code{as.tabular} is an alias for \code{tabular}. See also
+\code{\link{ltable}}, which wraps tabular output in a table environment.
 
 \code{tex2pdf} accepts the file names of tex fragments. It reads those fragments, 
 wraps them like documents and makes pdf files.  \code{viewtex} goes one step further, 
@@ -153,7 +154,7 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{charjust}{default justification for character columns}
   \item{numjust}{default justification for numeric columns}
   \item{justify}{manual specification of column justifications: left, right, center, or decimal (vector as long as ncol(x))}
-  \item{colwidth}{manual specification of column width. (vector of length nrow(x).) Overrides \code{justify} where not NA.}
+  \item{colwidth}{manual specification of column width. (vector of length ncol(x).) Overrides \code{justify} where not NA.}
   \item{paralign}{used with colwidth to align paragraphs: top, middle, or bottom.}
   \item{na}{string to replace NA elements}
   \item{verbatim}{whether to use verbatim environment for numeric fields.  Makes sense for decimal justification; interacts with \code{trim} and \code{justify}.}
@@ -224,6 +225,7 @@ you may have dropped.
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
+			\item \code{\link{ltable}}
 			\item \code{\link{align.decimal}}
 			\item \code{\link{breaks}}
 			\item \code{\link{row2tabular}}

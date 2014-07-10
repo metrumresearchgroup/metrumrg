@@ -123,14 +123,14 @@ ltable.data.frame <- function(
   options='!htpb',
   environments='center',
   source=NULL,
-  file=NULL,
+  file=NULL, ### file needs to support verbatim e.g. _
   source.label='source: ',
   file.label='file: ',
   basefile=FALSE,
   ...
 ){
   x <- tabular(x, ...)
-  if(!is.null(source))if(!is.null(source.label)) x <- c(x,glue('\\\\{\\tiny ',source.label,source,'}'))
+  if(!is.null(source))if(!is.null(source.label)) x <- c(x,glue('\\\\{\\tiny ',source.label,source,'}'))  ### tiny needs to be externalized
   if(!is.null(file))if(!is.null(file.label)) x <- c(
     x,
     glue(

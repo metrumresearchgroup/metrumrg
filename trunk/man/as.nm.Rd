@@ -86,7 +86,7 @@ classes and methods. Column-specific methods may make use of the passed argument
 \author{Tim Bergsma}
 \note{
 	Assembly chains, such as \code{nm() + dose + samp | demo}, are no longer
-	supported.  \code{as.moot} and \code{as.rigged} are deprecated.
+	supported.  Nor are \code{as.moot} and \code{as.rigged}.
 
 }
 \seealso{
