@@ -122,7 +122,7 @@ xmlValue.XMLAttributeValue <- function(x,...)as.best(x)
   if(any(semi %in% names(x)))x <- .xmlSimplify(
   	x, 
   	stack = stack, 
-  	ignore = ignore, 
+  	ignore = c(ignore,node), 
   	nodebase = nodebase, 
   	...
   )
