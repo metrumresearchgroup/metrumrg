@@ -1,3 +1,17 @@
+.resvar <- function() c(
+	'RES','NRES','WRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI',
+	'CWRESI','CIRES','CIWRES','CIWRESI','ERES','EWRES','ECWRES',
+	'EIWRES','IWRESI','NIWRES','IWRS','IRESI','IWRESI','NIRES','NIWRES',
+	'IRS','IWRS','EIRES','EIWRES'
+)
+.predvar <- function() c(
+	'PRED','NPRED','CPRED','CPREDI','EPRED','IPRE','IPRED','PREDI','CIPRED',
+	'IPREDI','IPRD','EIPRED'
+)
+ 
+
+
+
 `diagnosticPlots` <-
 function (
 	data, 
@@ -22,12 +36,12 @@ function (
 	include.all=FALSE,
 	...
   )
-  preds <- c('PRED','NPRED','CPRED','CPREDI','EPRED','IPRE','IPRED','PREDI','CIPRED')
+  preds <- .predvar()
   obsvar <- intersect(preds,names(data))
   obsid <- c("DV","grpnames")
   observed <- list()
   if(length(obsvar) & length(obsid))observed <- melt(data,measure.var=obsvar,id.var=obsid)
-  res <- c('RES','NRES','WRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','CIRES','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
+  res <- .resvar()
   if(!is.null(variant)) res <- variant
   resvar <- intersect(res,names(data))
   resid <- intersect(c("PRED","TIME","grpnames","TAD"),names(data))

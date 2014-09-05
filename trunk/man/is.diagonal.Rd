@@ -50,6 +50,7 @@ is.fixed(x)
 is.random(x)
 is.iiv(x)
 is.residual(x)
+on.diagonal("OMEGA40.40")
 }
 \keyword{manip}
 

@@ -87,14 +87,17 @@
 \item \link{as.day.week} coerce week to day
 \item \link{as.day.year} coerce year to day
 \item \link{as.day} coerce to day
+\item \link{as.define} create a define object
+\item \link{as.define.spec} convert spec to a define object
 \item \link{as.digest.data.frame} convert data.frame to digest
 \item \link{as.digest.digest} convert digest to digest
 \item \link{as.digest.keyed} convert keyed to digest
 \item \link{as.digest.nm} convert nm to digest
 \item \link{as.digest} resolve static components of an object hierarchy
+\item \link{as.document} convert to latex document
 \item \link{as.document.character} convert tex fragments to latex document
 \item \link{as.document.data.frame} convert data.frame to latex document
-\item \link{as.document} convert to latex document
+\item \link{as.document.define} convert define object to document
 \item \link{as.file.runlog} convert to convert runlog to file
 \item \link{as.filename.character} convert character to filename
 \item \link{as.filename} convert to filename
@@ -172,8 +175,9 @@
 \item \link{as.numeric.chartime} convert chartime to numeric
 \item \link{as.pdf.character} convert tex fragments to pdf
 \item \link{as.pdf.data.frame} convert data.frame to pdf
-\item \link{as.pdf.document} convert latex document to pdf
 \item \link{as.pdf} convert to pdf
+\item \link{as.pdf.define} convert define object to pdf
+\item \link{as.pdf.document} convert latex document to pdf
 \item \link{as.pxml.ext} convert a param file to XML
 %\item \link{as.rigged} convert to rigged
 \item \link{as.roles.digest} create roles for digest
@@ -395,6 +399,8 @@
 \item \link{lookup} translate among parameter attributes (vector)
 \item \link{lower} calculate normal quantiles at lower probability of interval
 \item \link{ltable.data.frame} convert a data.frame to a latex table
+\item \link{ltable.matrix} convert a matrix to a latex table
+\item \link{ltable.table} convert a (2D) table object to a latex table
 \item \link{ltable} convert to a latex table
 \item \link{lyse.data.frame} return the static and dynamic portions of a data frame
 \item \link{lyse.keyed} return the static and dynamic portions of a keyed data frame
@@ -451,6 +457,7 @@
 \item \link{offdiag.halfmatrix} select just the off-diagonal elements of a halfmatrix
 \item \link{offdiag} generic
 \item \link{omegacor} convert omega covariance in NONMEM output to correlation matrix
+\item \link{omegacov} convert omega covariance in NONMEM output to covariance matrix
 \item \link{only} repeat, for each element, the only element where a condition is \code{TRUE} (usually, within levels of an index)
 \item \link{Ops.keyed} use concise syntax to join data frames
 \item \link{ord.halfmatrix} compute the order of a half matrix
@@ -537,6 +544,7 @@
 \item \link{setCwres} append conditional weighted residuals to an appropriate file
 \item \link{shuffle} move columns in a data frame
 \item \link{sigmacor} convert sigma covariance in NONMEM output to correlation matrix
+\item \link{sigmacov} convert sigma covariance in NONMEM output to covariance matrix
 \item \link{simblock} generate deviates of the elements of a variance-covariance matrix
 \item \link{simpar} generate deviates of a set of model parameters for simulation
 \item \link{snap} coerce values to nearest of candidates
@@ -579,6 +587,9 @@
 \item \link{tabfile} extract tabfile specification from a control stream
 \item \link{tabular.data.frame} convert a data.frame to a latex tabular environment
 \item \link{tabular} convert to a latex tabular environment
+\item \link{tabular.define} convert define object to tabular
+\item \link{tabular.matrix} convert matrix to tabular
+\item \link{tabular.table} convert a (2D) table object to tabular
 \item \link{tabularformat} generate a format string for a latex tabular environment
 \item \link{tagvalue} convert a list to a string of delimited tag-value pairs
 \item \link{tex2pdf} convert tex files to pdf
@@ -599,6 +610,7 @@
 \item \link{uniKey} generic
 \item \link{unilog} create a zero-row unilog
 \item \link{unilogcor} convert omega or sigma covariance in NONMEM output to correlation matrix
+\item \link{unilogcov} convert omega or sigma covariance in NONMEM output to covariance matrix
 \item \link{unique.comment} find unique elements of a comment vector
 \item \link{unique.timepoint} find unique elements of a timepoint vector
 \item \link{unique.uniKey} find unique elements of a uniKey vector

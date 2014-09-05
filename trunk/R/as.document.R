@@ -11,6 +11,7 @@ makePreamble <- function(
 	xcolorPackage = command('usepackage',options=list('usenames','dvispnames','svgnames','table'),args='xcolor'),
     	geometryPackage = command('usepackage',options=list(left=geoLeft,top=geoTop,bottom=geoBottom,right=geoRight),args='geometry'),
 	geometry = command('geometry',args=list(glue('papersize=',glue('{',wide,'mm',',',long,'mm}')))),
+	multirow = command('usepackage',args='multirow'),
 	morePreamble = NULL,
 	...
 )c(
@@ -18,6 +19,7 @@ makePreamble <- function(
 	xcolorPackage,
 	geometryPackage,
 	geometry,
+	multirow,
 	morePreamble
 )
         

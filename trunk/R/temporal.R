@@ -117,6 +117,13 @@ Summary.timepoint <- function (..., na.rm=FALSE)
     val
 }
 
+toSAS.timepoint <- function(x, format="DATETIME16.", format.info=NULL){
+	diff <- as.numeric(as.mDate('1970-01-01') - as.mDate('1960-01-01'))
+	x <- as.numeric(x)
+	x <- x + diff
+	attr(x,'SASformat') <- format
+	x
+}
 #as.vector.timepoint <- function (x, mode = "any"){
 #    if (mode == "any") x
 #    else as.vector(unclass(x), mode)

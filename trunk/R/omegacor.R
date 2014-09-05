@@ -1,4 +1,4 @@
-unilogcor <- function(
+unilogcov <- function(
 	pattern,
 	run=0,
 	project=getwd(),
@@ -23,10 +23,33 @@ unilogcor <- function(
 	nms <- glue(pattern,nms)
 	val <- with(unilog, estimate[match(nms,parameter)])
 	cov <- as.matrix(as.halfmatrix(val))
-	cor <- cov2cor(cov)
-	cor
+	cov
+}
+unilogcor <- function(
+	pattern,
+	run=0,
+	project=getwd(),
+	tool='nm7',
+	extfile=file.path(project,run,paste(run,'ext',sep='.')),
+	pxml=as.pxml.ext(extfile),
+	unilog=as.unilog.pxml(x=pxml,run=run,tool=tool,...),
+	...
+){
+	cov <- unilogcov(
+		pattern=pattern,
+		run=run,
+		project=project,
+		tool=tool,
+		extfile=extfile,
+		pxml=pxml,
+		unilog=unilog,
+		...
+	)
+	cov2cor(cov)
 }
 	
+omegacov <- function(run,project=getwd(),...)unilogcov(pattern='OMEGA',run=run,project=project,...)
+sigmacov <- function(run,project=getwd(),...)unilogcov(pattern='SIGMA',run=run,project=project,...)
 omegacor <- function(run,project=getwd(),...)unilogcor(pattern='OMEGA',run=run,project=project,...)
 sigmacor <- function(run,project=getwd(),...)unilogcor(pattern='SIGMA',run=run,project=project,...)
 

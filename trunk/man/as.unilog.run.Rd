@@ -34,8 +34,8 @@ as.unilog.run(
 	The \sQuote{ext} file is digested.  In particular the rows labeled -1000000000
   and -1000000001 are taken as the parameter estimates and standard errors,
   respectively.  The minimization status (min) is either 0 (minimized) or 1 for NONMEM7, which is less 
-  informative than for NONMEM6.  The covariance status (cov) is normally 0. It will be
-  1 if covariance was requested but no standard errors appear in extfile (as for NONMEM6).
+  informative than for NONMEM6.  The covariance status (cov) is normally 0, or (v. 5.56 and later)
+  -1 if not requested. It will be 1 if covariance was requested but no standard errors appear in extfile (as for NONMEM6).
 }
 \value{
   data.frame with columns \emph{tool, run, parameter, moment, value}.

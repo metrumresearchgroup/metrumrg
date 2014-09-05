@@ -49,7 +49,7 @@ as.unilog.pxml <- function(x,run,tool='nm7',...){
 			)
 		)
 	)
-	cov <- as.integer(all(is.na(p$se)))#1 if no covariance
+	cov <- as.integer(all(is.na(p$se))) # 1 if no covariance
 	p$prse <- with(p, signif(digits=3, 100 * as.numeric(se)/abs(as.numeric(estimate))))
 	#p$se <- NULL
 	free(tree)
@@ -112,7 +112,7 @@ as.unilog.run <- function(
 	#requested <- 'cov' %in% names(read.nmctl(outfile))
 	requested <- any(grepl('^cov',names(read.nmctl(outfile))))
 	
-	if(tool=='nm7')if(!requested) pars$value[pars$parameter=='cov' & pars$moment=='status'] <- '0'		
+	if(tool=='nm7')if(!requested) pars$value[pars$parameter=='cov' & pars$moment=='status'] <- '-1'		
 	other <- as.unilog.lst(file=outfile,run=run,tool=tool,...)
 	
 	out <- rbind(pars,other)

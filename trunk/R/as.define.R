@@ -1,8 +1,5 @@
-getwd()
-library(metrumrg)
 as.define <- function(x, ...)UseMethod('as.define')
 
-toSAS.timepoint <- function(x,...)as.character(x)
 as.define.spec <- function(x,sep = ' = ',collapse = '; ',escape = c('_','%','$'),...){
   x$required <- NULL
   names(x) <- c('Variable', 'Label', 'Type', 'Codes','Comments')
@@ -28,38 +25,47 @@ as.define.spec <- function(x,sep = ' = ',collapse = '; ',escape = c('_','%','$')
   x
 }
 
-as.pdf.define <- function(
+as.pdf.define <- function(x,stem,...)as.pdf(stem=stem,as.document(x,...),...)
+  
+tabular.define <- function(
   x,
-  stem,
   caption = '',
   grid = TRUE,
   rules = 1,
   colwidth = c('1in','1in','0.5in','1.5in','1.5in'),
-  morePreamble = command('usepackage',args = 'longtable'),
   tabularEnvironment = 'longtable',
   walls = 1,
+  tabnum = FALSE,
+  pretable = if(is.null(caption)) '' else paste(if(tabnum) '\\caption{' else '\\caption*{',caption,'}\\\\'),
+  prepos = 1,
+  headerBold = TRUE,
+  ...
+){
+  if(headerBold) names(x) <- glue('\\textbf{',names(x),'}')
+  tab <- tabular.data.frame(
+    x,
+    caption=caption,
+    grid=grid,
+    rules=rules,
+    colwidth=colwidth,
+    tabularEnvironment=tabularEnvironment,
+    walls=walls,
+    ...
+  )
+  tab <- append(tab,pretable,prepos)
+  tab
+}
+as.document.define <- function(
+  x,
+  morePreamble = command('usepackage',args = 'longtable'),
   geoLeft = '1in',
   geoRight = '1in',
   geoTop = '1in',
   geoBottom = '1in',
-  tabnum = FALSE,
-  pretable = paste(if(tabnum) '\\caption{' else '\\caption*{',caption,'}\\\\'),
-  prepos = 1,
-  headerBold = TRUE,
   pagestyle = command("pagestyle", args = "plain"),
   ...
 ){
-  if(headerBold) names(x) <- glue('\\textbf{',names(x),'}')
-  tab <- tabular(
-    x,
-    grid = grid,
-    rules = rules,
-    colwidth = colwidth,
-    tabularEnvironment = tabularEnvironment,
-    walls = walls,
-    ...
-  )
-  tab <- append(tab,pretable,prepos)
+  tab <- tabular(x, ...)
   tex <- as.document(
     morePreamble = morePreamble,
     geoLeft = geoLeft,
@@ -70,13 +76,5 @@ as.pdf.define <- function(
     tab,
     ...
   )
-  as.pdf(stem=stem,tex,...)
+  tex
 }
-
-x <- read.spec('data/derived/tranPKPD1.spec')
-y <- as.define(x)
-head(y$Comments)
-y$Comments <- gsub(',',', ',y$Comments)
-as.pdf(y,stem = 'define',caption = 'Data Items (tran.xpt)')
-system('open define.pdf')
-

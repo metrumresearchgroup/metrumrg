@@ -2,17 +2,31 @@
 \alias{omegacor}
 \alias{sigmacor}
 \alias{unilogcor}
+\alias{unilogcov}
+\alias{omegacov}
+\alias{sigmacov}
 \title{
-Convert NONMEM Omega Covariance Matrix to Correlation Matrix
+Extract NONMEM Covariance or Correlation Matrices
 }
 \description{
 These functions acquire omega or sigma covariance matrix elements for a NONMEM 7 run
-and calculate the correlation matrix.  Run and project are used to calculate
+and return them as a matrix or calculate the corresponding correlation matrix.  
+Arguments \code{run} and \code{project} are used to calculate
 the .ext file name, which is read into memory as a pxml object, and then 
 converted to unilog format.  Directly supplying extfile, pxml, or unilog renders
 all previous arguments moot. Not vectorized: run should be scalar.
 }
 \usage{
+unilogcov(
+	pattern,
+	run=0,
+	project=getwd(),
+	tool='nm7',
+	extfile=file.path(project,run,paste(run,'ext',sep='.')),
+	pxml=as.pxml.ext(extfile),
+	unilog=as.unilog.pxml(x=pxml,run=run,tool=tool,...),
+	...
+)
 unilogcor(
 	pattern,
 	run=0,
@@ -23,16 +37,11 @@ unilogcor(
 	unilog=as.unilog.pxml(x=pxml,run=run,tool=tool,...),
 	...
 )
-omegacor(
-	run,
-	project=getwd(),
-	...
-)
-sigmacor(
-	run,
-	project=getwd(),
-	...
-)
+omegacov(run,project=getwd(),...)
+sigmacov(run,project=getwd(),...)
+omegacor(run,project=getwd(),...)
+sigmacor(run,project=getwd(),...)
+
 
 }
 

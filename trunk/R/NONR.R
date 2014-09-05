@@ -33,6 +33,7 @@ function (
 ){
     if (win())  grid <- FALSE
     if (win())  concurrent <- FALSE
+    if (length(run) > 99 & wait) warning('default installation will not wait for more than 99 runs')
     run <- unique(run)
     if (missing(command)){
     	message('argument "command" was not supplied')
@@ -83,8 +84,8 @@ function (
     	run,
     	function(this,args,concurrent){
     		args$run <- this
-    	if (concurrent){
-            library(fork)
+    	if (concurrent & requireNamespace("fork", quietly = TRUE)){
+            #library(fork)
             suppressWarnings(fork::handleSIGCLD())
             pid <- fork::fork(NULL)
             if (pid == 0) {

@@ -91,7 +91,11 @@ test \%matches\% 'test.spec'
 'test.csv' \%matches\% 'test.spec'
 spec \%matches\% test
 spec \%matches\% 'test.csv'
+
+as.pdf(as.define(spec),stem = 'test')
+
 unlink('test.csv')
 unlink('test.spec')	
+unlink('test.pdf')	
 }
 \keyword{manip}

@@ -278,7 +278,7 @@ dataFormat <- function(
 	run,
 	...
 ){
-    if (logtrans) tabdata <- backtrans(tabdata,intersect(names(tabdata),c('DV','PRED','NPRED','CPRED','CPREDI','EPRED','IPRE','IPRED','PREDI','CIPRED')))    
+    if (logtrans) tabdata <- backtrans(tabdata,intersect(names(tabdata),c('DV',.predvar())))    
     available <- unique(c(names(tabdata),names(covdata),names(pardata)))
     grp <- strain(grp,available)
     cont.cov <- strain(cont.cov,available)
@@ -316,7 +316,7 @@ dataFormat <- function(
   data <- superset(run=run,project=project,rundir=rundir,ctlfile=ctlfile,...)
   data <- as.best(data)
   data <- data[!!data[as.character(run)],,drop=FALSE]
-  if(logtrans) data <- backtrans(data,intersect(names(data),c('DV','PRED','IPRE','IPRED')))
+  if(logtrans) data <- backtrans(data,intersect(names(data),c('DV',c(.predvar()))))
   available <- names(data)
   grp <- strain(grp,available)
   cont.cov <- strain(cont.cov,available)

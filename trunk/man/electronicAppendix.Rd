@@ -3,11 +3,12 @@
 \title{Make an FDA-style Electronic Appendix from a Subversioned Directory.}
 \description{Make an FDA-style Electronic Appendix from a Subversioned Directory.}
 \usage{electronicAppendix(
-	x, as, 
+	x, as=glue(x,'_EA'), 
 	pattern = NULL, 
 	recursive = TRUE, 
 	ignore.case = TRUE, 
 	zip = FALSE, 
+	at = numeric(0),
 	...
 )
 }
@@ -18,6 +19,7 @@
   \item{recursive}{passed to \code{dir}}
   \item{ignore.case}{passed to \code{dir}}
   \item{zip}{logical indicating whether to compress \code{as} to a zipped file.}
+  \item{at}{a specific revision to export (head is exported by default, local changes preserved)}
   \item{\dots}{ignored}
 }
 \details{

@@ -2,7 +2,7 @@
 #All data.frames participating in merge syntax must inherit keyed.
 #No specific Ops methods may be defined for any inherited class.
 #Ops.keyed will always match both args, and redirect to method set.
-#Redirect dispatches on right argument.
+#Redirect dispatches on right argument.  Still current?
 #Specific methods may be defined for redirect values. 
 
 #Ops.keyed <- function(e1,e2){

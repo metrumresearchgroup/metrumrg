@@ -26,5 +26,6 @@ I want to ....
 \item \link[=viewtex]{render file-based tex fragments as pdf for informal viewing}
 \item \link[=xpath]{extract value of an xpath expression from an xml file}
 \item \link[=specification]{create a draft specification for a data set}
+\item \link[=as.define]{convert data specification to define.pdf}
 }
 }

@@ -161,7 +161,7 @@ function (
 	...
 ) 
 {
-    res <- c('RES','NRES','WRES','NWRES','CRES','CWRES','RESI','WRESI','CRESI','CWRESI','CIRES','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
+    res <- .resvar()
     if(is.null(variant)) variant <- res
     variant <- intersect(variant, names(data))
     plots <- list()

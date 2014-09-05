@@ -1,6 +1,8 @@
 \name{ltable.data.frame}
 \alias{ltable.data.frame}
 \alias{ltable}
+\alias{ltable.table}
+\alias{ltable.matrix}
 \alias{as.ltable}
 \title{Convert a Data Frame to a Latex Table}
 \description{Convert data.frame to latex table.}
@@ -20,6 +22,8 @@
 	basefile=FALSE,
 	...
 )
+\method{ltable}{table}(x,...)
+\method{ltable}{matrix}(x, caption = names(dimnames(x))[[2]],...)
 }
 \arguments{
   \item{x}{data.frame}
@@ -48,7 +52,12 @@ suppress embedding of \code{source}; set to empty string to suppress source labe
 suppress embedding of \code{file}; set to empty string to suppress file label. Note that
 \code{file} controls file destination, whether or not represented in the result.
 
-\code{ltable} is generic.  You can write methods for other classes. 
+\code{ltable} is generic.  You can write methods for other classes. \code{ltable.table} 
+reclassifies its argument as matrix.  \code{ltable.matrix} tries to capture the column 
+names as a caption, and (like \code{tabular.matrix}) converts its argument to data.frame,
+capturing rownames as a column in the first position if rownames are named (corresponding
+name of dimnames exists and is not NA).
+
 \code{as.ltable} is an alias for \code{ltable}.
 }
 \value{character}

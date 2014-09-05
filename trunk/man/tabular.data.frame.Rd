@@ -1,9 +1,14 @@
 \name{tabular.data.frame}
 \alias{tabular.data.frame}
+\alias{tabular.define}
+\alias{tabular.matrix}
+\alias{tabular.table}
 \alias{as.document}
 \alias{as.document.character}
 \alias{as.document.data.frame}
+\alias{as.document.define}
 \alias{as.pdf}
+\alias{as.pdf.define}
 \alias{as.pdf.document}
 \alias{as.pdf.character}
 \alias{as.pdf.data.frame}
@@ -28,6 +33,10 @@ convenience wrappers. \code{as.tabular} is an alias for \code{tabular}. See also
 \code{tex2pdf} accepts the file names of tex fragments. It reads those fragments, 
 wraps them like documents and makes pdf files.  \code{viewtex} goes one step further, 
 and tries to open those pdfs for viewing.
+
+\code{tabular.table} reclassifies its argument as matrix.  \code{tabular.matrix} converts
+its argument to data.frame.  If the rownames are named, they are adopted as a 
+column in the first position.
 }
 \usage{
 \method{tabular}{data.frame}(
@@ -39,6 +48,8 @@ and tries to open those pdfs for viewing.
 	colgroups = names(x), 
 	rowbreaks = if (grid) breaks(rowgroups, ...) else 0,
 	colbreaks = if (grid) breaks(colgroups, ...) else 0, 
+        rowgrouprule = 0,
+        colgrouprule = 0,
 	rowcolors=NULL,	
 	charjust = "left", 
 	numjust = "right", 
@@ -57,6 +68,22 @@ and tries to open those pdfs for viewing.
 	tabularEnvironment='tabular',
 	...
 )
+\method{tabular}{define}(
+  	x,
+	caption = '',
+	grid = TRUE,
+	rules = 1,
+	colwidth = c('1in','1in','0.5in','1.5in','1.5in'),
+	tabularEnvironment = 'longtable',
+	walls = 1,
+	tabnum = FALSE,
+	pretable = if(is.null(caption)) '' else paste(if(tabnum) '\\caption{' else '\\caption*{',caption,'}\\\\'),
+	prepos = 1,
+	headerBold = TRUE,
+	...
+)
+\method{tabular}{matrix}(x, ...)
+\method{tabular}{table}(x, ...)
 \method{as.document}{data.frame}(
 	  x,
 	  rules = c(2, 1, 1), 
@@ -89,10 +116,20 @@ and tries to open those pdfs for viewing.
 	epilog=NULL,
 	...
 )
-
+\method{as.document}{define}(
+  	x,
+  	morePreamble = command('usepackage',args = 'longtable'),
+  	geoLeft = '1in',
+  	geoRight = '1in',
+  	geoTop = '1in',
+  	geoBottom = '1in',
+  	pagestyle = command("pagestyle", args = "plain"),
+  	...
+)
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
 \method{as.pdf}{character}(x,stem,...)
 \method{as.pdf}{data.frame}(x,stem,...)
+\method{as.pdf}{define}(x,stem,...)
 makePreamble(
 	landscape=FALSE,
 	wide=if(landscape) 279.4 else 215.9,
@@ -150,6 +187,8 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{colgroups}{a vector as long as names(x), non-repeats trigger vertical lines}
   \item{rowbreaks}{numeric: a manual way to specify numbers of lines between rows (ignores grid and rowgroups)}
   \item{colbreaks}{numeric: a manual way to specify numbers of lines between columns (ignores grid and colgroups)}
+  \item{rowgrouprule}{number of lines to set off row group column, if rowgroups supplied as character}
+  \item{colgrouprule}{number of lines to set off col group header, if colgroups supplied as character}
   \item{rowcolors}{character vector of color names, recycled as necessary to color all rows (NULL: no color)}
   \item{charjust}{default justification for character columns}
   \item{numjust}{default justification for numeric columns}
@@ -167,6 +206,11 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{file.label}{optional text to preceed file if specified}
   \item{basefile}{if TRUE, strip path from file for display purposes}
   \item{tabularEnvironment}{default \code{tabular}; consider also \code{longtable}}
+  \item{caption}{for \code{define}, included in \code{pretable}}
+  \item{tabnum}{for \code{define}, whether to number this table}
+  \item{pretable}{for \code{define}, material to place before the table}
+  \item{prepos}{for \code{define}, where exactly to append pretable material}
+  \item{headerBold}{for \code{define}, whether to display the table header in bold font}
   \item{wide}{document width in mm}
   \item{long}{document lenth in mm}
   \item{wider}{additional document width in mm}
@@ -204,6 +248,13 @@ groups will be separated with a line.  For multiple lines at a given
 position, explicit control is offered by rowbreaks and colbreaks.  These 
 latter have lengths one less than their respective dimensions.
 
+As of v5.56, if you specify rowgroups or colgroups as a character vector, the 
+appropriate margin will be explicitly subclassified (extra column for rowgroups
+and extra header for colgroups).  If you also supply non-default column attributes 
+(e.g. colbreaks, na, verbatim, colwidth, justify), to add an extra element for the rowgroup column 
+if you wish to overide internal defaults.  Row color (rowcolors) seems not to be 
+entirely compatible with multirow cells (explicit rowgroups).
+ 
 If \code{source} and \code{source.label} are defined, they will be printed in a tiny font immediately
 under the table (bound to the tabular element).  If \code{file} and \code{file.label} are defined as well,
 they will be printed (tiny) under source.  Set \code{source.label} to NULL to 
@@ -211,7 +262,8 @@ suppress embedding of \code{source}; set to empty string to suppress source labe
 suppress embedding of \code{file}; set to empty string to suppress file label. Note that
 \code{file} controls file destination, whether or not represented in the result.
 
-Rownames are ignored.  If informative, capture them as a column.
+Rownames are ignored.  If informative, capture them as a column (done implicitly
+for \code{tabular.table} and \code{tabular.matrix}).
 
 Converting a \code{tabular} object or any character vector to a document causes
 inclusion of default values for the the arguments of \code{makePreamble} and 
@@ -231,6 +283,7 @@ you may have dropped.
 			\item \code{\link{row2tabular}}
 			\item \code{\link{tabularformat}}
 			\item \code{\link{wrap}}
+			\item \code{\link{as.define}}
 	}
 }
 \examples{

@@ -47,6 +47,7 @@ It should always be true that \code{x \%matches\% specification(x)}.}
 		\item \code{\link{encode}}
 		\item \code{\link{extract}}
 		\item \code{\link{\%matches\%}}
+		\item \code{\link{as.define.spec}}
 	}
 }
 \examples{

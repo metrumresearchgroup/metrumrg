@@ -22,6 +22,7 @@ I want to ....
 \item \link[=purgeRunDir]{delete certain files from run directories}
 \item \link[=bundleRead]{read data files from a directory into a list}
 \item \link[=ncomma]{report names as comma-delimited}
+\item \link[=as.define]{render data definitions}
 \item \link[=\%matches\%]{test whether data corresponds to some specification}
 %\item \link[=looks.numeric]{test whether a vector prints as numeric}
  }
