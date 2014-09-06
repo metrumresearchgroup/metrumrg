@@ -33,7 +33,7 @@ object of class `define`
 	\code{\link{as.pdf.define}}
 }
 \examples{
-example(`%matches%`)
+example(`\%matches\%`)
 }
 \keyword{manip}
 
