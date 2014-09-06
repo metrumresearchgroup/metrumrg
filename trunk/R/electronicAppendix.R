@@ -9,7 +9,7 @@ electronicAppendix <- function(
 	...
 ){
 	stopifnot(length(x)==1,length(as)==1,length(at) == 1)
-	rev <- if length(at) glue('@',at) else ''
+	rev <- if (length(at)) glue('@',at) else ''
 	if(!file.exists(x))stop('cannot find ',x)
 	if(contains('\\.zip$',as,ignore.case=TRUE))stop("'as' must be specified as a directory")
 	zipname <- glue(as,'.zip')
@@ -18,7 +18,7 @@ electronicAppendix <- function(
 	if(zip & file.exists(zipname))stop(zipname,' already exists')
 	tmpdir <- glue(as,'_tmp')
 	if(file.exists(tmpdir))unlink(tmpdir,recursive=TRUE)
-	system(paste('svn export',safeQuote(glue(x,rev),tmpdir)) # safeQuote(x) if head rev.
+	system(paste('svn export',safeQuote(glue(x,rev)),tmpdir)) # safeQuote(x) if head rev.
 	files <- dir(
 		#path=x,
 		path=tmpdir,
