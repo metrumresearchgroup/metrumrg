@@ -66,6 +66,7 @@ column in the first position.
 	file.label='file: ',
 	basefile=FALSE,
 	tabularEnvironment='tabular',
+	footnote.size = 'tiny',
 	...
 )
 \method{tabular}{define}(
@@ -77,7 +78,7 @@ column in the first position.
 	tabularEnvironment = 'longtable',
 	walls = 1,
 	tabnum = FALSE,
-	pretable = if(is.null(caption)) '' else paste(if(tabnum) '\\caption{' else '\\caption*{',caption,'}\\\\'),
+	pretable = if(is.null(caption)) '' else paste(if(tabnum) '\\\\caption{' else '\\\\caption*{',caption,'}\\\\\\\\'),
 	prepos = 1,
 	headerBold = TRUE,
 	...
@@ -131,19 +132,16 @@ column in the first position.
 \method{as.pdf}{data.frame}(x,stem,...)
 \method{as.pdf}{define}(x,stem,...)
 makePreamble(
-	landscape=FALSE,
-	wide=if(landscape) 279.4 else 215.9,
-	long=if(landscape) 215.9 else 279.4,
-	geoLeft = '1mm',
-	geoRight = '1mm',
-	geoTop = '1mm',
-	geoBottom = '1mm',
-	documentclass = command('documentclass',args='article'),
-	xcolorPackage = command(
-    'usepackage',
-    options=list('usenames','dvispnames','svgnames','table'),
-    args='xcolor'
-  ),
+  landscape=FALSE,
+  wide=if(landscape) 279.4 else 215.9,
+  long=if(landscape) 215.9 else 279.4,
+  geoLeft = '1mm',
+  geoRight = '1mm',
+  geoTop = '1mm',
+  geoBottom = '1mm',
+  documentclass = command('documentclass',args='article'),
+  xcolorPackage = command('usepackage',options=list('usenames',
+  'dvispnames','svgnames','table'),args='xcolor'),
   geometryPackage = command(
     'usepackage',
     options=list(
@@ -154,7 +152,7 @@ makePreamble(
     ),
     args='geometry'
   ),
-	geometry = command(
+  geometry = command(
     'geometry',
     args=list(
       glue(
@@ -162,8 +160,9 @@ makePreamble(
         glue('{',wide,'mm',',',long,'mm}')
       )
     )
-  ),
-	morePreamble = NULL,
+  ),	
+  multirow = command('usepackage',args='multirow'),
+  morePreamble = NULL,
 	...
 )
 tex2pdf(
@@ -236,6 +235,7 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{onefile}{whether to combine tex snippets into a single file}
   \item{delete}{whether temporary pdf (_doc.pdf) should persist}
   \item{latency}{how many seconds to wait before deleting temporary pdf}
+  \item{footnote.size}{font size for source and file attributions}
   \item{\dots}{passed to called functions}
 }
 \details{
