@@ -51,6 +51,7 @@ column in the first position.
         rowgrouprule = 0,
         colgrouprule = 0,
 	rowcolors=NULL,	
+	rowgrouplabel=' ',	
 	charjust = "left", 
 	numjust = "right", 
 	justify = ifelse(sapply(x, is.numeric), numjust, charjust), 
