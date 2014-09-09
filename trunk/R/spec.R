@@ -141,7 +141,7 @@ read.spec <- function(x, unquote = TRUE, ...){
   x
 }
 write.spec <- function(x,file,...)write.table(x,file=file, row.names=FALSE,quote=FALSE,na='.',sep='\t',...)
-clean.spec(file,...)write.spec(read.spec(file,...),file=file,...)
+clean.spec <- function(file,...)write.spec(read.spec(file,...),file=file,...)
 as.vector.spec <- function(x,mode='any',...) x$column
 summary.spec <- function (object, ...) {
   x <- object
