@@ -78,7 +78,9 @@ column in the first position.
 	tabularEnvironment = 'longtable',
 	walls = 1,
 	tabnum = FALSE,
-	pretable = if(is.null(caption)) '' else paste(if(tabnum) '\\\\caption{' else '\\\\caption*{',caption,'}\\\\\\\\'),
+	pretable = if(is.null(caption)) '' else 
+	paste( if(tabnum) '\\\\caption{' else 
+	'\\\\caption*{',caption,'}\\\\\\\\'),
 	prepos = 1,
 	headerBold = TRUE,
 	...
