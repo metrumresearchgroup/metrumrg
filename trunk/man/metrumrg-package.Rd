@@ -30,7 +30,7 @@ I want to ....
 Package: \tab metrumrg\cr
 Type: \tab Package\cr
 Version: \tab 5.56\cr
-Date: \tab 2014-09-04\cr
+Date: \tab 2014-09-09\cr
 License: \tab GPL\cr
 }
 }
