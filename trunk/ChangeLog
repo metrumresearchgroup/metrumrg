@@ -1,3 +1,27 @@
+5.56
+
+* as.define.spec, as.pdf.define, tabular.define give a convenient aesthetic for displaying spec objects.
+* tabular (and as.document) support rowgroup columngroup labels.
+* bugfix for xpath2frame, is.diagonal, format.comment.
+* Ops.keyed reverts to native dispatch mechanism.
+* electronicAppendix supports export of prior revisions and has default `as'.
+* functions rig, moot, etc. are removed.
+* diagnostic plots recognize NM7 RES/PRED reserved terms.
+* toSAS methods included for writing date/time objects to XPT files.
+* omegacov and sigmacov are new variants of omegacor and sigmacor.
+* tabular and ltable support alternate fontsizes for source and file attributions.
+* new tabular and ltable methods for table and matrix.
+* read.spec strips quotes by default.
+* bugfix for range checking in matches.
+* shuffle forces column names to be unique.
+* in rlog, cov is -1 instead of zero if covariance not requested.
+* NONR gives a warning if user tries to wait for more than 99 runs.
+* fork namespace is required where necessary.
+
+
+
+
+
 5.55
 
 * [.keyed is more robust when assigning 'defined' for various vector types.

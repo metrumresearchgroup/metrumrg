@@ -127,14 +127,15 @@ ltable.data.frame <- function(
   source.label='source: ',
   file.label='file: ',
   basefile=FALSE,
+  footnote.size='tiny',
   ...
 ){
   x <- tabular(x, ...)
-  if(!is.null(source))if(!is.null(source.label)) x <- c(x,glue('\\\\{\\tiny ',source.label,source,'}'))  ### tiny needs to be externalized
+  if(!is.null(source))if(!is.null(source.label)) x <- c(x,glue('\\\\{\\',footnote.size,' ',source.label,source,'}'))  
   if(!is.null(file))if(!is.null(file.label)) x <- c(
     x,
     glue(
-      '\\\\{\\tiny ',
+      '\\\\{\\',footnote.size,' ',
       file.label,
       if(basefile)basename(file) else file,
       '}'

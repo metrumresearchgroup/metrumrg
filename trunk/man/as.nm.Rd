@@ -132,14 +132,11 @@ nm()
 as.nm(dose)
 as.nm(dose + samp)
 as.nm(dose + samp | demo) #as.nm executes once
-#nm() + dose + samp | demo #deprecated
 
 meds
 long <- deranged(meds,start='HOUR',stop='STOP')
 long$EVID <- 2
 as.nm( dose + samp + long)
-#nm() + dose + samp + long - as.moot() # deprecated
-#nm() + dose + samp + as.rigged(n=10) # deprecated
 data <- as.nm( aug(dose,EVID=1, SEQ=1) + aug(samp,EVID=0, SEQ=0) | demo)
 summary(data,by=c('EVID','SEQ'))
 \dontrun{index(data)}

@@ -74,7 +74,7 @@ test <- aug(test[!duplicated(test$SUBJ),], AMT=DOSE,DOSE=NULL,EVID=1,SEQ=0,DV=NA
 test <- as.nm(test)
 summary(test)
 head(test)
-
+for(col in c('TIME','TAFD','TAD')) test[[col]] <- round(test[[col]], 5)
 spec <- specification(test)
 summary(spec)
 write.nm(test, 'test.csv')

@@ -20,6 +20,7 @@
 	source.label='source: ',
 	file.label='file: ',
 	basefile=FALSE,
+	footnote.size='tiny',
 	...
 )
 \method{ltable}{table}(x,...)
@@ -38,6 +39,7 @@
   \item{source.label}{optional text to preceed source if specified}
   \item{file.label}{optional text to preceed file if specified}
   \item{basefile}{if TRUE, strip path from file for display purposes}
+  \item{footnote.size}{font size for source and file, etc.}
   \item{\dots}{passed to \code{tabular}}
 }
 \details{Converts data.frame to tabular, then wraps it in

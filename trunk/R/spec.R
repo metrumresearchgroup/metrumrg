@@ -130,12 +130,12 @@ as.spec.data.frame <- function(x, ...){
   class(x) <- 'spec' %u% class(x)
   x
 }
-read.spec <- function(x, unquote = TRUE, ...){
+read.spec <- function(x, clean = TRUE, ...){
   x <- read.table(x,header=TRUE,as.is=TRUE,na.strings=c('','.','NA'), quote='',sep='\t')
   chars <- sapply(x, inherits, 'character')
   if(unquote) x[chars] <- lapply(x[chars], function(col){
-  	  col <- sub("^[\"']+",'',col)
-  	  col <- sub("[\"']+$",'',col)
+  	  col <- sub("^[\"' ]+",'',col)
+  	  col <- sub("[\"' ]+$",'',col)
   })
   x <- as.spec(x)
   x
@@ -336,5 +336,5 @@ specfile <- function(
   specfile <- sub('\\.csv$','.spec',datafile)
   specfile
 }
-# need a function to clean up quotations, whitespace, update ranges, etc
+# need a function to update ranges, etc
 
