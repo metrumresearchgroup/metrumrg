@@ -4,7 +4,7 @@
    <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
    <alias id="folder">/mnt/nm73</alias>
    <alias id="target">/opt/NONMEM/nm73</alias>
-   <alias id="origin">/mnt/nmqual_nm73</alias>
+   <alias id="origin">/mnt/nmqual-8.3.3</alias>
    <alias id="unlock">/mnt/nonmem.lic</alias>
    <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
    <!--The meta interface groups commands that collect metadata.-->
@@ -14,22 +14,22 @@
    <do on="meta">echo $SHELL</do>
    <do on="meta">echo $USER</do>
    <do on="meta">echo $PATH</do>
-   <do on="meta">ifort --version</do>
    <do on="meta">head -n 5 target/util/nmfe73</do>
+   <do on="meta">which ifort</do>
    <!--The 'install' interface installs NONMEM.-->
    <do on="install">date</do>
    <do on="install">rm -rf origin/temp</do>
-   <do on="install">mkdir -p -p origin/temp</do>
+   <do on="install">mkdir origin/temp</do>
    <do on="install">cp -r folder/* origin/temp</do>
    <do on="install" in="origin">patch -p0 &lt; nix/setup73.diff</do>
    <!--alters compile options in setup73-->
    <do on="install">rm -rf target</do>
-   <do on="install">mkdir -p -p target</do>
+   <do on="install">mkdir target</do>
    <do on="install" in="origin/temp">pwd</do>
    <do on="install" in="origin/temp">ifort --version</do>
    <do on="install" in="origin/temp">/bin/bash SETUP73 origin/temp target ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
-   <do on="install">mkdir -p -p target/nmqual</do>
-   <do on="install">mkdir -p -p target/nmqual/doc</do>
+   <do on="install">mkdir target/nmqual</do>
+   <do on="install">mkdir target/nmqual/doc</do>
    <do on="install">cp $0 target/nmqual</do>
    <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
    <do on="install">cp -r origin/con target/nmqual</do>
@@ -53,10 +53,9 @@
    <!--replace expired license-->
    <do on="install">cp mpicha target/mpi/mpi_lini</do>
    <!--replace default mpich archive-->
-   <do on="install">cp origin/nix/nmfe73.diff target/nmqual/doc</do>
-   <!--will need this soon-->
-   <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe73.diff</do>
-   <!--patches util/nmfe73 and run/nmfe73 to accept compile/execute option-->
+   <!--replace util/nmfe73 and run/nmfe73 to accept compile/execute option-->
+   <do on="install">cp origin/nix/nmfe73 target/util</do>
+   <do on="install">cp origin/nix/nmfe73 target/run</do>
    <do on="install" as="xml">perl $0 $_0 meta</do>
    <to on="install">target/nmqual/log.xml</to>
    <!--The 'basic' interface does not expect a compile/execute argument (nmfe73-as-modified no longer requires it).-->
@@ -128,7 +127,7 @@
        <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
        <alias id="folder">/mnt/nm73</alias>
        <alias id="target">/opt/NONMEM/nm73</alias>
-       <alias id="origin">/mnt/nmqual_nm73</alias>
+       <alias id="origin">/mnt/nmqual-8.3.3</alias>
        <alias id="unlock">/mnt/nonmem.lic</alias>
        <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
        <!--The meta interface groups commands that collect metadata.-->
@@ -138,22 +137,22 @@
        <do on="meta">echo $SHELL</do>
        <do on="meta">echo $USER</do>
        <do on="meta">echo $PATH</do>
-       <do on="meta">ifort --version</do>
        <do on="meta">head -n 5 target/util/nmfe73</do>
+       <do on="meta">which ifort</do>
        <!--The 'install' interface installs NONMEM.-->
        <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir -p -p origin/temp</do>
+       <do on="install">mkdir origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup73.diff</do>
        <!--alters compile options in setup73-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir -p -p target</do>
+       <do on="install">mkdir target</do>
        <do on="install" in="origin/temp">pwd</do>
        <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP73 origin/temp target ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
-       <do on="install">mkdir -p -p target/nmqual</do>
-       <do on="install">mkdir -p -p target/nmqual/doc</do>
+       <do on="install">mkdir target/nmqual</do>
+       <do on="install">mkdir target/nmqual/doc</do>
        <do on="install">cp $0 target/nmqual</do>
        <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
        <do on="install">cp -r origin/con target/nmqual</do>
@@ -177,10 +176,9 @@
        <!--replace expired license-->
        <do on="install">cp mpicha target/mpi/mpi_lini</do>
        <!--replace default mpich archive-->
-       <do on="install">cp origin/nix/nmfe73.diff target/nmqual/doc</do>
-       <!--will need this soon-->
-       <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe73.diff</do>
-       <!--patches util/nmfe73 and run/nmfe73 to accept compile/execute option-->
+       <!--replace util/nmfe73 and run/nmfe73 to accept compile/execute option-->
+       <do on="install">cp origin/nix/nmfe73 target/util</do>
+       <do on="install">cp origin/nix/nmfe73 target/run</do>
        <do on="install" as="xml">perl $0 $_0 meta</do>
        <to on="install">target/nmqual/log.xml</to>
        <!--The 'basic' interface does not expect a compile/execute argument (nmfe73-as-modified no longer requires it).-->
@@ -249,11 +247,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Tue Feb  4 16:22:51 UTC 2014</so>
+       <so>Tue Sep  9 16:00:04 UTC 2014</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node004,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+       <so>Linux,node005,3.2.0-39-virtual,#62-Ubuntu SMP Thu Feb 28 00:48:27 UTC 2013,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -265,13 +263,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/49.1.all.q:/usr/local/mpich2/bin:/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games/:/usr/local/texlive/2013/bin/x86_64-linux:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64</so>
-      </job>
-      <job>
-       <do>ifort --version</do>
-       <so>ifort (IFORT) 12.0.4 20110427
-          Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
-          </so>
+       <so>/tmp/320.1.all.q:/usr/local/mpich2/bin:/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games/:/usr/local/texlive/2013/bin/x86_64-linux:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64:/opt/sge6/bin/linux-x64</so>
       </job>
       <job>
        <do>head -n 5 /opt/NONMEM/nm73/util/nmfe73</do>
@@ -280,6 +272,10 @@
           f=ifort
           o=' -fp-model strict -Gs -nologo -nbs -w '
           opstat=' -static '</so>
+      </job>
+      <job>
+       <do>which ifort</do>
+       <so>/opt/intel/bin/intel64/ifort</so>
       </job>
      </logged>
     </log>
@@ -296,9 +292,9 @@
    Building NONMEM Executable
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
-   Expiration Date:    14 JUL 2014
-   Current Date:        4 FEB 2014
-   Days until program expires : 160
+   Expiration Date:    14 JUL 2015
+   Current Date:        9 SEP 2014
+   Days until program expires : 310
     
     
     First Order Conditional Estimation with Interaction
@@ -385,14 +381,14 @@
                -5.6248E-01 -6.6034E-01 -1.0295E+00 -2.5494E-01  4.5098E-01
     GRADIENT:   2.0244E-03  1.4944E-03  2.3400E-02 -1.2147E-02  4.7830E-03 -2.3632E-04  2.0094E-03  1.9002E-02 -1.7063E-03 -1.0489E-02
                -6.9116E-03 -1.0704E-03  2.3029E-04  6.3202E-03 -1.0190E-02
-    Elapsed estimation time in seconds:     8.74
-    Elapsed covariance time in seconds:    11.55</so>
+    Elapsed estimation time in seconds:     7.62
+    Elapsed covariance time in seconds:     9.14</so>
   </job>
   <job>
    <do in="../nonmem/1005">if [ -e 1005.xml ];then cat 1005.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2014-02-04T16:22:58.793</nm:start_datetime>
+     <nm:start_datetime>2014-09-09T16:00:14.044</nm:start_datetime>
      <nm:control_stream>
      $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
      $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED
@@ -466,9 +462,9 @@
      <nm:nonmem nm:version="7.3.0">
       <nm:license_information>
       License Registered to: Metrum Research Group
-      Expiration Date:    14 JUL 2014
-      Current Date:        4 FEB 2014
-      Days until program expires : 160</nm:license_information>
+      Expiration Date:    14 JUL 2015
+      Current Date:        9 SEP 2014
+      Days until program expires : 310</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.3.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -672,10 +668,10 @@
           <nm:col nm:cname="EPS2">7.04892673469398</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>8.74</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>7.62</nm:estimation_elapsed_time>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>11.55</nm:covariance_elapsed_time>
+        <nm:covariance_elapsed_time>9.14</nm:covariance_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2405.91626140177</nm:final_objective_function>
         <nm:theta>
@@ -1318,8 +1314,8 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2014-02-04T16:23:19.488</nm:stop_datetime>
-     <nm:total_cputime>20.340</nm:total_cputime>
+     <nm:stop_datetime>2014-09-09T16:00:31.226</nm:stop_datetime>
+     <nm:total_cputime>16.509</nm:total_cputime>
     </nm:output>
    </so>
   </job>
@@ -1332,7 +1328,7 @@
        <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
        <alias id="folder">/mnt/nm73</alias>
        <alias id="target">/opt/NONMEM/nm73</alias>
-       <alias id="origin">/mnt/nmqual_nm73</alias>
+       <alias id="origin">/mnt/nmqual-8.3.3</alias>
        <alias id="unlock">/mnt/nonmem.lic</alias>
        <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
        <!--The meta interface groups commands that collect metadata.-->
@@ -1342,22 +1338,22 @@
        <do on="meta">echo $SHELL</do>
        <do on="meta">echo $USER</do>
        <do on="meta">echo $PATH</do>
-       <do on="meta">ifort --version</do>
        <do on="meta">head -n 5 target/util/nmfe73</do>
+       <do on="meta">which ifort</do>
        <!--The 'install' interface installs NONMEM.-->
        <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir -p -p origin/temp</do>
+       <do on="install">mkdir origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup73.diff</do>
        <!--alters compile options in setup73-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir -p -p target</do>
+       <do on="install">mkdir target</do>
        <do on="install" in="origin/temp">pwd</do>
        <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP73 origin/temp target ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
-       <do on="install">mkdir -p -p target/nmqual</do>
-       <do on="install">mkdir -p -p target/nmqual/doc</do>
+       <do on="install">mkdir target/nmqual</do>
+       <do on="install">mkdir target/nmqual/doc</do>
        <do on="install">cp $0 target/nmqual</do>
        <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
        <do on="install">cp -r origin/con target/nmqual</do>
@@ -1381,10 +1377,9 @@
        <!--replace expired license-->
        <do on="install">cp mpicha target/mpi/mpi_lini</do>
        <!--replace default mpich archive-->
-       <do on="install">cp origin/nix/nmfe73.diff target/nmqual/doc</do>
-       <!--will need this soon-->
-       <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe73.diff</do>
-       <!--patches util/nmfe73 and run/nmfe73 to accept compile/execute option-->
+       <!--replace util/nmfe73 and run/nmfe73 to accept compile/execute option-->
+       <do on="install">cp origin/nix/nmfe73 target/util</do>
+       <do on="install">cp origin/nix/nmfe73 target/run</do>
        <do on="install" as="xml">perl $0 $_0 meta</do>
        <to on="install">target/nmqual/log.xml</to>
        <!--The 'basic' interface does not expect a compile/execute argument (nmfe73-as-modified no longer requires it).-->
@@ -1449,22 +1444,22 @@
       </config>
       <job>
        <do>date</do>
-       <so>Thu Jan 30 21:14:42 UTC 2014</so>
+       <so>Fri Jul 11 17:27:11 UTC 2014</so>
       </job>
       <job>
-       <do>rm -rf /mnt/nmqual_nm73/temp</do>
+       <do>rm -rf /mnt/nmqual-8.3.3/temp</do>
        <so/>
       </job>
       <job>
-       <do>mkdir -p -p /mnt/nmqual_nm73/temp</do>
+       <do>mkdir /mnt/nmqual-8.3.3/temp</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /mnt/nm73/* /mnt/nmqual_nm73/temp</do>
+       <do>cp -r /mnt/nm73/* /mnt/nmqual-8.3.3/temp</do>
        <so/>
       </job>
       <job>
-       <do in="/mnt/nmqual_nm73">patch -p0 &lt; nix/setup73.diff</do>
+       <do in="/mnt/nmqual-8.3.3">patch -p0 &lt; nix/setup73.diff</do>
        <so>patching file temp/SETUP73
           Hunk #1 succeeded at 380 (offset 14 lines).</so>
       </job>
@@ -1473,26 +1468,26 @@
        <so/>
       </job>
       <job>
-       <do>mkdir -p -p /opt/NONMEM/nm73</do>
+       <do>mkdir /opt/NONMEM/nm73</do>
        <so/>
       </job>
       <job>
-       <do in="/mnt/nmqual_nm73/temp">pwd</do>
-       <so>/mnt/nmqual_nm73/temp</so>
+       <do in="/mnt/nmqual-8.3.3/temp">pwd</do>
+       <so>/mnt/nmqual-8.3.3/temp</so>
       </job>
       <job>
-       <do in="/mnt/nmqual_nm73/temp">ifort --version</do>
+       <do in="/mnt/nmqual-8.3.3/temp">ifort --version</do>
        <so>ifort (IFORT) 12.0.4 20110427
           Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
           </so>
       </job>
       <job>
-       <do in="/mnt/nmqual_nm73/temp">/bin/bash SETUP73 /mnt/nmqual_nm73/temp /opt/NONMEM/nm73 ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
+       <do in="/mnt/nmqual-8.3.3/temp">/bin/bash SETUP73 /mnt/nmqual-8.3.3/temp /opt/NONMEM/nm73 ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
        <so>NONMEM 7.3.0 INSTALLATION UTILITY - UNIX Bourne-Again SHell version
           For instructions, see readme_7.3.0.pdf or readme_7.3.0.txt on the CD
            
-          SETUP73 /mnt/nmqual_nm73/temp /opt/NONMEM/nm73 ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip
-          CD-ROM drive is /mnt/nmqual_nm73/temp
+          SETUP73 /mnt/nmqual-8.3.3/temp /opt/NONMEM/nm73 ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip
+          CD-ROM drive is /mnt/nmqual-8.3.3/temp
           NONMEM 7.3 directory is /opt/NONMEM/nm73
           Command for FORTRAN compiles is ifort
           Optimization for Fortran compiles is y
@@ -1509,15 +1504,15 @@
           % SETUP73 help
            
           directory /opt/NONMEM/nm73
-          Step 1a. Copy files from /mnt/nmqual_nm73/temp to /opt/NONMEM/nm73
-          Step 1b. Copy files from /mnt/nmqual_nm73/temp/NONMEM_7.3.0 to /opt/NONMEM/nm73
+          Step 1a. Copy files from /mnt/nmqual-8.3.3/temp to /opt/NONMEM/nm73
+          Step 1b. Copy files from /mnt/nmqual-8.3.3/temp/NONMEM_7.3.0 to /opt/NONMEM/nm73
            
           Installing NONMEM 7.3.0 (Enter Ctrl-C to interrupt) ...
           Step 2a. Make sub-directories of /opt/NONMEM/nm73
           Extract rest of files
           Choosing platform-dependent files ...
           os is Linux
-          cpu is unknown
+          cpu is x86_64
             Will use install_Linux
           Compiler is ifort
             Will use util/finish_Linux_ifort
@@ -1596,7 +1591,7 @@
           Starting nonmem execution ...
           License Registered to: Temporary license for NONMEM7.3.0 installation
           Expiration Date:    22 DEC 2013
-          Current Date:       30 JAN 2014
+          Current Date:       11 JUL 2014
            
             **** NONMEM LICENSE HAS EXPIRED ****
             ****     NONMEM TERMINATING     ****
@@ -1609,11 +1604,11 @@
           /opt/NONMEM/nm73/license/nonmem.lic</so>
       </job>
       <job>
-       <do>mkdir -p -p /opt/NONMEM/nm73/nmqual</do>
+       <do>mkdir /opt/NONMEM/nm73/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>mkdir -p -p /opt/NONMEM/nm73/nmqual/doc</do>
+       <do>mkdir /opt/NONMEM/nm73/nmqual/doc</do>
        <so/>
       </job>
       <job>
@@ -1621,35 +1616,35 @@
        <so/>
       </job>
       <job>
-       <do>cp -r /mnt/nmqual_nm73/con /opt/NONMEM/nm73/nmqual</do>
+       <do>cp -r /mnt/nmqual-8.3.3/con /opt/NONMEM/nm73/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /mnt/nmqual_nm73/csv /opt/NONMEM/nm73/nmqual</do>
+       <do>cp -r /mnt/nmqual-8.3.3/csv /opt/NONMEM/nm73/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /mnt/nmqual_nm73/doc/nix/* /opt/NONMEM/nm73/nmqual/doc</do>
+       <do>cp /mnt/nmqual-8.3.3/doc/nix/* /opt/NONMEM/nm73/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /mnt/nmqual_nm73/psn /opt/NONMEM/nm73/nmqual</do>
+       <do>cp -r /mnt/nmqual-8.3.3/psn /opt/NONMEM/nm73/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>cp /mnt/nmqual_nm73/nix/setup73.diff /opt/NONMEM/nm73/nmqual/doc</do>
+       <do>cp /mnt/nmqual-8.3.3/nix/setup73.diff /opt/NONMEM/nm73/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>cp /mnt/nmqual_nm73/temp/SETUP73 /opt/NONMEM/nm73/nmqual/doc</do>
+       <do>cp /mnt/nmqual-8.3.3/temp/SETUP73 /opt/NONMEM/nm73/nmqual/doc</do>
        <so/>
       </job>
       <job>
-       <do>rm -rf /mnt/nmqual_nm73/temp</do>
+       <do>rm -rf /mnt/nmqual-8.3.3/temp</do>
        <so/>
       </job>
       <job>
-       <do>cp -r /mnt/nmqual_nm73/test /opt/NONMEM/nm73/nmqual</do>
+       <do>cp -r /mnt/nmqual-8.3.3/test /opt/NONMEM/nm73/nmqual</do>
        <so/>
       </job>
       <job>
@@ -1665,21 +1660,12 @@
        <so/>
       </job>
       <job>
-       <do>cp /mnt/nmqual_nm73/nix/nmfe73.diff /opt/NONMEM/nm73/nmqual/doc</do>
+       <do>cp /mnt/nmqual-8.3.3/nix/nmfe73 /opt/NONMEM/nm73/util</do>
        <so/>
       </job>
       <job>
-       <do in="/opt/NONMEM/nm73">patch -p1 &lt; nmqual/doc/nmfe73.diff</do>
-       <so>patching file run/nmfe73
-          Hunk #1 succeeded at 6 with fuzz 2 (offset -1 lines).
-          Hunk #2 FAILED at 300.
-          Hunk #3 FAILED at 321.
-          2 out of 3 hunks FAILED -- saving rejects to file run/nmfe73.rej
-          patching file util/nmfe73
-          Hunk #1 succeeded at 6 with fuzz 2 (offset -1 lines).
-          Hunk #2 FAILED at 300.
-          Hunk #3 FAILED at 321.
-          2 out of 3 hunks FAILED -- saving rejects to file util/nmfe73.rej</so>
+       <do>cp /mnt/nmqual-8.3.3/nix/nmfe73 /opt/NONMEM/nm73/run</do>
+       <so/>
       </job>
       <job>
        <do>perl autolog.pl nix/nm73.xml meta</do>
@@ -1690,7 +1676,7 @@
            <!--Linux / Darwin with ifort compile opts for cross-platform reproducibility.-->
            <alias id="folder">/mnt/nm73</alias>
            <alias id="target">/opt/NONMEM/nm73</alias>
-           <alias id="origin">/mnt/nmqual_nm73</alias>
+           <alias id="origin">/mnt/nmqual-8.3.3</alias>
            <alias id="unlock">/mnt/nonmem.lic</alias>
            <alias id="mpicha">/usr/local/mpich2/lib/libmpich.a</alias>
            <!--The meta interface groups commands that collect metadata.-->
@@ -1700,22 +1686,22 @@
            <do on="meta">echo $SHELL</do>
            <do on="meta">echo $USER</do>
            <do on="meta">echo $PATH</do>
-           <do on="meta">ifort --version</do>
            <do on="meta">head -n 5 target/util/nmfe73</do>
+           <do on="meta">which ifort</do>
            <!--The 'install' interface installs NONMEM.-->
            <do on="install">date</do>
            <do on="install">rm -rf origin/temp</do>
-           <do on="install">mkdir -p -p origin/temp</do>
+           <do on="install">mkdir origin/temp</do>
            <do on="install">cp -r folder/* origin/temp</do>
            <do on="install" in="origin">patch -p0 &lt; nix/setup73.diff</do>
            <!--alters compile options in setup73-->
            <do on="install">rm -rf target</do>
-           <do on="install">mkdir -p -p target</do>
+           <do on="install">mkdir target</do>
            <do on="install" in="origin/temp">pwd</do>
            <do on="install" in="origin/temp">ifort --version</do>
            <do on="install" in="origin/temp">/bin/bash SETUP73 origin/temp target ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
-           <do on="install">mkdir -p -p target/nmqual</do>
-           <do on="install">mkdir -p -p target/nmqual/doc</do>
+           <do on="install">mkdir target/nmqual</do>
+           <do on="install">mkdir target/nmqual/doc</do>
            <do on="install">cp $0 target/nmqual</do>
            <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
            <do on="install">cp -r origin/con target/nmqual</do>
@@ -1739,10 +1725,9 @@
            <!--replace expired license-->
            <do on="install">cp mpicha target/mpi/mpi_lini</do>
            <!--replace default mpich archive-->
-           <do on="install">cp origin/nix/nmfe73.diff target/nmqual/doc</do>
-           <!--will need this soon-->
-           <do on="install" in="target">patch -p1 &lt; nmqual/doc/nmfe73.diff</do>
-           <!--patches util/nmfe73 and run/nmfe73 to accept compile/execute option-->
+           <!--replace util/nmfe73 and run/nmfe73 to accept compile/execute option-->
+           <do on="install">cp origin/nix/nmfe73 target/util</do>
+           <do on="install">cp origin/nix/nmfe73 target/run</do>
            <do on="install" as="xml">perl $0 $_0 meta</do>
            <to on="install">target/nmqual/log.xml</to>
            <!--The 'basic' interface does not expect a compile/execute argument (nmfe73-as-modified no longer requires it).-->
@@ -1807,15 +1792,15 @@
           </config>
           <job>
            <do>pwd</do>
-           <so>/mnt/nmqual_nm73</so>
+           <so>/mnt/nmqual-8.3.3</so>
           </job>
           <job>
            <do>date</do>
-           <so>Thu Jan 30 21:19:51 UTC 2014</so>
+           <so>Fri Jul 11 17:33:02 UTC 2014</so>
           </job>
           <job>
            <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-           <so>Linux,master,2.6.32-305-ec2,#9-Ubuntu SMP Thu Apr 15 08:05:38 UTC 2010,x86_64</so>
+           <so>Linux,master,3.2.0-39-virtual,#62-Ubuntu SMP Thu Feb 28 00:48:27 UTC 2013,x86_64</so>
           </job>
           <job>
            <do>echo $SHELL</do>
@@ -1827,13 +1812,7 @@
           </job>
           <job>
            <do>echo $PATH</do>
-           <so>/opt/intel/bin/intel64:/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games/:/usr/local/texlive/2013/bin/x86_64-linux:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64:/opt/chef/embedded/bin:/opt/chef/embedded/bin:/opt/intel/mpirt/bin/intel64</so>
-          </job>
-          <job>
-           <do>ifort --version</do>
-           <so>ifort (IFORT) 12.0.4 20110427
-                     Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
-                     </so>
+           <so>/opt/intel/bin/intel64:/opt/intel/bin/intel64:/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/linux-x64:/opt/intel/mpirt/bin/intel64:/opt/chef/embedded/bin:/opt/chef/embedded/bin:/opt/intel/mpirt/bin/intel64</so>
           </job>
           <job>
            <do>head -n 5 /opt/NONMEM/nm73/util/nmfe73</do>
@@ -1842,6 +1821,10 @@
                      f=ifort
                      o=' -fp-model strict -Gs -nologo -nbs -w '
                      opstat=' -static '</so>
+          </job>
+          <job>
+           <do>which ifort</do>
+           <so>/opt/intel/bin/intel64/ifort</so>
           </job>
          </logged>
         </log>

@@ -21,7 +21,7 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \begin{Sinput}
 > #Be sure to set directory to the script directory that contains this file.
 > library(metrumrg)
-> #command <- '/opt/NONMEM/nm72/nmqual/autolog.pl'
+> command <- '/opt/NONMEM/nm73/nmqual/autolog.pl'
 > cat.cov='SEX'
 > cont.cov=c('HEIGHT','WEIGHT','AGE')
 > par.list=c('CL','Q','KA','V','V2','V3')
@@ -33,7 +33,7 @@ This script runs NONMEM models and diagnostics for sample phase1 data.
 \begin{Sinput}
 > NONR(
 +      run=1001:1005,                       # 5 models, ctl pre-written
-+      #command=command,                    # this version will search for NONMEM
++      command=command,                    # this version will search for NONMEM
 +      project='../nonmem',                 # must specify, unless ctl in getwd()
 +      grid=TRUE,                          # set to FALSE for better error messaging (but slower)
 +      nice=TRUE,                           # don't delete subversioned directories
@@ -57,7 +57,7 @@ Installing SIGCHLD signal handler...Done.
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-            4             0             0             1             0 
+            5             0             0             0             0 
 \end{Soutput}
 \begin{Sinput}
 > follow(1001:1005,project='../nonmem')
@@ -66,11 +66,11 @@ Installing SIGCHLD signal handler...Done.
        queued      compiled       running          done indeterminate 
             5             0             0             0             0 
        queued      compiled       running          done indeterminate 
+            0             5             0             0             0 
+       queued      compiled       running          done indeterminate 
             0             0             5             0             0 
        queued      compiled       running          done indeterminate 
-            0             0             4             1             0 
-       queued      compiled       running          done indeterminate 
-            0             0             2             3             0 
+            0             0             3             2             0 
        queued      compiled       running          done indeterminate 
             0             0             0             5             0 
 \end{Soutput}
@@ -146,7 +146,7 @@ We request some variants of PRED and CWRES if running under NONMEM 7.3.
 \begin{Sinput}
 > preds <- c('NPRED','CPRED','CPREDI','EPRED')
 > res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
-> if(findNonmemCommand()[[1]] %contains% '73')  ctl[[12]] <- c(ctl[[12]],preds, res)
+> ctl[[12]] <- c(ctl[[12]],preds, res)
 \end{Sinput}
 \end{Schunk}
 \begin{Schunk}
@@ -154,6 +154,7 @@ We request some variants of PRED and CWRES if running under NONMEM 7.3.
 > write.nmctl(ctl,file='../nonmem/ctl/1006.ctl')
 > NONR(
 +      run=1006,
++      command=command,
 +      project='../nonmem',
 +      grid=TRUE,
 +      nice=TRUE,
@@ -431,7 +432,7 @@ This run makes the predictions (simulations).
 \begin{Sinput}
 > NONR(
 +      run=1105,
-+      #command=command,
++      command=command,
 +      project='../nonmem',
 +      grid=TRUE,
 +      nice=TRUE,
@@ -899,7 +900,8 @@ We also show densityplots of predictions at those quartiles.
 +      wait=FALSE,
 +      grid=TRUE,
 +      project='../nonmem/1005boot',
-+      streams='../nonmem/1005bootctl'
++      streams='../nonmem/1005bootctl',
++      command=command
 + ))
 \end{Sinput}
 \begin{Soutput}
@@ -912,24 +914,39 @@ We also show densityplots of predictions at those quartiles.
 +      wait=FALSE,
 +      grid=TRUE,
 +      project='../nonmem/1005boot',
-+      streams='../nonmem/1005bootctl'
++      streams='../nonmem/1005bootctl',
++      command=command
 + )
 > qstat()
 > follow(RUN,project='../nonmem/1005boot')
 \end{Sinput}
 \begin{Soutput}
        queued      compiled       running          done indeterminate 
-           52            37            35           176             0 
+          134            69            10            87             0 
        queued      compiled       running          done indeterminate 
-           37            44            17           201             1 
+          129            62            15            94             0 
        queued      compiled       running          done indeterminate 
-           15            44            30           211             0 
+          120            44            30           106             0 
        queued      compiled       running          done indeterminate 
-            4            35            31           230             0 
+          104            31            37           128             0 
        queued      compiled       running          done indeterminate 
-            0            14            28           258             0 
+           82            36            27           155             0 
        queued      compiled       running          done indeterminate 
-            0             0            16           284             0 
+           48            65             7           180             0 
+       queued      compiled       running          done indeterminate 
+           35            62            17           186             0 
+       queued      compiled       running          done indeterminate 
+           27            55            14           204             0 
+       queued      compiled       running          done indeterminate 
+           14            44            31           210             1 
+       queued      compiled       running          done indeterminate 
+            0            31            37           232             0 
+       queued      compiled       running          done indeterminate 
+            0            13            23           264             0 
+       queued      compiled       running          done indeterminate 
+            0             3            11           286             0 
+       queued      compiled       running          done indeterminate 
+            0             0             1           299             0 
        queued      compiled       running          done indeterminate 
             0             0             0           300             0 
 \end{Soutput}
