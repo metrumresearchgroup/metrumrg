@@ -24,7 +24,7 @@ I want to ....
 \item \link[=ncomma]{report names as comma-delimited}
 \item \link[=as.define]{render data definitions}
 \item \link[=\%matches\%]{test whether data corresponds to some specification}
-\item \link[=toSAS.timepoint]{convert timepoint to SAS format for writing}
+\item \link[=toSAS.mDateTime]{convert timepoints to SAS format for writing}
 %\item \link[=looks.numeric]{test whether a vector prints as numeric}
  }
 }

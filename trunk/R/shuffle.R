@@ -1,4 +1,5 @@
 shuffle <- function(x,who,after=NA){
+  names(x) <- make.unique(names(x))
   who <- names(x[,who,drop=FALSE]) 
   nms <- names(x)[!names(x) %in% who]
   if(is.null(after)) after <- length(nms)

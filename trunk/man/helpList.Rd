@@ -599,7 +599,9 @@
 \item \link{Tmax} calculate the time associated with the maximum concentration for each subject
 \item \link{tmax} calculate the time of the maximum concentration
 \item \link{Tmin} calculate the time associated with the minimum concentration for each subject
-\item \link{toSAS.timepoint} encode timepoint in SAS format for writing
+\item \link{toSAS.mDate} encode mDate in SAS format for writing
+\item \link{toSAS.mDateTime} encode mDateTime in SAS format for writing
+\item \link{toSAS.mTime} encode mTime in SAS format for writing
 \item \link{tos} extract thetas, omegas, and sigmas from wikimath
 \item \link{totitle} convert mixed case to title case, not strictly by default
 \item \link{transform.keyed} transform a keyed data frame, preserving class

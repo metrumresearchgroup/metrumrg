@@ -224,6 +224,7 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{xcolorPackage}{xcolor package command}
   \item{geometryPackage}{geometry package command}
   \item{geometry}{geometry specification}
+  \item{multirow}{multirow specification}
   \item{morePreamble}{additional preamble before beginning the document}
   \item{thispagestyle}{thispagestyle command}
   \item{pagestyle}{pagestyle command}
@@ -251,13 +252,13 @@ latter have lengths one less than their respective dimensions.
 As of v5.56, if you specify rowgroups or colgroups as a character vector, the 
 appropriate margin will be explicitly subclassified (extra column for rowgroups
 and extra header for colgroups).  If you also supply non-default column attributes 
-(e.g. colbreaks, na, verbatim, colwidth, justify), to add an extra element for the rowgroup column 
-if you wish to overide internal defaults.  Row color (rowcolors) seems not to be 
+(e.g. colbreaks, na, verbatim, colwidth, justify), add an extra element for the rowgroup column 
+to overide internal defaults.  Row color (rowcolors) seems not to be 
 entirely compatible with multirow cells (explicit rowgroups).
  
-If \code{source} and \code{source.label} are defined, they will be printed in a tiny font immediately
+If \code{source} and \code{source.label} are defined, they will be printed in a \code{footnote.size} font immediately
 under the table (bound to the tabular element).  If \code{file} and \code{file.label} are defined as well,
-they will be printed (tiny) under source.  Set \code{source.label} to NULL to 
+they will be printed (same size) under source.  Set \code{source.label} to NULL to 
 suppress embedding of \code{source}; set to empty string to suppress source label. Set \code{file.label} to NULL to 
 suppress embedding of \code{file}; set to empty string to suppress file label. Note that
 \code{file} controls file destination, whether or not represented in the result.

@@ -23,6 +23,9 @@ shuffle(x, who, after = NA)
 \value{
 data.frame: a variant of x
 }
+\note{
+  As of 5.56, duplicate column names are resolved by \code{make.unique} without warning.
+ }
 \references{\url{http://metrumrg.googlecode.com}}
 \author{
 Tim Bergsma

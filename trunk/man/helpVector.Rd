@@ -13,7 +13,7 @@ I want to ....
 \item \link[=forbak]{impute missing vector values}
 \item \link[=runhead]{check some properties of vectors}
 \item \link[=timepoint]{create date, time, and date-time objects}
-\item \link[=toSAS.timepoint]{convert timepoint SAS format}
+\item \link[=toSAS.mDateTime]{convert timepoints to SAS format}
 \item \link[=map]{map one set of values to another}
 \item \link[=titleCase]{coerce text to title case}
 \item \link[=addl]{calculate the NONMEM ADDL data item from explicit dose records}

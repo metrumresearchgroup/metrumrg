@@ -116,12 +116,25 @@ Summary.timepoint <- function (..., na.rm=FALSE)
     class(val) <- oldClass(list(...)[[1L]])
     val
 }
-
-toSAS.timepoint <- function(x, format="DATETIME16.", format.info=NULL){
-	diff <- as.numeric(as.mDate('1970-01-01') - as.mDate('1960-01-01'))
-	x <- as.numeric(x)
+toSAS.mDateTime <- function(x, format="", format.info=NULL){
+	diff <- as.mDate('1970-01-01') - as.mDate('1960-01-01')
+	x <- as.second(x)
 	x <- x + diff
-	attr(x,'SASformat') <- format
+	attr(x, "SASformat") <- format
+    
+	x
+}
+toSAS.mDate <- function(x, format="", format.info=NULL){
+	diff <- as.day(as.mDate('1970-01-01') - as.mDate('1960-01-01'))
+	x <- as.day(as.second(x))
+	x <- x + diff
+	attr(x, "SASformat") <- format
+    
+	x
+}
+toSAS.mTime <- function(x, format="", format.info=NULL){
+	x <- as.numeric(x)
+	attr(x, "SASformat") <- format
 	x
 }
 #as.vector.timepoint <- function (x, mode = "any"){

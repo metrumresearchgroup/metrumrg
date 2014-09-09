@@ -6,8 +6,8 @@ Version: 5.56
 Date: 2014-09-04
 Author: Tim Bergsma, Bill Knebel, Leonid Gibiansky, Natalie Hsiang
 Maintainer: Tim Bergsma <timb@metrumrg.com>
-Depends: reshape, lattice, XML, MASS, methods, grid, SASxport
-Suggests: chron, fork
+Depends: reshape, lattice, XML, MASS, methods, grid
+Suggests: chron, fork, SASxport
 Description: 
  Pharmacometric tools for common data preparation tasks, stratified 
  bootstrap resampling of data sets, NONMEM control stream creation/editing, 
