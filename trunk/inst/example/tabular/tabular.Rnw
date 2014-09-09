@@ -1,6 +1,7 @@
 \documentclass[titlepage]{article}
 \usepackage{listings}
 \usepackage{xcolor,colortbl}
+\usepackage{multirow}
 \usepackage{courier}
 \usepackage[colorlinks,linkcolor=blue,citecolor=blue,urlcolor=blue,breaklinks=true]{hyperref}
 \lstset{basicstyle=\ttfamily\small , breaklines}
@@ -110,5 +111,37 @@ writeLines(ltable(x,grid=TRUE,caption='Custom Column Width',
 ))
 <<results=tex>>=
 writeLines(ltable(x,caption='Row Colors',rowcolors=c('white','lightgray')))
+@
+<<results=tex>>=
+writeLines(
+  ltable(
+    x,
+    caption='Row Groups',
+    rowgroups=as.character(x$subject),
+    rowgrouplabel='groups',
+    rowgrouprule = 2
+  )
+)
+@
+<<results=tex>>=
+writeLines(
+  ltable(
+    x,
+    caption='Column Groups',
+    colgroups=c('demographic','demographic','clinical','clinical')
+  )
+)
+@
+<<results=tex>>=
+writeLines(
+  ltable(
+    x,
+    caption='Row and Column Groups',
+    rowgroups=as.character(x$subject),
+    colgroups=c('demographic','demographic','clinical','clinical'),
+    rowgrouprule = 1,
+    grid=TRUE
+  )
+)
 @
 \end{document}

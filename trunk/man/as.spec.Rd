@@ -25,7 +25,7 @@ Create and Manipulate spec Objects
 	\method{as.spec}{data.frame}(x, ...)
 	\method{as.vector}{spec}(x, mode = "any", ...)
 	\method{summary}{spec}(object, ...)
-	read.spec(x, ...)
+	read.spec(x, unquote = TRUE,  ...)
 	write.spec(x, file, ...)
 }
 
@@ -33,6 +33,7 @@ Create and Manipulate spec Objects
 \item{x}{object of dispatch}
 \item{object}{object of dispatch}
 \item{mode}{passed to \code{as.vector}}
+\item{unquote}{whether to strip leading or trailing quote characters}
 \item{file}{character}
 \item{\dots}{ignored or passed}
 }

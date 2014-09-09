@@ -191,6 +191,7 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{rowgrouprule}{number of lines to set off row group column, if rowgroups supplied as character}
   \item{colgrouprule}{number of lines to set off col group header, if colgroups supplied as character}
   \item{rowcolors}{character vector of color names, recycled as necessary to color all rows (NULL: no color)}
+  \item{rowgrouplabel}{character string (at least one character) to label rowgroup column}
   \item{charjust}{default justification for character columns}
   \item{numjust}{default justification for numeric columns}
   \item{justify}{manual specification of column justifications: left, right, center, or decimal (vector as long as ncol(x))}
@@ -256,7 +257,8 @@ appropriate margin will be explicitly subclassified (extra column for rowgroups
 and extra header for colgroups).  If you also supply non-default column attributes 
 (e.g. colbreaks, na, verbatim, colwidth, justify), add an extra element for the rowgroup column 
 to overide internal defaults.  Row color (rowcolors) seems not to be 
-entirely compatible with multirow cells (explicit rowgroups).
+entirely compatible with multirow cells (explicit rowgroups). For rowgroups,
+be sure to use package \code{multirow} in your latex preamble.
  
 If \code{source} and \code{source.label} are defined, they will be printed in a \code{footnote.size} font immediately
 under the table (bound to the tabular element).  If \code{file} and \code{file.label} are defined as well,

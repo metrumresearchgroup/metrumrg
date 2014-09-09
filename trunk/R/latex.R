@@ -180,7 +180,8 @@ tabular.data.frame <- function(
   colbreaks=if(grid)breaks(colgroups,...)else 0,
   rowgrouprule = 0,
   colgrouprule = 0,
-  rowcolors=NULL,  
+  rowcolors=NULL,
+  rowgrouplabel=' ',
   charjust='left',
   numjust='right',
   justify=ifelse(sapply(x,is.numeric),numjust,charjust),
@@ -220,9 +221,8 @@ tabular.data.frame <- function(
   
   # if grouprows, rowgroups becomes a column, affecting following ncol
   if(grouprows){
-   x['_rowgroups'] <- rowgroups
-   x <- shuffle(x,'_rowgroups') # place first
-   names(x)[[1]] <- ''
+   x[rowgrouplabel] <- rowgroups
+   x <- shuffle(x,rowgrouplabel) # place first
   }
   partial <- glue('\\cline{',2,'-',ncol(x),'}')
   multirow <- function(x){
@@ -233,7 +233,7 @@ tabular.data.frame <- function(
     y[!node] <- ''
     y
   }
-  x[,1] <- multirow(x[,1])
+  if(grouprows) x[,1] <- multirow(x[,1])
   mitigate <- function(arg,cols,rowgroupval){
     if(length(arg) == 1) arg <- rep(arg, length.out=cols)
     if(length(arg) == cols - 1) arg <- append(arg,rowgroupval,0)
@@ -278,7 +278,7 @@ tabular.data.frame <- function(
     y[!node] <- ''
     y
   }
-  colgroups <- multicol(colgroups,colbreaks,justify,walls)
+  if(groupcols) colgroups <- multicol(colgroups,colbreaks,justify,walls)
   header2 <- row2tabular(colgroups[colgroups!=''])
  
   sapply(names(x)[verbatim],function(nm)if(any(!is.na(x[[nm]]) & contains(escape,x[[nm]],fixed=TRUE)))warning(nm,'contains', escape))

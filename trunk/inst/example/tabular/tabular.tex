@@ -1,6 +1,7 @@
 \documentclass[titlepage]{article}
 \usepackage{listings}
 \usepackage{xcolor,colortbl}
+\usepackage{multirow}
 \usepackage{courier}
 \usepackage[colorlinks,linkcolor=blue,citecolor=blue,urlcolor=blue,breaklinks=true]{hyperref}
 \lstset{basicstyle=\ttfamily\small , breaklines}
@@ -302,12 +303,94 @@ Now we try various invocations.
   \begin{tabular}{lrrr}
     \hline \hline
    study & subject & time & conc \\ \hline
-   \rowcolor{white}PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
-   \rowcolor{lightgray}PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
-   \rowcolor{white}PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\
-   \rowcolor{lightgray}PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
-   \rowcolor{white}PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
-   \rowcolor{lightgray} & \verb#1002# & \verb#2# & \verb## \\ \hline
+   \rowcolor{white} PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+   \rowcolor{lightgray} PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+   \rowcolor{white} PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\
+   \rowcolor{lightgray} PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+   \rowcolor{white} PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+   \rowcolor{lightgray}  & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(
++   ltable(
++     x,
++     caption='Row Groups',
++     rowgroups=as.character(x$subject),
++     rowgrouplabel='groups',
++     rowgrouprule = 2
++   )
++ )
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Row Groups]{Row Groups }
+ \begin{center}
+  \begin{tabular}{l||lrrr}
+    \hline \hline
+   groups & study & subject & time & conc \\ \hline
+   \multirow{3}{*}{1001} & PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+                          & PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+                          & PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\
+   \multirow{3}{*}{1002} & PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+                          & PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+                          &  & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(
++   ltable(
++     x,
++     caption='Column Groups',
++     colgroups=c('demographic','demographic','clinical','clinical')
++   )
++ )
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Column Groups]{Column Groups }
+ \begin{center}
+  \begin{tabular}{lrrr}
+    \hline \hline
+   \multicolumn{2}{c}{demographic} & \multicolumn{2}{c}{clinical} \\
+   study & subject & time & conc \\ \hline
+   PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+   PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+   PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\
+   PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+   PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+    & \verb#1002# & \verb#2# & \verb## \\ \hline
+  \end{tabular}
+ \end{center}
+\end{table}\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> writeLines(
++   ltable(
++     x,
++     caption='Row and Column Groups',
++     rowgroups=as.character(x$subject),
++     colgroups=c('demographic','demographic','clinical','clinical'),
++     rowgrouprule = 1,
++     grid=TRUE
++   )
++ )
+\end{Sinput}
+\begin{table}[!htpb]
+ \caption[Row and Column Groups]{Row and Column Groups }
+ \begin{center}
+  \begin{tabular}{l|lr|rr}
+    \hline \hline
+   \multicolumn{1}{c|}{} & \multicolumn{2}{c|}{demographic} & \multicolumn{2}{c}{clinical} \\
+     & study & subject & time & conc \\ \hline
+   \multirow{3}{*}{1001} & PROT01 & \verb#1001# & \verb#0# & \verb#0.12# \\
+                          & PROT01 & \verb#1001# & \verb#1# & \verb#34.00# \\
+                          & PROT01 & \verb#1001# & \verb#2# & \verb#5.60# \\ \hline
+   \multirow{3}{*}{1002} & PROT01 & \verb#1002# & \verb#0# & \verb#0.50# \\
+                          & PROT01 & \verb#1002# & \verb#1# & \verb#200.00# \\
+                          &  & \verb#1002# & \verb#2# & \verb## \\ \hline
   \end{tabular}
  \end{center}
 \end{table}\end{Schunk}
