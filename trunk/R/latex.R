@@ -174,8 +174,8 @@ tabular.data.frame <- function(
   rules=c(2,1,1),
   walls=0,
   grid=FALSE,
-  rowgroups=rownames(x),
-  colgroups=names(x),
+  rowgroups=factor(rownames(x)),
+  colgroups=factor(names(x)),
   rowbreaks=if(grid)breaks(rowgroups,...)else 0,
   colbreaks=if(grid)breaks(colgroups,...)else 0,
   rowgrouprule = 0,
@@ -202,8 +202,8 @@ tabular.data.frame <- function(
 ){
   #groom arguments 
   # shall there be row group labels and column group labels?  
-  groupcols <- !missing(colgroups) & inherits(colgroups, 'character')
-  grouprows <- !missing(rowgroups) & inherits(rowgroups, 'character')
+  groupcols <- inherits(colgroups, 'character')
+  grouprows <- inherits(rowgroups, 'character')
   stopifnot(length(rowgrouprule) == 1, length(colgrouprule) == 1)
   x <- as.data.frame(x)
   rules <- rep(rules, length.out = 3)
