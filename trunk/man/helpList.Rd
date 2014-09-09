@@ -245,6 +245,7 @@
 \item \link{cast,keyed-method} cast a keyed data.frame, restoring key and output classes
 \item \link{cavg} calculate average concentration
 \item \link{check.subjects} check for missing data, numeric data, ranges, etc.
+\item \link{clean.spec} clean up spec storage format
 \item \link{clear} drop regular patterns from a character vector
 \item \link{CLNR} delete files and directories and log what was deleted to a text file in the project
 \item \link{closers} set closing positions for wikmath nests

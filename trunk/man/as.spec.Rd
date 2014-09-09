@@ -5,6 +5,7 @@
 \alias{as.vector.spec}
 \alias{read.spec}
 \alias{write.spec}
+\alias{clean.spec}
 \alias{summary.spec}
 \title{
 Create and Manipulate spec Objects
@@ -27,13 +28,14 @@ Create and Manipulate spec Objects
 	\method{summary}{spec}(object, ...)
 	read.spec(x, unquote = TRUE,  ...)
 	write.spec(x, file, ...)
+	clean.spec(file,...)
 }
 
 \arguments{
 \item{x}{object of dispatch}
 \item{object}{object of dispatch}
 \item{mode}{passed to \code{as.vector}}
-\item{unquote}{whether to strip leading or trailing quote characters}
+\item{unquote}{whether to strip leading and trailing quote characters}
 \item{file}{character}
 \item{\dots}{ignored or passed}
 }
@@ -61,6 +63,12 @@ Create and Manipulate spec Objects
 	
 }
 \value{object of class \code{spec keyed data.frame} for \code{read.spec} and \code{as.spec}}
+\note{Since \code{spec} is stored as tab-delimited, it is rarely
+	necessary to quote the contents of cells (though some external tools
+	do this anyway).  As of 5.56, leading single and double quotes
+	are stripped by default for \code{read.spec}.  To clean up the stored
+	file, use \code{clean.spec}.
+}
 \references{\url{http://metrumrg.googlecode.com}}
 
 \author{ Tim Bergsma }
