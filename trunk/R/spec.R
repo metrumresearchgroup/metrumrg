@@ -133,7 +133,7 @@ as.spec.data.frame <- function(x, ...){
 read.spec <- function(x, clean = TRUE, ...){
   x <- read.table(x,header=TRUE,as.is=TRUE,na.strings=c('','.','NA'), quote='',sep='\t')
   chars <- sapply(x, inherits, 'character')
-  if(unquote) x[chars] <- lapply(x[chars], function(col){
+  if(clean) x[chars] <- lapply(x[chars], function(col){
   	  col <- sub("^[\"' ]+",'',col)
   	  col <- sub("[\"' ]+$",'',col)
   })
@@ -170,9 +170,9 @@ specification.comment <- function(x,...)factor(x, levels=c(TRUE,FALSE), labels=c
   if(length(codes) <= tol) if(!any(codes %contains% sep))return(encode(codes,labels=codes,sep=sep))
   return(as.character(NA))
 }
-.guide.numeric <- function(x,...){
+.guide.numeric <- function(x,digits=20,...){
   if(all(x == round(x),na.rm=TRUE)) .guide(as.integer(x))
-  else glue('[',min(x,na.rm=TRUE),',',max(x,na.rm=TRUE),']')
+  else glue('[',signif(digits=digits,min(x,na.rm=TRUE)),',',signif(digits=digits,max(x,na.rm=TRUE)),']')
 }
 .guide.integer <- function(x,tol=10,...){
   if(length(unique(x)) <= tol) .guide(as.factor(x))
@@ -198,14 +198,14 @@ specification.comment <- function(x,...)factor(x, levels=c(TRUE,FALSE), labels=c
 }
 .required <- function(x,...)UseMethod('.required')
 .required.default <- function(x,...)as.integer(all(is.defined(x)))
-specification.data.frame <- function(x,tol=10,sep='/',...){
+specification.data.frame <- function(x,tol=10,sep='/',digits=20,...){
   x[] <- lapply(x,specification)
   y <- data.frame(
     stringsAsFactors=FALSE,
     column=names(x),
     label=sapply(x,.label,...),
     type=sapply(x,.type,...),
-    guide=sapply(x,.guide,tol=tol,sep=sep,...),
+    guide=sapply(x,.guide,tol=tol,sep=sep,digits=digits,...),
     required=sapply(x,.required,...),
     derivation=NA
   )
@@ -336,5 +336,39 @@ specfile <- function(
   specfile <- sub('\\.csv$','.spec',datafile)
   specfile
 }
-# need a function to update ranges, etc
+respecify <- function(x,...)UseMethod('respecify')
+respecify.character <- function(
+  x, 
+  data=sub('spec$','csv',x), 
+  file=x, 
+  ...
+)respecify(read.spec(x,...),data=data,file=file,...)
+
+respecify.spec <- function(x, data, file=NULL, ...){
+  if (inherits(data,'character')) data <- read.csv(
+    data,
+    na.strings='.',
+    as.is=TRUE,
+    ...
+  )
+  # get as many ranges as possible
+  y <- specification(data,tol=0, ...) 
+  # only where originals and replacements exist
+  xrange <- !encoded(x) & grepl('[])]$',x$guide)
+  yrange <- !encoded(x) & grepl('[])]$',y$guide)
+  text <- guidetext(x) # won't be present in y
+  text[is.na(text)] <- '' # glues nicely
+  # trailing space where applicable
+  text[text != ''] <- glue(text[text != ''], ' ') 
+  if(any(xrange & ! yrange)) warning('some ranges not updated')
+  here <- xrange & yrange
+  x$guide[here] <- glue(text[here], y$guide[here])  
+  if (is.null(file)) 
+    return(x)
+  else {
+    write.spec(x, file=file, ...)
+    invisible(x)
+  }
+}
+
 

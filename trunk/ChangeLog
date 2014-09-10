@@ -17,10 +17,8 @@
 * in rlog, cov is -1 instead of zero if covariance not requested.
 * NONR gives a warning if user tries to wait for more than 99 runs.
 * fork namespace is required where necessary.
-
-
-
-
+* significance defaults to 20 digits for range estimation in specification.
+* respecify updates spec ranges.
 
 5.55
 

@@ -96,6 +96,8 @@ as.pdf(as.define(spec),stem = 'test')
 
 unlink('test.csv')
 unlink('test.spec')	
-unlink('test.pdf')	
+unlink('test.pdf')
+
+head(respecify(spec, data=test))
 }
 \keyword{manip}

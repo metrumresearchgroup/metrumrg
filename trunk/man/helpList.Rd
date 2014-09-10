@@ -524,6 +524,9 @@
 \item \link{resample.data.frame} create replicate data sets by stratified sampling with replacement
 \item \link{resample.filename} create replicate data sets by stratified sampling with replacement, after reading file
 \item \link{resample} generic
+\item \link{respecify} update a data specification
+\item \link{respecify.character} update a data specification by filename
+\item \link{respecify.spec} update a data specification explicitly
 \item \link{resolve} reinterpret relative file paths with respect to specified directory.
 \item \link{rhs} extract right-hand side of wikimath
 %\item \link{rig.nm} generate extra rows, spaced across each subject's timecourse, for obtaining model predictions in NONMEM (EVID==2)
