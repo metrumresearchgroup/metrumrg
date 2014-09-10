@@ -8,7 +8,7 @@ electronicAppendix <- function(
 	at=numeric(0),
 	...
 ){
-	stopifnot(length(x)==1,length(as)==1,length(at) == 1)
+	stopifnot(length(x)==1,length(as)==1,length(at) <= 1)
 	rev <- if (length(at)) glue('@',at) else ''
 	if(!file.exists(x))stop('cannot find ',x)
 	if(contains('\\.zip$',as,ignore.case=TRUE))stop("'as' must be specified as a directory")
