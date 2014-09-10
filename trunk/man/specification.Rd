@@ -18,13 +18,8 @@
 	\method{specification}{default}(x, ...)
 	\method{specification}{comment}(x, ...)
 	\method{specification}{data.frame}(x, tol = 10, sep = '/', digits = 20, ...)
-	\method{respecify}{character}(
-		x, 
-		data=sub('spec$','csv',x), 
-		file=x, 
-		...
-	)
-	\method{respecify}{spec}(x, data, file=NULL)
+	\method{respecify}{spec}(x, data, file = NULL, ...)
+	\method{respecify}{character}(x, data=sub('spec$','csv',x), file=x, ...)
 }
 
 \arguments{
