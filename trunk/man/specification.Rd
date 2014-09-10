@@ -45,13 +45,15 @@ are the same as the column names, unless the columns have a label attribute. Lab
 the levels of factor-like objects (true factors, and other vectors with few unique values)
 are by default the same as the values themselves. Units for numerics are not guessed.
 Typically one refines the resulting spec to more closely specify data characteristics.  
-It should always be true that \code{x \%matches\% specification(x)}.}
+It should always be true that \code{x \%matches\% specification(x)}.
 
 If the underlying data changes, numeric ranges can be updated using \code{respecify}.
 For a filename (character), the default behavior is to update the file in storage
 and return the new spec invisibly.  Set file to NULL to leave storage untouched 
 and return the spec visibly.  For class \code{spec}, NULL is already default for 
-\code{file}, and \code{data} must be specified (cannot be guessed).  
+\code{file}, and \code{data} must be specified (cannot be guessed). 
+
+}
 
 \value{object with class \code{spec keyed data.frame}}
 \references{\url{http://metrumrg.googlecode.com}}
