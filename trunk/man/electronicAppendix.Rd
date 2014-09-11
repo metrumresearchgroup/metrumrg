@@ -3,7 +3,8 @@
 \title{Make an FDA-style Electronic Appendix from a Subversioned Directory.}
 \description{Make an FDA-style Electronic Appendix from a Subversioned Directory.}
 \usage{electronicAppendix(
-	x, as=glue(x,'_EA'), 
+	x, 
+	as=NULL, 
 	pattern = NULL, 
 	recursive = TRUE, 
 	ignore.case = TRUE, 
@@ -40,7 +41,11 @@
 	\code{as} must be specified as a directory name.  If \code{zip} is \code{TRUE}, .zip will be added.
 	
 	\code{as} cannot pre-exist unless \code{zip} is true, in which
-	case \code{as} will be renamed temporarily while its namesake is zipped and unlinked.
+	case \code{as} will be renamed temporarily while its namesake is zipped 
+	and unlinked.  By default, \code{as} is like \code{x},
+	followed by \code{rev} and revision number (if \code{at} is specified) and
+	\code{_EA}.
+	
 }
 \value{used for side effects}
 \references{\url{http://metrumrg.googlecode.com}}
