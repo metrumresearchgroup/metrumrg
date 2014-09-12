@@ -351,7 +351,10 @@ tabular.matrix <- function(x,...){
   if(!is.null(dimnames)){
     nms <- names(dimnames)
     rows <- nms[[1]]
-    if(!is.na(rows)){
+    if(!is.null(rows))
+    if(!is.na(rows))
+    if(rows != '')
+    if(!rows %in% names(y)){
       y[,rows] <- rownames(x)
       y <- shuffle(y, rows) # move to front
     }
@@ -364,7 +367,10 @@ ltable.matrix <- function(x, caption = names(dimnames(x))[[2]],...){
   if(!is.null(dimnames)){
     nms <- names(dimnames)
     rows <- nms[[1]]
-    if(!is.na(rows)){
+    if(!is.null(rows))
+    if(!is.na(rows))
+    if(rows != '')
+    if(!rows %in% names(y)){
       y[,rows] <- rownames(x)
       y <- shuffle(y, rows) # move to front
     }

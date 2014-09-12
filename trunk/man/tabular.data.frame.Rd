@@ -35,7 +35,7 @@ wraps them like documents and makes pdf files.  \code{viewtex} goes one step fur
 and tries to open those pdfs for viewing.
 
 \code{tabular.table} reclassifies its argument as matrix.  \code{tabular.matrix} converts
-its argument to data.frame.  If the rownames are named, they are adopted as a 
+its argument to data.frame.  If the rownames are suitably named, they are adopted as a 
 column in the first position.
 }
 \usage{
@@ -297,7 +297,7 @@ tabular(head(Theoph))
 as.tabular(head(Theoph))
 as.document(head(Theoph))
 tabular(table(1:3,4:6))
-tabular(head(Theoph,source='foo/bar',footnote.size='huge')
+tabular(head(Theoph,source='foo/bar',footnote.size='huge'))
 \dontrun{as.pdf(head(Theoph),stem='theoph')}
 \dontrun{metrumrgURL('example/tabular/tabular.pdf')}
 }

@@ -57,8 +57,7 @@ suppress embedding of \code{file}; set to empty string to suppress file label. N
 \code{ltable} is generic.  You can write methods for other classes. \code{ltable.table} 
 reclassifies its argument as matrix.  \code{ltable.matrix} tries to capture the column 
 names as a caption, and (like \code{tabular.matrix}) converts its argument to data.frame,
-capturing rownames as a column in the first position if rownames are named (corresponding
-name of dimnames exists and is not NA).
+capturing rownames as a column in the first position if rownames are suitably named.
 
 \code{as.ltable} is an alias for \code{ltable}.
 }
