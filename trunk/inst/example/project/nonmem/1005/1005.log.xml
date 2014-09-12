@@ -247,7 +247,7 @@
       </job>
       <job>
        <do>date</do>
-       <so>Tue Sep  9 16:00:04 UTC 2014</so>
+       <so>Fri Sep 12 15:18:57 UTC 2014</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
@@ -263,7 +263,7 @@
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/320.1.all.q:/usr/local/mpich2/bin:/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games/:/usr/local/texlive/2013/bin/x86_64-linux:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64:/opt/sge6/bin/linux-x64</so>
+       <so>/tmp/4.1.all.q:/usr/local/mpich2/bin:/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games/:/usr/local/texlive/2013/bin/x86_64-linux:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64:/opt/sge6/bin/linux-x64</so>
       </job>
       <job>
        <do>head -n 5 /opt/NONMEM/nm73/util/nmfe73</do>
@@ -293,8 +293,8 @@
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
    Expiration Date:    14 JUL 2015
-   Current Date:        9 SEP 2014
-   Days until program expires : 310
+   Current Date:       12 SEP 2014
+   Days until program expires : 307
     
     
     First Order Conditional Estimation with Interaction
@@ -381,14 +381,14 @@
                -5.6248E-01 -6.6034E-01 -1.0295E+00 -2.5494E-01  4.5098E-01
     GRADIENT:   2.0244E-03  1.4944E-03  2.3400E-02 -1.2147E-02  4.7830E-03 -2.3632E-04  2.0094E-03  1.9002E-02 -1.7063E-03 -1.0489E-02
                -6.9116E-03 -1.0704E-03  2.3029E-04  6.3202E-03 -1.0190E-02
-    Elapsed estimation time in seconds:     7.62
-    Elapsed covariance time in seconds:     9.14</so>
+    Elapsed estimation time in seconds:     7.24
+    Elapsed covariance time in seconds:     9.10</so>
   </job>
   <job>
    <do in="../nonmem/1005">if [ -e 1005.xml ];then cat 1005.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2014-09-09T16:00:14.044</nm:start_datetime>
+     <nm:start_datetime>2014-09-12T15:19:10.894</nm:start_datetime>
      <nm:control_stream>
      $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
      $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED
@@ -463,8 +463,8 @@
       <nm:license_information>
       License Registered to: Metrum Research Group
       Expiration Date:    14 JUL 2015
-      Current Date:        9 SEP 2014
-      Days until program expires : 310</nm:license_information>
+      Current Date:       12 SEP 2014
+      Days until program expires : 307</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.3.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -668,10 +668,10 @@
           <nm:col nm:cname="EPS2">7.04892673469398</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>7.62</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>7.24</nm:estimation_elapsed_time>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>9.14</nm:covariance_elapsed_time>
+        <nm:covariance_elapsed_time>9.10</nm:covariance_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2405.91626140177</nm:final_objective_function>
         <nm:theta>
@@ -1314,8 +1314,8 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2014-09-09T16:00:31.226</nm:stop_datetime>
-     <nm:total_cputime>16.509</nm:total_cputime>
+     <nm:stop_datetime>2014-09-12T15:19:27.669</nm:stop_datetime>
+     <nm:total_cputime>16.473</nm:total_cputime>
     </nm:output>
    </so>
   </job>
