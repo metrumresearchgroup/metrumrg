@@ -337,13 +337,13 @@ tabular.data.frame <- function(
 
 tabular.table <- function(x, ...){
   if(length(dim(x)) != 2) stop('tabular.table only implemented for 2-dimensional tables')
-  class(t) <- 'matrix'
-  tabular(t, ...)
+  class(x) <- 'matrix'
+  tabular(x, ...)
 }
 ltable.table <- function(x, ...){
   if(length(dim(x)) != 2) stop('ltable.table only implemented for 2-dimensional tables')
-  class(t) <- 'matrix'
-  ltable(t, ...)
+  class(x) <- 'matrix'
+  ltable(x, ...)
 }
 tabular.matrix <- function(x,...){
   y <- as.data.frame(x)

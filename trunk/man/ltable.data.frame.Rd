@@ -71,6 +71,7 @@ name of dimnames exists and is not NA).
 }
 \examples{
 ltable(head(Theoph))
+ltable(table(1:3,4:6))
 }
 \keyword{manip}
 

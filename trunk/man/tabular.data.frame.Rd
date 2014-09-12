@@ -296,6 +296,8 @@ you may have dropped.
 tabular(head(Theoph))
 as.tabular(head(Theoph))
 as.document(head(Theoph))
+tabular(table(1:3,4:6))
+tabular(head(Theoph,source='foo/bar',footnote.size='huge')
 \dontrun{as.pdf(head(Theoph),stem='theoph')}
 \dontrun{metrumrgURL('example/tabular/tabular.pdf')}
 }

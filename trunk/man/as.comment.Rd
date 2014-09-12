@@ -77,6 +77,7 @@ Theoph <- hide(Theoph, where=Theoph$conc < 1,why='blq')
 Theoph <- hide(Theoph, where=Theoph$Subject==1,why='suspect')
 hidden(Theoph)
 summary(hidden(Theoph))
+format(as.comment(c(TRUE,FALSE,NA)))
 }
 \keyword{manip}
 

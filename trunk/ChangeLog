@@ -1,24 +1,26 @@
 5.56
 
 * as.define.spec, as.pdf.define, tabular.define give a convenient aesthetic for displaying spec objects.
-* tabular (and as.document) support rowgroup columngroup labels.
-* bugfix for xpath2frame, is.diagonal, format.comment.
-* Ops.keyed reverts to native dispatch mechanism.
-* electronicAppendix supports export of prior revisions and has default `as'.
-* functions rig, moot, etc. are removed.
-* diagnostic plots recognize NM7 RES/PRED reserved terms.
-* toSAS methods included for writing date/time objects to XPT files.
-* omegacov and sigmacov are new variants of omegacor and sigmacor.
-* tabular and ltable support alternate fontsizes for source and file attributions.
-* new tabular and ltable methods for table and matrix.
-* read.spec strips quotes by default.
-* bugfix for range checking in matches.
-* shuffle forces column names to be unique.
-* in rlog, cov is -1 instead of zero if covariance not requested.
-* NONR gives a warning if user tries to wait for more than 99 runs.
-* fork namespace is required where necessary.
+* read.spec strips leading & trailing quotes and spaces by default.
 * significance defaults to 20 digits for range estimation in specification.
 * respecify updates spec ranges.
+* toSAS methods are included for writing date/time objects to XPT files.
+* tabular and as.document support rowgroup and columngroup labels.
+* tabular and ltable support alternate fontsizes for source and file attributions.
+* new tabular and ltable methods are added for table and matrix.
+* electronicAppendix supports export of prior revisions and has default `as'.
+* omegacov and sigmacov are new variants of omegacor and sigmacor.
+* shuffle forces column names to be unique.
+* NONR gives a warning if user tries to wait for more than 99 runs.
+* in rlog, cov is -1 instead of zero if covariance not requested.
+* fork namespace is required where necessary.
+* Ops.keyed reverts to native dispatch mechanism.
+* diagnostic plots recognize NM73 RES/PRED reserved terms.
+* functions rig, moot, etc. are removed.
+* bugfix for xpath2frame.
+* bugfix for is.diagonal.
+* bugfix for format.comment.
+* bugfix for range checking in matches.
 
 5.55
 

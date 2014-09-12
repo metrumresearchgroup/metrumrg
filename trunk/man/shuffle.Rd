@@ -38,5 +38,8 @@ Tim Bergsma
 \examples{
 head(Theoph)
 head(shuffle(Theoph,'Time'))
+names(Theoph) <- c('Subject','Wt', 'Dose', 'Time',  'Time')
+head(shuffle(Theoph,'Time'))
+
 }
 \keyword{manip}
