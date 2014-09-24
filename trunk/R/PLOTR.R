@@ -62,33 +62,57 @@
     	    if(any(duplicated(estimated)))warning('estimated contains duplicates and will not be used')
     	    else try(levels(it.dat$variable) <- estimated)
     }
+
+    #make plots
+    tryCatch(list(),error = function(e) list())
+    di <- tryCatch(diagnosticPlots(data, dvname=dvname, group='grpnames', model= paste('Model',run),...),error = function(e) list())
+    co <- tryCatch(covariatePlots(data,cont.cov,cat.cov,par.list,eta.list,...),error = function(e) list())
+    cw <- tryCatch(cwresPlots(data,cont.cov,cat.cov,...),error = function(e) list())
+    it <- if(is.null(it.dat)) list() else c(
+    	tryCatch(
+    		list(parameter=
+    			xyplot(
+				value~iteration|variable,
+				it.dat[it.dat$course=='parameter',],
+				main= paste('Model',run,'parameter search'),
+				type='l',ylab='scaled parameter',as.table=TRUE,
+				scales=list(y=list(relation='free'))
+			)
+		),
+		error = function(e)list()
+	),
+	tryCatch(
+		list(gradient=
+			xyplot(
+				value~iteration|variable,
+				it.dat[it.dat$course=='gradient',] ,
+				main= paste('Model',run,'gradient search'),
+				type='l',ylab='gradient',as.table=TRUE,
+				scales=list(y=list(relation='free')),
+				panel=function(...){
+					panel.abline(h=0)
+					panel.xyplot(...)
+				}
+			)
+		),
+		error = function(e)list()
+	)
+    )
+    plots <- c(di, co, cw, it)
     #open device
     plotfile <- star(plotfile,run)
     safe.call(pdf,file=plotfile,onefile=onefile,...)
-
-    #make plots
-    lapply(diagnosticPlots(data, dvname=dvname, group='grpnames', model= paste('Model',run),...),print)
-    lapply(covariatePlots(data,cont.cov,cat.cov,par.list,eta.list,...),print)
-    lapply(cwresPlots(data,cont.cov,cat.cov,...),print)
-    if(!is.null(it.dat))try(print(xyplot(value~iteration|variable,it.dat[it.dat$course=='parameter',],main= paste('Model',run,'parameter search'),type='l',ylab='scaled parameter',as.table=TRUE,scales=list(y=list(relation='free')))))
-    if(!is.null(it.dat))try(
-    	print(
-		xyplot(
-			value~iteration|variable,
-			it.dat[it.dat$course=='gradient',] ,
-			main= paste('Model',run,'gradient search'),
-			type='l',
-			ylab='gradient',
-			as.table=TRUE,
-			scales=list(y=list(relation='free')),
-			panel=function(...){
-				panel.abline(h=0)
-				panel.xyplot(...)
-			}
-		)
-	)
-    )
-
+    lapply(
+    	seq_along(plots),
+    	function(i){
+    		nm <- names(plots)[[i]]
+    		if(is.null(nm) || is.na(nm) || nm == '') nm <- 'unnamed'
+    		plot <- plots[[i]]
+    		msg <- paste('error printing',nm, 'plot')
+    		standby <- xyplot(1~1,panel=ltext,label=msg)
+    		tryCatch(print(plot),error=function(e)print(standby))
+    	}
+    )   		
     #cleanup
     dev.off()
     unlink(filename(rundir,ext='_syn.csv'))
