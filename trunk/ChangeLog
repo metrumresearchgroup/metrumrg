@@ -1,3 +1,7 @@
+5.57
+
+* failed diagnostic plots give an error message rather than breaking PLOTR.
+
 5.56
 
 * as.define.spec, as.pdf.define, tabular.define give a convenient aesthetic for displaying spec objects.

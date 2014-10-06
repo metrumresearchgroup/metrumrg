@@ -16,7 +16,7 @@ setMethod(
     df=FALSE, 
     fill=NA, 
     add.missing=FALSE, 
-    value = guess_value(data)
+    value = reshape::guess_value(data)
   ){
     theClass <- class(data[[value]])[[1]]
     coerce <- glue('as.',theClass)
