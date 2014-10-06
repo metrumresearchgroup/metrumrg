@@ -18,7 +18,7 @@ setMethod(
     add.missing=FALSE, 
     value = NULL
   ){
-    if(is.null(value)) value <- guess_value(data)
+    if(is.null(value)) value <- reshape::guess_value(data)
     theClass <- class(data[[value]])[[1]]
     coerce <- glue('as.',theClass)
     x <- cast(
