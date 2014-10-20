@@ -18,7 +18,14 @@ setMethod(
     add.missing=FALSE, 
     value = NULL
   ){
-    if(is.null(value)) value <- reshape::guess_value(data)
+    guess_value <- function (df){
+      if ("value" %in% names(df)) return("value")
+      if ("(all)" %in% names(df)) return("(all)")
+      last <- names(df)[ncol(df)]
+      message("Using ", last, " as value column.  Use the value argument to cast to override this choice")
+      last
+    }
+    if(is.null(value)) value <- guess_value(data)
     theClass <- class(data[[value]])[[1]]
     coerce <- glue('as.',theClass)
     x <- cast(

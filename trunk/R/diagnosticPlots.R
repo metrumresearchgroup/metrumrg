@@ -34,6 +34,7 @@ function (
 	group=NULL,
 	model=model,
 	include.all=FALSE,
+	variant=variant,
 	...
   )
   preds <- .predvar()

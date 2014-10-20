@@ -1,6 +1,8 @@
 5.57
 
 * failed diagnostic plots give an error message rather than breaking PLOTR.
+* variant is respected by diagnosticPlots when include.all is TRUE.
+* cast.keyed has revised default value argument.
 
 5.56
 

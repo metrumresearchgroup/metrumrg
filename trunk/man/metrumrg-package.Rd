@@ -29,8 +29,8 @@ I want to ....
 \tabular{ll}{
 Package: \tab metrumrg\cr
 Type: \tab Package\cr
-Version: \tab 5.56\cr
-Date: \tab 2014-10-06\cr
+Version: \tab 5.57\cr
+Date: \tab 2014-10-20\cr
 License: \tab GPL\cr
 }
 }
