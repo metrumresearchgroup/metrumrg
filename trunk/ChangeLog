@@ -7,7 +7,7 @@
 5.56
 
 * as.define.spec, as.pdf.define, tabular.define give a convenient aesthetic for displaying spec objects.
-* read.spec strips leading & trailing quotes and spaces by default.
+* read.spec strips double quotes by default.
 * significance defaults to 20 digits for range estimation in specification.
 * respecify updates spec ranges.
 * toSAS methods are included for writing date/time objects to XPT files.

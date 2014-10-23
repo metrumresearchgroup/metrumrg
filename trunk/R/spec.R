@@ -130,13 +130,27 @@ as.spec.data.frame <- function(x, ...){
   class(x) <- 'spec' %u% class(x)
   x
 }
+.nibble <- function(x,...){
+  # strip outer spaces
+  x <- sub('^ *','',x)
+  x <- sub(' *$','',x)
+  # identify balanced double quotes
+  leading <- grepl('^"',x)
+  trailing <- grepl('"$',x)
+  i <- leading & trailing
+  # strip balanced double quotes
+  x[i] <- sub('^"','',x[i])
+  x[i] <- sub('"$','',x[i])
+  # strip outer spaces
+  x <- sub('^ *','',x)
+  x <- sub(' *$','',x)
+  x
+}
+	
 read.spec <- function(x, clean = TRUE, ...){
   x <- read.table(x,header=TRUE,as.is=TRUE,na.strings=c('','.','NA'), quote='',sep='\t')
   chars <- sapply(x, inherits, 'character')
-  if(clean) x[chars] <- lapply(x[chars], function(col){
-  	  col <- sub("^[\"' ]+",'',col)
-  	  col <- sub("[\"' ]+$",'',col)
-  })
+  if(clean) x[chars] <- lapply(x[chars], .nibble)
   x <- as.spec(x)
   x
 }
@@ -156,7 +170,7 @@ summary.spec <- function (object, ...) {
 }
 as.spec.character <- function(x,...){
   stopifnot(length(x) == 1 && file.exists(x))
-  y <- read.spec(x)
+  y <- read.spec(x,...)
   y
 }
 specification <- function(x,...)UseMethod('specification')

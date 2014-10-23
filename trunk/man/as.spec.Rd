@@ -65,9 +65,9 @@ Create and Manipulate spec Objects
 \value{object of class \code{spec keyed data.frame} for \code{read.spec} and \code{as.spec}}
 \note{Since \code{spec} is stored as tab-delimited, it is rarely
 	necessary to quote the contents of cells (though some external tools
-	do this anyway).  As of 5.56, leading/trailing single/double quotes and spaces,
-	in any combination, are stripped by default for \code{read.spec}.  To clean up the stored
-	file, use \code{clean.spec}.
+	do this anyway).  As of 5.56, matched leading/trailing double quotes and spaces
+	are stripped by default for \code{read.spec} (after stripping outer 
+	white space).  To clean up the storedfile, use \code{clean.spec}.
 }
 \references{\url{http://metrumrg.googlecode.com}}
 

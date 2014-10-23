@@ -77,7 +77,7 @@ head(test)
 for(col in c('TIME','TAFD','TAD')) test[[col]] <- round(test[[col]], 5)
 spec <- specification(test)
 summary(spec)
-spec[1,1] <- paste(' " ',spec[1,1]) # will be stripped by read.spec
+spec[1,1] <- paste(' " ',spec[1,1],' " ') # will be stripped by read.spec
 spec[1,1]
 write.nm(test, 'test.csv')
 write.spec(spec,'test.spec')

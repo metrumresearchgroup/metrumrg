@@ -18,12 +18,19 @@ setMethod(
     add.missing=FALSE, 
     value = NULL
   ){
-    guess_value <- function (df){
-      if ("value" %in% names(df)) return("value")
-      if ("(all)" %in% names(df)) return("(all)")
-      last <- names(df)[ncol(df)]
-      message("Using ", last, " as value column.  Use the value argument to cast to override this choice")
-      last
+    # default for value was reshape::guess_value, which gives warning in R CMD check for Rdevel 'Unsuffered Consequences' (post 3.1.1)
+    if(is.null(value)){
+      if ("value" %in% names(df)){
+      	      value <- 'value'
+      }else{
+         if ("(all)" %in% names(df)){
+         	 value <- '(all)'
+         }else{
+           last <- names(df)[ncol(df)]
+           message("Using ", last, " as value column.  Use the value argument to cast to override this choice")
+           value <- last
+         }
+      }
     }
     if(is.null(value)) value <- guess_value(data)
     theClass <- class(data[[value]])[[1]]
