@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2014-09-12T15:19:10.894</nm:start_datetime>
+<nm:start_datetime>2014-10-24T18:19:41.583</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
 $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED
@@ -54,7 +54,7 @@ $COV PRINT=E
 $TABLE NOPRINT FILE=./1005.tab ONEHEADER ID AMT TIME EVID PRED IPRE CWRES
 $TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 
-;<wiki model='CL/F (L/h) ~ theta_1 *  theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1'>apparent oral clearance</wiki>
+;<wiki model='CL/F (L/h) ~ theta_1 * theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1'>apparent oral clearance</wiki>
 ;<wiki model='V_c /F (L) ~ theta_2 * (WT/70)^1 * e^eta_2'                       >central volume of distribution</wiki>
 ;<wiki model='K_a (h^-1 ) ~ theta_3 * e^eta_3'                                  >absorption rate constant</wiki>
 ;<wiki model='Q/F (L/h) ~ theta_4'                                              >intercompartmental clearance</wiki>
@@ -68,7 +68,7 @@ $TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 ;<wiki model='cov_V,Ka  ~ Omega_3.2'                                            >interindividual volume-Ka covariance</wiki>
 ;<wiki model='IIV_K_a  ~ Omega_3.3'                                             >interindividual variability of Ka</wiki>
 ;<wiki model='err_prop ~ Sigma_1.1'                                             >proportional error</wiki>
-;<wiki model='err_add ~ Sigma_2.2'                                             >additive error</wiki>
+;<wiki model='err_add ~ Sigma_2.2'                                              >additive error</wiki>
 ;</doc>
 ]]></nm:control_stream>
 <nm:nmtran><![CDATA[
@@ -81,8 +81,8 @@ $TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 <nm:license_information><![CDATA[
 License Registered to: Metrum Research Group
 Expiration Date:    14 JUL 2015
-Current Date:       12 SEP 2014
-Days until program expires : 307
+Current Date:       24 OCT 2014
+Days until program expires : 265
 ]]></nm:license_information>
 <nm:program_information><![CDATA[
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.3.0
@@ -290,11 +290,11 @@ Days until program expires : 307
 <nm:col nm:cname='EPS2'>7.04892673469398</nm:col>
 </nm:row>
 </nm:epsshrink>
-<nm:estimation_elapsed_time>7.24</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>4.90</nm:estimation_elapsed_time>
 <nm:covariance_information><![CDATA[
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='0' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.000000000000000E+000' nm:maxeigenvalue='0.000000000000000E+000' nm:rms='0.000000000000000E+000'/>
-<nm:covariance_elapsed_time>9.10</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>5.92</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>2405.91626140177</nm:final_objective_function>
 <nm:theta>
@@ -937,6 +937,6 @@ Days until program expires : 307
 </nm:estimation>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2014-09-12T15:19:27.669</nm:stop_datetime>
-<nm:total_cputime>16.473</nm:total_cputime>
+<nm:stop_datetime>2014-10-24T18:19:52.696</nm:stop_datetime>
+<nm:total_cputime>10.753</nm:total_cputime>
 </nm:output>

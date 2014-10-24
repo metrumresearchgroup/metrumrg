@@ -19,17 +19,17 @@
    <!--The 'install' interface installs NONMEM.-->
    <do on="install">date</do>
    <do on="install">rm -rf origin/temp</do>
-   <do on="install">mkdir origin/temp</do>
+   <do on="install">mkdir -p origin/temp</do>
    <do on="install">cp -r folder/* origin/temp</do>
    <do on="install" in="origin">patch -p0 &lt; nix/setup73.diff</do>
    <!--alters compile options in setup73-->
    <do on="install">rm -rf target</do>
-   <do on="install">mkdir target</do>
+   <do on="install">mkdir -p target</do>
    <do on="install" in="origin/temp">pwd</do>
    <do on="install" in="origin/temp">ifort --version</do>
    <do on="install" in="origin/temp">/bin/bash SETUP73 origin/temp target ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
-   <do on="install">mkdir target/nmqual</do>
-   <do on="install">mkdir target/nmqual/doc</do>
+   <do on="install">mkdir -p target/nmqual</do>
+   <do on="install">mkdir -p target/nmqual/doc</do>
    <do on="install">cp $0 target/nmqual</do>
    <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
    <do on="install">cp -r origin/con target/nmqual</do>
@@ -142,17 +142,17 @@
        <!--The 'install' interface installs NONMEM.-->
        <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir origin/temp</do>
+       <do on="install">mkdir -p origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup73.diff</do>
        <!--alters compile options in setup73-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir target</do>
+       <do on="install">mkdir -p target</do>
        <do on="install" in="origin/temp">pwd</do>
        <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP73 origin/temp target ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
-       <do on="install">mkdir target/nmqual</do>
-       <do on="install">mkdir target/nmqual/doc</do>
+       <do on="install">mkdir -p target/nmqual</do>
+       <do on="install">mkdir -p target/nmqual/doc</do>
        <do on="install">cp $0 target/nmqual</do>
        <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
        <do on="install">cp -r origin/con target/nmqual</do>
@@ -247,11 +247,11 @@
       </job>
       <job>
        <do>date</do>
-       <so>Fri Sep 12 15:18:57 UTC 2014</so>
+       <so>Fri Oct 24 18:19:24 UTC 2014</so>
       </job>
       <job>
        <do>perl -e 'use POSIX; print join qq(,),uname'</do>
-       <so>Linux,node005,3.2.0-39-virtual,#62-Ubuntu SMP Thu Feb 28 00:48:27 UTC 2013,x86_64</so>
+       <so>Linux,node008,3.2.0-39-virtual,#62-Ubuntu SMP Thu Feb 28 00:48:27 UTC 2013,x86_64</so>
       </job>
       <job>
        <do>echo $SHELL</do>
@@ -259,11 +259,11 @@
       </job>
       <job>
        <do>echo $USER</do>
-       <so>timb</so>
+       <so>root</so>
       </job>
       <job>
        <do>echo $PATH</do>
-       <so>/tmp/4.1.all.q:/usr/local/mpich2/bin:/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games/:/usr/local/texlive/2013/bin/x86_64-linux:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64:/opt/sge6/bin/linux-x64</so>
+       <so>/tmp/1.1.all.q:/usr/local/mpich2/bin:/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games/:/usr/local/texlive/2013/bin/x86_64-linux:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/lx24-amd64:/opt/sge6/bin/linux-x64</so>
       </job>
       <job>
        <do>head -n 5 /opt/NONMEM/nm73/util/nmfe73</do>
@@ -293,8 +293,8 @@
    Starting nonmem execution ...
    License Registered to: Metrum Research Group
    Expiration Date:    14 JUL 2015
-   Current Date:       12 SEP 2014
-   Days until program expires : 307
+   Current Date:       24 OCT 2014
+   Days until program expires : 265
     
     
     First Order Conditional Estimation with Interaction
@@ -381,14 +381,14 @@
                -5.6248E-01 -6.6034E-01 -1.0295E+00 -2.5494E-01  4.5098E-01
     GRADIENT:   2.0244E-03  1.4944E-03  2.3400E-02 -1.2147E-02  4.7830E-03 -2.3632E-04  2.0094E-03  1.9002E-02 -1.7063E-03 -1.0489E-02
                -6.9116E-03 -1.0704E-03  2.3029E-04  6.3202E-03 -1.0190E-02
-    Elapsed estimation time in seconds:     7.24
-    Elapsed covariance time in seconds:     9.10</so>
+    Elapsed estimation time in seconds:     4.90
+    Elapsed covariance time in seconds:     5.92</so>
   </job>
   <job>
    <do in="../nonmem/1005">if [ -e 1005.xml ];then cat 1005.xml;else echo \&lt;nofile/\>; fi</do>
    <so>
     <nm:output xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nm="http://namespaces.oreilly.com/xmlnut/address" xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd">
-     <nm:start_datetime>2014-09-12T15:19:10.894</nm:start_datetime>
+     <nm:start_datetime>2014-10-24T18:19:41.583</nm:start_datetime>
      <nm:control_stream>
      $PROB 1005 phase1 2 CMT like 1004 but diff. initial on V3
      $INPUT C ID TIME SEQ=DROP EVID AMT DV SUBJ HOUR HEIGHT WT SEX AGE DOSE FED
@@ -437,7 +437,7 @@
      $TABLE NOPRINT FILE=./1005.tab ONEHEADER ID AMT TIME EVID PRED IPRE CWRES
      $TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
      
-     ;&lt;wiki model='CL/F (L/h) ~ theta_1 *  theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1'>apparent oral clearance&lt;/wiki>
+     ;&lt;wiki model='CL/F (L/h) ~ theta_1 * theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1'>apparent oral clearance&lt;/wiki>
      ;&lt;wiki model='V_c /F (L) ~ theta_2 * (WT/70)^1 * e^eta_2'                       >central volume of distribution&lt;/wiki>
      ;&lt;wiki model='K_a (h^-1 ) ~ theta_3 * e^eta_3'                                  >absorption rate constant&lt;/wiki>
      ;&lt;wiki model='Q/F (L/h) ~ theta_4'                                              >intercompartmental clearance&lt;/wiki>
@@ -451,7 +451,7 @@
      ;&lt;wiki model='cov_V,Ka  ~ Omega_3.2'                                            >interindividual volume-Ka covariance&lt;/wiki>
      ;&lt;wiki model='IIV_K_a  ~ Omega_3.3'                                             >interindividual variability of Ka&lt;/wiki>
      ;&lt;wiki model='err_prop ~ Sigma_1.1'                                             >proportional error&lt;/wiki>
-     ;&lt;wiki model='err_add ~ Sigma_2.2'                                             >additive error&lt;/wiki>
+     ;&lt;wiki model='err_add ~ Sigma_2.2'                                              >additive error&lt;/wiki>
      ;&lt;/doc>
      </nm:control_stream>
      <nm:nmtran>
@@ -463,8 +463,8 @@
       <nm:license_information>
       License Registered to: Metrum Research Group
       Expiration Date:    14 JUL 2015
-      Current Date:       12 SEP 2014
-      Days until program expires : 307</nm:license_information>
+      Current Date:       24 OCT 2014
+      Days until program expires : 265</nm:license_information>
       <nm:program_information>
       1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.3.0
        ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -668,10 +668,10 @@
           <nm:col nm:cname="EPS2">7.04892673469398</nm:col>
          </nm:row>
         </nm:epsshrink>
-        <nm:estimation_elapsed_time>7.24</nm:estimation_elapsed_time>
+        <nm:estimation_elapsed_time>4.90</nm:estimation_elapsed_time>
         <nm:covariance_information/>
         <nm:covariance_status nm:error="0" nm:numnegeigenvalues="-1" nm:mineigenvalue="0.000000000000000E+000" nm:maxeigenvalue="0.000000000000000E+000" nm:rms="0.000000000000000E+000"/>
-        <nm:covariance_elapsed_time>9.10</nm:covariance_elapsed_time>
+        <nm:covariance_elapsed_time>5.92</nm:covariance_elapsed_time>
         <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
         <nm:final_objective_function>2405.91626140177</nm:final_objective_function>
         <nm:theta>
@@ -1314,8 +1314,8 @@
        </nm:estimation>
       </nm:problem>
      </nm:nonmem>
-     <nm:stop_datetime>2014-09-12T15:19:27.669</nm:stop_datetime>
-     <nm:total_cputime>16.473</nm:total_cputime>
+     <nm:stop_datetime>2014-10-24T18:19:52.696</nm:stop_datetime>
+     <nm:total_cputime>10.753</nm:total_cputime>
     </nm:output>
    </so>
   </job>
@@ -1343,17 +1343,17 @@
        <!--The 'install' interface installs NONMEM.-->
        <do on="install">date</do>
        <do on="install">rm -rf origin/temp</do>
-       <do on="install">mkdir origin/temp</do>
+       <do on="install">mkdir -p origin/temp</do>
        <do on="install">cp -r folder/* origin/temp</do>
        <do on="install" in="origin">patch -p0 &lt; nix/setup73.diff</do>
        <!--alters compile options in setup73-->
        <do on="install">rm -rf target</do>
-       <do on="install">mkdir target</do>
+       <do on="install">mkdir -p target</do>
        <do on="install" in="origin/temp">pwd</do>
        <do on="install" in="origin/temp">ifort --version</do>
        <do on="install" in="origin/temp">/bin/bash SETUP73 origin/temp target ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
-       <do on="install">mkdir target/nmqual</do>
-       <do on="install">mkdir target/nmqual/doc</do>
+       <do on="install">mkdir -p target/nmqual</do>
+       <do on="install">mkdir -p target/nmqual/doc</do>
        <do on="install">cp $0 target/nmqual</do>
        <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
        <do on="install">cp -r origin/con target/nmqual</do>
@@ -1444,14 +1444,14 @@
       </config>
       <job>
        <do>date</do>
-       <so>Fri Jul 11 17:27:11 UTC 2014</so>
+       <so>Wed Oct  1 18:55:23 UTC 2014</so>
       </job>
       <job>
        <do>rm -rf /mnt/nmqual-8.3.3/temp</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /mnt/nmqual-8.3.3/temp</do>
+       <do>mkdir -p /mnt/nmqual-8.3.3/temp</do>
        <so/>
       </job>
       <job>
@@ -1468,7 +1468,7 @@
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm73</do>
+       <do>mkdir -p /opt/NONMEM/nm73</do>
        <so/>
       </job>
       <job>
@@ -1591,7 +1591,7 @@
           Starting nonmem execution ...
           License Registered to: Temporary license for NONMEM7.3.0 installation
           Expiration Date:    22 DEC 2013
-          Current Date:       11 JUL 2014
+          Current Date:        1 OCT 2014
            
             **** NONMEM LICENSE HAS EXPIRED ****
             ****     NONMEM TERMINATING     ****
@@ -1604,11 +1604,11 @@
           /opt/NONMEM/nm73/license/nonmem.lic</so>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm73/nmqual</do>
+       <do>mkdir -p /opt/NONMEM/nm73/nmqual</do>
        <so/>
       </job>
       <job>
-       <do>mkdir /opt/NONMEM/nm73/nmqual/doc</do>
+       <do>mkdir -p /opt/NONMEM/nm73/nmqual/doc</do>
        <so/>
       </job>
       <job>
@@ -1691,17 +1691,17 @@
            <!--The 'install' interface installs NONMEM.-->
            <do on="install">date</do>
            <do on="install">rm -rf origin/temp</do>
-           <do on="install">mkdir origin/temp</do>
+           <do on="install">mkdir -p origin/temp</do>
            <do on="install">cp -r folder/* origin/temp</do>
            <do on="install" in="origin">patch -p0 &lt; nix/setup73.diff</do>
            <!--alters compile options in setup73-->
            <do on="install">rm -rf target</do>
-           <do on="install">mkdir target</do>
+           <do on="install">mkdir -p target</do>
            <do on="install" in="origin/temp">pwd</do>
            <do on="install" in="origin/temp">ifort --version</do>
            <do on="install" in="origin/temp">/bin/bash SETUP73 origin/temp target ifort y ar same rec q unzip nonmem73e.zip nonmem73r.zip</do>
-           <do on="install">mkdir target/nmqual</do>
-           <do on="install">mkdir target/nmqual/doc</do>
+           <do on="install">mkdir -p target/nmqual</do>
+           <do on="install">mkdir -p target/nmqual/doc</do>
            <do on="install">cp $0 target/nmqual</do>
            <!--runtime copy of autolog.pl, uses nmqual/log.xml as config-->
            <do on="install">cp -r origin/con target/nmqual</do>
@@ -1796,7 +1796,7 @@
           </job>
           <job>
            <do>date</do>
-           <so>Fri Jul 11 17:33:02 UTC 2014</so>
+           <so>Wed Oct  1 19:01:00 UTC 2014</so>
           </job>
           <job>
            <do>perl -e 'use POSIX; print join qq(,),uname'</do>
@@ -1812,7 +1812,7 @@
           </job>
           <job>
            <do>echo $PATH</do>
-           <so>/opt/intel/bin/intel64:/opt/intel/bin/intel64:/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/intel/mpirt/bin/intel64:/opt/intel/bin/intel64:/opt/sge6/bin/linux-x64:/opt/intel/mpirt/bin/intel64:/opt/chef/embedded/bin:/opt/chef/embedded/bin:/opt/intel/mpirt/bin/intel64</so>
+           <so>/opt/intel/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/chef/embedded/bin:/opt/chef/embedded/bin:/opt/intel/mpirt/bin/intel64</so>
           </job>
           <job>
            <do>head -n 5 /opt/NONMEM/nm73/util/nmfe73</do>

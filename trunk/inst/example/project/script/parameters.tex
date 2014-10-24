@@ -50,22 +50,22 @@ We do some science on the result first, and then some aesthetics for printing in
 13  OMEGA3.3             interindividual variability of Ka
 14  SIGMA1.1                            proportional error
 15  SIGMA2.2                                additive error
-                                                                model estimate
-1  CL/F (L/h) ~ theta_1 *  theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1   9.5100
-2                          V_c /F (L) ~ theta_2 * (WT/70)^1 * e^eta_2  22.8000
-3                                     K_a (h^-1 ) ~ theta_3 * e^eta_3   0.0714
-4                                                 Q/F (L/h) ~ theta_4   3.4700
-5                                                V_p /F (L) ~ theta_5 113.0000
-6                                                 MALE_CL/F ~ theta_6   1.0200
-7                                                   WT_CL/F ~ theta_7   1.1900
-8                                                IIV_CL/F ~ Omega_1.1   0.2140
-9                                                cov_CL,V ~ Omega_2.1   0.1210
-10                                             IIV_V_c /F ~ Omega_2.2   0.0945
-11                                             cov_CL,Ka  ~ Omega_3.1  -0.0116
-12                                              cov_V,Ka  ~ Omega_3.2  -0.0372
-13                                               IIV_K_a  ~ Omega_3.3   0.0466
-14                                               err_prop ~ Sigma_1.1   0.0492
-15                                                err_add ~ Sigma_2.2   0.2020
+                                                               model estimate
+1  CL/F (L/h) ~ theta_1 * theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1   9.5100
+2                         V_c /F (L) ~ theta_2 * (WT/70)^1 * e^eta_2  22.8000
+3                                    K_a (h^-1 ) ~ theta_3 * e^eta_3   0.0714
+4                                                Q/F (L/h) ~ theta_4   3.4700
+5                                               V_p /F (L) ~ theta_5 113.0000
+6                                                MALE_CL/F ~ theta_6   1.0200
+7                                                  WT_CL/F ~ theta_7   1.1900
+8                                               IIV_CL/F ~ Omega_1.1   0.2140
+9                                               cov_CL,V ~ Omega_2.1   0.1210
+10                                            IIV_V_c /F ~ Omega_2.2   0.0945
+11                                            cov_CL,Ka  ~ Omega_3.1  -0.0116
+12                                             cov_V,Ka  ~ Omega_3.2  -0.0372
+13                                              IIV_K_a  ~ Omega_3.3   0.0466
+14                                              err_prop ~ Sigma_1.1   0.0492
+15                                               err_add ~ Sigma_2.2   0.2020
    prse
 1  9.75
 2  9.55
@@ -93,38 +93,22 @@ Now we can extract some information from the model statements.
 > tab[c('model','units','name')]
 \end{Sinput}
 \begin{Soutput}
-                                                           model units
-1  CL/F  ~ theta_1 *  theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1   L/h
-2                        V_c /F  ~ theta_2 * (WT/70)^1 * e^eta_2     L
-3                                       K_a  ~ theta_3 * e^eta_3 h^-1 
-4                                                 Q/F  ~ theta_4   L/h
-5                                              V_p /F  ~ theta_5     L
-6                                            MALE_CL/F ~ theta_6      
-7                                              WT_CL/F ~ theta_7      
-8                                           IIV_CL/F ~ Omega_1.1      
-9                                           cov_CL,V ~ Omega_2.1      
-10                                        IIV_V_c /F ~ Omega_2.2      
-11                                        cov_CL,Ka  ~ Omega_3.1      
-12                                         cov_V,Ka  ~ Omega_3.2      
-13                                          IIV_K_a  ~ Omega_3.3      
-14                                          err_prop ~ Sigma_1.1      
-15                                           err_add ~ Sigma_2.2      
-        name
-1       CL/F
-2      V_c/F
-3        K_a
-4        Q/F
-5      V_p/F
-6  MALE_CL/F
-7    WT_CL/F
-8   IIV_CL/F
-9   cov_CL,V
-10 IIV_V_c/F
-11 cov_CL,Ka
-12  cov_V,Ka
-13   IIV_K_a
-14  err_prop
-15   err_add
+                                                          model units      name
+1  CL/F  ~ theta_1 * theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1   L/h      CL/F
+2                       V_c /F  ~ theta_2 * (WT/70)^1 * e^eta_2     L     V_c/F
+3                                      K_a  ~ theta_3 * e^eta_3 h^-1        K_a
+4                                                Q/F  ~ theta_4   L/h       Q/F
+5                                             V_p /F  ~ theta_5     L     V_p/F
+6                                           MALE_CL/F ~ theta_6       MALE_CL/F
+7                                             WT_CL/F ~ theta_7         WT_CL/F
+8                                          IIV_CL/F ~ Omega_1.1        IIV_CL/F
+9                                          cov_CL,V ~ Omega_2.1        cov_CL,V
+10                                       IIV_V_c /F ~ Omega_2.2       IIV_V_c/F
+11                                       cov_CL,Ka  ~ Omega_3.1       cov_CL,Ka
+12                                        cov_V,Ka  ~ Omega_3.2        cov_V,Ka
+13                                         IIV_K_a  ~ Omega_3.3         IIV_K_a
+14                                         err_prop ~ Sigma_1.1        err_prop
+15                                          err_add ~ Sigma_2.2         err_add
 \end{Soutput}
 \end{Schunk}
 \section{variance}
@@ -421,22 +405,22 @@ We wish to include 95 percentiles in our table as confidence intervals.
 13  OMEGA3.3             interindividual variability of Ka
 14  SIGMA1.1                            proportional error
 15  SIGMA2.2                                additive error
-                                                           model estimate prse
-1  CL/F  ~ theta_1 *  theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1   9.5100 9.75
-2                        V_c /F  ~ theta_2 * (WT/70)^1 * e^eta_2  22.8000 9.55
-3                                       K_a  ~ theta_3 * e^eta_3   0.0714 7.35
-4                                                 Q/F  ~ theta_4   3.4700 15.4
-5                                              V_p /F  ~ theta_5 113.0000   21
-6                                            MALE_CL/F ~ theta_6   1.0200 11.1
-7                                              WT_CL/F ~ theta_7   1.1900 28.3
-8                                           IIV_CL/F ~ Omega_1.1   0.2140 22.8
-9                                           cov_CL,V ~ Omega_2.1   0.1210 26.4
-10                                        IIV_V_c /F ~ Omega_2.2   0.0945 33.2
-11                                        cov_CL,Ka  ~ Omega_3.1  -0.0116  173
-12                                         cov_V,Ka  ~ Omega_3.2  -0.0372 36.1
-13                                          IIV_K_a  ~ Omega_3.3   0.0466 34.8
-14                                          err_prop ~ Sigma_1.1   0.0492 10.9
-15                                           err_add ~ Sigma_2.2   0.2020 33.5
+                                                          model estimate prse
+1  CL/F  ~ theta_1 * theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1   9.5100 9.75
+2                       V_c /F  ~ theta_2 * (WT/70)^1 * e^eta_2  22.8000 9.55
+3                                      K_a  ~ theta_3 * e^eta_3   0.0714 7.35
+4                                                Q/F  ~ theta_4   3.4700 15.4
+5                                             V_p /F  ~ theta_5 113.0000   21
+6                                           MALE_CL/F ~ theta_6   1.0200 11.1
+7                                             WT_CL/F ~ theta_7   1.1900 28.3
+8                                          IIV_CL/F ~ Omega_1.1   0.2140 22.8
+9                                          cov_CL,V ~ Omega_2.1   0.1210 26.4
+10                                       IIV_V_c /F ~ Omega_2.2   0.0945 33.2
+11                                       cov_CL,Ka  ~ Omega_3.1  -0.0116  173
+12                                        cov_V,Ka  ~ Omega_3.2  -0.0372 36.1
+13                                         IIV_K_a  ~ Omega_3.3   0.0466 34.8
+14                                         err_prop ~ Sigma_1.1   0.0492 10.9
+15                                          err_add ~ Sigma_2.2   0.2020 33.5
    units      name        cv        sd        cor                 ci
 1    L/h      CL/F        NA        NA         NA        (7.31,11.1)
 2      L     V_c/F        NA        NA         NA        (19.2,27.9)
@@ -497,21 +481,21 @@ Note that no parameter defines more than one of CV, SD,and COR.  We could collap
   \begin{tabular}{llllll}
     \hline \hline
    description & model & estimate & prse & ci & variability \\ \hline
-   apparent oral clearance                       & $\mathrm{CL/F  \sim \theta_{1}\cdot  \theta_{6}^{MALE}\cdot (WT/70)^{\theta_{7}}\cdot e^{\eta_{1}}}$ & 9.51 $ L/h $     & 9.75 & (7.31,11.1)        &  \\
-   central volume of distribution                & $\mathrm{V_{c}/F  \sim \theta_{2}\cdot (WT/70)^{1}\cdot e^{\eta_{2}}}$                                  & 22.8 $ L $       & 9.55 & (19.2,27.9)        &  \\
-   absorption rate constant                      & $\mathrm{K_{a} \sim \theta_{3}\cdot e^{\eta_{3}}}$                                                       & 0.0714 $ h^-1  $ & 7.35 & (0.0625,0.0838)    &  \\
-   intercompartmental clearance                  & $\mathrm{Q/F  \sim \theta_{4}}$                                                                            & 3.47 $ L/h $     & 15.4 & (2.78,4.91)        &  \\
-   peripheral volume of distribution             & $\mathrm{V_{p}/F  \sim \theta_{5}}$                                                                        & 113 $ L $        & 21   & (85.6,559)         &  \\
-   male effect on clearance                      & $\mathrm{MALE_{CL/F}\sim \theta_{6}}$                                                                      & 1.02 $  $        & 11.1 & (0.847,1.25)       &  \\
-   weight effect on clearance                    & $\mathrm{WT_{CL/F}\sim \theta_{7}}$                                                                        & 1.19 $  $        & 28.3 & (0.61,1.91)        &  \\
-   interindividual variability of clearance      & $\mathrm{IIV_{CL/F}\sim \Omega_{1.1}}$                                                                     & 0.214 $  $       & 22.8 & (0.128,0.321)      & \%CV = 48.8  \\
-   interindividual clearance-volume covariance   & $\mathrm{cov_{CL,V}\sim \Omega_{2.1}}$                                                                     & 0.121 $  $       & 26.4 & (0.0606,0.183)     & CORR = 0.849  \\
-   interindividual variability of central volume & $\mathrm{IIV_{V_{c}/F}\sim \Omega_{2.2}}$                                                                  & 0.0945 $  $      & 33.2 & (0.047,0.158)      & \%CV = 31.5  \\
-   interindividual clearance-Ka covariance       & $\mathrm{cov_{CL,Ka} \sim \Omega_{3.1}}$                                                                   & -0.0116 $  $     & 173  & (-0.0448,0.0261)   & CORR = -0.117 \\
-   interindividual volume-Ka covariance          & $\mathrm{cov_{V,Ka} \sim \Omega_{3.2}}$                                                                    & -0.0372 $  $     & 36.1 & (-0.0577,-0.00491) & CORR = -0.561 \\
-   interindividual variability of Ka             & $\mathrm{IIV_{K_{a}}\sim \Omega_{3.3}}$                                                                    & 0.0466 $  $      & 34.8 & (0.0236,0.0811)    & \%CV = 21.8  \\
-   proportional error                            & $\mathrm{err_{prop}\sim \Sigma_{1.1}}$                                                                     & 0.0492 $  $      & 10.9 & (0.0399,0.0587)    & \%CV = 22.2  \\
-   additive error                                & $\mathrm{err_{add}\sim \Sigma_{2.2}}$                                                                      & 0.202 $  $       & 33.5 & (0.0836,0.329)     & SD = 0.449    \\ \hline
+   apparent oral clearance                       & $\mathrm{CL/F  \sim \theta_{1}\cdot \theta_{6}^{MALE}\cdot (WT/70)^{\theta_{7}}\cdot e^{\eta_{1}}}$ & 9.51 $ L/h $     & 9.75 & (7.31,11.1)        &  \\
+   central volume of distribution                & $\mathrm{V_{c}/F  \sim \theta_{2}\cdot (WT/70)^{1}\cdot e^{\eta_{2}}}$                                 & 22.8 $ L $       & 9.55 & (19.2,27.9)        &  \\
+   absorption rate constant                      & $\mathrm{K_{a} \sim \theta_{3}\cdot e^{\eta_{3}}}$                                                      & 0.0714 $ h^-1  $ & 7.35 & (0.0625,0.0838)    &  \\
+   intercompartmental clearance                  & $\mathrm{Q/F  \sim \theta_{4}}$                                                                           & 3.47 $ L/h $     & 15.4 & (2.78,4.91)        &  \\
+   peripheral volume of distribution             & $\mathrm{V_{p}/F  \sim \theta_{5}}$                                                                       & 113 $ L $        & 21   & (85.6,559)         &  \\
+   male effect on clearance                      & $\mathrm{MALE_{CL/F}\sim \theta_{6}}$                                                                     & 1.02 $  $        & 11.1 & (0.847,1.25)       &  \\
+   weight effect on clearance                    & $\mathrm{WT_{CL/F}\sim \theta_{7}}$                                                                       & 1.19 $  $        & 28.3 & (0.61,1.91)        &  \\
+   interindividual variability of clearance      & $\mathrm{IIV_{CL/F}\sim \Omega_{1.1}}$                                                                    & 0.214 $  $       & 22.8 & (0.128,0.321)      & \%CV = 48.8  \\
+   interindividual clearance-volume covariance   & $\mathrm{cov_{CL,V}\sim \Omega_{2.1}}$                                                                    & 0.121 $  $       & 26.4 & (0.0606,0.183)     & CORR = 0.849  \\
+   interindividual variability of central volume & $\mathrm{IIV_{V_{c}/F}\sim \Omega_{2.2}}$                                                                 & 0.0945 $  $      & 33.2 & (0.047,0.158)      & \%CV = 31.5  \\
+   interindividual clearance-Ka covariance       & $\mathrm{cov_{CL,Ka} \sim \Omega_{3.1}}$                                                                  & -0.0116 $  $     & 173  & (-0.0448,0.0261)   & CORR = -0.117 \\
+   interindividual volume-Ka covariance          & $\mathrm{cov_{V,Ka} \sim \Omega_{3.2}}$                                                                   & -0.0372 $  $     & 36.1 & (-0.0577,-0.00491) & CORR = -0.561 \\
+   interindividual variability of Ka             & $\mathrm{IIV_{K_{a}}\sim \Omega_{3.3}}$                                                                   & 0.0466 $  $      & 34.8 & (0.0236,0.0811)    & \%CV = 21.8  \\
+   proportional error                            & $\mathrm{err_{prop}\sim \Sigma_{1.1}}$                                                                    & 0.0492 $  $      & 10.9 & (0.0399,0.0587)    & \%CV = 22.2  \\
+   additive error                                & $\mathrm{err_{add}\sim \Sigma_{2.2}}$                                                                     & 0.202 $  $       & 33.5 & (0.0836,0.329)     & SD = 0.449    \\ \hline
   \end{tabular}
  \end{center}
 \end{table}\section{simple parameter table}

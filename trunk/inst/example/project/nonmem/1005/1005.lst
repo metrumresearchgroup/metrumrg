@@ -1,4 +1,4 @@
-Fri Sep 12 15:18:58 UTC 2014
+Fri Oct 24 18:19:25 UTC 2014
 ifort (IFORT) 12.0.4 20110427
 Copyright (C) 1985-2011 Intel Corporation.  All rights reserved.
 
@@ -49,7 +49,7 @@ $COV PRINT=E
 $TABLE NOPRINT FILE=./1005.tab ONEHEADER ID AMT TIME EVID PRED IPRE CWRES
 $TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 
-;<wiki model='CL/F (L/h) ~ theta_1 *  theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1'>apparent oral clearance</wiki>
+;<wiki model='CL/F (L/h) ~ theta_1 * theta_6 ^MALE * (WT/70)^theta_7  * e^eta_1'>apparent oral clearance</wiki>
 ;<wiki model='V_c /F (L) ~ theta_2 * (WT/70)^1 * e^eta_2'                       >central volume of distribution</wiki>
 ;<wiki model='K_a (h^-1 ) ~ theta_3 * e^eta_3'                                  >absorption rate constant</wiki>
 ;<wiki model='Q/F (L/h) ~ theta_4'                                              >intercompartmental clearance</wiki>
@@ -63,7 +63,7 @@ $TABLE NOPRINT FILE=./1005par.tab ONEHEADER ID TIME CL Q V2 V3 KA ETA1 ETA2 ETA3
 ;<wiki model='cov_V,Ka  ~ Omega_3.2'                                            >interindividual volume-Ka covariance</wiki>
 ;<wiki model='IIV_K_a  ~ Omega_3.3'                                             >interindividual variability of Ka</wiki>
 ;<wiki model='err_prop ~ Sigma_1.1'                                             >proportional error</wiki>
-;<wiki model='err_add ~ Sigma_2.2'                                             >additive error</wiki>
+;<wiki model='err_add ~ Sigma_2.2'                                              >additive error</wiki>
 ;</doc>
 
 NM-TRAN MESSAGES
@@ -74,8 +74,8 @@ NM-TRAN MESSAGES
 
 License Registered to: Metrum Research Group
 Expiration Date:    14 JUL 2015
-Current Date:       12 SEP 2014
-Days until program expires : 307
+Current Date:       24 OCT 2014
+Days until program expires : 265
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.3.0
  ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
  CURRENT DEVELOPERS ARE ROBERT BAUER, ICON DEVELOPMENT SOLUTIONS,
@@ -355,8 +355,8 @@ Days until program expires : 307
  EPSshrink(%):   7.0489E+00  7.0489E+00
  
  #TERE:
- Elapsed estimation time in seconds:     7.24
- Elapsed covariance time in seconds:     9.10
+ Elapsed estimation time in seconds:     4.90
+ Elapsed covariance time in seconds:     5.92
 1
  
  
@@ -770,6 +770,6 @@ Days until program expires : 307
          2.91E-02  3.79E-02  1.08E-01  1.70E-01  2.16E-01  3.78E-01  4.25E-01  5.62E-01  8.31E-01  1.08E+00  1.24E+00  1.41E+00
           1.91E+00  2.44E+00  4.16E+00
  
- #CPUT: Total CPU Time in Seconds,       16.473
+ #CPUT: Total CPU Time in Seconds,       10.753
 Stop Time:
-Fri Sep 12 15:19:27 UTC 2014
+Fri Oct 24 18:19:52 UTC 2014
