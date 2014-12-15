@@ -1,4 +1,3 @@
-globalVariables('guess_value')
 setGeneric('cast')
 setOldClass(c('keyed','data.frame'))
 setMethod(
