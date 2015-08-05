@@ -1,0 +1,44 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Sweave}{}
+
+\RequirePackage{ifthen}
+\newboolean{Sweave@gin}
+\setboolean{Sweave@gin}{false}  % JAR set to false
+\newboolean{Sweave@ae}
+\setboolean{Sweave@ae}{false}   % JAR set to false
+
+\DeclareOption{nogin}{\setboolean{Sweave@gin}{false}}
+\DeclareOption{noae}{\setboolean{Sweave@ae}{false}}
+\ProcessOptions
+
+\RequirePackage{graphicx,fancyvrb}
+\IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
+
+\ifthenelse{\boolean{Sweave@gin}}{\setkeys{Gin}{width=0.8\textwidth}}{}%
+\ifthenelse{\boolean{Sweave@ae}}{%
+  \RequirePackage[T1]{fontenc}  
+  \RequirePackage{ae}
+}{}
+
+% JAR edit:
+\lstnewenvironment{Sinput}
+ {\lstset{caption=\ , breaklines, basicstyle=\small\ttfamily,
+     literate={~}{\texttildelow}{2}, 
+     backgroundcolor=\color[rgb]{.88,.88,.99}}}
+ {\lstset{basicstyle=\ttfamily , breaklines}}
+% JAR edit
+\lstnewenvironment{Soutput}
+ {\lstset{breaklines,
+     basicstyle=\small\ttfamily\color[rgb]{.15,.35,.7},
+    literate={~}{\texttildelow}{1}}}
+ {\lstset{basicstyle=\ttfamily , breaklines}}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{fontshape=sl}
+
+
+\newenvironment{Schunk}{}{}
+
+\newcommand{\Sconcordance}[1]{%
+  \ifx\pdfoutput\undefined%
+  \csname newcount\endcsname\pdfoutput\fi%
+  \ifcase\pdfoutput\special{#1}%
+  \else\immediate\pdfobj{#1}\fi}

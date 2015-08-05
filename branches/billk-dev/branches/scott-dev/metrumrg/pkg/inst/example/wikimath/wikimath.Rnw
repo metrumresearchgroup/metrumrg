@@ -1,0 +1,98 @@
+\documentclass[titlepage]{article}
+\usepackage{listings}
+\lstMakeShortInline{|}
+\usepackage{courier}
+\usepackage[colorlinks,linkcolor=blue,citecolor=blue,urlcolor=blue,breaklinks=true]{hyperref}
+\lstset{basicstyle=\ttfamily\small , breaklines}
+\usepackage[left=3cm,top=3cm,bottom=3cm, right=3cm,includehead,includefoot]{geometry}
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+\rhead{Metrum Research Group LLC \\ }
+\lhead{\includegraphics[scale=.5]{logo.png}}
+\cfoot{Page \thepage\ of \pageref{LastPage}}
+\fancyhfoffset{.25in}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\footrulewidth}{0pt} 
+\setlength{\headheight}{23pt}
+\renewcommand{\labelitemiii}{$\circ$}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{courier}
+\usepackage{graphicx}
+\usepackage{tocbibind}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{upgreek}
+\usepackage{textpos}
+\usepackage{relsize}
+\usepackage{upquote}
+% Use \begin{landscape} and end{landscape} to rotate text %%%
+\usepackage{pdflscape}
+\usepackage{textcomp}
+\usepackage{float}
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+\usepackage[printonlyused,nohyperlinks]{acronym}
+\def\bflabel#1{{\large#1\ \ \ \ }\hfill}
+\usepackage{fixltx2e}
+\setlength{\belowcaptionskip}{10pt}
+\usepackage{Sweave}
+\SweaveOpts{keep.source=true}
+\SweaveOpts{eps=false} 
+\begin{document}
+\vspace*{2cm}
+\begin{center}
+\vspace{1.5cm}
+{\Large Wikimath}\\
+~\\
+\today\\
+~\\
+Tim Bergsma\\
+\end{center}
+\newpage
+
+\section*{Wikimath}
+<<handlers,echo=false,results=hide>>=
+library(metrumrg)
+@
+\subsection{writing wikimath expressions}
+Here we define a string of text.
+<<text>>=
+x <- "V_c /F (L * h^-1 ) ~theta_1 *(WT/70)^theta_2"
+@
+\subsection{extracting and supressing elements}
+Now we try x as a column name for a data frame.
+<<data.frame>>=
+d <- data.frame(subject=1,x=2)
+names(d)[2] <- wiki2label(x)
+d
+justUnits(x)
+@
+\subsection{identifying related parameters}
+What theta is primarily associated with this equation?
+<<theta>>=
+wiki2parameter(x)
+text2decimal(wiki2parameter(x))
+@
+\subsection{rendering in a table}
+Next we try it in a latex table.
+<<latex,results=tex>>=
+writeLines(tabular(data.frame(model=wiki2latex(noUnits(x)))))
+@
+\subsection{rendering in a figure}
+Finally we try it in a figure.
+<<figure,fig=true>>= https://stat.ethz.ch/pipermail/r-help/2008-August/171948.html
+library(lattice)
+print(densityplot(
+  ~v,
+  data.frame(v=rnorm(1000,mean=1)),
+  main=parse(text=wiki2plotmath(noUnits(x))),
+  xlab='volume (l)'
+))
+@
+<<echo=false,results=hide>>=
+if(file.exists('Rplots.pdf'))file.remove('Rplots.pdf')
+@
+\end{document}

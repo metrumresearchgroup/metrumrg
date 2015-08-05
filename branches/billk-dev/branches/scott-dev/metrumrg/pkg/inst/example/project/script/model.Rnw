@@ -1,0 +1,401 @@
+\input{settings.sty}
+\usepackage{Sweave}
+\SweaveOpts{keep.source=true}
+\SweaveOpts{eps=false} 
+\begin{document}
+\vspace*{2cm}
+\begin{center}
+{\Large Modeling}\\
+~\\
+\today\\
+~\\
+Tim Bergsma\\
+\end{center}
+\newpage
+
+\section{Purpose}
+This script runs NONMEM models and diagnostics for sample phase1 data.
+\section{Model Development}
+\subsection{Set up for NONMEM run.}
+<<model>>=
+#Be sure to set directory to the script directory that contains this file.
+library(metrumrg)
+command <- '/opt/NONMEM/nm73/nmqual/autolog.pl'
+cat.cov='SEX'
+cont.cov=c('HEIGHT','WEIGHT','AGE')
+par.list=c('CL','Q','KA','V','V2','V3')
+eta.list=paste('ETA',1:10,sep='')
+@
+\subsection{Run NONMEM.}
+<<run>>=
+NONR(
+     run=1001:1005,                       # 5 models, ctl pre-written
+     command=command,                    # this version will search for NONMEM
+     project='../nonmem',                 # must specify, unless ctl in getwd()
+     grid=TRUE,                          # set to FALSE for better error messaging (but slower)
+     nice=TRUE,                           # don't delete subversioned directories
+     checkrunno=FALSE,                    # TRUE auto-replaces conflicting run numbers
+     cont.cov=cont.cov,                   # see help for following
+     cat.cov=cat.cov,
+     par.list=par.list,
+     eta.list=eta.list,
+     grp='SEX',                           # separate diagnostic plots for each level of SEX
+     grpnames=c('female','male'),         # use these instead of 0, 1, when plotting by SEX
+     include.all=TRUE,                    # also show diagnostics with groups combined
+     plotfile='../nonmem/*/*.pdf',        # use the run dir and run name for the plot file 
+     streams='../nonmem/ctl'              # expect the control streams here, not locally
+)
+progress(1001:1005,project='../nonmem')
+follow(1001:1005,project='../nonmem')
+Sys.sleep(10)                             #wait briefly to ensure all processes complete
+@
+Covariance succeeded on model 1005.
+We confirm that we can get similar results with different initial estimates.
+<<tweak>>=
+getwd()
+ctl <- read.nmctl('../nonmem/1005/1005.ctl',parse=TRUE)
+names(ctl)
+ctl$theta[] <- lapply(ctl$theta,`comment<-`,value=NULL)
+writeLines(format(ctl$theta))
+set.seed(0)
+ctl$theta <- tweak(ctl$theta)
+writeLines(format(ctl$theta))
+ctl$prob
+ctl$prob <- '1006 like 1005 with tweaked initial estimates'
+@
+We request some variants of PRED and CWRES if running under NONMEM 7.3.
+<<cwres>>=
+ctl[[12]]
+preds <- c('NPRED','CPRED','CPREDI','EPRED')
+res <- c('RES','NRES','NWRES','CRES','RESI','WRESI','CRESI','CWRESI','CIWRES','CIWRESI','ERES','EWRES','ECWRES')
+ctl[[12]] <- c(ctl[[12]],preds, res)
+@
+<<>>=
+write.nmctl(ctl,file='../nonmem/ctl/1006.ctl')
+NONR(
+     run=1006,
+     command=command,
+     project='../nonmem',
+     grid=TRUE,
+     nice=TRUE,
+     mode='para',                         # For illustrative purposes, we parallelize this run.
+     pe='orte 16',                        # orte is the parallelization environment; we use 16 cores.
+     checkrunno=TRUE,                     # default
+     diag=TRUE,                           # default
+     streams='../nonmem/ctl',             # software will look for 1006.pmn or template.pmn
+     plotfile='../nonmem/*/*.pdf',
+     epilog='../../misc/epilog.R',
+     eta.list='ETA1'
+)
+Sys.sleep(5)
+qstat()
+follow(1006,project='../nonmem')
+Sys.sleep(20)
+@
+We can make a quick run log using some simple tools. Table \ref{runlog}.
+<<runlog>>=
+# intentionally including a bogus run, to test effect
+# don't want the 'wide' file, just the 'long' R object
+log <- rlog(1001:1007,'../nonmem',file=NULL) 
+head(log)
+tail(log)
+sapply(log,class)
+log$tool <- NULL
+log <- log[log$run!=1007,]
+unique(log$parameter)
+log <- log[log$parameter %in% c('ofv','prob','cov','min'),]
+log
+with(log, constant(moment,within=parameter))#i.e., moment is non-informative here.
+log <- data.frame(cast(log,run~parameter))
+log <- shuffle(log,'prob','run')
+log$ofv <- signif(digits=6,as.numeric(as.character(log$ofv)))
+@
+<<runlog,results=tex,echo=FALSE>>=
+writeLines(
+  ltable(
+    log,
+    caption='Run Log',
+    cap='Run Log',
+	  label='runlog'
+  )
+)
+@
+\section{Predictive Check}
+\subsection{Create a simulation control stream.}
+Convert control stream to R object.
+<<predict>>=
+ctl <- read.nmctl('../nonmem/ctl/1005.ctl')
+@
+Strip comments and view.
+<<strip>>=
+ctl[] <- lapply(ctl,function(rec)sub(' *;.*','',rec))          # read control stream into a list
+ctl                                                            # print it like text
+@
+Fix records of interest.
+<<fix>>=
+ctl$prob                                                       # problem statement
+ctl$prob <- sub('1005','1105',ctl$prob)                        # substitute new run number
+names(ctl)
+names(ctl)[names(ctl)=='theta'] <- 'msfi'                      # replace theta with final msfi
+ctl$msfi <- '=../1005/1005.msf'
+ctl$omega <- NULL                                              # drop omega, sigma
+ctl$sigma <- NULL
+names(ctl)[names(ctl)=='estimation'] <- 'simulation'           # simulate instead of estimate
+ctl$simulation <- 'ONLYSIM (1968) SUBPROBLEMS=500'             
+ctl$cov <- NULL                                                # drop covariance step
+ctl$table <- NULL                                              # replace multiple tables with one
+ctl$table <- NULL
+ctl$table <- 'DV NOHEADER NOPRINT FILE=./1105.tab FORWARD NOAPPEND' # only really need DV, save file space
+write.nmctl(ctl,'../nonmem/ctl/1105.ctl')
+@
+\subsection{Run the simulation.}
+This run makes the predictions (simulations).
+<<sim>>=
+NONR(
+     run=1105,
+     command=command,
+     project='../nonmem',
+     grid=TRUE,
+     nice=TRUE,
+     diag=FALSE,
+     streams='../nonmem/ctl'
+)
+follow(1105,project='../nonmem')
+Sys.sleep(80) # let all processes complete
+@
+\subsection{Combine the original data and the simulation data.}
+Now we fetch the results and integrate them with the other data.
+<<fetch>>= 
+x <- superset(
+  run=1105,
+  project='../nonmem',
+  read.output=list(read.table,header=FALSE)
+)
+x <- x[,c('SUBJ','TIME','DV','V1','1105')]
+read.nmctl('../nonmem/1105/1105.ctl')$simulation
+x$SIM <- rep(1:500,each=nrow(x)/500)
+colname(x) <- c(V1='PRED')
+x <- x[x$`1105`==1,]
+x$`1105` <- NULL
+head(x)
+nrow(x)
+str(x)
+x <- x[x$DV != '.',]
+x$DV <- as.numeric(x$DV)
+@
+\subsection{Plot predictive checks.}
+\subsubsection{Aggregate data within subject.}
+Since subjects may contribute differing numbers of observations, it may
+be useful to look at predictions from a subject-centric perspective.
+Therefore, we wish to calculate summary statistics for each subject, 
+(observed and predicted) and then make obspred comparisons therewith.
+<<subject>>=
+head(x)
+subject <- melt(x,measure.var=c('DV','PRED'))
+head(subject)
+@
+We are going to aggregate each subject's DV and PRED values using cast().
+cast() likes an aggregation function that returns a list.
+We write one that grabs min med max for each subject, sim, and variable.
+<<metrics>>=
+metrics <- function(x)list(min=min(x), med=median(x), max=max(x))
+@
+Now we cast, ignoring time.
+<<cast>>=
+subject <- data.frame(cast(subject, SUBJ + SIM + variable ~ .,fun=metrics))
+head(subject)
+@
+Note that regardless of SIM, DV (observed) is constant.
+
+Now we melt the metrics.
+<<metrics>>=
+metr <- melt(subject,measure.var=c('min','med','max'),variable_name='metric')
+head(metr)
+metr$value <- reapply(
+	metr$value,
+	INDEX=metr[,c('SIM','variable','metric')],
+	FUN=sort,
+	na.last=FALSE
+)
+metr <- data.frame(cast(metr))
+head(metr)
+nrow(metr)
+metr <- metr[!is.na(metr$DV),]#maybe no NA
+nrow(metr)
+@
+We plot using lattice.
+<<qq,fig=TRUE>>=
+print(
+	xyplot(
+		PRED~DV|metric,
+		metr,
+		groups=SIM,
+		scales=list(relation='free'),
+		type='l',
+		panel=function(...){
+			panel.superpose(...)
+			panel.abline(0,1,col='white',lwd=2)
+		}
+	)
+)
+@
+
+For detail, we show one endpoint, tossing the outer 5 percent of values, and 
+indicating quartiles. Technically, though, one may want to calculate quartiles
+befor trimming the data.
+<<qqdetail,fig=TRUE>>=
+med <- metr[metr$metric=='med',]
+med$metric <- NULL
+head(med)
+trim <- inner(med, id.var=c('SIM'),measure.var=c('PRED','DV'))
+head(trim)
+nrow(trim)
+trim <- trim[!is.na(trim$DV),]
+nrow(trim)
+head(trim)
+print(
+	xyplot(
+		PRED~DV,
+		trim,
+		groups=SIM,
+		type='l',
+		panel=function(x,y,...){
+			panel.xyplot(x=x,y=y,...)
+			panel.abline(0,1,col='white',lwd=2)
+			panel.abline(
+				v=quantile(x,probs=c(0.25,0.5,0.75)),
+				col='grey',
+				lty=2
+			)
+		}
+	)
+)
+@
+
+We also show densityplots of predictions at those quartiles.
+<<qqdensity,fig=TRUE>>=
+head(trim)
+quantile(trim$DV)
+molt <- melt(trim, id.var='SIM')
+head(molt)
+quart <- data.frame(cast(molt,SIM+variable~.,fun=quantile,probs=c(0.25,0.5,0.75)))
+head(quart)
+molt <- melt(quart,id.var='variable',measure.var=c('X25.','X50.','X75.'),variable_name='quartile')
+head(molt)
+levels(molt$quartile)
+levels(molt$quartile) <- c('first quartile','second quartile','third quartile')
+head(molt)
+levels(molt$variable)
+molt$variable <- factor(molt$variable,levels=c('PRED','DV'))
+print(
+	densityplot(
+		~value|quartile,
+		molt,
+		groups=variable,
+		layout=c(3,1),
+		scales=list(relation='free'),
+		aspect=1,
+		panel=panel.superpose,
+		panel.groups=function(x,...,group.number){
+			if(group.number==1)panel.densityplot(x,...)
+			if(group.number==2)panel.abline(v=unique(x),...)
+		},
+		auto.key=TRUE
+	)
+)
+@
+\section{Bootstrap Estimates of Parameter Uncertainty}
+\subsection{Create directories.}
+<<bootstrap>>=
+getwd()
+dir.create('../nonmem/1005boot')
+dir.create('../nonmem/1005bootdata')
+dir.create('../nonmem/1005bootctl')
+@
+\subsection{Create replicate control streams.}
+<<control>>=
+ctl <- clear(readLines('../nonmem/ctl/1005.ctl'),';.+',fixed=FALSE)
+#ctl <- read.nmctl('../nonmem/1005/1005.ctl')
+ctl <- as.nmctl(ctl)
+names(ctl)
+ctl$cov <- NULL
+ctl$table <- NULL
+ctl$table <- NULL
+ctl$prob
+ctl$data
+
+#makes nice padded run directories like 001 instead of 1 (better directory sorting) to be used below
+RUN <- padded(1:300) 
+
+invisible(
+  lapply(
+    RUN,
+    function(i,ctl){
+      ctl$prob <- sub('1005',i,ctl$prob)
+      ctl$data <- sub(
+        '../../data/derived/phase1.csv',
+        sub('\\*',i,'../../1005bootdata/*.csv'),
+        ctl$data
+      )
+      write.nmctl(ctl,file=glue('../nonmem/1005bootctl/',i,'.ctl'))
+    },
+    ctl=ctl
+  )
+)
+@
+\subsection{Create replicate data sets by resampling original.}
+<<resample>>=
+ bootset <- read.csv('../data/derived/phase1.csv')
+ r <- resample(
+ 	bootset,
+ 	names=RUN,
+ 	key='ID',
+ 	rekey=TRUE,
+ 	out='../nonmem/1005bootdata',
+ 	stratify='SEX'
+ )
+@
+\subsection{Run bootstrap models.}
+<<boot>>=
+#intentionally trying a non-existent run ... 1 should be 001 per above. 
+#Parentheses force display of invisible NONR result.
+(NONR(
+     run=1,
+     wait=FALSE,
+     grid=TRUE,
+     project='../nonmem/1005boot',
+     streams='../nonmem/1005bootctl',
+     command=command
+))
+NONR(
+     run=RUN,
+     wait=FALSE,
+     grid=TRUE,
+     project='../nonmem/1005boot',
+     streams='../nonmem/1005bootctl',
+     command=command
+)
+
+qstat()
+follow(RUN,project='../nonmem/1005boot')
+Sys.sleep(5)
+
+boot <- rlog(
+	run=RUN,
+	project='../nonmem/1005boot',
+	append=FALSE,
+	tool='nm7',
+  file=NULL
+)
+write.csv(boot, '../nonmem/1005bootlog.csv')
+Sys.sleep(5)
+@
+\section{File Disposition}
+Predictive checks and bootstraps make huge files that need not be retained.
+<<cleanup>>=
+unlink('../nonmem/1105',recursive=TRUE)
+unlink('../nonmem/1005boot',recursive=TRUE)
+unlink('../nonmem/1005bootdata',recursive=TRUE)
+unlink('../nonmem/1005bootctl',recursive=TRUE)
+@
+\end{document}

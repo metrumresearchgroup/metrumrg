@@ -1,0 +1,170 @@
+\input{settings.sty}
+\usepackage{Sweave}
+\SweaveOpts{keep.source=true}
+\SweaveOpts{eps=false} 
+\begin{document}
+\vspace*{2cm}
+\begin{center}
+{\Large Parameter Table}\\
+~\\
+\today\\
+~\\
+Tim Bergsma\\
+\end{center}
+\newpage
+
+\section{Purpose}
+This script picks up after model.Rnw to process bootstrap results and make a parameter table. It assumes the current working directory is the script directory containing this file.
+\subsection{Package}
+<<more>>= 
+library(metrumrg)
+@
+\section{inputs}
+`wikitab' gives us a quick synthesis of `rlog' and the `lookup' of wiki notation in 1005.ctl.
+We do some science on the result first, and then some aesthetics for printing in a \LaTeX table.  Table \ref{p1005}.
+<<params>>=
+tab <- wikitab(1005,'../nonmem')
+tab$estimate <- signif(as.numeric(tab$estimate),3)
+tab$tool <- NULL
+tab$run <- NULL
+tab$se <- NULL
+tab
+@
+Now we can extract some information from the model statements.
+<<model>>=
+tab$units <- justUnits(tab$model)
+tab$model <- noUnits(tab$model)
+tab$name <- with(tab, wiki2label(model))
+tab[c('model','units','name')]
+@
+\section{variance}
+The estimates for the matrix diagonals are variances, and their square roots have special meaning.  In model 1005, interindividual variability was modelled exponentially, in which case square root of variance gives an approximate CV; alternatively, and exact CV can be calculated.  For proportional error terms like ERR1, square root gives an exact CV.  For additive error terms like ERR2, square root gives standard deviation.
+
+We can use functions of `parameter' to sort out the various error components, as they are used in this model. 
+\subsection{exponential}
+<<exponential>>=
+expo <- is.iiv(tab$parameter) & is.diagonal(tab$parameter)
+tab$parameter[expo]
+tab$cv[expo] <- cvLognormal(tab$estimate[expo])
+tab[,c('parameter','name','estimate','cv')]
+@
+\subsection{proportional}
+<<proportional>>=
+writeLines(read.nmctl('../nonmem/ctl/1005.ctl')$err)
+prop <- is.random(tab$parameter) & tab$name %contains% 'prop'
+tab$parameter[prop]
+tab$cv[prop] <- sqrt(tab$estimate[prop])
+tab[,c('parameter','name','estimate','cv')]
+@
+\subsection{additive}
+<<additive>>=
+add <- is.residual(tab$parameter) & tab$name %contains% 'add'
+tab$parameter[add]
+tab$sd[add] <- sqrt(tab$estimate[add])
+tab[,c('parameter','name','estimate','cv','sd')]
+@
+\section{covariance}
+The estimates of matrix off-diagonals are covariances, and are more useful if transformed to correlations.  We could extract the matrices manually, or use package shortcuts.
+<<correlation>>=
+cor <- omegacor(run=1005,project='../nonmem')
+cor
+half(cor)
+offdiag(half(cor))
+off <- is.iiv(tab$parameter) & is.offdiagonal(tab$parameter)
+tab$parameter[off]
+tab$cor[off] <- offdiag(half(cor))
+tab[,c('parameter','name','estimate','cv','sd','cor')]
+@
+\section{confidence interval}
+We wish to include 95 percentiles in our table as confidence intervals.
+<<confidence>>=
+boot <- read.csv('../nonmem/1005bootlog.csv',as.is=TRUE)
+head(boot)
+boot <- boot[boot$moment=='estimate',]
+boot <- data.frame(cast(boot,...~moment))
+head(boot)
+boot <- boot[,c('run','parameter','estimate')]
+sapply(boot,class)
+boot$estimate <- as.numeric(as.character(boot$estimate))
+unique(boot$parameter)
+quan <- function(x,probs)as.character(signif(quantile(x,probs=probs,na.rm=TRUE),3))
+boot$lo <- with(boot, reapply(estimate,parameter,quan,probs=.05))
+boot$hi <- with(boot, reapply(estimate,parameter,quan,probs=.95))
+head(boot)
+boot <- unique(boot[,c('parameter','lo','hi')])
+boot
+boot$ci <- with(boot, parens(glue(lo,',',hi)))
+boot
+tab <- stableMerge(tab,boot[,c('parameter','ci')])
+tab
+@
+\section{aesthetics}
+Here we format the table for printing.
+<<format>>=
+tab$name <- NULL
+tab$parameter <- NULL
+tab$model <- wiki2latex(tab$model)
+tab$estimate <- as.character(tab$estimate)
+tab$estimate <- paste(tab$estimate,'$', tab$units,'$')
+tab$units <- NULL
+@ 
+Note that no parameter defines more than one of CV, SD,and COR.  We could collapse these into a single column, and add a descriptive flag.
+<<statistic>>=
+m <- as.matrix(tab[,c('cv','sd','cor')])
+tab$variability <- suppressWarnings(apply(m,1,max,na.rm=TRUE))
+tab$variability[is.infinite(tab$variability)] <- NA
+i <- is.defined(m)
+i[!i] <- NA
+tab$statistic <- apply(i,1,function(x){
+  p <- colnames(i)[x]
+  ifelse(all(is.na(p)),NA,p[!is.na(p)])
+})
+toPercent <- with(tab, !is.na(statistic) & statistic=='cv')
+tab$variability[toPercent] <- percent(tab$variability[toPercent])
+tab$variability <- as.character(signif(tab$variability,3))
+tab$statistic <- map(tab$statistic,from=c(NA,'cv','cor','sd'),to=c(NA,'\\%CV','CORR','SD'))
+tab$variability <- paste(tab$statistic,tab$variability,sep=' = ')
+tab$variability[is.na(tab$statistic)] <- NA
+tab$statistic <- NULL
+tab$cv <- NULL
+tab$sd <- NULL
+tab$cor <- NULL
+@
+<<partab,results=tex,echo=FALSE>>=
+writeLines(
+  ltable(
+	  tab,
+    caption='Parameter Estimates from Population Pharmacokinetic Model Run 1005',
+	  cap='Model 1005 Parameters',
+	  label='p1005'
+  )
+)
+@
+\section{simple parameter table}
+We can make a quick parameter table that does not use wikitab markup. Table \ref{simple}.
+<<simpletab>>=
+tab <- rlog(1005,'../nonmem',tool='nm7',file=NULL)
+head(tab)
+tab$tool <- NULL
+tab$run <- NULL
+tab <- tab[tab$moment %in% c('estimate','prse'),]
+unique(tab$parameter)
+tab$value <- signif(as.numeric(tab$value),3)
+tab$parameter <- factor(tab$parameter,levels=unique(tab$parameter))#to preserve row order during cast
+tab <- cast(tab,parameter~moment)
+tab
+tab$parameter <- parameter2wiki(tab$parameter)
+tab
+tab$parameter <- wiki2latex(tab$parameter)
+tab
+@
+<<simpletab,results=tex,echo=false>>=
+writeLines(
+  ltable(
+    tab,
+    caption='Simple Parameter Table',
+	  label='simple'
+  )
+)
+@
+\end{document}
