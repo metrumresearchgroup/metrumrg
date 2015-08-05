@@ -43,7 +43,7 @@ NONR(
 	eta.list = NULL, 
 	missing = -99,
 	interface='autolog.pl',
-	q='all.q',
+	q=NA,
 	pe=NA
 )
 }
