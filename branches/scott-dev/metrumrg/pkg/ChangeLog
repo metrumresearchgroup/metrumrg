@@ -1,0 +1,510 @@
+5.58
+
+* change default queue to NA
+
+5.57
+
+* failed diagnostic plots give an error message rather than breaking PLOTR.
+* variant is respected by diagnosticPlots when include.all is TRUE.
+* read.spec strips only balanced double quotes rather than all quotes.
+
+5.56
+
+* as.define.spec, as.pdf.define, tabular.define give a convenient aesthetic for displaying spec objects.
+* read.spec strips double quotes by default.
+* significance defaults to 20 digits for range estimation in specification.
+* respecify updates spec ranges.
+* toSAS methods are included for writing date/time objects to XPT files.
+* tabular and as.document support rowgroup and columngroup labels.
+* tabular and ltable support alternate fontsizes for source and file attributions.
+* new tabular and ltable methods are added for table and matrix.
+* electronicAppendix supports export of prior revisions and has default `as'.
+* omegacov and sigmacov are new variants of omegacor and sigmacor.
+* shuffle forces column names to be unique.
+* NONR gives a warning if user tries to wait for more than 99 runs.
+* in rlog, cov is -1 instead of zero if covariance not requested.
+* fork namespace is required where necessary.
+* Ops.keyed reverts to native dispatch mechanism.
+* diagnostic plots recognize NM73 RES/PRED reserved terms.
+* functions rig, moot, etc. are removed.
+* bugfix for xpath2frame.
+* bugfix for is.diagonal.
+* bugfix for format.comment.
+* bugfix for range checking in matches.
+
+5.55
+
+* [.keyed is more robust when assigning 'defined' for various vector types.
+* cwresPlots looks for CIRES, CIWRES, CIWRESI in addition to the usual variants.
+* diagnosticPlots is now aware of CIRES, CIWRES, CIWRESI, PREDI, CIPRED.
+* map gains an argument: strict.
+* metaMerge methods have bug fixes and additions.
+* NONR72 is eliminated and NONR inherits its defaults.
+* PLOTR conditionally backtransforms PREDI and CIPRED.
+* specification.data.frame has a bug fix.
+* superset supports wider range of NONMEM syntax.
+* wiki2latex and wiki2plotmath allow their defaults to be overridden.
+
+5.54
+
+* rlog fixes a bug where failed covariance step was reported as 0 instead of 1.
+* Example scripts have been rerun.
+
+5.53
+
+* accept now has arguments for lib, lib.loc, and type; it now logs the paths of packages.
+* NONR, NONR72, runNonmem, runCommand, and PLOTR now have dots in the second position of argument list, to prevent accidental partial matching.
+* makePreamble is introduced for greater control of as.document and as.pdf. Related functions are reorganized.
+* constant has default for argument within
+* as.spec and related functions support creation and enforcement of data properties
+
+5.52
+
+* prev supports factors.
+* merge.nm is undefined.
+* as.nm no longer limits the significance of time variables.
+* runhead and prev now return logical(0) if argument is logical(0).
+* superset supports Fortran 95 comparison operators, e.g. IGNORE=(REP > 0), etc.
+
+5.51
+
+* Better logic for ignore functionality under superset.
+* iterations is tolerant of NUMSIGDIG.
+* worker directories purged by default in purgeRunDir, etc.
+* Categorical covariates (cat.cov) in PLOTR are coerced to factor.
+* snap accepts non-finite elements.
+* rlog tolerates runs with maxeval:0.
+* NONR:checkrunno works with control streams having comments after $PROBLEM.
+* tabular.data.frame picks up source and file arguments, as for ltable.
+* tabular.data.frame supports row color.
+* [.keyed supports detection of defined elements.
+* New functions: combinations, supp, nondecreasing, nonincreasing, monotonic.
+
+5.50
+
+* bugfix for only: broken since 5.46.
+
+5.49
+
+* c.timepoint, seq.timepoint, rep.timepoint, [.timepoint, and [[.timepoint have been replaced with *.timeline equivalents.  Intent is to support basic manipulations for duration objects as well as timepoint objects, both of which inherit from timeline.
+
+5.48
+
+* Further attempt to meet line length restrictions.
+
+5.47
+
+* Documentation has been altered to comply with new CRAN line length restrictions.
+
+5.46
+
+* reapply returns same class as FUN; since 5.35 class has been that of x.
+* only is rewritten without ifelse, so that it does not unclass its argument.
+* melt.keyed now gives a message if id.vars defaults to the key.
+
+5.45
+
+* crosses has been rewritten to solve a bug.  crosses(c(1,1,1),c(1,2,2)) now gives F T T not F T F.
+
+5.44
+
+* example(xpath2frame) is now not run, with explanation.
+
+5.43
+
+* The examples for xpath2frame trap the case where libxml version is 2.8; problems there are suspected.
+
+5.42
+
+* This version attempts to fix a CRAN test error that occurs for an xpath2frame example: Casting formula contains variables not found in molten data: obj, node.
+
+5.41
+
+* A bug is fixed in the keyed method for cast: it prevented type coercion for 'value' columns with where length of class was greater than one.
+
+* An example is added illustrating cast(keyed(x)).  See ?melt.keyed.
+
+5.40
+
+* All metrumrgURL examples in help files are now configured not to run automatically.
+
+* NONR now calls fork::handleSIGCLD and fork::exit explicitly.
+
+* Additional error trapping is added for xpath2frame.
+
+5.39
+
+* Support is added for finding the difference of two timepoints.
+
+5.38
+
+* xlog and xpath2frame are introduced experimentally to deal with multiple xpath expressions.
+
+5.37
+
+* NONR72 now writes command to cat file.
+
+* runNonmem now accepts pe argument (default NA). Only if pe is defined, and attempt is made to copy the parallelization file.  If the file is not found, a message is written to run.cat. template.pnm is now sought in the parent of 'command' if not found in the streams directory.
+
+5.36
+
+* Bugfix in 'cast' method for class 'keyed': there is now an explicit search for 'as' function if and when restoring class of 'value'. see ?`cast,keyed-method`.
+
+* This ChangeLog is introduced.
+
+5.35
+
+* Implementation of reapply is modernized, greatly simplifying the code and increasing speed about 6-fold. 'where' is now a true subset argument, rather than a mere NA generator.
+
+5.34
+
+* as.digest.data.frame has been completely rewritten.
+
+* as.digest.nm now passes dots arguments.
+
+* summary method for keyed now gives number of unsorted rows.
+
+* uniKey now uses \r internally as an element separator to reduce conflation of keys.
+
+* classes nominal and temporal are renamed to duration and timepoint; both are subclasses of timeline.
+
+* better support for adding and subtracting timeline objects.
+
+* crosses gains an 'all' argument.
+
+* aug follows transform's conventions: _data is first argument and expressions are evaluated in parent frame.
+
+* lyse.data.frame now returns keyed data frames.
+
+* superset strips blank lines from $INPUT when parsing control streams.
+
+5.33
+
+The special value NA for the argument 'as' was not respected after data.frame changed the way matrix names are handled.  A workaround is implemented.  Several minor edits were made to help files.
+
+5.32
+
+* A bug in runCommand prevented 'interface' from being specified as a function rather than function name.
+
+* A bug in rlog prevented dots from being passed to as.unilog.run, e.g. to control extfile.
+
+5.31
+
+* as.digest.data.frame supplies a key for any dynamic residual table.
+
+* as.keyed now has a default key: character(0).
+
+* For keyed objects, methods are defined for melt (S3) and cast (S4).
+
+5.30
+
+* Recent changes to xpath were causing a problem in rlog that was mistakenly attributed to .minstat.  Reverting to prior versions pending resolution.
+
+5.29
+
+* rlog calls .minstat, which now returns NA instead of NULL if termination_status is not in *.xml.  
+
+* General improvements to sortedInstall, courtesy of N. Hsiang.
+
+5.28
+
+* Better support for character model names in NONR.
+
+* as.vector.keyed method returns the names of a keyed data frame.
+
+* Binary operators are defined for set relations, e.g. %u% for union.
+
+* ncomma reports names of an object, delimited with commas.
+
+* pe is formal argument to NONR72.
+
+* Operators  *, /, and ! are defined for keyed data frames.
+
+* shuffle accepts logical and numeric values for 'who', and character, integer, NA, or NULL for 'after'.
+
+* Group generic Summary is implemented for class temporal.  Gives date ranges formatted as dates, etc.
+
+* Succinct messaging is implemented for Ops.keyed: displays only the first 5 to 7 matching column names.
+
+* Improvements to xpath courtesy of Klaas Prins: now works for matrices.
+
+* Better algorithm for finding par files in control streams.
+
+* suppressed warnings in isSubversionedFile.
+
+5.27
+
+* template.pmn is now template.pnm.
+
+5.26
+
+* metrumrg 5.26 adds a citation, also listed on the homepage for this site.  
+
+* It improves INPUT handling for control streams (ignoring leading whitespace). 
+
+* It traps some esoteric errors in superset.  
+
+* WRES is added to the canonical list of residuals, plottable by PLOTR, etc.  
+
+* PLOTR(logtrans=TRUE) now recognizes the full list of DV and PRED variants.  
+
+* /opt/nonmem is now a search path for findNonmemCommand, in addition to /opt/NONMEM.
+
+5.25
+
+* metrumrg 5.25 makes minor edits to various help files. 
+
+* superset now strips comments before parsing input record from NONMEM control stream.
+
+5.24
+
+* metrumrg 5.24 fixes a bug in superset:  white space surrounding commas in an ignore statement of a control stream is now stripped.  
+
+* New functions bundleRead and nasum are included, courtesy of Natalie Hsiang.  
+
+* sortedInstall has been updated.
+
+5.23
+
+metrumrg 5.23 fixes the help example for xpath, which did not work with metrumrg as packaged.
+
+5.22
+
+* The head method for class digest is defined.
+
+* as.nm.R has an exception message altered for the new definition of 'crosses.
+
+* [[.nmctl is redefined to give the expected result.
+
+* crosses, %crosses%, %crossed.on%, %nests%, %nested.in%, and constant() are 
+completely reworked for consistency.
+
+* is.defined ... well ... is defined.
+
+* pool is defined.
+
+* convertLines is defined.
+
+* cwresPlots now supports all variants of RES in NONMEM 7.2.0. Variants of 
+PRED already supported in 5.21.
+
+* ltable now supports embedding source and filename references in the table.
+
+* In NONR, rlog, runCommand, runNonmem, partab, wikitab: 'wait' 
+replaces 'boot';  'purge' replaces 'pattern'.
+
+* random is defined.
+
+* experimental 'where' argument added to reapply.
+
+* .boot and *.lock directories are no longer created or sought.
+
+* purgeRunDir provides uniform directory cleanup.
+
+* runCommand deconstructs the bootstrap queue.
+
+* xpath is defined.
+
+* runNonmem is pmn-aware.
+
+5.21
+
+* Bugs are fixed in padded, as.day.week, and [.keyed.
+
+* Support is introduced for plotting arbitrary variants of residuals tabled by NONMEM.
+
+5.20
+
+* PLOTR now returns the plotting data set invisibly.  Formerly, it did not have an explicit return value.
+
+5.19
+
+* metrumrg 5.19 supports interconversion among nominal time units: second, minute, hour, day, week, month, year.  See help for "as.second".
+
+5.18
+
+NONR has been significantly redrafted ...
+
+* concurrent now defaults to grid & !boot.
+
+* Experimental 'delay' has been dropped.
+
+* NONR now has an invisible return value.
+
+* runCommand and runNonmem have return values.
+
+* NONR help has example invocations.
+
+* cleanup does not remove INTER (needed by runstate).
+
+* most errors are now silent return values.
+
+* most warnings are now dumped to run.cat.
+
+* new functions progress, follow, and qstat help resolve run state.
+
+
+rlog and related functions have been redrafted ...
+
+* default tool for partab, rlog, and as.unilog.run is now 'nm7' instead of 'nm6'
+
+* cleanup does not remove INTER (needed by runstate).
+
+* runstate supports testfile "indifference".
+
+* runlog tries to give a more meaningful minimization status than just 1/0.
+
+* rlog returns min: -1 for missing runs, rather than issuing a warning.
+
+* rlog returns min:error for "running" runs (rather than ignoring).
+
+
+Additionally ...
+
+* as.nmctl no longer gives 80 column warning.
+
+* new function 'tweak' adjusts initial estimates in a control stream.
+
+* new function 'padded' pads numbers on the left with zeros, to specified width.
+
+* superset now can grow the input data to match the dimensions of nrow-multiple output table.
+
+5.17
+
+* metrumrg 5.17 introduces classes "init" and "initList" (@rev 114).  The $THETA record of a NONMEM control stream can be represented as a numbered list of "init" objects, rather than just a character vector.  "init" and "initList" support programmatic manipulation of model initializations.  See examples for "init".
+
+5.16
+
+* NONR calls fork::fork to distinguish from multicore::fork.
+
+* In helpBrowse, relationships between online and local vignettes are explicit.
+
+* AUC now gives warnings if critical columns contain NA; help page updated.
+
+* Experimental support in rlog() for SAEM method.
+
+* Bugfix: partab now supports tables with only one row.
+
+* NONR has a delay argument that introduces time between run invocations (experimental).
+
+* PLOTR has an experimental option to use superset instead of dataSynthesis.
+
+* superset includes a run-specific ignore flag.
+
+* superset allows four options for excluding redundant columns.
+
+* new function ignored returns a logical vector indicating which rows NONMEM ignored.
+
+5.15
+
+* iterations uses better subsetting.  
+
+* seq.temporal allows more varied invocations.  
+
+* PLOTR is more cautiously conditional in what it attempts to plot.  
+
+* PLOTR now accepts include.all=TRUE, which gives an additional set of global diagnostics when groups have been specified.  
+
+* findNonmemCommand helps locate NONMEM executables.
+
+* NONR now makes a verbose attempt to supply "command" using this function. 
+
+* Bugfix for the epliog argument of NONR.  
+
+* Bugfix ("3G") for text2decimal.
+
+5.14
+
+* metrumrg 5.14 fixes a bug in superset:  NAs now have more predictable interpretation.  
+
+* Better help for LDOS in as.nm.
+
+* Better dots handling in as.digest.data.frame.
+
+5.13
+
+* The development version of R issues warnings when checking 5.12:  several arguments are identified by partial matching of argument names.  Fixed here.
+
+5.12
+
+* metrumrg 5.12 fixes bugs in noPk.nm, as.digest.data.frame, [.conditioned, format.legacy, and index.isolated.
+
+5.11
+
+* metrumrg 5.11 fixes a bug in as.digest.keyed.
+
+5.10
+
+* metrumrg 5.10 has new functions:  superset, digest, lyse, dynamic, sortedInstall (welcome author Natalie Hsiang), as.best.comment, as.best.temporal, as.data.frame.keyed.  
+
+* metaMerge no longer has a groom argument, and binding proceeds from left to right (first frame is merged with merge of remaining, recursively).  
+
+* as.best.data.frame has more-informative error messages.
+
+*as.best.default tries to do something intelligent for mixed character-numeric.
+
+5.9
+
+* raised.keyed has been redefined as a serial left join.
+
+* Generic static with data.frame method has been introduced.
+
+* getdname is now generic.
+
+* text2decimal now supports scientific notation, with extended example.
+
+* functions.R includes undocumented experimental utilities for supersetting datasets.
+
+5.8
+
+* The function addl is now generic, with a default method and a method for data.frame.  
+
+* A bug is fixed in rlog, which now allows passing of "dots" arguments to called functions.  
+
+* raised.keyed is introduced as a proxy for ^.keyed: experimental and subject to change.
+
+5.7
+
+* In metrumrg 5.7, as.pdf.tex becomes tex2pdf, since it is really not a method for as.pdf.  
+
+* unique.comment is added so that comments are not unclassed when tested for unique values.  
+
+* A sasdate method has been added for as.mDate.  
+
+* as.best is a new grooming generic with methods for vectors and data.frames.  
+
+* metaMerge is a multi-way merge generic with methods for data.frames and character vectors.  
+
+* addl is a new function that aids compaction of nonmem records using ADDL and II.  
+
+* xyplot.ext is now xyplotExt so that it does not look like an attempt to give a method for xyplot.
+
+5.6
+
+* viewtex calls as.pdf.tex to wrap the contents of a tex file appropriately and display it in the default pdf viewer.  By default, viewtex deletes intermediate files after 1 second (presumably enough time to get them open).  You can also pass onefile=TRUE, which is an argument to as.pdf.tex.
+
+5.5
+
+* data/ctl has moved.  
+
+* metrumrgURL has been implemented for offline access to internal help files.
+
+5.4
+
+* metrumrg 5.4 has a new entry on the main help page.  The 'browse' link takes you to a list of annotated scripts that demonstrate various pharmacometric tasks using metrumrg tools.  Some involve NONMEM; for full reproducibility, check out the repository onto a machine with an NMQual-mediated NONMEM 7.2 installation.
+
+5.3
+
+* metrumrg 5.3 fixes a bug in resample.data.frame().  If the user supplied the extra argument 'na', it was partially-matched to the 'name' argument of a function defined internally, preventing intended use.
+
+* The pattern argument for rlog has been augmented.
+
+5.2
+
+* as.pdf and related functions support creating pdf's directly from data frames.  The utility 'pdflatex' must already be present at the OS level, and visible on the command line.
+
+5.1
+
+* metrumrg 5.1 is essentially a clone of MIfuns 5.1. Package name has changed to more accurately reflect sponsorship.  See mifuns.googlecode.com for prior versions.
+
+
