@@ -199,6 +199,7 @@ tabular.data.frame <- function(
   basefile=FALSE,
   tabularEnvironment='tabular',
   footnote.size = 'tiny',
+  endhead=FALSE,
   ...
 ){
   #groom arguments 
@@ -254,6 +255,7 @@ tabular.data.frame <- function(
   justify[!is.na(colwidth)] <- colwidth[!is.na(colwidth)]
   format <- tabularformat(justify=justify, breaks=colbreaks, walls=walls) #ready
   header <- row2tabular(names(x)) #ready
+  if (endhead) header <- paste(header,'\\hline \\endhead')
   if(grouprows & groupcols) colgroups <- c('',colgroups)
   multicol <- function(x,colbreaks,justify,walls){
     node <- runhead(x)

@@ -84,6 +84,7 @@ column in the first position.
 	'\\\\caption*{',caption,'}\\\\\\\\'),
 	prepos = 1,
 	headerBold = TRUE,
+  endhead=FALSE,
 	...
 )
 \method{tabular}{matrix}(x, ...)
@@ -241,6 +242,7 @@ viewtex(x,delete=TRUE,latency=1,...)
   \item{delete}{whether temporary pdf (_doc.pdf) should persist}
   \item{latency}{how many seconds to wait before deleting temporary pdf}
   \item{footnote.size}{font size for source and file attributions}
+  \item{endhead}{for \code{define}, if TRUE header row will repeat across pages. Default = FALSE}
   \item{\dots}{passed to called functions}
 }
 \details{
