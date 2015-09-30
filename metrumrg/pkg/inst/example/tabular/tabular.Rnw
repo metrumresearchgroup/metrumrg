@@ -1,0 +1,147 @@
+\documentclass[titlepage]{article}
+\usepackage{listings}
+\usepackage{xcolor,colortbl}
+\usepackage{multirow}
+\usepackage{courier}
+\usepackage[colorlinks,linkcolor=blue,citecolor=blue,urlcolor=blue,breaklinks=true]{hyperref}
+\lstset{basicstyle=\ttfamily\small , breaklines}
+\usepackage[left=3cm,top=3cm,bottom=3cm, right=3cm,includehead,includefoot]{geometry}
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+\rhead{Metrum Research Group LLC \\ }
+\lhead{\includegraphics[scale=.5]{logo.png}}
+\cfoot{Page \thepage\ of \pageref{LastPage}}
+\fancyhfoffset{.25in}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\footrulewidth}{0pt} 
+\setlength{\headheight}{23pt}
+\renewcommand{\labelitemiii}{$\circ$}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{courier}
+\usepackage{graphicx}
+\usepackage{tocbibind}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{upgreek}
+\usepackage{textpos}
+\usepackage{relsize}
+\usepackage{upquote}
+% Use \begin{landscape} and end{landscape} to rotate text %%%
+\usepackage{pdflscape}
+\usepackage{textcomp}
+\usepackage{float}
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+\usepackage[printonlyused,nohyperlinks]{acronym}
+\def\bflabel#1{{\large#1\ \ \ \ }\hfill}
+\usepackage{fixltx2e}
+\setlength{\belowcaptionskip}{10pt}
+\usepackage{Sweave}
+\SweaveOpts{keep.source=true}
+\SweaveOpts{eps=false} 
+\begin{document}
+\vspace*{2cm}
+\begin{center}
+\vspace{1.5cm}
+{\Large Tabular}\\
+~\\
+\today\\
+~\\
+Tim Bergsma\\
+\end{center}
+\newpage
+\section*{tabular}
+<<handlers,echo=false,results=hide>>=
+library(metrumrg)
+@
+We make a sample data frame.
+<<sample>>=
+x <- data.frame(
+  study=c(rep('PROT01',5),NA),
+  subject=rep(c(1001,1002),each=3),
+  time=c(0,1,2,0,1,2),
+  conc=c(0.12,34,5.6,.5,200,NA)
+)
+x
+@
+Now we try various invocations.
+<<results=tex>>=
+writeLines(ltable(x))
+@
+<<results=tex>>=
+writeLines(ltable(x,environments=NULL))
+@
+<<results=tex>>=
+writeLines(ltable(x,caption='Plasma Concentrations',label='pctab'))
+@
+<<results=tex>>=
+writeLines(ltable(x,caption='Plasma Concentrations',cap.top=FALSE))
+@
+<<results=tex>>=
+writeLines(ltable(x,grid=TRUE,caption='grid is TRUE'))
+@
+<<results=tex>>=
+writeLines(ltable(x,grid=TRUE,caption='Includes Walls',walls=1,rules=c(1,2,1)))
+@
+<<results=tex>>=
+writeLines(ltable(x,grid=TRUE,caption='Custom Breaks',
+    colbreaks=c(0,2,0),rowgroups=x$subject
+))
+@
+<<results=tex>>=
+writeLines(ltable(x,grid=TRUE,caption='Custom Justify',
+    numjust='left',charjust='right'
+))
+<<results=tex>>=
+writeLines(ltable(x,grid=TRUE,caption='Decimal Align',
+    justify=c('center','left','right','decimal')
+))
+<<results=tex>>=
+writeLines(ltable(x,grid=TRUE,caption='Not Verbatim',
+    justify=c('center','left','right','decimal'),
+    verbatim=FALSE
+))
+<<results=tex>>=
+writeLines(ltable(x,grid=TRUE,caption='Custom Column Width',
+    justify=c('center','left','right','decimal'),
+    colwidth=c(NA,NA,NA,'2cm')
+))
+<<results=tex>>=
+writeLines(ltable(x,caption='Row Colors',rowcolors=c('white','lightgray')))
+@
+<<results=tex>>=
+writeLines(
+  ltable(
+    x,
+    caption='Row Groups',
+    rowgroups=as.character(x$subject),
+    rowgrouplabel='groups',
+    rowgrouprule = 2
+  )
+)
+@
+<<results=tex>>=
+writeLines(
+  ltable(
+    x,
+    caption='Column Groups',
+    colgroups=c('demographic','demographic','clinical','clinical')
+  )
+)
+@
+<<results=tex>>=
+writeLines(
+  ltable(
+    x,
+    caption='Row and Column Groups',
+    rowgroups=as.character(x$subject),
+    colgroups=c('demographic','demographic','clinical','clinical'),
+    rowgrouprule = 1,
+    grid=TRUE
+  )
+)
+@
+\end{document}
