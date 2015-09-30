@@ -43,7 +43,10 @@ subset of identified names using assignment syntax.
 \value{
 used for side effects
 }
-\references{\url{http://metrumrg.googlecode.com}}
+\note{
+  In some cases the column name being replaced must be quoted for the replacement to work. For example, when running \code{colname} to replace a column name that contains a special character like '_' or '*', it is necessary to place quotes around the column name.
+}
+\references{\url{https://r-forge.r-project.org/R/?group_id=1215}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{
