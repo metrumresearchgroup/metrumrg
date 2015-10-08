@@ -2,7 +2,6 @@ as.define <- function(x, ...)UseMethod('as.define')
 
 as.define.spec <- function(x,sep = ' = ',collapse = '; ',escape = c('_','%','$'),...){
   x$required <- NULL
-  if('category' %in% names(x)) {x$category <- NULL} 
   names(x) <- c('Variable', 'Label', 'Type', 'Codes','Comments')
   x$Type <- map(x$Type, from = c('character','numeric','integer','datetime'),
                 to = c('char','num','num','char'))
@@ -17,14 +16,6 @@ as.define.spec <- function(x,sep = ' = ',collapse = '; ',escape = c('_','%','$')
     string
   }
   x$Codes <- sapply(seq_along(codes),function(i)blend(codes[[i]],decodes[[i]]))
-   prse <- function(m){
-    a <- strsplit(m,'//',fixed=T)[[1]]
-    a <- a[a!='']
-    a <- gsub('/',':',a)
-    a <- paste(a,collapse='\n\n')
-    a
-  }
-  x$Comments <- sapply(x$Comments,prse)
   polish <- function(x,escape){
     for(i in escape)x <- gsub(i,glue('\\',i),x,fixed = TRUE)
     x
@@ -35,17 +26,17 @@ as.define.spec <- function(x,sep = ' = ',collapse = '; ',escape = c('_','%','$')
 }
 
 as.pdf.define <- function(x,stem,...)as.pdf(stem=stem,as.document(x,...),...)
-
+  
 tabular.define <- function(
   x,
   caption = '',
   grid = TRUE,
   rules = 1,
-  colwidth = c('0.75in','1.5in','0.5in','1.5in','1.75in'), 
+  colwidth = c('1in','1in','0.5in','1.5in','1.5in'),
   tabularEnvironment = 'longtable',
   walls = 1,
   tabnum = FALSE,
-  pretable = paste('\\hline \\multicolumn{5}{|l|}{\\textbf{\\hypertarget{',caption,'}{',caption,'}}} \\\\',sep=''), 
+  pretable = if(is.null(caption)) '' else paste(if(tabnum) '\\caption{' else '\\caption*{',caption,'}\\\\'),
   prepos = 1,
   headerBold = TRUE,
   ...
@@ -66,7 +57,7 @@ tabular.define <- function(
 }
 as.document.define <- function(
   x,
-  morePreamble = c(command('usepackage',args = 'longtable'),command('usepackage',args = 'hyperref')), 
+  morePreamble = command('usepackage',args = 'longtable'),
   geoLeft = '1in',
   geoRight = '1in',
   geoTop = '1in',

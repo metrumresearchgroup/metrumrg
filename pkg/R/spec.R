@@ -123,7 +123,7 @@ as.spec.data.frame <- function(x, ...){
   expected <- c('column','label','type','guide','required','derivation')
   found <- names(x)
   missing <- expected %-% found
-  extra <- (found %-% 'category') %-% expected
+  extra <- found %-% expected
   if(length(missing))warning('missing expected column(s) ',paste(missing,collapse=', '))
   if(length(extra))message('found unexpected column(s) ',paste(extra,collapse=', '))
   x <- as.keyed(x,'column')
