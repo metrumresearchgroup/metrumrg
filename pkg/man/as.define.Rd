@@ -21,8 +21,7 @@ which calls \code{tabular}.  Any of these may be called directly.
 object of class `define`
 }
 \note{ A newline character in \code{collapse} may be combined with fixed width column(s)
-	in \code{as.document} to good effect (wrapping of long code/decode lists). A latex
-  hypertarget command has been added to \code{caption} to work with \code{as.menu.define}.
+	in \code{as.document} to good effect (wrapping of long code/decode lists).
 }
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}

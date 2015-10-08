@@ -3,7 +3,7 @@ Type: Package
 Title: Pharmacometric Tools for Data Preparation, Modeling, Simulation,
         and Reporting
 Version: 5.57
-Date: 2015-7-2
+Date: 2015-10-8
 Author: Tim Bergsma, Bill Knebel, Leonid Gibiansky, Natalie Hsiang
 Maintainer: Bill Knebel <billk@metrumrg.com>
 Depends: reshape, lattice, XML, MASS, methods, grid
