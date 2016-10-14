@@ -174,6 +174,8 @@ fixed.initList <- function(x,...)sapply(x,fixed)
 }
 as.initList.character <- function(x,...){
   stopifnot(length(x)>0)
+  # Prevent leading whitespace from linking comments between lines
+  x <- trimws(x, which="both")
   comments <- .initcomments(x)
   data <- .initdata(x)
   data <- paste(data,collapse='\n')
@@ -206,16 +208,11 @@ as.initList.character <- function(x,...){
   )
   as.initList(inits,comment=globalcom)
 }
-.initRelComment <- function(i,est,line){
+.initRelComment <- function(i, est, line) {
   #need numbers for comment lines for any comment on my line, plus any trailing
   #comments, i.e. those after this line but before a new est is started
-  #use comment groups: where runhead est coincides with runhead line
-  stopifnot(length(est)==length(line))
-  groupstart <- runhead(est) & runhead(line)
-  group <- cumsum(groupstart)
-  mygroup <- unique(group[est==i])#probably only 1
-  mylines <- unique(line[group==mygroup])
-  mylines
+  stopifnot(length(est) == length(line))
+  unique(line[est == i])
 }
 .as.init.character <- function(x,comment=character(0),...){#limited utility
   stopifnot(length(x)==1)
