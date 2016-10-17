@@ -3,16 +3,17 @@ Type: Package
 Title: Pharmacometric Tools for Data Preparation, Modeling, Simulation,
         and Reporting
 Version: 5.57
-Date: 2015-10-8
-Author: Tim Bergsma, Bill Knebel, Leonid Gibiansky, Natalie Hsiang
+Date: 2016-10-17
+Author: Tim Bergsma, Bill Knebel, Leonid Gibiansky, Natalie Hsiang, Bill Denney
 Maintainer: Bill Knebel <billk@metrumrg.com>
 Depends: reshape, lattice, XML, MASS, methods, grid
 Suggests: chron, fork, SASxport
 Description: 
- Pharmacometric tools for common data preparation tasks, stratified 
- bootstrap resampling of data sets, NONMEM control stream creation/editing, 
- NONMEM model execution, creation of standard and user-defined diagnostic plots,  
- execution and summary of bootstrap and predictive check results, implementation 
- of simulations from posterior parameter distributions, reporting of output 
- tables and creation of detailed analysis logs.
+ Pharmacometric tools for common data preparation tasks, stratified
+ bootstrap resampling of data sets, NONMEM control stream
+ creation/editing, NONMEM model execution, creation of standard and
+ user-defined diagnostic plots, execution and summary of bootstrap and
+ predictive check results, implementation of simulations from
+ posterior parameter distributions, reporting of output tables and
+ creation of detailed analysis logs.
 License: GPL

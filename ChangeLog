@@ -1,6 +1,7 @@
 5.58
 
 * change default queue to NA
+* Fix generic function package identification for 'cast'
 
 5.57
 
