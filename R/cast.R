@@ -1,4 +1,4 @@
-setGeneric('cast')
+setGeneric("cast", package="reshape")
 setOldClass(c('keyed','data.frame'))
 setMethod(
   'cast',
