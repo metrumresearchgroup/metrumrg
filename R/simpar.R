@@ -67,7 +67,7 @@ ord.matrix <- function(x,...){
 }
 rinvchisq <- function(n,df,cov)df*cov/rchisq(n, df)
 simblock <- function(n,df,cov){
-    if(df < length(cov))stop('df is less than matrix length')
+    if(df < nrow(cov))stop('df is less than matrix nrow')
     if(length(cov)==1)return(rinvchisq(n,df,cov))
     s <- dim(cov)[1]
     ncols <- s*(s+1)/2
