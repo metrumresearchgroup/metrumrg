@@ -22,8 +22,8 @@ function(nsim,theta,covar,omega,sigma,odf=NULL,sdf=NULL,digits=4,min=-Inf,max=In
   if( any(sapply(sigma,function(x)det(x)<0)))stop('not all sigma blocks are positive-definite')
   if(length(odf)!=length(omega))stop('length odf differs from length omega')
   if(length(sdf)!=length(sigma))stop('length sdf differs from length sigma')
-  if(any(odf < sapply(omega,length)))stop('odf[n] is less than number of elements in corresponding matrix')
-  if(any(sdf < sapply(sigma,length)))stop('sdf[n] is less than number of elements in corresponding matrix')
+  if(any(odf < sapply(omega,nrow)))stop('odf[n] is less than number of rows in corresponding matrix')
+  if(any(sdf < sapply(sigma,nrow)))stop('sdf[n] is less than number of rows in corresponding matrix')
   mvr <- mvrnorm(nsim,theta,covar)
   if(nsim==1)mvr <- t(as.matrix(mvr))
   omg <- lapply(1:length(odf),function(x)list(n=nsim,df=odf[[x]],cov=omega[[x]]))
@@ -67,7 +67,7 @@ ord.matrix <- function(x,...){
 }
 rinvchisq <- function(n,df,cov)df*cov/rchisq(n, df)
 simblock <- function(n,df,cov){
-    if(df < length(cov))stop('df is less than matrix length')
+    if(df < nrow(cov))stop('df is less than matrix nrow')
     if(length(cov)==1)return(rinvchisq(n,df,cov))
     s <- dim(cov)[1]
     ncols <- s*(s+1)/2
